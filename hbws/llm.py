@@ -15,7 +15,7 @@ from pathlib import Path
 
 from openai import AzureOpenAI, APIError, APITimeoutError, RateLimitError
 
-from .ledger import TaskLedger
+from .ledger import ReserveRejected, TaskLedger, llm_call_vec
 
 ROOT = Path(__file__).resolve().parent.parent
 _local = threading.local()
@@ -66,40 +66,65 @@ CACHE = Cache()
 RETRYABLE = (RateLimitError, APITimeoutError, APIError, ConnectionError)
 
 
+def estimate_in_tokens(messages: list[dict]) -> int:
+    """Conservative pre-call estimate: ~1 token / 3 chars (≈33% headroom over
+    the usual 1/4 ratio). Used only for reservation, never for billing."""
+    return sum(len(m.get("content", "")) for m in messages) // 3 + 16
+
+
 def chat(messages: list[dict], ledger: TaskLedger, *,
          temperature: float = 0.7, max_tokens: int = 1024, seed: int | None = None,
-         use_cache: bool = True, max_retries: int = 5) -> str:
-    """One chat completion, charged to `ledger`. Returns message content."""
+         use_cache: bool = True, max_retries: int = 5, wall_est: float = 0.0) -> str:
+    """One chat completion under reserve->call->settle discipline.
+
+    Raises ReserveRejected if the worst-case cost cannot be reserved — the
+    caller must treat that as a control-flow signal (fallback/END), never as
+    a task error. Cached hits still reserve and settle: they count against
+    the task budget; caching only saves real dollars during search.
+    """
     deployment = os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-4o")
     params = {"temperature": temperature, "max_tokens": max_tokens, "seed": seed}
     key = hashlib.sha256(json.dumps(
         [deployment, messages, params], sort_keys=True).encode()).hexdigest()
 
-    if use_cache:
-        hit = CACHE.get(key)
-        if hit is not None:
-            # Cached calls still count against the task budget: the workflow
-            # "spent" them; caching only saves real dollars during search.
-            ledger.add_llm(hit["in_tokens"], hit["out_tokens"])
-            return hit["content"]
+    vec = llm_call_vec(estimate_in_tokens(messages), max_tokens, wall_est)
+    lease = ledger.reserve(vec)
+    if lease is None:
+        raise ReserveRejected(f"cannot reserve {vec}")
 
-    # Pre-check so we never issue a call that is already over budget.
-    ledger.check()
+    try:
+        if use_cache:
+            hit = CACHE.get(key)
+            if hit is not None:
+                ledger.settle(lease, {"llm_calls": 1,
+                                      "in_tokens": hit["in_tokens"],
+                                      "out_tokens": hit["out_tokens"]})
+                lease = None
+                return hit["content"]
 
-    last_err = None
-    for attempt in range(max_retries):
-        try:
-            r = _client().chat.completions.create(
-                model=deployment, messages=messages,
-                temperature=temperature, max_tokens=max_tokens, seed=seed)
-            content = r.choices[0].message.content or ""
-            usage = {"in_tokens": r.usage.prompt_tokens,
-                     "out_tokens": r.usage.completion_tokens, "content": content}
-            ledger.add_llm(usage["in_tokens"], usage["out_tokens"])
-            if use_cache:
-                CACHE.put(key, usage)
-            return content
-        except RETRYABLE as e:
-            last_err = e
-            time.sleep(min(2 ** attempt * 1.5, 30))
-    raise RuntimeError(f"LLM call failed after {max_retries} retries: {last_err}")
+        last_err = None
+        for attempt in range(max_retries):
+            try:
+                r = _client().chat.completions.create(
+                    model=deployment, messages=messages,
+                    temperature=temperature, max_tokens=max_tokens, seed=seed)
+                content = r.choices[0].message.content or ""
+                usage = {"in_tokens": r.usage.prompt_tokens,
+                         "out_tokens": r.usage.completion_tokens, "content": content}
+                # No clamping: if actual exceeds the reservation, settle
+                # raises settle_overrun — a defect in the estimator we must
+                # see and fix, not silently absorb.
+                ledger.settle(lease, {"llm_calls": 1,
+                                      "in_tokens": usage["in_tokens"],
+                                      "out_tokens": usage["out_tokens"]})
+                lease = None
+                if use_cache:
+                    CACHE.put(key, usage)
+                return content
+            except RETRYABLE as e:
+                last_err = e
+                time.sleep(min(2 ** attempt * 1.5, 30))
+        raise RuntimeError(f"LLM call failed after {max_retries} retries: {last_err}")
+    finally:
+        if lease is not None:
+            ledger.cancel(lease)

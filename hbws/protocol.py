@@ -70,6 +70,9 @@ def evaluate(wf: dict, tasks: list[dict], caps: BudgetCaps, *, run_name: str,
         "p95_sec": round(secs[int(n * 0.95)] if n > 1 else secs[0], 2) if n else 0,
         "total_usd": round(sum(usd), 4),
         "wall_min": round((time.monotonic() - t0) / 60, 1),
+        "reserve_rejected": sum(1 for r in results if r["status"] == "reserve_rejected"),
+        # Nonzero over_budget now indicates a runtime defect (settle overrun),
+        # not a policy failure — the reservation ledger prevents the latter.
         "over_budget": sum(1 for r in results if str(r["status"]).startswith("budget_exceeded")),
         "errors": sum(1 for r in results if str(r["status"]).startswith("error")),
     }

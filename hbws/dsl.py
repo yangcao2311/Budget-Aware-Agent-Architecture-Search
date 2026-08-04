@@ -162,10 +162,99 @@ def wf_budget_adaptive() -> dict:
     }
 
 
+# ---------------------------------------------------------------------------
+# Envelope structure library (方案 v4.0 §5.6): 8 canonical static structures.
+# ---------------------------------------------------------------------------
+
+def wf_cot() -> dict:
+    return {
+        "nodes": [{"id": "g", "type": "generate", "prompt_id": "solve_cot",
+                   "params": {"temperature": 0.0, "max_output_tokens": 1536}}],
+        "edges": [{"from": "g", "to": "END"}],
+    }
+
+
+def _wf_vote(k: int) -> dict:
+    return {
+        "nodes": [{"id": "g", "type": "vote", "k": k, "prompt_id": "solve_cot",
+                   "aggregator": "majority",
+                   "params": {"temperature": 0.8, "max_output_tokens": 1536}}],
+        "edges": [{"from": "g", "to": "END"}],
+    }
+
+
+def _wf_verify_refine(max_iter: int, critic_k: int = 1) -> dict:
+    return {
+        "nodes": [
+            {"id": "g", "type": "generate", "prompt_id": "solve_cot",
+             "params": {"temperature": 0.7, "max_output_tokens": 1536}},
+            {"id": "v", "type": "verify", "k": critic_k},
+            {"id": "r", "type": "refine", "prompt_id": "refine_from_feedback",
+             "params": {"temperature": 0.7, "max_output_tokens": 1536}},
+        ],
+        "edges": [
+            {"from": "g", "to": "v"},
+            {"from": "v", "to": "END", "cond": "verify_passed"},
+            {"from": "v", "to": "r", "cond": "verify_failed"},
+            {"from": "r", "to": "v", "loop": True, "max_iter": max_iter},
+        ],
+    }
+
+
+def wf_decompose_agg() -> dict:
+    return {
+        "nodes": [
+            {"id": "d", "type": "decompose", "prompt_id": "decompose",
+             "params": {"temperature": 0.7, "max_output_tokens": 1024}},
+            {"id": "a", "type": "aggregate", "prompt_id": "aggregate_sub",
+             "params": {"temperature": 0.3, "max_output_tokens": 1536}},
+        ],
+        "edges": [{"from": "d", "to": "a"}, {"from": "a", "to": "END"}],
+    }
+
+
+def wf_vote_verify() -> dict:
+    return {
+        "nodes": [
+            {"id": "g", "type": "vote", "k": 3, "prompt_id": "solve_cot",
+             "aggregator": "majority",
+             "params": {"temperature": 0.8, "max_output_tokens": 1536}},
+            {"id": "v", "type": "verify"},
+            {"id": "r", "type": "refine", "prompt_id": "refine_from_feedback",
+             "params": {"temperature": 0.7, "max_output_tokens": 1536}},
+        ],
+        "edges": [
+            {"from": "g", "to": "v"},
+            {"from": "v", "to": "END", "cond": "verify_passed"},
+            {"from": "v", "to": "r", "cond": "verify_failed"},
+            {"from": "r", "to": "v", "loop": True, "max_iter": 1},
+        ],
+    }
+
+
+# The 8-structure envelope library (Fig.2). Keys are frozen names used in
+# results files — do not rename after the first envelope run.
+ENVELOPE_LIB = {
+    "direct": wf_direct,
+    "cot": wf_cot,
+    "vote3": lambda: _wf_vote(3),
+    "vote5": lambda: _wf_vote(5),
+    "verify_refine_1": lambda: _wf_verify_refine(1),
+    "verify_refine_3": lambda: _wf_verify_refine(3),
+    "decompose_agg": wf_decompose_agg,
+    "vote_verify": wf_vote_verify,
+}
+
 TEMPLATES = {
     "direct": wf_direct,
+    "cot": wf_cot,
     "cot_check": wf_cot_check,
     "strong_manual": wf_strong_manual,
-    "vote3": wf_vote3,
+    "vote3": lambda: _wf_vote(3),
+    "vote5": lambda: _wf_vote(5),
+    "verify_refine_1": lambda: _wf_verify_refine(1),
+    "verify_refine_3": lambda: _wf_verify_refine(3),
+    "decompose_agg": wf_decompose_agg,
+    "vote_verify": wf_vote_verify,
     "budget_adaptive": wf_budget_adaptive,
 }

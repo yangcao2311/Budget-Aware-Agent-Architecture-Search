@@ -1,0 +1,17 @@
+{
+  "run": "envelope/direct_code_E1",
+  "seed": 0,
+  "n": 5,
+  "success_rate": 0.6,
+  "usd_per_task": 0.00178,
+  "usd_per_success": 0.00296,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 237.0,
+  "p50_sec": 3.96,
+  "p95_sec": 4.08,
+  "total_usd": 0.0089,
+  "wall_min": 0.1,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

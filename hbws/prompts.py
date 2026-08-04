@@ -36,6 +36,19 @@ PROMPTS = {
                  "Feedback:\n{feedback}\n\n"
                  "Rework the solution carefully. " + MATH_FORMAT),
     },
+    "decompose": {
+        "code": ("{task}\n\nBreak this task into 2-4 subproblems (input handling, "
+                 "core algorithm, edge cases). For each, sketch the approach in "
+                 "2-3 lines. Do not write the final solution yet."),
+        "math": ("{task}\n\nBreak this problem into 2-4 subproblems and solve "
+                 "each briefly. Do not state the final answer yet."),
+    },
+    "aggregate_sub": {
+        "code": ("Task:\n{task}\n\nYour subproblem analysis:\n{solution}\n\n"
+                 "Now write the complete final solution. " + CODE_FORMAT),
+        "math": ("Problem:\n{task}\n\nYour subproblem work:\n{solution}\n\n"
+                 "Combine the pieces into a complete solution. " + MATH_FORMAT),
+    },
     "check_math": {
         # Gold-free internal verifier for math: independent re-derivation.
         # The runner compares the checker's boxed answer with the candidate's.

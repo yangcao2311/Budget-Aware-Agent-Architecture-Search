@@ -17,7 +17,8 @@ import time
 
 from . import llm, verify
 from .dsl import validate
-from .ledger import BudgetCaps, BudgetExceeded, TaskLedger
+from .ledger import (BudgetCaps, BudgetExceeded, ReserveRejected, TaskLedger,
+                     llm_call_vec, tool_call_vec)
 from .prompts import render
 
 
@@ -55,27 +56,49 @@ class WorkflowRun:
                        self.state["solution"], self.state["feedback"]), params)
             self.state["verify_passed"] = None
         elif t == "vote":
+            # All-k upfront feasibility (方案 §4.2): a vote either fully fits
+            # in the remaining budget or is rejected before any call starts.
+            prompt = render(node["prompt_id"], fam, task_text)
+            one = llm_call_vec(llm.estimate_in_tokens(
+                [{"role": "user", "content": prompt}]),
+                params.get("max_output_tokens", 1024))
+            k = node["k"]
+            all_k = {d: v * k for d, v in one.items()}
+            if not self.ledger.can_reserve(all_k):
+                raise ReserveRejected(f"vote-{k} cannot fully reserve")
             answers = []
-            for i in range(node["k"]):
-                out = llm.chat(
-                    [{"role": "user", "content": render(node["prompt_id"], fam, task_text)}],
+            for i in range(k):
+                answers.append(llm.chat(
+                    [{"role": "user", "content": prompt}],
                     self.ledger, temperature=params.get("temperature", 0.8),
                     max_tokens=params.get("max_output_tokens", 1024),
-                    seed=(self.seed or 0) * 100 + i, use_cache=self.use_cache)
-                answers.append(out)
+                    seed=(self.seed or 0) * 100 + i, use_cache=self.use_cache))
             self.state["solution"] = self._majority(answers)
             self.state["verify_passed"] = None
         elif t == "verify":
-            self.ledger.add_tool()
             if fam == "code":
+                lease = self.ledger.reserve(tool_call_vec())
+                if lease is None:
+                    raise ReserveRejected("verify tool call")
                 ok, fb = verify.run_code_tests(
                     self.state["solution"], self.task["feedback_tests"])
+                self.ledger.settle(lease, {"tool_calls": 1})
             else:
-                check = self._chat(render("check_math", fam, task_text),
-                                   {"temperature": 0.3, "max_output_tokens": 1536})
+                # heuristic_critic: k independent gold-free re-derivations;
+                # PASS iff a majority agrees with the candidate's answer.
+                k = node.get("k", 1)
                 a1 = verify.extract_boxed(self.state["solution"])
-                a2 = verify.extract_boxed(check)
-                ok = a1 is not None and a2 is not None and verify.math_equal(a1, a2)
+                agree = 0
+                for i in range(k):
+                    check = llm.chat(
+                        [{"role": "user", "content": render("check_math", fam, task_text)}],
+                        self.ledger, temperature=0.3 + 0.2 * i,
+                        max_tokens=1536, seed=(self.seed or 0) * 100 + 50 + i,
+                        use_cache=self.use_cache)
+                    a2 = verify.extract_boxed(check)
+                    if a1 is not None and a2 is not None and verify.math_equal(a1, a2):
+                        agree += 1
+                ok = agree * 2 > k
                 fb = ("independent check agrees" if ok else
                       "an independent solution reached a different answer; "
                       "re-examine your reasoning step by step")
@@ -132,7 +155,16 @@ class WorkflowRun:
             for _ in range(64):  # absolute step bound
                 node = self.nodes[cur]
                 t0 = time.monotonic()
-                self._exec_node(node)
+                try:
+                    self._exec_node(node)
+                except ReserveRejected as e:
+                    # Not a violation: the ledger refused the call, we end
+                    # gracefully with the incumbent solution (safe fallback).
+                    status = "reserve_rejected"
+                    self.trace.append({"node": cur, "type": node["type"],
+                                       "reserve_rejected": str(e),
+                                       "budget": self.ledger.snapshot()})
+                    break
                 self.trace.append({"node": cur, "type": node["type"],
                                    "sec": round(time.monotonic() - t0, 2),
                                    "budget": self.ledger.snapshot(),
@@ -144,6 +176,8 @@ class WorkflowRun:
             else:
                 status = "step_bound_hit"
         except BudgetExceeded as e:
+            # With the reservation ledger this indicates a runtime defect
+            # (settle overrun) or the global circuit breaker — surface loudly.
             status = f"budget_exceeded:{e.dimension}"
         return {"task_id": self.task["id"], "status": status,
                 "solution": self.state["solution"],

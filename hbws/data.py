@@ -17,9 +17,12 @@ SPLIT_SEED = 20260804
 
 MATH_IN_SUBJECTS = ["algebra", "counting_and_probability", "number_theory", "prealgebra"]
 MATH_OOD_SUBJECTS = ["intermediate_algebra", "precalculus"]
-MATH_LEVELS = {"Level 3", "Level 4", "Level 5"}
+MATH_LEVELS = {"Level 4", "Level 5"}  # v4.0 §5.1: L3 dropped for headroom
 
-SPLIT_SIZES = {"dev": 80, "val": 50, "test": 150}
+# v4.0 one-time authorized resplit (2026-08-04, before any real search run);
+# frozen permanently afterwards. F1/F2 fidelity subsets are nested prefixes
+# of dev (which is stratified-shuffled at generation time).
+SPLIT_SIZES = {"dev": 120, "val": 40, "test": 150}
 
 
 def _extract_gold(solution: str) -> str | None:

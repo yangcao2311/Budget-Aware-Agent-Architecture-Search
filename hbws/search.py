@@ -74,7 +74,10 @@ def mut_swap_prompt(wf, rng):
 def mut_toggle_vote(wf, rng):
     """generate <-> vote-k conversion."""
     wf = copy.deepcopy(wf)
-    node = rng.choice([n for n in wf["nodes"] if n["type"] in ("generate", "vote")])
+    cands = [n for n in wf["nodes"] if n["type"] in ("generate", "vote")]
+    if not cands:
+        raise InvalidWorkflow("no generate/vote node to toggle")
+    node = rng.choice(cands)
     if node["type"] == "generate":
         node["type"], node["k"] = "vote", rng.randint(2, MAX_VOTE_K)
         node["aggregator"] = "majority"
