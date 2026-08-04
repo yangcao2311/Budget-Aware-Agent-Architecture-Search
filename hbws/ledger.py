@@ -39,6 +39,17 @@ class BudgetCaps:
         return cls(**{k: v for k, v in d.items() if k in cls.__dataclass_fields__})
 
 
+# Budget axis B1-B5 (方案 v3.0 §2.1). Worst-case single call must cost less
+# than max_usd at every tier (checked in tests below by construction).
+BUDGET_TIERS = {
+    "B1": BudgetCaps(1, 3000, 1000, 2, 45, 0.02),
+    "B2": BudgetCaps(2, 5000, 1500, 3, 60, 0.05),
+    "B3": BudgetCaps(4, 8000, 2000, 4, 90, 0.10),
+    "B4": BudgetCaps(8, 16000, 4000, 6, 180, 0.25),
+    "B5": BudgetCaps(16, 24000, 6000, 8, 300, 0.50),
+}
+
+
 @dataclass
 class TaskLedger:
     caps: BudgetCaps
