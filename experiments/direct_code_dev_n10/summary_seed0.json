@@ -1,0 +1,16 @@
+{
+  "run": "direct_code_dev_n10",
+  "seed": 0,
+  "n": 10,
+  "success_rate": 0.7,
+  "usd_per_task": 0.00166,
+  "usd_per_success": 0.00237,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 226.4,
+  "p50_sec": 0.0,
+  "p95_sec": 0.0,
+  "total_usd": 0.0166,
+  "wall_min": 0.1,
+  "over_budget": 0,
+  "errors": 0
+}

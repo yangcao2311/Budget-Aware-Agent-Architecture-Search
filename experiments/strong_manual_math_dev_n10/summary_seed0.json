@@ -1,0 +1,16 @@
+{
+  "run": "strong_manual_math_dev_n10",
+  "seed": 0,
+  "n": 10,
+  "success_rate": 0.8,
+  "usd_per_task": 0.01888,
+  "usd_per_success": 0.0236,
+  "llm_calls_per_task": 3.0,
+  "tokens_per_task": 2376.4,
+  "p50_sec": 11.94,
+  "p95_sec": 27.49,
+  "total_usd": 0.1888,
+  "wall_min": 0.7,
+  "over_budget": 1,
+  "errors": 0
+}
