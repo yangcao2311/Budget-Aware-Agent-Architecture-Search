@@ -43,11 +43,15 @@ def crossover_report(rows):
         for t in tiers:
             cand = [(d[(t, s)]["success_rate"], s) for s in structures if (t, s) in d]
             if cand:
-                sr, s = max(cand)
-                best_seq.append((t, s, sr))
-        print("best per tier: " + "  ".join(f"{t}:{s}({sr:.3f})" for t, s, sr in best_seq))
-        changes = sum(1 for a, b in zip(best_seq, best_seq[1:]) if a[1] != b[1])
-        print(f"crossovers (argmax changes along budget axis): {changes}  "
+                top = max(sr for sr, _ in cand)
+                winners = frozenset(s for sr, s in cand if sr == top)
+                best_seq.append((t, winners, top))
+        print("best per tier: " + "  ".join(
+            f"{t}:{'/'.join(sorted(w))}({sr:.3f})" for t, w, sr in best_seq))
+        # A crossover is counted only when winner sets are disjoint — ties
+        # never count as a change (honesty rule, 方案 v0 判读).
+        changes = sum(1 for a, b in zip(best_seq, best_seq[1:]) if not (a[1] & b[1]))
+        print(f"crossovers (disjoint argmax changes): {changes}  "
               f"[H-E1 needs >=2 in >=1 family, stable over 3 seeds]")
 
 

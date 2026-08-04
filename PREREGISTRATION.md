@@ -17,8 +17,11 @@ allowed only as dated deviation records appended to §9 — never edits in place
   violation is defined as any settle-overrun or cap excess; reservation
   rejection is NOT a violation.
 - Tier clamp rule: each node's per-call output cap is clamped to the tier's
-  total output cap (`run_envelope.clamp_to_tier`); applied identically to
-  every structure and method.
+  total output cap; vote nodes divide the tier output cap k-ways (floor of
+  64) so their all-k upfront reservation is well-defined
+  (`run_envelope.clamp_to_tier`). Applied identically to every structure and
+  method. (k-way division added 2026-08-04 after the v0 screen showed votes
+  spuriously infeasible at every tier — an artifact, not a finding.)
 - Verifier taxonomy: code = oracle environment feedback (visible asserts
   only; extended tests exist only in the external grader); math =
   non-oracle structured self-check (k independent gold-free re-derivations,

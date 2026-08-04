@@ -1,0 +1,17 @@
+{
+  "run": "envelope/verify_refine_3_math_E1",
+  "seed": 0,
+  "n": 60,
+  "success_rate": 0.5833,
+  "usd_per_task": 0.00663,
+  "usd_per_success": 0.01137,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 720.7,
+  "p50_sec": 0.0,
+  "p95_sec": 5.7,
+  "total_usd": 0.3978,
+  "wall_min": 0.2,
+  "reserve_rejected": 55,
+  "over_budget": 5,
+  "errors": 0
+}

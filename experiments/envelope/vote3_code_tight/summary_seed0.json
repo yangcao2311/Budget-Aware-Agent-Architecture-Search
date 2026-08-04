@@ -1,0 +1,17 @@
+{
+  "run": "envelope/vote3_code_tight",
+  "seed": 0,
+  "n": 60,
+  "success_rate": 0.5167,
+  "usd_per_task": 0.01805,
+  "usd_per_success": 0.03494,
+  "llm_calls_per_task": 3.0,
+  "tokens_per_task": 2019.7,
+  "p50_sec": 17.32,
+  "p95_sec": 24.71,
+  "total_usd": 1.0832,
+  "wall_min": 2.4,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

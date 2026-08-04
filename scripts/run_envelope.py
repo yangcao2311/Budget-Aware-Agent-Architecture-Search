@@ -43,7 +43,11 @@ def clamp_to_tier(wf: dict, caps) -> dict:
     for n in wf["nodes"]:
         p = n.get("params")
         if p and "max_output_tokens" in p:
-            p["max_output_tokens"] = min(p["max_output_tokens"], caps.max_out_tokens)
+            # Vote branches share the tier's output cap k-ways so the all-k
+            # upfront reservation can succeed: structures adapt verbosity to
+            # budget rather than being spuriously infeasible.
+            share = caps.max_out_tokens // n["k"] if n["type"] == "vote" else caps.max_out_tokens
+            p["max_output_tokens"] = max(64, min(p["max_output_tokens"], share))
     return wf
 
 
