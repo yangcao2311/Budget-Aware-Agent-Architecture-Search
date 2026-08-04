@@ -98,26 +98,118 @@ def mut_tweak_branch_threshold(wf, rng):
     return wf
 
 
+def mut_add_refine_loop_static(wf, rng):
+    """Static variant of mut_add_refine_loop: verify->refine loop with NO
+    budget-conditioned branch (M7 Static Evolution Search operator)."""
+    wf = copy.deepcopy(wf)
+    if len(wf["nodes"]) + 2 > MAX_NODES:
+        raise InvalidWorkflow("no room")
+    end_edges = [e for e in wf["edges"] if e["to"] == "END" and not e.get("loop")]
+    if not end_edges:
+        raise InvalidWorkflow("no END edge")
+    e = rng.choice(end_edges)
+    v = _fresh_id(wf)
+    wf["nodes"].append({"id": v, "type": "verify"})
+    r = _fresh_id(wf)
+    wf["nodes"].append({"id": r, "type": "refine", "prompt_id": "refine_from_feedback",
+                        "params": {"temperature": 0.7, "max_output_tokens": 1536}})
+    e["to"] = v
+    wf["edges"] += [
+        {"from": v, "to": "END", "cond": "verify_passed"},
+        {"from": v, "to": r, "cond": "verify_failed"},
+        {"from": r, "to": v, "loop": True, "max_iter": rng.randint(1, MAX_LOOP_ITER)},
+    ]
+    return wf
+
+
 OPERATORS = [mut_add_refine_loop, mut_swap_prompt, mut_toggle_vote,
              mut_tweak_branch_threshold]
+# M7 Static Evolution Search: identical operator set except every budget-
+# conditioned primitive is removed (the ONLY difference from HBWS).
+OPERATORS_STATIC = [mut_add_refine_loop_static, mut_swap_prompt, mut_toggle_vote]
 
 
-def mutate(wf: dict, rng: random.Random, max_tries: int = 10) -> dict:
+def _has_budget_cond(wf: dict) -> bool:
+    return any(str(e.get("cond", "")).startswith("budget_") for e in wf["edges"])
+
+
+def mutate(wf: dict, rng: random.Random, max_tries: int = 10, *,
+           static: bool = False) -> dict:
+    ops = OPERATORS_STATIC if static else OPERATORS
     for _ in range(max_tries):
         try:
-            child = rng.choice(OPERATORS)(wf, rng)
+            child = rng.choice(ops)(wf, rng)
             validate(child)
+            if static and _has_budget_cond(child):
+                continue
             return child
         except InvalidWorkflow:
             continue
     return copy.deepcopy(wf)
 
 
-def random_workflow(rng: random.Random, n_mutations: int = 3) -> dict:
-    wf = TEMPLATES[rng.choice(list(TEMPLATES))]()
+def random_workflow(rng: random.Random, n_mutations: int = 3, *,
+                    static: bool = False) -> dict:
+    pool = [n for n in TEMPLATES if not (static and n == "budget_adaptive")]
+    wf = TEMPLATES[rng.choice(pool)]()
     for _ in range(n_mutations):
-        wf = mutate(wf, rng)
+        wf = mutate(wf, rng, static=static)
     return wf
+
+
+# -- cross-budget evaluation (方案 v4.0 §3) ---------------------------------
+
+def hoeffding_lcb(successes: int, n: int, alpha: float = 0.05) -> float:
+    """Conservative anytime-usable lower bound on success rate.
+    Preregistered fallback bound (PREREGISTRATION §4); may be upgraded to
+    empirical-Bernstein before prereg-freeze, never after."""
+    import math as _m
+    if n == 0:
+        return 0.0
+    return max(0.0, successes / n - _m.sqrt(_m.log(2 / alpha) / (2 * n)))
+
+
+def cross_budget_evaluate(wf: dict, tasks: list[dict], tiers: dict, *,
+                          run_prefix: str, seed: int = 0, exec_seeds=(0,),
+                          workers: int = 6) -> dict:
+    """Evaluate one candidate on identical tasks under every search tier.
+
+    Returns per-tier stats plus J_CB. Any policy-attributable violation
+    (over_budget > 0, i.e. settle overrun) marks the candidate infeasible.
+    Tier keys must come from SEARCH_TIERS — never 'unseen'.
+    """
+    from .ledger import SEARCH_TIERS
+    assert all(t in SEARCH_TIERS for t in tiers), "non-search tier in search path"
+    per_tier, feasible = {}, True
+    for tname, caps in tiers.items():
+        succ_by_task = {t["id"]: [] for t in tasks}
+        usd_total = 0.0
+        for es in exec_seeds:
+            s = evaluate(wf, tasks, caps, run_name=f"{run_prefix}_{tname}_es{es}",
+                         seed=es, use_cache=True, workers=workers)
+            usd_total += s["total_usd"]
+            import json as _json
+            from .protocol import EXP_DIR
+            rows = [_json.loads(l) for l in
+                    open(EXP_DIR / f"{run_prefix}_{tname}_es{es}" / f"results_seed{es}.jsonl")]
+            for r in rows:
+                succ_by_task[r["task_id"]].append(bool(r["success"]))
+            if s["over_budget"] > 0:
+                feasible = False
+        per_task = [sum(v) / len(v) for v in succ_by_task.values() if v]
+        n = len(per_task)
+        mean = sum(per_task) / n if n else 0.0
+        per_tier[tname] = {
+            "success_rate": round(mean, 4),
+            "lcb": round(hoeffding_lcb(int(round(mean * n)), n), 4),
+            "usd_per_task": round(usd_total / max(1, n * len(exec_seeds)), 5),
+            "n": n,
+        }
+    lcbs = [v["lcb"] for v in per_tier.values()]
+    aubpc_lcb = sum(lcbs) / len(lcbs)
+    j_cb = 0.5 * aubpc_lcb + 0.5 * min(lcbs)
+    return {"per_tier": per_tier, "aubpc_lcb": round(aubpc_lcb, 4),
+            "j_cb": round(j_cb, 4), "feasible": feasible}
 
 
 # -- successive halving ------------------------------------------------------
