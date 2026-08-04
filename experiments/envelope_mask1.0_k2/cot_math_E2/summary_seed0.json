@@ -1,0 +1,17 @@
+{
+  "run": "envelope_mask1.0_k2/cot_math_E2",
+  "seed": 0,
+  "n": 60,
+  "success_rate": 0.6,
+  "usd_per_task": 0.00649,
+  "usd_per_success": 0.01081,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 706.5,
+  "p50_sec": 0.01,
+  "p95_sec": 5.06,
+  "total_usd": 0.3893,
+  "wall_min": 0.2,
+  "reserve_rejected": 0,
+  "over_budget": 5,
+  "errors": 0
+}

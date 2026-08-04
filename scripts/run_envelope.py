@@ -30,7 +30,9 @@ def mask_tests(task: dict, frac: float) -> dict:
     asserts = [l for l in lines if l.lstrip().startswith("assert")]
     other = [l for l in lines if not l.lstrip().startswith("assert")]
     keep = math.ceil(frac * len(asserts))
-    t["feedback_tests"] = "\n".join(other + asserts[:keep])
+    # keep == 0 must yield a truly empty script: leftover imports would make
+    # the sandbox vacuously report success (no-signal semantics, verify.py).
+    t["feedback_tests"] = "\n".join(other + asserts[:keep]) if keep else ""
     return t
 
 

@@ -39,7 +39,14 @@ sys.setrecursionlimit(10000)
 
 
 def run_code_tests(solution_text: str, test_code: str) -> tuple[bool, str]:
-    """Returns (passed, feedback). feedback is truncated stderr/assertion info."""
+    """Returns (passed, feedback). feedback is truncated stderr/assertion info.
+
+    Empty test_code means NO verification signal — that must read as
+    not-passed with a no-signal message (blind refinement), never as a
+    vacuous pass (Fig.3 mask=0.0 semantics)."""
+    if not test_code.strip():
+        return False, ("no tests are available; carefully review your solution "
+                       "for correctness and edge cases")
     code = extract_code(solution_text)
     program = _SANDBOX_PRELUDE + code + "\n\n" + test_code + "\nprint('ALL_TESTS_PASSED')\n"
     with tempfile.TemporaryDirectory() as td:
