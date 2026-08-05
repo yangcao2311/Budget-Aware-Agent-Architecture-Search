@@ -1,0 +1,17 @@
+{
+  "run": "envelope_test/incumbent_refine_code_unseen",
+  "seed": 0,
+  "n": 150,
+  "success_rate": 0.7533,
+  "usd_per_task": 0.00257,
+  "usd_per_success": 0.00341,
+  "llm_calls_per_task": 1.37,
+  "tokens_per_task": 409.3,
+  "p50_sec": 0.02,
+  "p95_sec": 6.37,
+  "total_usd": 0.3852,
+  "wall_min": 0.3,
+  "reserve_rejected": 0,
+  "over_budget": 4,
+  "errors": 0
+}
