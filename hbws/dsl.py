@@ -258,8 +258,19 @@ def wf_incumbent_refine() -> dict:
 # The envelope structure library (Fig.2). Keys are frozen names used in
 # results files — do not rename after the first envelope run; additions are
 # allowed pre-freeze with a dated note (incumbent_refine: 2026-08-05).
+def wf_incumbent_refine_cot() -> dict:
+    """incumbent_refine with the family's strongest single-call structure
+    (CoT, temp 0) as the protected first draft. Added 2026-08-05 after the
+    math result showed the incumbent must be the best single-call baseline."""
+    wf = wf_incumbent_refine()
+    wf["nodes"][0]["prompt_id"] = "solve_cot"
+    wf["nodes"][0]["params"]["max_output_tokens"] = 1536
+    return wf
+
+
 ENVELOPE_LIB = {
     "incumbent_refine": wf_incumbent_refine,
+    "incumbent_refine_cot": wf_incumbent_refine_cot,
     "direct": wf_direct,
     "cot": wf_cot,
     "vote3": lambda: _wf_vote(3),

@@ -113,6 +113,15 @@ baselines, 3 search seeds, $0.15 unseen evaluation.
 - 2026-08-04: "AgentEvo" citation supplied by an external review agent was
   checked (DOI unindexed, name unfindable) and treated as unverifiable;
   nearest real neighbors EvoFlow/EvoAgentX/FlowEvo added to related work.
+- 2026-08-05: confirmatory dev-set results recorded BEFORE freeze: H-E1 as
+  originally stated fails at full resolution; H-E2 confirmed (monotone,
+  no-signal harm CI<0). Envelope library extended with incumbent_refine
+  and incumbent_refine_cot (dated additions), motivated by the
+  repair/breakage decomposition. Part-I confirmatory hypotheses for the
+  FROZEN TEST SET will be restated at freeze around: (a) net-zero of
+  vanilla structures, (b) budget floor harm, (c) signal-degradation harm,
+  (d) incumbent-protection dominance. Dev-set numbers are exploratory and
+  will not be reported as confirmatory.
 
 ## 9. Post-freeze deviation log
 

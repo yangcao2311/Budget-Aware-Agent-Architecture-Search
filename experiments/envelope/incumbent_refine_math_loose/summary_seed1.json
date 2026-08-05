@@ -1,0 +1,17 @@
+{
+  "run": "envelope/incumbent_refine_math_loose",
+  "seed": 1,
+  "n": 120,
+  "success_rate": 0.6417,
+  "usd_per_task": 0.01361,
+  "usd_per_success": 0.02121,
+  "llm_calls_per_task": 2.12,
+  "tokens_per_task": 1535.0,
+  "p50_sec": 0.0,
+  "p95_sec": 7.3,
+  "total_usd": 1.6332,
+  "wall_min": 0.4,
+  "reserve_rejected": 11,
+  "over_budget": 25,
+  "errors": 0
+}
