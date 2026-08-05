@@ -1,0 +1,17 @@
+{
+  "run": "envelope_ood/verify_refine_3_code_loose",
+  "seed": 2,
+  "n": 100,
+  "success_rate": 0.85,
+  "usd_per_task": 0.01914,
+  "usd_per_success": 0.02251,
+  "llm_calls_per_task": 4.98,
+  "tokens_per_task": 3509.1,
+  "p50_sec": 5.59,
+  "p95_sec": 9.59,
+  "total_usd": 1.9136,
+  "wall_min": 1.2,
+  "reserve_rejected": 2,
+  "over_budget": 0,
+  "errors": 0
+}

@@ -1,0 +1,17 @@
+{
+  "run": "envelope_ood/direct_code_tight",
+  "seed": 0,
+  "n": 100,
+  "success_rate": 0.88,
+  "usd_per_task": 0.00238,
+  "usd_per_success": 0.00271,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 366.8,
+  "p50_sec": 2.02,
+  "p95_sec": 3.44,
+  "total_usd": 0.2382,
+  "wall_min": 0.5,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

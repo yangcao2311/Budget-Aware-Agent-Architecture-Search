@@ -1,0 +1,17 @@
+{
+  "run": "envelope_ood/incumbent_refine_code_loose",
+  "seed": 0,
+  "n": 100,
+  "success_rate": 0.82,
+  "usd_per_task": 0.01568,
+  "usd_per_success": 0.01912,
+  "llm_calls_per_task": 5.0,
+  "tokens_per_task": 2961.2,
+  "p50_sec": 2.62,
+  "p95_sec": 8.42,
+  "total_usd": 1.5682,
+  "wall_min": 0.7,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

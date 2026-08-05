@@ -1,0 +1,17 @@
+{
+  "run": "envelope_ood/verify_refine_3_math_loose",
+  "seed": 0,
+  "n": 100,
+  "success_rate": 0.34,
+  "usd_per_task": 0.02807,
+  "usd_per_success": 0.08256,
+  "llm_calls_per_task": 2.4,
+  "tokens_per_task": 3253.5,
+  "p50_sec": 11.17,
+  "p95_sec": 19.38,
+  "total_usd": 2.8071,
+  "wall_min": 2.5,
+  "reserve_rejected": 63,
+  "over_budget": 0,
+  "errors": 0
+}

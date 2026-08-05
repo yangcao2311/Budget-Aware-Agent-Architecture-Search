@@ -1,0 +1,17 @@
+{
+  "run": "envelope_ood/verify_refine_3_code_tight",
+  "seed": 1,
+  "n": 100,
+  "success_rate": 0.86,
+  "usd_per_task": 0.00717,
+  "usd_per_success": 0.00834,
+  "llm_calls_per_task": 1.7,
+  "tokens_per_task": 1136.4,
+  "p50_sec": 6.09,
+  "p95_sec": 8.63,
+  "total_usd": 0.717,
+  "wall_min": 1.3,
+  "reserve_rejected": 100,
+  "over_budget": 0,
+  "errors": 0
+}
