@@ -206,10 +206,18 @@ def cross_budget_evaluate(wf: dict, tasks: list[dict], tiers: dict, *,
             "n": n,
         }
     lcbs = [v["lcb"] for v in per_tier.values()]
+    means = [v["success_rate"] for v in per_tier.values()]
     aubpc_lcb = sum(lcbs) / len(lcbs)
+    # Two scores with different jobs. j_cb (LCB-based) is CONSERVATIVE and
+    # drives the racing stop rule. j_mean is fidelity-comparable and drives
+    # parent selection and archive ranking: the Hoeffding penalty shrinks
+    # with n, so ranking candidates by j_cb across different fidelities
+    # rewards having been evaluated more, not being better.
     j_cb = 0.5 * aubpc_lcb + 0.5 * min(lcbs)
+    j_mean = 0.5 * (sum(means) / len(means)) + 0.5 * min(means)
     return {"per_tier": per_tier, "aubpc_lcb": round(aubpc_lcb, 4),
-            "j_cb": round(j_cb, 4), "feasible": feasible}
+            "j_cb": round(j_cb, 4), "j_mean": round(j_mean, 4),
+            "feasible": feasible}
 
 
 # -- successive halving ------------------------------------------------------

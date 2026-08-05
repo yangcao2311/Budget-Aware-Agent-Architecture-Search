@@ -41,14 +41,15 @@ class Candidate:
     parent: int | None = None
     cid: int = -1
     stats: dict = field(default_factory=dict)   # fidelity level (int) -> eval dict
-    j_cb: float = -1.0
+    j_cb: float = -1.0      # conservative (LCB): racing stop rule only
+    j_mean: float = -1.0    # fidelity-comparable: selection and ranking
     feasible: bool = True
     fidelity: int = -1          # highest fidelity level reached
     credit: str = ""            # kept out of `stats`: that dict is int-keyed
 
     def record(self) -> dict:
         return {"cid": self.cid, "origin": self.origin, "parent": self.parent,
-                "j_cb": self.j_cb, "feasible": self.feasible,
+                "j_cb": self.j_cb, "j_mean": self.j_mean, "feasible": self.feasible,
                 "fidelity": self.fidelity, "credit": self.credit,
                 "stats": self.stats, "wf": self.wf}
 
@@ -150,6 +151,7 @@ def hbws_search(family: str, tasks: list[dict], *, cap_usd: float,
                 seed=seed, exec_seeds=EXEC_SEEDS[lvl], workers=workers)
             c.stats[lvl] = res
             c.j_cb = res["j_cb"]
+            c.j_mean = res["j_mean"]
             c.feasible = c.feasible and res["feasible"]
             c.fidelity = lvl
             if not c.feasible:
@@ -157,8 +159,10 @@ def hbws_search(family: str, tasks: list[dict], *, cap_usd: float,
             # Racing: stop promoting if the optimistic bound cannot reach the
             # archive's incumbent J_CB (conservative slack of one CI width).
             if archive and lvl < upto_level:
-                best = max(a.j_cb for a in archive)
-                if c.j_cb + 0.10 < best:
+                # Racing compares like with like: only against archive
+                # members that reached at least this fidelity.
+                peers = [a.j_cb for a in archive if a.fidelity >= lvl]
+                if peers and c.j_cb + 0.10 < max(peers):
                     return
 
     # -- seed population ----------------------------------------------------
@@ -179,14 +183,15 @@ def hbws_search(family: str, tasks: list[dict], *, cap_usd: float,
         evaluate_candidate(c, upto_level=1)
         _archive_update(archive, c)
         anytime.append({**sled.snapshot(), "cid": c.cid,
-                        "best_j_cb": max((a.j_cb for a in archive), default=-1)})
+                        "best_j_cb": max((a.j_cb for a in archive), default=-1),
+                        "best_j_mean": max((a.j_mean for a in archive), default=-1)})
 
     # -- evolutionary loop --------------------------------------------------
     generation = 0
     while not sled.exhausted:
         generation += 1
         parents = sorted([c for c in registry if c.feasible and c.stats],
-                         key=lambda c: -c.j_cb)[:4]
+                         key=lambda c: -c.j_mean)[:4]
         if not parents:
             break
         progressed = False
@@ -211,16 +216,17 @@ def hbws_search(family: str, tasks: list[dict], *, cap_usd: float,
             entered = _archive_update(archive, child)
             anytime.append({**sled.snapshot(), "cid": child.cid,
                             "credit": child.credit, "archive": entered,
-                            "best_j_cb": max((a.j_cb for a in archive), default=-1)})
+                            "best_j_cb": max((a.j_cb for a in archive), default=-1),
+                            "best_j_mean": max((a.j_mean for a in archive), default=-1)})
             if generation % log_every == 0:
                 print(f"[{run_name}] gen{generation} c{child.cid} "
-                      f"j_cb={child.j_cb:.3f} credit={child.credit} "
+                      f"j_mean={child.j_mean:.3f} credit={child.credit} "
                       f"spent=${sled.spent:.2f}/{cap_usd}")
         if not progressed:
             break
 
     # -- promote archive members to full fidelity ---------------------------
-    for c in sorted(archive, key=lambda c: -c.j_cb)[:3]:
+    for c in sorted(archive, key=lambda c: -c.j_mean)[:3]:
         if not sled.exhausted and c.fidelity < 2:
             evaluate_candidate(c, upto_level=2)
 
@@ -228,7 +234,7 @@ def hbws_search(family: str, tasks: list[dict], *, cap_usd: float,
         "run": run_name, "family": family, "mode": mode, "seed": seed,
         "cap_usd": cap_usd, **sled.snapshot(),
         "n_candidates": len(registry),
-        "archive": [c.record() for c in sorted(archive, key=lambda c: -c.j_cb)],
+        "archive": [c.record() for c in sorted(archive, key=lambda c: -c.j_mean)],
         "anytime": anytime,
     }
     with open(out_dir / "search_result.json", "w") as f:

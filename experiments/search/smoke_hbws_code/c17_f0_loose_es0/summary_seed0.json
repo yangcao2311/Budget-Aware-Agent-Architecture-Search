@@ -1,0 +1,17 @@
+{
+  "run": "search/smoke_hbws_code/c17_f0_loose_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.7083,
+  "usd_per_task": 0.00897,
+  "usd_per_success": 0.01267,
+  "llm_calls_per_task": 1.67,
+  "tokens_per_task": 1264.3,
+  "p50_sec": 0.02,
+  "p95_sec": 6.59,
+  "total_usd": 0.2153,
+  "wall_min": 0.1,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

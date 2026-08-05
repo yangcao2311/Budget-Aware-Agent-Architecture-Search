@@ -1,0 +1,17 @@
+{
+  "run": "search/smoke_hbws_code/c27_f0_tight_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.4167,
+  "usd_per_task": 0.00249,
+  "usd_per_success": 0.00598,
+  "llm_calls_per_task": 1.29,
+  "tokens_per_task": 378.2,
+  "p50_sec": 0.02,
+  "p95_sec": 2.69,
+  "total_usd": 0.0598,
+  "wall_min": 0.1,
+  "reserve_rejected": 0,
+  "over_budget": 1,
+  "errors": 0
+}
