@@ -1,0 +1,17 @@
+{
+  "run": "final/A_static_loose_math_s0/c0_test_unseen",
+  "seed": 1,
+  "n": 150,
+  "success_rate": 0.7067,
+  "usd_per_task": 0.00651,
+  "usd_per_success": 0.00921,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 711.1,
+  "p50_sec": 5.24,
+  "p95_sec": 10.22,
+  "total_usd": 0.976,
+  "wall_min": 1.9,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

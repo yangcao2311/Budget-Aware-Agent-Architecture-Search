@@ -1,0 +1,17 @@
+{
+  "run": "select/A_static_loose_math_s0/c7_tight",
+  "seed": 0,
+  "n": 40,
+  "success_rate": 0.675,
+  "usd_per_task": 0.00828,
+  "usd_per_success": 0.01227,
+  "llm_calls_per_task": 1.32,
+  "tokens_per_task": 924.8,
+  "p50_sec": 5.23,
+  "p95_sec": 12.94,
+  "total_usd": 0.3312,
+  "wall_min": 0.5,
+  "reserve_rejected": 29,
+  "over_budget": 0,
+  "errors": 0
+}

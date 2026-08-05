@@ -205,6 +205,40 @@ baselines, 3 search seeds, $0.15 unseen evaluation.
 
 (append-only)
 
+- **2026-08-05 — Part-II confirmatory run executed once on the frozen test
+  split. Verdicts recorded verbatim; no hypothesis restated.**
+  - **P1 NOT SUPPORTED** (requires all four tier×family cells). Observed
+    HBWS − static(per-tier), one-sided 95% LCB: code/tight +0.013
+    (LCB −0.001, OK); code/loose +0.001 (LCB −0.010, OK); **math/tight
+    −0.022 (LCB −0.049, FAIL)**; math/loose +0.049 (LCB +0.016, OK and
+    significantly positive). Non-inferiority holds in the code family at
+    both tiers and at math/loose; it fails at math/tight.
+  - **P2 NOT SUPPORTED.** Code deployment cost reduction at loose was
+    +10.5% (threshold was ≥20%). Math was 190.9% MORE expensive: the
+    selected HBWS math policy verifies and refines, while the selected
+    static-loose policy is a bare `generate`. That is a Pareto trade
+    (math/loose quality +0.049 at 3× cost), not a cost win.
+  - **P3 NOT SUPPORTED** at the family level. Code: −0.001
+    (LCB −0.010) at the never-searched $0.15 tier — indistinguishable from
+    the static transfer control. Math: −0.011 (LCB −0.040), just outside
+    the δ = 0.03 margin.
+  - **P4 (descriptive).** Only 3/12 selected policies show the
+    incumbent-protection shape, and 2/4 HBWS policies retained a budget
+    predicate. This is much weaker than the dev-set search analysis, where
+    the best-at-full-fidelity candidate in every arm had that shape. The
+    discrepancy is attributable to the preregistered one-shot selection on
+    a 40-task validation split, whose selection variance is large; this is
+    reported as a protocol limitation, not adjusted after the fact.
+  - **P5 (reported).** Code: HBWS costs $60 to search vs $120 for static
+    (Protocol A) and deploys $0.00029/task cheaper, so N* = 0 (dominant
+    from the first task). Math: deployment is more expensive, so
+    N* = ∞.
+  - Overall: the Part-II claims as preregistered do not hold. What survives
+    is narrower and stated as such: in the code family a single
+    budget-contingent policy matches per-tier static search at both
+    searched budgets AND at an unseen intermediate budget, using half the
+    search budget; in the math family it does not transfer.
+
 - **2026-08-05 — Part-I confirmatory run executed once on the frozen test
   split (150 tasks/family, 3 execution seeds). Verdicts, recorded verbatim
   with no post-hoc restatement:**

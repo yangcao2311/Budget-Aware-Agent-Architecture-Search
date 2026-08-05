@@ -1,0 +1,64 @@
+{
+  "cid": 0,
+  "origin": "seed:direct",
+  "parent": null,
+  "j_cb": 0.4396,
+  "j_mean": 0.6094,
+  "j_ucb": 0.7791,
+  "feasible": true,
+  "fidelity": 1,
+  "credit": "",
+  "stats": {
+    "0": {
+      "per_tier": {
+        "loose": {
+          "success_rate": 0.5,
+          "lcb": 0.2228,
+          "ucb": 0.7772,
+          "usd_per_task": 0.00614,
+          "n": 24
+        }
+      },
+      "aubpc_lcb": 0.2228,
+      "j_cb": 0.2228,
+      "j_mean": 0.5,
+      "j_ucb": 0.7772,
+      "feasible": true
+    },
+    "1": {
+      "per_tier": {
+        "loose": {
+          "success_rate": 0.6094,
+          "lcb": 0.4396,
+          "ucb": 0.7791,
+          "usd_per_task": 0.00665,
+          "n": 64
+        }
+      },
+      "aubpc_lcb": 0.4396,
+      "j_cb": 0.4396,
+      "j_mean": 0.6094,
+      "j_ucb": 0.7791,
+      "feasible": true
+    }
+  },
+  "wf": {
+    "nodes": [
+      {
+        "id": "g",
+        "type": "generate",
+        "prompt_id": "solve_direct",
+        "params": {
+          "temperature": 0.0,
+          "max_output_tokens": 1024
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "g",
+        "to": "END"
+      }
+    ]
+  }
+}
