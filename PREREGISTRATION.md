@@ -205,6 +205,37 @@ baselines, 3 search seeds, $0.15 unseen evaluation.
 
 (append-only)
 
+- **2026-08-05 — OOD transfer test (tag `ood-predictions-locked`) scored.
+  THE LOCKED PREDICTION FAILED.** Mean |error| 0.061 over 8 conditions,
+  sign agreement 6/8, and the structural breakage bound (≤0.02 for
+  incumbent-protecting structures) was VIOLATED in 2/4 cells: code OOD
+  breakage 0.125 (tight) and 0.114 (loose). This failure is recorded as the
+  primary outcome of the transfer test and is not superseded by anything
+  below.
+  - Diagnosis (post-hoc): the OOD code split as constructed on 2026-08-04
+    shipped with EMPTY `feedback_tests`, so its verify node ran in the
+    no-signal regime, while the transferred parameters came from the
+    oracle regime. The locked test therefore varied domain AND verifier
+    availability simultaneously — a design confound of ours, not a
+    property of the framework. Using matched no-signal parameters does not
+    rescue it either (errors 0.09–0.15), so the quantitative transfer
+    claim fails on its own terms.
+  - **Decoupled follow-up (post-hoc, clearly labelled).** Visible tests
+    were recovered from HumanEval+ docstring examples (68/100 tasks) to
+    give an OOD condition differing from in-domain ONLY in domain. In it,
+    incumbent-protection breakage returns to 0.000 at both tiers, and the
+    transferred prediction for the incumbent-protecting structures is
+    accurate (errors 0.002 and 0.000); the vanilla structures remain badly
+    mispredicted (errors 0.169 and 0.108), so mean |error| over all four
+    cells is 0.070 — no better than the confounded test.
+  - **What is therefore claimed, and what is not.** Claimed: the breakage
+    guarantee tracks verifier signal, not domain — breakage is 0.000 in
+    all four conditions where the verifier has signal (in-domain oracle,
+    in-domain non-oracle math, OOD math, OOD code with tests recovered)
+    and 0.114 in the single condition where it has none. NOT claimed:
+    that r and b transfer quantitatively; for vanilla structures they do
+    not, in any condition tested.
+
 - **2026-08-05 — Part-II confirmatory run executed once on the frozen test
   split. Verdicts recorded verbatim; no hypothesis restated.**
   - **P1 NOT SUPPORTED** (requires all four tier×family cells). Observed
