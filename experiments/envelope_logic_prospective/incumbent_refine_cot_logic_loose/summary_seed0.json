@@ -1,0 +1,17 @@
+{
+  "run": "envelope_logic_prospective/incumbent_refine_cot_logic_loose",
+  "seed": 0,
+  "n": 120,
+  "success_rate": 0.925,
+  "usd_per_task": 0.01305,
+  "usd_per_success": 0.01411,
+  "llm_calls_per_task": 2.27,
+  "tokens_per_task": 1695.0,
+  "p50_sec": 0.01,
+  "p95_sec": 9.09,
+  "total_usd": 1.566,
+  "wall_min": 0.3,
+  "reserve_rejected": 10,
+  "over_budget": 0,
+  "errors": 0
+}

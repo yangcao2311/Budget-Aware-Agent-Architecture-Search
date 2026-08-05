@@ -1,0 +1,17 @@
+{
+  "run": "envelope_logic_prospective/direct_logic_tight",
+  "seed": 0,
+  "n": 120,
+  "success_rate": 0.9167,
+  "usd_per_task": 0.00393,
+  "usd_per_success": 0.00428,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 522.7,
+  "p50_sec": 3.69,
+  "p95_sec": 6.37,
+  "total_usd": 0.4711,
+  "wall_min": 1.0,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

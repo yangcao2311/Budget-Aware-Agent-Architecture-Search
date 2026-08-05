@@ -1,0 +1,25 @@
+### TABLE: Part I confirmatory (frozen test, 150/family, 3 seeds)
+code  tight  verify_refine_3        succ=0.622 base=0.727 d=-0.104 [-0.162,-0.047] brk=0.224 rep=0.162 $0.0062 base$0.0016
+code  tight  incumbent_refine       succ=0.740 base=0.727 d=+0.013 [+0.002,+0.031] brk=0.000 rep=0.034 $0.0022 base$0.0016
+code  unseen verify_refine_3        succ=0.689 base=0.727 d=-0.038 [-0.093,+0.018] brk=0.150 rep=0.214 $0.0085 base$0.0016
+code  unseen incumbent_refine       succ=0.747 base=0.727 d=+0.020 [+0.002,+0.042] brk=0.000 rep=0.060 $0.0025 base$0.0016
+code  loose  verify_refine_3        succ=0.693 base=0.727 d=-0.033 [-0.087,+0.020] brk=0.140 rep=0.205 $0.0090 base$0.0016
+code  loose  incumbent_refine       succ=0.747 base=0.727 d=+0.020 [+0.002,+0.042] brk=0.000 rep=0.060 $0.0025 base$0.0016
+math  tight  verify_refine_3        succ=0.704 base=0.700 d=+0.004 [-0.029,+0.038] brk=0.052 rep=0.126 $0.0076 base$0.0069
+math  tight  incumbent_refine_cot   succ=0.700 base=0.700 d=+0.000 [+0.000,+0.000] brk=0.000 rep=0.000 $0.0075 base$0.0069
+math  unseen verify_refine_3        succ=0.709 base=0.700 d=+0.009 [-0.022,+0.040] brk=0.042 rep=0.117 $0.0141 base$0.0069
+math  unseen incumbent_refine_cot   succ=0.704 base=0.700 d=+0.004 [+0.000,+0.011] brk=0.000 rep=0.018 $0.0141 base$0.0069
+math  loose  verify_refine_3        succ=0.716 base=0.700 d=+0.016 [-0.016,+0.047] brk=0.038 rep=0.117 $0.0153 base$0.0069
+math  loose  incumbent_refine_cot   succ=0.711 base=0.700 d=+0.011 [+0.002,+0.022] brk=0.000 rep=0.036 $0.0153 base$0.0069
+
+### TABLE: dose-response (code, frozen test)
+mask=1.0 loose: d=-0.033 [-0.087,+0.020] brk=0.140 rep=0.205
+mask=0.5 loose: d=-0.033 [-0.089,+0.022] brk=0.146 rep=0.222
+mask=0.0 loose: d=-0.118 [-0.178,-0.058] brk=0.234 rep=0.171
+
+### TABLE: breakage across verifier regimes
+in-domain code oracle        brk=0.000 d=+0.020 [+0.002,+0.042] n=150
+in-domain math non-oracle    brk=0.000 d=+0.011 [+0.002,+0.022] n=150
+OOD math non-oracle          brk=0.000 d=+0.003 [-0.013,+0.023] n=100
+OOD code NO signal           brk=0.114 d=-0.087 [-0.140,-0.033] n=100
+OOD code signal restored     brk=0.000 d=+0.005 [+0.000,+0.015] n=68
