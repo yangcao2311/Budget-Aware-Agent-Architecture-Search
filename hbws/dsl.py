@@ -232,9 +232,34 @@ def wf_vote_verify() -> dict:
     }
 
 
-# The 8-structure envelope library (Fig.2). Keys are frozen names used in
-# results files — do not rename after the first envelope run.
+def wf_incumbent_refine() -> dict:
+    """Incumbent-protecting refine: first draft IDENTICAL to direct (same
+    prompt, temp 0), verify gates END, refinement touches only failures.
+    Added 2026-08-05 (pre-freeze amendment) after the repair/breakage
+    decomposition showed vanilla verify-refine's gains are cancelled by
+    breakage on already-solved tasks."""
+    return {
+        "nodes": [
+            {"id": "g", "type": "generate", "prompt_id": "solve_direct",
+             "params": {"temperature": 0.0, "max_output_tokens": 1024}},
+            {"id": "v", "type": "verify"},
+            {"id": "r", "type": "refine", "prompt_id": "refine_from_feedback",
+             "params": {"temperature": 0.7, "max_output_tokens": 1536}},
+        ],
+        "edges": [
+            {"from": "g", "to": "v"},
+            {"from": "v", "to": "END", "cond": "verify_passed"},
+            {"from": "v", "to": "r", "cond": "verify_failed"},
+            {"from": "r", "to": "v", "loop": True, "max_iter": 3},
+        ],
+    }
+
+
+# The envelope structure library (Fig.2). Keys are frozen names used in
+# results files — do not rename after the first envelope run; additions are
+# allowed pre-freeze with a dated note (incumbent_refine: 2026-08-05).
 ENVELOPE_LIB = {
+    "incumbent_refine": wf_incumbent_refine,
     "direct": wf_direct,
     "cot": wf_cot,
     "vote3": lambda: _wf_vote(3),

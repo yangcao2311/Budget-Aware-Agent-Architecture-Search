@@ -1,0 +1,17 @@
+{
+  "run": "envelope/decompose_agg_math_loose",
+  "seed": 2,
+  "n": 120,
+  "success_rate": 0.3,
+  "usd_per_task": 0.00868,
+  "usd_per_success": 0.02894,
+  "llm_calls_per_task": 1.93,
+  "tokens_per_task": 1125.6,
+  "p50_sec": 2.78,
+  "p95_sec": 7.66,
+  "total_usd": 1.0419,
+  "wall_min": 0.6,
+  "reserve_rejected": 0,
+  "over_budget": 69,
+  "errors": 0
+}

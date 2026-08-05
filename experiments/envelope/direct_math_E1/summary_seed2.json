@@ -1,0 +1,17 @@
+{
+  "run": "envelope/direct_math_E1",
+  "seed": 2,
+  "n": 120,
+  "success_rate": 0.6,
+  "usd_per_task": 0.00562,
+  "usd_per_success": 0.00937,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 610.1,
+  "p50_sec": 5.06,
+  "p95_sec": 11.29,
+  "total_usd": 0.6748,
+  "wall_min": 1.4,
+  "reserve_rejected": 0,
+  "over_budget": 14,
+  "errors": 0
+}

@@ -1,0 +1,17 @@
+{
+  "run": "envelope/verify_refine_1_code_loose",
+  "seed": 1,
+  "n": 120,
+  "success_rate": 0.6833,
+  "usd_per_task": 0.00797,
+  "usd_per_success": 0.01166,
+  "llm_calls_per_task": 1.41,
+  "tokens_per_task": 1075.0,
+  "p50_sec": 0.02,
+  "p95_sec": 4.57,
+  "total_usd": 0.9563,
+  "wall_min": 0.3,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

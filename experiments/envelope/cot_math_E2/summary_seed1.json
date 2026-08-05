@@ -1,0 +1,17 @@
+{
+  "run": "envelope/cot_math_E2",
+  "seed": 1,
+  "n": 120,
+  "success_rate": 0.6583,
+  "usd_per_task": 0.00677,
+  "usd_per_success": 0.01028,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 733.1,
+  "p50_sec": 4.44,
+  "p95_sec": 7.99,
+  "total_usd": 0.8122,
+  "wall_min": 1.2,
+  "reserve_rejected": 0,
+  "over_budget": 9,
+  "errors": 0
+}

@@ -1,0 +1,17 @@
+{
+  "run": "envelope/vote5_code_unseen",
+  "seed": 1,
+  "n": 120,
+  "success_rate": 0.4,
+  "usd_per_task": 0.02871,
+  "usd_per_success": 0.07178,
+  "llm_calls_per_task": 5.0,
+  "tokens_per_task": 3223.1,
+  "p50_sec": 29.1,
+  "p95_sec": 38.23,
+  "total_usd": 3.4453,
+  "wall_min": 7.4,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}
