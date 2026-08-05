@@ -111,3 +111,13 @@ def _dump(name: str, rows: list[dict]):
 def load_split(family: str, split: str) -> list[dict]:
     path = DATA_DIR / f"{family}_{split}.jsonl"
     return [json.loads(l) for l in open(path)]
+
+
+def load_ood_visible() -> list[dict]:
+    """OOD code tasks with visible tests recovered from docstring examples
+    (scripts/build_ood_visible_tests.py). Same 100 tasks as code_ood, but
+    the verifier has signal, so domain transfer can be measured without
+    being confounded with verifier availability. Only the 68 tasks that
+    yielded parsable examples are returned."""
+    rows = [json.loads(l) for l in open(DATA_DIR / "code_ood_visible.jsonl")]
+    return [r for r in rows if r["feedback_tests"].strip()]
