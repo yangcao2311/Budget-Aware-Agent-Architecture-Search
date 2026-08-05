@@ -4,9 +4,9 @@
   "mode": "static",
   "seed": 0,
   "cap_usd": 40.0,
-  "search_usd": 40.0238,
-  "search_min": 21.2,
-  "n_candidates": 516,
+  "search_usd": 40.0381,
+  "search_min": 20.9,
+  "n_candidates": 517,
   "archive": [
     {
       "cid": 1,
@@ -11153,28 +11153,28 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.2711,
-      "search_min": 0.3,
+      "search_usd": 1.2707,
+      "search_min": 0.2,
       "cid": 3,
       "best_j_cb": 0.5021,
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.3405,
-      "search_min": 0.4,
+      "search_usd": 1.3434,
+      "search_min": 0.3,
       "cid": 4,
       "best_j_cb": 0.5021,
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.3405,
-      "search_min": 0.4,
+      "search_usd": 1.3434,
+      "search_min": 0.3,
       "cid": 5,
       "best_j_cb": 0.5021,
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.3405,
+      "search_usd": 1.3434,
       "search_min": 0.4,
       "cid": 6,
       "credit": "negative",
@@ -11183,8 +11183,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.411,
-      "search_min": 0.6,
+      "search_usd": 1.4174,
+      "search_min": 0.5,
       "cid": 7,
       "credit": "negative",
       "archive": false,
@@ -11192,8 +11192,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.5727,
-      "search_min": 1.0,
+      "search_usd": 1.5789,
+      "search_min": 0.5,
       "cid": 8,
       "credit": "positive",
       "archive": false,
@@ -11201,8 +11201,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.7198,
-      "search_min": 1.0,
+      "search_usd": 1.726,
+      "search_min": 0.5,
       "cid": 9,
       "credit": "neutral",
       "archive": false,
@@ -11210,8 +11210,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.8786,
-      "search_min": 1.0,
+      "search_usd": 1.8848,
+      "search_min": 0.5,
       "cid": 10,
       "credit": "neutral",
       "archive": false,
@@ -11219,8 +11219,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 1.8786,
-      "search_min": 1.0,
+      "search_usd": 1.8848,
+      "search_min": 0.5,
       "cid": 11,
       "credit": "negative",
       "archive": true,
@@ -11228,8 +11228,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.0402,
-      "search_min": 1.0,
+      "search_usd": 2.0466,
+      "search_min": 0.6,
       "cid": 12,
       "credit": "positive",
       "archive": false,
@@ -11237,8 +11237,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.1873,
-      "search_min": 1.0,
+      "search_usd": 2.1937,
+      "search_min": 0.6,
       "cid": 13,
       "credit": "neutral",
       "archive": false,
@@ -11246,8 +11246,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.1873,
-      "search_min": 1.0,
+      "search_usd": 2.1937,
+      "search_min": 0.6,
       "cid": 14,
       "credit": "negative",
       "archive": true,
@@ -11255,8 +11255,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.1873,
-      "search_min": 1.0,
+      "search_usd": 2.1937,
+      "search_min": 0.6,
       "cid": 15,
       "credit": "negative",
       "archive": true,
@@ -11264,8 +11264,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.1873,
-      "search_min": 1.0,
+      "search_usd": 2.1937,
+      "search_min": 0.6,
       "cid": 16,
       "credit": "negative",
       "archive": true,
@@ -11273,8 +11273,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.3344,
-      "search_min": 1.1,
+      "search_usd": 2.3408,
+      "search_min": 0.6,
       "cid": 17,
       "credit": "neutral",
       "archive": false,
@@ -11282,8 +11282,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.3344,
-      "search_min": 1.1,
+      "search_usd": 2.3408,
+      "search_min": 0.6,
       "cid": 18,
       "credit": "negative",
       "archive": true,
@@ -11291,8 +11291,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.3344,
-      "search_min": 1.1,
+      "search_usd": 2.3408,
+      "search_min": 0.6,
       "cid": 19,
       "credit": "negative",
       "archive": true,
@@ -11300,8 +11300,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.4932,
-      "search_min": 1.1,
+      "search_usd": 2.4996,
+      "search_min": 0.6,
       "cid": 20,
       "credit": "neutral",
       "archive": false,
@@ -11309,8 +11309,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.5324,
-      "search_min": 1.2,
+      "search_usd": 2.5389,
+      "search_min": 0.7,
       "cid": 21,
       "credit": "negative",
       "archive": false,
@@ -11318,8 +11318,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.5324,
-      "search_min": 1.2,
+      "search_usd": 2.5389,
+      "search_min": 0.7,
       "cid": 22,
       "credit": "negative",
       "archive": true,
@@ -11327,8 +11327,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.6101,
-      "search_min": 1.3,
+      "search_usd": 2.6117,
+      "search_min": 0.8,
       "cid": 23,
       "credit": "negative",
       "archive": false,
@@ -11336,8 +11336,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.6808,
-      "search_min": 1.4,
+      "search_usd": 2.6838,
+      "search_min": 0.9,
       "cid": 24,
       "credit": "negative",
       "archive": false,
@@ -11345,8 +11345,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.6808,
-      "search_min": 1.4,
+      "search_usd": 2.6838,
+      "search_min": 0.9,
       "cid": 25,
       "credit": "negative",
       "archive": true,
@@ -11354,8 +11354,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.6808,
-      "search_min": 1.4,
+      "search_usd": 2.6838,
+      "search_min": 0.9,
       "cid": 26,
       "credit": "negative",
       "archive": true,
@@ -11363,8 +11363,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.6808,
-      "search_min": 1.4,
+      "search_usd": 2.6838,
+      "search_min": 0.9,
       "cid": 27,
       "credit": "negative",
       "archive": true,
@@ -11372,8 +11372,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.8279,
-      "search_min": 1.4,
+      "search_usd": 2.8308,
+      "search_min": 0.9,
       "cid": 28,
       "credit": "neutral",
       "archive": false,
@@ -11381,8 +11381,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 2.975,
-      "search_min": 1.4,
+      "search_usd": 2.9779,
+      "search_min": 0.9,
       "cid": 29,
       "credit": "neutral",
       "archive": false,
@@ -11390,8 +11390,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.047,
-      "search_min": 1.5,
+      "search_usd": 3.0503,
+      "search_min": 1.1,
       "cid": 30,
       "credit": "negative",
       "archive": false,
@@ -11399,8 +11399,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.1256,
-      "search_min": 1.6,
+      "search_usd": 3.1206,
+      "search_min": 1.2,
       "cid": 31,
       "credit": "negative",
       "archive": false,
@@ -11408,8 +11408,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.1971,
-      "search_min": 1.7,
+      "search_usd": 3.1916,
+      "search_min": 1.3,
       "cid": 32,
       "credit": "negative",
       "archive": false,
@@ -11417,8 +11417,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.2364,
-      "search_min": 1.8,
+      "search_usd": 3.2309,
+      "search_min": 1.4,
       "cid": 33,
       "credit": "negative",
       "archive": false,
@@ -11426,8 +11426,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.2364,
-      "search_min": 1.8,
+      "search_usd": 3.2309,
+      "search_min": 1.4,
       "cid": 34,
       "credit": "negative",
       "archive": true,
@@ -11435,8 +11435,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.3114,
-      "search_min": 2.0,
+      "search_usd": 3.3034,
+      "search_min": 1.5,
       "cid": 35,
       "credit": "negative",
       "archive": false,
@@ -11444,8 +11444,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.4584,
-      "search_min": 2.0,
+      "search_usd": 3.4505,
+      "search_min": 1.5,
       "cid": 36,
       "credit": "neutral",
       "archive": false,
@@ -11453,8 +11453,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.4584,
-      "search_min": 2.0,
+      "search_usd": 3.4505,
+      "search_min": 1.5,
       "cid": 37,
       "credit": "negative",
       "archive": true,
@@ -11462,8 +11462,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.6055,
-      "search_min": 2.0,
+      "search_usd": 3.5976,
+      "search_min": 1.5,
       "cid": 38,
       "credit": "neutral",
       "archive": false,
@@ -11471,8 +11471,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.6055,
-      "search_min": 2.0,
+      "search_usd": 3.5976,
+      "search_min": 1.5,
       "cid": 39,
       "credit": "negative",
       "archive": true,
@@ -11480,8 +11480,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.6055,
-      "search_min": 2.0,
+      "search_usd": 3.5976,
+      "search_min": 1.5,
       "cid": 40,
       "credit": "negative",
       "archive": true,
@@ -11489,8 +11489,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.6055,
-      "search_min": 2.0,
+      "search_usd": 3.5976,
+      "search_min": 1.5,
       "cid": 41,
       "credit": "negative",
       "archive": true,
@@ -11498,8 +11498,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.7526,
-      "search_min": 2.0,
+      "search_usd": 3.7447,
+      "search_min": 1.5,
       "cid": 42,
       "credit": "neutral",
       "archive": false,
@@ -11507,8 +11507,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.7526,
-      "search_min": 2.0,
+      "search_usd": 3.7447,
+      "search_min": 1.6,
       "cid": 43,
       "credit": "negative",
       "archive": true,
@@ -11516,8 +11516,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.7526,
-      "search_min": 2.0,
+      "search_usd": 3.7447,
+      "search_min": 1.6,
       "cid": 44,
       "credit": "negative",
       "archive": true,
@@ -11525,8 +11525,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.7919,
-      "search_min": 2.1,
+      "search_usd": 3.7839,
+      "search_min": 1.6,
       "cid": 45,
       "credit": "negative",
       "archive": false,
@@ -11534,8 +11534,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.7919,
-      "search_min": 2.1,
+      "search_usd": 3.7839,
+      "search_min": 1.6,
       "cid": 46,
       "credit": "negative",
       "archive": true,
@@ -11543,8 +11543,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.7919,
-      "search_min": 2.1,
+      "search_usd": 3.7839,
+      "search_min": 1.7,
       "cid": 47,
       "credit": "negative",
       "archive": true,
@@ -11552,8 +11552,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.939,
-      "search_min": 2.1,
+      "search_usd": 3.931,
+      "search_min": 1.7,
       "cid": 48,
       "credit": "neutral",
       "archive": false,
@@ -11561,8 +11561,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 3.9782,
-      "search_min": 2.2,
+      "search_usd": 3.9703,
+      "search_min": 1.7,
       "cid": 49,
       "credit": "negative",
       "archive": false,
@@ -11570,8 +11570,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.0488,
-      "search_min": 2.3,
+      "search_usd": 4.0398,
+      "search_min": 1.8,
       "cid": 50,
       "credit": "negative",
       "archive": false,
@@ -11579,8 +11579,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.1217,
-      "search_min": 2.5,
+      "search_usd": 4.1127,
+      "search_min": 2.0,
       "cid": 51,
       "credit": "negative",
       "archive": false,
@@ -11588,8 +11588,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.1217,
-      "search_min": 2.5,
+      "search_usd": 4.1127,
+      "search_min": 2.0,
       "cid": 52,
       "credit": "negative",
       "archive": true,
@@ -11597,8 +11597,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.2687,
-      "search_min": 2.5,
+      "search_usd": 4.2598,
+      "search_min": 2.0,
       "cid": 53,
       "credit": "neutral",
       "archive": false,
@@ -11606,8 +11606,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.3352,
-      "search_min": 2.7,
+      "search_usd": 4.3308,
+      "search_min": 2.1,
       "cid": 54,
       "credit": "negative",
       "archive": false,
@@ -11615,8 +11615,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.4175,
-      "search_min": 2.8,
+      "search_usd": 4.4056,
+      "search_min": 2.2,
       "cid": 55,
       "credit": "negative",
       "archive": false,
@@ -11624,8 +11624,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.4904,
-      "search_min": 2.9,
+      "search_usd": 4.4772,
+      "search_min": 2.3,
       "cid": 56,
       "credit": "negative",
       "archive": false,
@@ -11633,8 +11633,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.6375,
-      "search_min": 2.9,
+      "search_usd": 4.6243,
+      "search_min": 2.3,
       "cid": 57,
       "credit": "neutral",
       "archive": false,
@@ -11642,8 +11642,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.6375,
-      "search_min": 2.9,
+      "search_usd": 4.6243,
+      "search_min": 2.3,
       "cid": 58,
       "credit": "negative",
       "archive": true,
@@ -11651,8 +11651,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.7166,
-      "search_min": 3.1,
+      "search_usd": 4.7014,
+      "search_min": 2.5,
       "cid": 59,
       "credit": "negative",
       "archive": false,
@@ -11660,8 +11660,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.7166,
-      "search_min": 3.1,
+      "search_usd": 4.7014,
+      "search_min": 2.5,
       "cid": 60,
       "credit": "negative",
       "archive": true,
@@ -11669,8 +11669,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.8637,
-      "search_min": 3.1,
+      "search_usd": 4.8485,
+      "search_min": 2.5,
       "cid": 61,
       "credit": "neutral",
       "archive": false,
@@ -11678,8 +11678,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.8637,
-      "search_min": 3.1,
+      "search_usd": 4.8485,
+      "search_min": 2.5,
       "cid": 62,
       "credit": "negative",
       "archive": true,
@@ -11687,8 +11687,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 4.9362,
-      "search_min": 3.2,
+      "search_usd": 4.9277,
+      "search_min": 2.7,
       "cid": 63,
       "credit": "negative",
       "archive": false,
@@ -11696,8 +11696,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.0093,
-      "search_min": 3.3,
+      "search_usd": 4.9988,
+      "search_min": 2.8,
       "cid": 64,
       "credit": "negative",
       "archive": false,
@@ -11705,8 +11705,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.0486,
-      "search_min": 3.4,
+      "search_usd": 5.0381,
+      "search_min": 2.8,
       "cid": 65,
       "credit": "negative",
       "archive": false,
@@ -11714,8 +11714,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.1957,
-      "search_min": 3.4,
+      "search_usd": 5.1852,
+      "search_min": 2.8,
       "cid": 66,
       "credit": "neutral",
       "archive": false,
@@ -11723,8 +11723,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.3428,
-      "search_min": 3.4,
+      "search_usd": 5.3323,
+      "search_min": 2.8,
       "cid": 67,
       "credit": "neutral",
       "archive": false,
@@ -11732,8 +11732,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.4142,
-      "search_min": 3.5,
+      "search_usd": 5.4068,
+      "search_min": 3.0,
       "cid": 68,
       "credit": "negative",
       "archive": false,
@@ -11741,8 +11741,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.4535,
-      "search_min": 3.6,
+      "search_usd": 5.4461,
+      "search_min": 3.0,
       "cid": 69,
       "credit": "negative",
       "archive": false,
@@ -11750,8 +11750,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.4535,
-      "search_min": 3.6,
+      "search_usd": 5.4461,
+      "search_min": 3.1,
       "cid": 70,
       "credit": "negative",
       "archive": true,
@@ -11759,8 +11759,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.4535,
-      "search_min": 3.6,
+      "search_usd": 5.4461,
+      "search_min": 3.1,
       "cid": 71,
       "credit": "negative",
       "archive": true,
@@ -11768,8 +11768,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.5247,
-      "search_min": 3.7,
+      "search_usd": 5.5171,
+      "search_min": 3.2,
       "cid": 72,
       "credit": "negative",
       "archive": false,
@@ -11777,8 +11777,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.6718,
-      "search_min": 3.8,
+      "search_usd": 5.6642,
+      "search_min": 3.2,
       "cid": 73,
       "credit": "neutral",
       "archive": false,
@@ -11786,8 +11786,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.6718,
-      "search_min": 3.8,
+      "search_usd": 5.6642,
+      "search_min": 3.2,
       "cid": 74,
       "credit": "negative",
       "archive": true,
@@ -11795,8 +11795,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.6718,
-      "search_min": 3.8,
+      "search_usd": 5.6642,
+      "search_min": 3.2,
       "cid": 75,
       "credit": "negative",
       "archive": true,
@@ -11804,8 +11804,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.8189,
-      "search_min": 3.8,
+      "search_usd": 5.8113,
+      "search_min": 3.2,
       "cid": 76,
       "credit": "neutral",
       "archive": false,
@@ -11813,8 +11813,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 5.966,
-      "search_min": 3.8,
+      "search_usd": 5.9584,
+      "search_min": 3.2,
       "cid": 77,
       "credit": "neutral",
       "archive": false,
@@ -11822,8 +11822,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.1131,
-      "search_min": 3.8,
+      "search_usd": 6.1055,
+      "search_min": 3.2,
       "cid": 78,
       "credit": "neutral",
       "archive": false,
@@ -11831,8 +11831,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.2602,
-      "search_min": 3.8,
+      "search_usd": 6.2526,
+      "search_min": 3.2,
       "cid": 79,
       "credit": "neutral",
       "archive": false,
@@ -11840,8 +11840,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.4072,
-      "search_min": 3.8,
+      "search_usd": 6.3997,
+      "search_min": 3.2,
       "cid": 80,
       "credit": "neutral",
       "archive": false,
@@ -11849,8 +11849,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.4072,
-      "search_min": 3.8,
+      "search_usd": 6.3997,
+      "search_min": 3.2,
       "cid": 81,
       "credit": "negative",
       "archive": true,
@@ -11858,8 +11858,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.4072,
-      "search_min": 3.8,
+      "search_usd": 6.3997,
+      "search_min": 3.2,
       "cid": 82,
       "credit": "negative",
       "archive": true,
@@ -11867,8 +11867,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.4072,
-      "search_min": 3.8,
+      "search_usd": 6.3997,
+      "search_min": 3.2,
       "cid": 83,
       "credit": "negative",
       "archive": true,
@@ -11876,8 +11876,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.5543,
-      "search_min": 3.8,
+      "search_usd": 6.5468,
+      "search_min": 3.2,
       "cid": 84,
       "credit": "neutral",
       "archive": false,
@@ -11885,8 +11885,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.5936,
-      "search_min": 3.9,
+      "search_usd": 6.586,
+      "search_min": 3.3,
       "cid": 85,
       "credit": "negative",
       "archive": false,
@@ -11894,8 +11894,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.5936,
-      "search_min": 3.9,
+      "search_usd": 6.586,
+      "search_min": 3.3,
       "cid": 86,
       "credit": "negative",
       "archive": true,
@@ -11903,8 +11903,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.671,
-      "search_min": 4.0,
+      "search_usd": 6.6567,
+      "search_min": 3.4,
       "cid": 87,
       "credit": "negative",
       "archive": false,
@@ -11912,8 +11912,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.671,
-      "search_min": 4.0,
+      "search_usd": 6.6567,
+      "search_min": 3.4,
       "cid": 88,
       "credit": "negative",
       "archive": true,
@@ -11921,8 +11921,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.7103,
-      "search_min": 4.1,
+      "search_usd": 6.696,
+      "search_min": 3.5,
       "cid": 89,
       "credit": "negative",
       "archive": false,
@@ -11930,8 +11930,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.7103,
-      "search_min": 4.1,
+      "search_usd": 6.696,
+      "search_min": 3.5,
       "cid": 90,
       "credit": "negative",
       "archive": true,
@@ -11939,8 +11939,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.8573,
-      "search_min": 4.1,
+      "search_usd": 6.843,
+      "search_min": 3.5,
       "cid": 91,
       "credit": "neutral",
       "archive": false,
@@ -11948,8 +11948,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 6.9259,
-      "search_min": 4.2,
+      "search_usd": 6.9141,
+      "search_min": 3.6,
       "cid": 92,
       "credit": "negative",
       "archive": false,
@@ -11957,8 +11957,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.073,
-      "search_min": 4.2,
+      "search_usd": 7.0612,
+      "search_min": 3.6,
       "cid": 93,
       "credit": "neutral",
       "archive": false,
@@ -11966,8 +11966,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.073,
-      "search_min": 4.2,
+      "search_usd": 7.0612,
+      "search_min": 3.6,
       "cid": 94,
       "credit": "negative",
       "archive": true,
@@ -11975,8 +11975,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.073,
-      "search_min": 4.2,
+      "search_usd": 7.0612,
+      "search_min": 3.7,
       "cid": 95,
       "credit": "negative",
       "archive": true,
@@ -11984,8 +11984,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.073,
-      "search_min": 4.2,
+      "search_usd": 7.0612,
+      "search_min": 3.7,
       "cid": 96,
       "credit": "negative",
       "archive": true,
@@ -11993,8 +11993,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.2201,
-      "search_min": 4.3,
+      "search_usd": 7.2083,
+      "search_min": 3.7,
       "cid": 97,
       "credit": "neutral",
       "archive": false,
@@ -12002,8 +12002,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.2921,
-      "search_min": 4.4,
+      "search_usd": 7.2812,
+      "search_min": 3.8,
       "cid": 98,
       "credit": "negative",
       "archive": false,
@@ -12011,8 +12011,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.3637,
-      "search_min": 4.5,
+      "search_usd": 7.3539,
+      "search_min": 3.9,
       "cid": 99,
       "credit": "negative",
       "archive": false,
@@ -12020,8 +12020,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.3637,
-      "search_min": 4.5,
+      "search_usd": 7.3539,
+      "search_min": 3.9,
       "cid": 100,
       "credit": "negative",
       "archive": true,
@@ -12029,8 +12029,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.403,
-      "search_min": 4.5,
+      "search_usd": 7.3932,
+      "search_min": 4.0,
       "cid": 101,
       "credit": "negative",
       "archive": false,
@@ -12038,8 +12038,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.5501,
-      "search_min": 4.5,
+      "search_usd": 7.5403,
+      "search_min": 4.0,
       "cid": 102,
       "credit": "neutral",
       "archive": false,
@@ -12047,8 +12047,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.5501,
-      "search_min": 4.6,
+      "search_usd": 7.5403,
+      "search_min": 4.0,
       "cid": 103,
       "credit": "negative",
       "archive": true,
@@ -12056,8 +12056,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.6972,
-      "search_min": 4.6,
+      "search_usd": 7.6874,
+      "search_min": 4.0,
       "cid": 104,
       "credit": "neutral",
       "archive": false,
@@ -12065,8 +12065,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.6972,
-      "search_min": 4.6,
+      "search_usd": 7.6874,
+      "search_min": 4.0,
       "cid": 105,
       "credit": "negative",
       "archive": true,
@@ -12074,8 +12074,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.7715,
-      "search_min": 4.7,
+      "search_usd": 7.7633,
+      "search_min": 4.1,
       "cid": 106,
       "credit": "negative",
       "archive": false,
@@ -12083,8 +12083,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.8423,
-      "search_min": 4.8,
+      "search_usd": 7.8431,
+      "search_min": 4.3,
       "cid": 107,
       "credit": "negative",
       "archive": false,
@@ -12092,8 +12092,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.9172,
-      "search_min": 4.9,
+      "search_usd": 7.9146,
+      "search_min": 4.4,
       "cid": 108,
       "credit": "negative",
       "archive": false,
@@ -12101,8 +12101,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 7.9564,
-      "search_min": 5.0,
+      "search_usd": 7.9539,
+      "search_min": 4.4,
       "cid": 109,
       "credit": "negative",
       "archive": false,
@@ -12110,8 +12110,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.0275,
-      "search_min": 5.2,
+      "search_usd": 8.0256,
+      "search_min": 4.5,
       "cid": 110,
       "credit": "negative",
       "archive": false,
@@ -12119,8 +12119,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.1746,
-      "search_min": 5.2,
+      "search_usd": 8.1727,
+      "search_min": 4.5,
       "cid": 111,
       "credit": "neutral",
       "archive": false,
@@ -12128,8 +12128,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.3217,
-      "search_min": 5.2,
+      "search_usd": 8.3198,
+      "search_min": 4.6,
       "cid": 112,
       "credit": "neutral",
       "archive": false,
@@ -12137,8 +12137,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.4688,
-      "search_min": 5.2,
+      "search_usd": 8.4669,
+      "search_min": 4.6,
       "cid": 113,
       "credit": "neutral",
       "archive": false,
@@ -12146,8 +12146,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.6159,
-      "search_min": 5.2,
+      "search_usd": 8.614,
+      "search_min": 4.6,
       "cid": 114,
       "credit": "neutral",
       "archive": false,
@@ -12155,8 +12155,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.6906,
-      "search_min": 5.3,
+      "search_usd": 8.6931,
+      "search_min": 4.7,
       "cid": 115,
       "credit": "negative",
       "archive": false,
@@ -12164,8 +12164,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.7642,
-      "search_min": 5.5,
+      "search_usd": 8.7625,
+      "search_min": 4.8,
       "cid": 116,
       "credit": "negative",
       "archive": false,
@@ -12173,8 +12173,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.7642,
-      "search_min": 5.5,
+      "search_usd": 8.7625,
+      "search_min": 4.8,
       "cid": 117,
       "credit": "negative",
       "archive": true,
@@ -12182,8 +12182,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.9113,
-      "search_min": 5.5,
+      "search_usd": 8.9096,
+      "search_min": 4.8,
       "cid": 118,
       "credit": "neutral",
       "archive": false,
@@ -12191,8 +12191,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.9113,
-      "search_min": 5.5,
+      "search_usd": 8.9096,
+      "search_min": 4.8,
       "cid": 119,
       "credit": "negative",
       "archive": true,
@@ -12200,8 +12200,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.9113,
-      "search_min": 5.5,
+      "search_usd": 8.9096,
+      "search_min": 4.8,
       "cid": 120,
       "credit": "negative",
       "archive": true,
@@ -12209,8 +12209,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 8.9113,
-      "search_min": 5.5,
+      "search_usd": 8.9096,
+      "search_min": 4.8,
       "cid": 121,
       "credit": "negative",
       "archive": true,
@@ -12218,8 +12218,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.0584,
-      "search_min": 5.5,
+      "search_usd": 9.0567,
+      "search_min": 4.8,
       "cid": 122,
       "credit": "neutral",
       "archive": false,
@@ -12227,8 +12227,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.0584,
-      "search_min": 5.5,
+      "search_usd": 9.0567,
+      "search_min": 4.8,
       "cid": 123,
       "credit": "negative",
       "archive": true,
@@ -12236,8 +12236,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.1249,
-      "search_min": 5.7,
+      "search_usd": 9.1265,
+      "search_min": 4.9,
       "cid": 124,
       "credit": "negative",
       "archive": false,
@@ -12245,8 +12245,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.1642,
-      "search_min": 5.8,
+      "search_usd": 9.1657,
+      "search_min": 5.0,
       "cid": 125,
       "credit": "negative",
       "archive": false,
@@ -12254,8 +12254,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.1642,
-      "search_min": 5.8,
+      "search_usd": 9.1657,
+      "search_min": 5.0,
       "cid": 126,
       "credit": "negative",
       "archive": true,
@@ -12263,8 +12263,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.2388,
-      "search_min": 5.9,
+      "search_usd": 9.2408,
+      "search_min": 5.1,
       "cid": 127,
       "credit": "negative",
       "archive": false,
@@ -12272,8 +12272,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.2388,
-      "search_min": 5.9,
+      "search_usd": 9.2408,
+      "search_min": 5.1,
       "cid": 128,
       "credit": "negative",
       "archive": true,
@@ -12281,8 +12281,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.2781,
-      "search_min": 6.0,
+      "search_usd": 9.2801,
+      "search_min": 5.2,
       "cid": 129,
       "credit": "negative",
       "archive": false,
@@ -12290,8 +12290,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.4252,
-      "search_min": 6.0,
+      "search_usd": 9.4272,
+      "search_min": 5.2,
       "cid": 130,
       "credit": "neutral",
       "archive": false,
@@ -12299,8 +12299,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.4252,
-      "search_min": 6.0,
+      "search_usd": 9.4272,
+      "search_min": 5.2,
       "cid": 131,
       "credit": "negative",
       "archive": true,
@@ -12308,8 +12308,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.5723,
-      "search_min": 6.0,
+      "search_usd": 9.5743,
+      "search_min": 5.2,
       "cid": 132,
       "credit": "neutral",
       "archive": false,
@@ -12317,8 +12317,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.7194,
-      "search_min": 6.0,
+      "search_usd": 9.7214,
+      "search_min": 5.3,
       "cid": 133,
       "credit": "neutral",
       "archive": false,
@@ -12326,8 +12326,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.7867,
-      "search_min": 6.1,
+      "search_usd": 9.7888,
+      "search_min": 5.3,
       "cid": 134,
       "credit": "negative",
       "archive": false,
@@ -12335,8 +12335,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.9338,
-      "search_min": 6.1,
+      "search_usd": 9.9359,
+      "search_min": 5.3,
       "cid": 135,
       "credit": "neutral",
       "archive": false,
@@ -12344,8 +12344,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.9338,
-      "search_min": 6.1,
+      "search_usd": 9.9359,
+      "search_min": 5.4,
       "cid": 136,
       "credit": "negative",
       "archive": true,
@@ -12353,8 +12353,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 9.9338,
-      "search_min": 6.1,
+      "search_usd": 9.9359,
+      "search_min": 5.4,
       "cid": 137,
       "credit": "negative",
       "archive": true,
@@ -12362,8 +12362,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.0809,
-      "search_min": 6.1,
+      "search_usd": 10.083,
+      "search_min": 5.4,
       "cid": 138,
       "credit": "neutral",
       "archive": false,
@@ -12371,8 +12371,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.1562,
-      "search_min": 6.3,
+      "search_usd": 10.1592,
+      "search_min": 5.5,
       "cid": 139,
       "credit": "negative",
       "archive": false,
@@ -12380,8 +12380,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.3032,
-      "search_min": 6.3,
+      "search_usd": 10.3062,
+      "search_min": 5.5,
       "cid": 140,
       "credit": "neutral",
       "archive": false,
@@ -12389,8 +12389,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.3032,
-      "search_min": 6.3,
+      "search_usd": 10.3062,
+      "search_min": 5.5,
       "cid": 141,
       "credit": "negative",
       "archive": true,
@@ -12398,8 +12398,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.4503,
-      "search_min": 6.3,
+      "search_usd": 10.4533,
+      "search_min": 5.5,
       "cid": 142,
       "credit": "neutral",
       "archive": false,
@@ -12407,8 +12407,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.532,
-      "search_min": 6.5,
+      "search_usd": 10.5278,
+      "search_min": 5.6,
       "cid": 143,
       "credit": "negative",
       "archive": false,
@@ -12416,8 +12416,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.532,
-      "search_min": 6.5,
+      "search_usd": 10.5278,
+      "search_min": 5.6,
       "cid": 144,
       "credit": "negative",
       "archive": true,
@@ -12425,8 +12425,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.6791,
-      "search_min": 6.5,
+      "search_usd": 10.6748,
+      "search_min": 5.6,
       "cid": 145,
       "credit": "neutral",
       "archive": false,
@@ -12434,8 +12434,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.8262,
-      "search_min": 6.5,
+      "search_usd": 10.8219,
+      "search_min": 5.6,
       "cid": 146,
       "credit": "neutral",
       "archive": false,
@@ -12443,8 +12443,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.9032,
-      "search_min": 6.6,
+      "search_usd": 10.8936,
+      "search_min": 5.7,
       "cid": 147,
       "credit": "negative",
       "archive": false,
@@ -12452,8 +12452,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 10.9032,
-      "search_min": 6.6,
+      "search_usd": 10.8936,
+      "search_min": 5.7,
       "cid": 148,
       "credit": "negative",
       "archive": true,
@@ -12461,8 +12461,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.0503,
-      "search_min": 6.6,
+      "search_usd": 11.0407,
+      "search_min": 5.7,
       "cid": 149,
       "credit": "neutral",
       "archive": false,
@@ -12470,8 +12470,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.1974,
-      "search_min": 6.6,
+      "search_usd": 11.1878,
+      "search_min": 5.7,
       "cid": 150,
       "credit": "neutral",
       "archive": false,
@@ -12479,8 +12479,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.3444,
-      "search_min": 6.6,
+      "search_usd": 11.3349,
+      "search_min": 5.8,
       "cid": 151,
       "credit": "neutral",
       "archive": false,
@@ -12488,8 +12488,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.4915,
-      "search_min": 6.6,
+      "search_usd": 11.482,
+      "search_min": 5.8,
       "cid": 152,
       "credit": "neutral",
       "archive": false,
@@ -12497,8 +12497,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.6386,
-      "search_min": 6.6,
+      "search_usd": 11.6291,
+      "search_min": 5.8,
       "cid": 153,
       "credit": "neutral",
       "archive": false,
@@ -12506,8 +12506,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.6386,
-      "search_min": 6.6,
+      "search_usd": 11.6291,
+      "search_min": 5.8,
       "cid": 154,
       "credit": "negative",
       "archive": true,
@@ -12515,8 +12515,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.7166,
-      "search_min": 6.8,
+      "search_usd": 11.7124,
+      "search_min": 5.9,
       "cid": 155,
       "credit": "negative",
       "archive": false,
@@ -12524,8 +12524,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.7166,
-      "search_min": 6.8,
+      "search_usd": 11.7124,
+      "search_min": 5.9,
       "cid": 156,
       "credit": "negative",
       "archive": true,
@@ -12533,8 +12533,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.7559,
-      "search_min": 6.9,
+      "search_usd": 11.7517,
+      "search_min": 6.0,
       "cid": 157,
       "credit": "negative",
       "archive": false,
@@ -12542,8 +12542,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.903,
-      "search_min": 6.9,
+      "search_usd": 11.8988,
+      "search_min": 6.0,
       "cid": 158,
       "credit": "neutral",
       "archive": false,
@@ -12551,8 +12551,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.9749,
-      "search_min": 7.0,
+      "search_usd": 11.983,
+      "search_min": 6.1,
       "cid": 159,
       "credit": "negative",
       "archive": false,
@@ -12560,8 +12560,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 11.9749,
-      "search_min": 7.1,
+      "search_usd": 11.983,
+      "search_min": 6.1,
       "cid": 160,
       "credit": "negative",
       "archive": true,
@@ -12569,8 +12569,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.122,
-      "search_min": 7.1,
+      "search_usd": 12.1301,
+      "search_min": 6.1,
       "cid": 161,
       "credit": "neutral",
       "archive": false,
@@ -12578,8 +12578,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.122,
-      "search_min": 7.1,
+      "search_usd": 12.1301,
+      "search_min": 6.1,
       "cid": 162,
       "credit": "negative",
       "archive": true,
@@ -12587,8 +12587,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.2691,
-      "search_min": 7.1,
+      "search_usd": 12.2771,
+      "search_min": 6.1,
       "cid": 163,
       "credit": "neutral",
       "archive": false,
@@ -12596,8 +12596,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.2691,
-      "search_min": 7.1,
+      "search_usd": 12.2771,
+      "search_min": 6.2,
       "cid": 164,
       "credit": "negative",
       "archive": true,
@@ -12605,8 +12605,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.4162,
-      "search_min": 7.1,
+      "search_usd": 12.4242,
+      "search_min": 6.2,
       "cid": 165,
       "credit": "neutral",
       "archive": false,
@@ -12614,8 +12614,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.4834,
-      "search_min": 7.2,
+      "search_usd": 12.4935,
+      "search_min": 6.3,
       "cid": 166,
       "credit": "negative",
       "archive": false,
@@ -12623,8 +12623,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.5579,
-      "search_min": 7.3,
+      "search_usd": 12.5735,
+      "search_min": 6.4,
       "cid": 167,
       "credit": "negative",
       "archive": false,
@@ -12632,8 +12632,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.5579,
-      "search_min": 7.3,
+      "search_usd": 12.5735,
+      "search_min": 6.4,
       "cid": 168,
       "credit": "negative",
       "archive": true,
@@ -12641,8 +12641,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.5972,
-      "search_min": 7.4,
+      "search_usd": 12.6127,
+      "search_min": 6.5,
       "cid": 169,
       "credit": "negative",
       "archive": false,
@@ -12650,8 +12650,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.6679,
-      "search_min": 7.5,
+      "search_usd": 12.6859,
+      "search_min": 6.6,
       "cid": 170,
       "credit": "negative",
       "archive": false,
@@ -12659,8 +12659,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.6679,
-      "search_min": 7.5,
+      "search_usd": 12.6859,
+      "search_min": 6.6,
       "cid": 171,
       "credit": "negative",
       "archive": true,
@@ -12668,8 +12668,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.6679,
-      "search_min": 7.5,
+      "search_usd": 12.6859,
+      "search_min": 6.6,
       "cid": 172,
       "credit": "negative",
       "archive": true,
@@ -12677,8 +12677,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.6679,
-      "search_min": 7.5,
+      "search_usd": 12.6859,
+      "search_min": 6.6,
       "cid": 173,
       "credit": "negative",
       "archive": true,
@@ -12686,8 +12686,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.815,
-      "search_min": 7.5,
+      "search_usd": 12.833,
+      "search_min": 6.6,
       "cid": 174,
       "credit": "neutral",
       "archive": false,
@@ -12695,8 +12695,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 12.9621,
-      "search_min": 7.5,
+      "search_usd": 12.9801,
+      "search_min": 6.6,
       "cid": 175,
       "credit": "neutral",
       "archive": false,
@@ -12704,8 +12704,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.1091,
-      "search_min": 7.5,
+      "search_usd": 13.1272,
+      "search_min": 6.7,
       "cid": 176,
       "credit": "neutral",
       "archive": false,
@@ -12713,8 +12713,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.1091,
-      "search_min": 7.5,
+      "search_usd": 13.1272,
+      "search_min": 6.7,
       "cid": 177,
       "credit": "negative",
       "archive": true,
@@ -12722,8 +12722,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.2562,
-      "search_min": 7.5,
+      "search_usd": 13.2743,
+      "search_min": 6.7,
       "cid": 178,
       "credit": "neutral",
       "archive": false,
@@ -12731,8 +12731,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.2562,
-      "search_min": 7.5,
+      "search_usd": 13.2743,
+      "search_min": 6.7,
       "cid": 179,
       "credit": "negative",
       "archive": true,
@@ -12740,8 +12740,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.4033,
-      "search_min": 7.5,
+      "search_usd": 13.4214,
+      "search_min": 6.7,
       "cid": 180,
       "credit": "neutral",
       "archive": false,
@@ -12749,8 +12749,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.4033,
-      "search_min": 7.5,
+      "search_usd": 13.4214,
+      "search_min": 6.7,
       "cid": 181,
       "credit": "negative",
       "archive": true,
@@ -12758,8 +12758,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.5504,
-      "search_min": 7.5,
+      "search_usd": 13.5685,
+      "search_min": 6.7,
       "cid": 182,
       "credit": "neutral",
       "archive": false,
@@ -12767,8 +12767,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.5504,
-      "search_min": 7.5,
+      "search_usd": 13.5685,
+      "search_min": 6.7,
       "cid": 183,
       "credit": "negative",
       "archive": true,
@@ -12776,8 +12776,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.6212,
-      "search_min": 7.6,
+      "search_usd": 13.6368,
+      "search_min": 6.8,
       "cid": 184,
       "credit": "negative",
       "archive": false,
@@ -12785,8 +12785,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.7683,
-      "search_min": 7.7,
+      "search_usd": 13.7839,
+      "search_min": 6.8,
       "cid": 185,
       "credit": "neutral",
       "archive": false,
@@ -12794,8 +12794,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.9154,
-      "search_min": 7.7,
+      "search_usd": 13.931,
+      "search_min": 6.8,
       "cid": 186,
       "credit": "neutral",
       "archive": false,
@@ -12803,8 +12803,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 13.9926,
-      "search_min": 7.8,
+      "search_usd": 14.0008,
+      "search_min": 6.9,
       "cid": 187,
       "credit": "negative",
       "archive": false,
@@ -12812,8 +12812,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.1397,
-      "search_min": 7.8,
+      "search_usd": 14.1479,
+      "search_min": 6.9,
       "cid": 188,
       "credit": "neutral",
       "archive": false,
@@ -12821,8 +12821,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.179,
-      "search_min": 7.9,
+      "search_usd": 14.1871,
+      "search_min": 7.0,
       "cid": 189,
       "credit": "negative",
       "archive": false,
@@ -12830,8 +12830,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.179,
-      "search_min": 7.9,
+      "search_usd": 14.1871,
+      "search_min": 7.0,
       "cid": 190,
       "credit": "negative",
       "archive": true,
@@ -12839,8 +12839,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.179,
-      "search_min": 7.9,
+      "search_usd": 14.1871,
+      "search_min": 7.0,
       "cid": 191,
       "credit": "negative",
       "archive": true,
@@ -12848,8 +12848,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.3261,
-      "search_min": 7.9,
+      "search_usd": 14.3342,
+      "search_min": 7.0,
       "cid": 192,
       "credit": "neutral",
       "archive": false,
@@ -12857,8 +12857,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.4731,
-      "search_min": 7.9,
+      "search_usd": 14.4813,
+      "search_min": 7.0,
       "cid": 193,
       "credit": "neutral",
       "archive": false,
@@ -12866,8 +12866,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.4731,
-      "search_min": 7.9,
+      "search_usd": 14.4813,
+      "search_min": 7.0,
       "cid": 194,
       "credit": "negative",
       "archive": true,
@@ -12875,8 +12875,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.5466,
-      "search_min": 8.0,
+      "search_usd": 14.551,
+      "search_min": 7.1,
       "cid": 195,
       "credit": "negative",
       "archive": false,
@@ -12884,8 +12884,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.6937,
-      "search_min": 8.0,
+      "search_usd": 14.6981,
+      "search_min": 7.1,
       "cid": 196,
       "credit": "neutral",
       "archive": false,
@@ -12893,8 +12893,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.7329,
-      "search_min": 8.1,
+      "search_usd": 14.7373,
+      "search_min": 7.2,
       "cid": 197,
       "credit": "negative",
       "archive": false,
@@ -12902,8 +12902,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.88,
-      "search_min": 8.1,
+      "search_usd": 14.8844,
+      "search_min": 7.2,
       "cid": 198,
       "credit": "neutral",
       "archive": false,
@@ -12911,8 +12911,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.88,
-      "search_min": 8.1,
+      "search_usd": 14.8844,
+      "search_min": 7.2,
       "cid": 199,
       "credit": "negative",
       "archive": true,
@@ -12920,8 +12920,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.9547,
-      "search_min": 8.2,
+      "search_usd": 14.9549,
+      "search_min": 7.3,
       "cid": 200,
       "credit": "negative",
       "archive": false,
@@ -12929,8 +12929,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.9547,
-      "search_min": 8.3,
+      "search_usd": 14.9549,
+      "search_min": 7.3,
       "cid": 201,
       "credit": "negative",
       "archive": true,
@@ -12938,8 +12938,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 14.9547,
-      "search_min": 8.3,
+      "search_usd": 14.9549,
+      "search_min": 7.4,
       "cid": 202,
       "credit": "negative",
       "archive": true,
@@ -12947,8 +12947,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.0331,
-      "search_min": 8.4,
+      "search_usd": 15.0324,
+      "search_min": 7.5,
       "cid": 203,
       "credit": "negative",
       "archive": false,
@@ -12956,8 +12956,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.1061,
-      "search_min": 8.5,
+      "search_usd": 15.1052,
+      "search_min": 7.6,
       "cid": 204,
       "credit": "negative",
       "archive": false,
@@ -12965,8 +12965,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.1453,
-      "search_min": 8.6,
+      "search_usd": 15.1444,
+      "search_min": 7.7,
       "cid": 205,
       "credit": "negative",
       "archive": false,
@@ -12974,8 +12974,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.2156,
-      "search_min": 8.7,
+      "search_usd": 15.2146,
+      "search_min": 7.8,
       "cid": 206,
       "credit": "negative",
       "archive": false,
@@ -12983,8 +12983,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.2156,
-      "search_min": 8.7,
+      "search_usd": 15.2146,
+      "search_min": 7.8,
       "cid": 207,
       "credit": "negative",
       "archive": true,
@@ -12992,8 +12992,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.2156,
-      "search_min": 8.7,
+      "search_usd": 15.2146,
+      "search_min": 7.8,
       "cid": 208,
       "credit": "negative",
       "archive": true,
@@ -13001,8 +13001,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.2549,
-      "search_min": 8.8,
+      "search_usd": 15.2539,
+      "search_min": 7.9,
       "cid": 209,
       "credit": "negative",
       "archive": false,
@@ -13010,8 +13010,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.2549,
-      "search_min": 8.8,
+      "search_usd": 15.2539,
+      "search_min": 7.9,
       "cid": 210,
       "credit": "negative",
       "archive": true,
@@ -13019,8 +13019,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.3315,
-      "search_min": 9.0,
+      "search_usd": 15.328,
+      "search_min": 8.0,
       "cid": 211,
       "credit": "negative",
       "archive": false,
@@ -13028,8 +13028,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.3315,
-      "search_min": 9.0,
+      "search_usd": 15.328,
+      "search_min": 8.0,
       "cid": 212,
       "credit": "negative",
       "archive": true,
@@ -13037,8 +13037,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.4786,
-      "search_min": 9.0,
+      "search_usd": 15.4751,
+      "search_min": 8.0,
       "cid": 213,
       "credit": "neutral",
       "archive": false,
@@ -13046,8 +13046,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.5526,
-      "search_min": 9.1,
+      "search_usd": 15.5445,
+      "search_min": 8.2,
       "cid": 214,
       "credit": "negative",
       "archive": false,
@@ -13055,8 +13055,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.6296,
-      "search_min": 9.2,
+      "search_usd": 15.6199,
+      "search_min": 8.3,
       "cid": 215,
       "credit": "negative",
       "archive": false,
@@ -13064,8 +13064,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.7767,
-      "search_min": 9.2,
+      "search_usd": 15.767,
+      "search_min": 8.3,
       "cid": 216,
       "credit": "neutral",
       "archive": false,
@@ -13073,8 +13073,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.7767,
-      "search_min": 9.3,
+      "search_usd": 15.767,
+      "search_min": 8.4,
       "cid": 217,
       "credit": "negative",
       "archive": true,
@@ -13082,8 +13082,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.8483,
-      "search_min": 9.4,
+      "search_usd": 15.8409,
+      "search_min": 8.5,
       "cid": 218,
       "credit": "negative",
       "archive": false,
@@ -13091,8 +13091,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.8483,
-      "search_min": 9.4,
+      "search_usd": 15.8409,
+      "search_min": 8.5,
       "cid": 219,
       "credit": "negative",
       "archive": true,
@@ -13100,8 +13100,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.8483,
-      "search_min": 9.4,
+      "search_usd": 15.8409,
+      "search_min": 8.5,
       "cid": 220,
       "credit": "negative",
       "archive": true,
@@ -13109,8 +13109,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.8483,
-      "search_min": 9.4,
+      "search_usd": 15.8409,
+      "search_min": 8.5,
       "cid": 221,
       "credit": "negative",
       "archive": true,
@@ -13118,8 +13118,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 15.9953,
-      "search_min": 9.4,
+      "search_usd": 15.988,
+      "search_min": 8.5,
       "cid": 222,
       "credit": "neutral",
       "archive": false,
@@ -13127,8 +13127,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.0764,
-      "search_min": 9.5,
+      "search_usd": 16.0632,
+      "search_min": 8.6,
       "cid": 223,
       "credit": "negative",
       "archive": false,
@@ -13136,8 +13136,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.0764,
-      "search_min": 9.5,
+      "search_usd": 16.0632,
+      "search_min": 8.6,
       "cid": 224,
       "credit": "negative",
       "archive": true,
@@ -13145,8 +13145,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.2235,
-      "search_min": 9.5,
+      "search_usd": 16.2103,
+      "search_min": 8.6,
       "cid": 225,
       "credit": "neutral",
       "archive": false,
@@ -13154,8 +13154,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.3706,
-      "search_min": 9.5,
+      "search_usd": 16.3574,
+      "search_min": 8.6,
       "cid": 226,
       "credit": "neutral",
       "archive": false,
@@ -13163,8 +13163,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.4419,
-      "search_min": 9.6,
+      "search_usd": 16.4282,
+      "search_min": 8.8,
       "cid": 227,
       "credit": "negative",
       "archive": false,
@@ -13172,8 +13172,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.5116,
-      "search_min": 9.7,
+      "search_usd": 16.4983,
+      "search_min": 8.9,
       "cid": 228,
       "credit": "negative",
       "archive": false,
@@ -13181,8 +13181,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.5116,
-      "search_min": 9.7,
+      "search_usd": 16.4983,
+      "search_min": 8.9,
       "cid": 229,
       "credit": "negative",
       "archive": true,
@@ -13190,8 +13190,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.6587,
-      "search_min": 9.7,
+      "search_usd": 16.6454,
+      "search_min": 8.9,
       "cid": 230,
       "credit": "neutral",
       "archive": false,
@@ -13199,8 +13199,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.7306,
-      "search_min": 9.8,
+      "search_usd": 16.7202,
+      "search_min": 9.1,
       "cid": 231,
       "credit": "negative",
       "archive": false,
@@ -13208,8 +13208,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.8011,
-      "search_min": 10.0,
+      "search_usd": 16.7921,
+      "search_min": 9.2,
       "cid": 232,
       "credit": "negative",
       "archive": false,
@@ -13217,8 +13217,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.8011,
-      "search_min": 10.0,
+      "search_usd": 16.7921,
+      "search_min": 9.2,
       "cid": 233,
       "credit": "negative",
       "archive": true,
@@ -13226,8 +13226,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.8681,
-      "search_min": 10.1,
+      "search_usd": 16.8613,
+      "search_min": 9.3,
       "cid": 234,
       "credit": "negative",
       "archive": false,
@@ -13235,8 +13235,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 16.8681,
-      "search_min": 10.1,
+      "search_usd": 16.8613,
+      "search_min": 9.3,
       "cid": 235,
       "credit": "negative",
       "archive": true,
@@ -13244,8 +13244,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.0152,
-      "search_min": 10.1,
+      "search_usd": 17.0084,
+      "search_min": 9.3,
       "cid": 236,
       "credit": "neutral",
       "archive": false,
@@ -13253,8 +13253,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.1623,
-      "search_min": 10.1,
+      "search_usd": 17.1555,
+      "search_min": 9.3,
       "cid": 237,
       "credit": "neutral",
       "archive": false,
@@ -13262,8 +13262,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.3094,
-      "search_min": 10.1,
+      "search_usd": 17.3026,
+      "search_min": 9.3,
       "cid": 238,
       "credit": "neutral",
       "archive": false,
@@ -13271,8 +13271,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.3829,
-      "search_min": 10.3,
+      "search_usd": 17.3709,
+      "search_min": 9.4,
       "cid": 239,
       "credit": "negative",
       "archive": false,
@@ -13280,8 +13280,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.4511,
-      "search_min": 10.4,
+      "search_usd": 17.4396,
+      "search_min": 9.5,
       "cid": 240,
       "credit": "negative",
       "archive": false,
@@ -13289,8 +13289,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.4903,
-      "search_min": 10.5,
+      "search_usd": 17.4788,
+      "search_min": 9.6,
       "cid": 241,
       "credit": "negative",
       "archive": false,
@@ -13298,8 +13298,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.6374,
-      "search_min": 10.5,
+      "search_usd": 17.6259,
+      "search_min": 9.6,
       "cid": 242,
       "credit": "neutral",
       "archive": false,
@@ -13307,8 +13307,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.7845,
-      "search_min": 10.5,
+      "search_usd": 17.773,
+      "search_min": 9.6,
       "cid": 243,
       "credit": "neutral",
       "archive": false,
@@ -13316,8 +13316,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.8555,
-      "search_min": 10.6,
+      "search_usd": 17.8443,
+      "search_min": 9.7,
       "cid": 244,
       "credit": "negative",
       "archive": false,
@@ -13325,8 +13325,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.8948,
-      "search_min": 10.7,
+      "search_usd": 17.8835,
+      "search_min": 9.8,
       "cid": 245,
       "credit": "negative",
       "archive": false,
@@ -13334,8 +13334,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 17.9655,
-      "search_min": 10.8,
+      "search_usd": 17.9539,
+      "search_min": 9.9,
       "cid": 246,
       "credit": "negative",
       "archive": false,
@@ -13343,8 +13343,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.1126,
-      "search_min": 10.8,
+      "search_usd": 18.101,
+      "search_min": 9.9,
       "cid": 247,
       "credit": "neutral",
       "archive": false,
@@ -13352,8 +13352,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.1863,
-      "search_min": 11.0,
+      "search_usd": 18.1635,
+      "search_min": 10.2,
       "cid": 248,
       "credit": "negative",
       "archive": false,
@@ -13361,8 +13361,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.1863,
-      "search_min": 11.0,
+      "search_usd": 18.1635,
+      "search_min": 10.2,
       "cid": 249,
       "credit": "negative",
       "archive": true,
@@ -13370,8 +13370,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.2567,
-      "search_min": 11.1,
+      "search_usd": 18.2367,
+      "search_min": 10.3,
       "cid": 250,
       "credit": "negative",
       "archive": false,
@@ -13379,8 +13379,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.4038,
-      "search_min": 11.1,
+      "search_usd": 18.3837,
+      "search_min": 10.3,
       "cid": 251,
       "credit": "neutral",
       "archive": false,
@@ -13388,8 +13388,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.4038,
-      "search_min": 11.1,
+      "search_usd": 18.3837,
+      "search_min": 10.3,
       "cid": 252,
       "credit": "negative",
       "archive": true,
@@ -13397,8 +13397,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.4431,
-      "search_min": 11.2,
+      "search_usd": 18.423,
+      "search_min": 10.4,
       "cid": 253,
       "credit": "negative",
       "archive": false,
@@ -13406,8 +13406,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.5124,
-      "search_min": 11.3,
+      "search_usd": 18.4955,
+      "search_min": 10.5,
       "cid": 254,
       "credit": "negative",
       "archive": false,
@@ -13415,8 +13415,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.5911,
-      "search_min": 11.4,
+      "search_usd": 18.5666,
+      "search_min": 10.6,
       "cid": 255,
       "credit": "negative",
       "archive": false,
@@ -13424,8 +13424,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.7382,
-      "search_min": 11.4,
+      "search_usd": 18.7136,
+      "search_min": 10.6,
       "cid": 256,
       "credit": "neutral",
       "archive": false,
@@ -13433,8 +13433,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.7775,
-      "search_min": 11.5,
+      "search_usd": 18.7529,
+      "search_min": 10.7,
       "cid": 257,
       "credit": "negative",
       "archive": false,
@@ -13442,8 +13442,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.8436,
-      "search_min": 11.6,
+      "search_usd": 18.8222,
+      "search_min": 10.9,
       "cid": 258,
       "credit": "negative",
       "archive": false,
@@ -13451,8 +13451,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.9907,
-      "search_min": 11.6,
+      "search_usd": 18.9693,
+      "search_min": 10.9,
       "cid": 259,
       "credit": "neutral",
       "archive": false,
@@ -13460,8 +13460,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 18.9907,
-      "search_min": 11.6,
+      "search_usd": 18.9693,
+      "search_min": 10.9,
       "cid": 260,
       "credit": "negative",
       "archive": true,
@@ -13469,8 +13469,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.1378,
-      "search_min": 11.6,
+      "search_usd": 19.1164,
+      "search_min": 10.9,
       "cid": 261,
       "credit": "neutral",
       "archive": false,
@@ -13478,8 +13478,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.1378,
-      "search_min": 11.6,
+      "search_usd": 19.1164,
+      "search_min": 10.9,
       "cid": 262,
       "credit": "negative",
       "archive": true,
@@ -13487,8 +13487,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.2849,
-      "search_min": 11.6,
+      "search_usd": 19.2635,
+      "search_min": 11.0,
       "cid": 263,
       "credit": "neutral",
       "archive": false,
@@ -13496,8 +13496,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.432,
-      "search_min": 11.6,
+      "search_usd": 19.4106,
+      "search_min": 11.0,
       "cid": 264,
       "credit": "neutral",
       "archive": false,
@@ -13505,8 +13505,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.4712,
-      "search_min": 11.7,
+      "search_usd": 19.4498,
+      "search_min": 11.0,
       "cid": 265,
       "credit": "negative",
       "archive": false,
@@ -13514,8 +13514,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.5436,
-      "search_min": 11.8,
+      "search_usd": 19.5262,
+      "search_min": 11.2,
       "cid": 266,
       "credit": "negative",
       "archive": false,
@@ -13523,8 +13523,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.5436,
-      "search_min": 11.8,
+      "search_usd": 19.5262,
+      "search_min": 11.2,
       "cid": 267,
       "credit": "negative",
       "archive": true,
@@ -13532,8 +13532,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.5436,
-      "search_min": 11.8,
+      "search_usd": 19.5262,
+      "search_min": 11.2,
       "cid": 268,
       "credit": "negative",
       "archive": true,
@@ -13541,8 +13541,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.6907,
-      "search_min": 11.9,
+      "search_usd": 19.6733,
+      "search_min": 11.2,
       "cid": 269,
       "credit": "neutral",
       "archive": false,
@@ -13550,8 +13550,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.7608,
-      "search_min": 11.9,
+      "search_usd": 19.7481,
+      "search_min": 11.3,
       "cid": 270,
       "credit": "negative",
       "archive": false,
@@ -13559,8 +13559,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.9079,
-      "search_min": 12.0,
+      "search_usd": 19.8952,
+      "search_min": 11.3,
       "cid": 271,
       "credit": "neutral",
       "archive": false,
@@ -13568,8 +13568,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 19.9805,
-      "search_min": 12.1,
+      "search_usd": 19.967,
+      "search_min": 11.4,
       "cid": 272,
       "credit": "negative",
       "archive": false,
@@ -13577,8 +13577,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.1276,
-      "search_min": 12.1,
+      "search_usd": 20.1141,
+      "search_min": 11.4,
       "cid": 273,
       "credit": "neutral",
       "archive": false,
@@ -13586,8 +13586,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.1985,
-      "search_min": 12.2,
+      "search_usd": 20.1809,
+      "search_min": 11.6,
       "cid": 274,
       "credit": "negative",
       "archive": false,
@@ -13595,8 +13595,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.3456,
-      "search_min": 12.2,
+      "search_usd": 20.328,
+      "search_min": 11.6,
       "cid": 275,
       "credit": "neutral",
       "archive": false,
@@ -13604,8 +13604,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.3456,
-      "search_min": 12.2,
+      "search_usd": 20.328,
+      "search_min": 11.6,
       "cid": 276,
       "credit": "negative",
       "archive": true,
@@ -13613,8 +13613,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.4927,
-      "search_min": 12.2,
+      "search_usd": 20.4751,
+      "search_min": 11.6,
       "cid": 277,
       "credit": "neutral",
       "archive": false,
@@ -13622,8 +13622,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.5655,
-      "search_min": 12.3,
+      "search_usd": 20.5498,
+      "search_min": 11.8,
       "cid": 278,
       "credit": "negative",
       "archive": false,
@@ -13631,8 +13631,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.5655,
-      "search_min": 12.3,
+      "search_usd": 20.5498,
+      "search_min": 11.8,
       "cid": 279,
       "credit": "negative",
       "archive": true,
@@ -13640,8 +13640,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.7126,
-      "search_min": 12.3,
+      "search_usd": 20.6969,
+      "search_min": 11.8,
       "cid": 280,
       "credit": "neutral",
       "archive": false,
@@ -13649,8 +13649,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 20.8597,
-      "search_min": 12.3,
+      "search_usd": 20.844,
+      "search_min": 11.8,
       "cid": 281,
       "credit": "neutral",
       "archive": false,
@@ -13658,8 +13658,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.0068,
-      "search_min": 12.4,
+      "search_usd": 20.9911,
+      "search_min": 11.8,
       "cid": 282,
       "credit": "neutral",
       "archive": false,
@@ -13667,8 +13667,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.0833,
-      "search_min": 12.5,
+      "search_usd": 21.063,
+      "search_min": 11.9,
       "cid": 283,
       "credit": "negative",
       "archive": false,
@@ -13676,8 +13676,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.0833,
-      "search_min": 12.5,
+      "search_usd": 21.063,
+      "search_min": 11.9,
       "cid": 284,
       "credit": "negative",
       "archive": true,
@@ -13685,8 +13685,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.0833,
-      "search_min": 12.5,
+      "search_usd": 21.063,
+      "search_min": 11.9,
       "cid": 285,
       "credit": "negative",
       "archive": true,
@@ -13694,8 +13694,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.0833,
-      "search_min": 12.5,
+      "search_usd": 21.063,
+      "search_min": 11.9,
       "cid": 286,
       "credit": "negative",
       "archive": true,
@@ -13703,8 +13703,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.2304,
-      "search_min": 12.5,
+      "search_usd": 21.2101,
+      "search_min": 11.9,
       "cid": 287,
       "credit": "neutral",
       "archive": false,
@@ -13712,8 +13712,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.3775,
-      "search_min": 12.5,
+      "search_usd": 21.3572,
+      "search_min": 11.9,
       "cid": 288,
       "credit": "neutral",
       "archive": false,
@@ -13721,8 +13721,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.4167,
-      "search_min": 12.6,
+      "search_usd": 21.3964,
+      "search_min": 12.0,
       "cid": 289,
       "credit": "negative",
       "archive": false,
@@ -13730,8 +13730,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.4167,
-      "search_min": 12.6,
+      "search_usd": 21.3964,
+      "search_min": 12.0,
       "cid": 290,
       "credit": "negative",
       "archive": true,
@@ -13739,8 +13739,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.5638,
-      "search_min": 12.6,
+      "search_usd": 21.5435,
+      "search_min": 12.0,
       "cid": 291,
       "credit": "neutral",
       "archive": false,
@@ -13748,8 +13748,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.7109,
-      "search_min": 12.6,
+      "search_usd": 21.6906,
+      "search_min": 12.0,
       "cid": 292,
       "credit": "neutral",
       "archive": false,
@@ -13757,8 +13757,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.7502,
-      "search_min": 12.7,
+      "search_usd": 21.7299,
+      "search_min": 12.1,
       "cid": 293,
       "credit": "negative",
       "archive": false,
@@ -13766,8 +13766,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.8973,
-      "search_min": 12.7,
+      "search_usd": 21.877,
+      "search_min": 12.1,
       "cid": 294,
       "credit": "neutral",
       "archive": false,
@@ -13775,8 +13775,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 21.9713,
-      "search_min": 12.8,
+      "search_usd": 21.9487,
+      "search_min": 12.2,
       "cid": 295,
       "credit": "negative",
       "archive": false,
@@ -13784,8 +13784,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.0454,
-      "search_min": 12.9,
+      "search_usd": 22.0278,
+      "search_min": 12.3,
       "cid": 296,
       "credit": "negative",
       "archive": false,
@@ -13793,8 +13793,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.1925,
-      "search_min": 12.9,
+      "search_usd": 22.1749,
+      "search_min": 12.3,
       "cid": 297,
       "credit": "neutral",
       "archive": false,
@@ -13802,8 +13802,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.2618,
-      "search_min": 13.0,
+      "search_usd": 22.2434,
+      "search_min": 12.5,
       "cid": 298,
       "credit": "negative",
       "archive": false,
@@ -13811,8 +13811,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.2618,
-      "search_min": 13.0,
+      "search_usd": 22.2434,
+      "search_min": 12.5,
       "cid": 299,
       "credit": "negative",
       "archive": true,
@@ -13820,8 +13820,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.4089,
-      "search_min": 13.0,
+      "search_usd": 22.3905,
+      "search_min": 12.5,
       "cid": 300,
       "credit": "neutral",
       "archive": false,
@@ -13829,8 +13829,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.4482,
-      "search_min": 13.1,
+      "search_usd": 22.4298,
+      "search_min": 12.6,
       "cid": 301,
       "credit": "negative",
       "archive": false,
@@ -13838,8 +13838,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.5953,
-      "search_min": 13.1,
+      "search_usd": 22.5769,
+      "search_min": 12.6,
       "cid": 302,
       "credit": "neutral",
       "archive": false,
@@ -13847,8 +13847,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.5953,
-      "search_min": 13.1,
+      "search_usd": 22.5769,
+      "search_min": 12.6,
       "cid": 303,
       "credit": "negative",
       "archive": true,
@@ -13856,8 +13856,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.5953,
-      "search_min": 13.1,
+      "search_usd": 22.5769,
+      "search_min": 12.6,
       "cid": 304,
       "credit": "negative",
       "archive": true,
@@ -13865,8 +13865,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.6345,
-      "search_min": 13.2,
+      "search_usd": 22.6161,
+      "search_min": 12.7,
       "cid": 305,
       "credit": "negative",
       "archive": false,
@@ -13874,8 +13874,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.6345,
-      "search_min": 13.2,
+      "search_usd": 22.6161,
+      "search_min": 12.7,
       "cid": 306,
       "credit": "negative",
       "archive": true,
@@ -13883,8 +13883,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.7816,
-      "search_min": 13.2,
+      "search_usd": 22.7632,
+      "search_min": 12.7,
       "cid": 307,
       "credit": "neutral",
       "archive": false,
@@ -13892,8 +13892,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 22.9287,
-      "search_min": 13.3,
+      "search_usd": 22.9103,
+      "search_min": 12.7,
       "cid": 308,
       "credit": "neutral",
       "archive": false,
@@ -13901,8 +13901,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.0758,
-      "search_min": 13.3,
+      "search_usd": 23.0574,
+      "search_min": 12.7,
       "cid": 309,
       "credit": "neutral",
       "archive": false,
@@ -13910,8 +13910,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.1447,
-      "search_min": 13.4,
+      "search_usd": 23.1295,
+      "search_min": 12.8,
       "cid": 310,
       "credit": "negative",
       "archive": false,
@@ -13919,8 +13919,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.2917,
-      "search_min": 13.4,
+      "search_usd": 23.2766,
+      "search_min": 12.8,
       "cid": 311,
       "credit": "neutral",
       "archive": false,
@@ -13928,8 +13928,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.3661,
-      "search_min": 13.5,
+      "search_usd": 23.3457,
+      "search_min": 12.9,
       "cid": 312,
       "credit": "negative",
       "archive": false,
@@ -13937,8 +13937,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.5132,
-      "search_min": 13.5,
+      "search_usd": 23.4928,
+      "search_min": 12.9,
       "cid": 313,
       "credit": "neutral",
       "archive": false,
@@ -13946,8 +13946,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.5815,
-      "search_min": 13.6,
+      "search_usd": 23.5639,
+      "search_min": 13.1,
       "cid": 314,
       "credit": "negative",
       "archive": false,
@@ -13955,8 +13955,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.6594,
-      "search_min": 13.7,
+      "search_usd": 23.6416,
+      "search_min": 13.2,
       "cid": 315,
       "credit": "negative",
       "archive": false,
@@ -13964,8 +13964,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.7324,
-      "search_min": 13.8,
+      "search_usd": 23.7118,
+      "search_min": 13.3,
       "cid": 316,
       "credit": "negative",
       "archive": false,
@@ -13973,8 +13973,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 23.8795,
-      "search_min": 13.8,
+      "search_usd": 23.8589,
+      "search_min": 13.3,
       "cid": 317,
       "credit": "neutral",
       "archive": false,
@@ -13982,8 +13982,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.0266,
-      "search_min": 13.8,
+      "search_usd": 24.0059,
+      "search_min": 13.3,
       "cid": 318,
       "credit": "neutral",
       "archive": false,
@@ -13991,8 +13991,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.1049,
-      "search_min": 14.0,
+      "search_usd": 24.0814,
+      "search_min": 13.5,
       "cid": 319,
       "credit": "negative",
       "archive": false,
@@ -14000,8 +14000,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.1774,
-      "search_min": 14.1,
+      "search_usd": 24.1521,
+      "search_min": 13.6,
       "cid": 320,
       "credit": "negative",
       "archive": false,
@@ -14009,8 +14009,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.3245,
-      "search_min": 14.1,
+      "search_usd": 24.2992,
+      "search_min": 13.6,
       "cid": 321,
       "credit": "neutral",
       "archive": false,
@@ -14018,8 +14018,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.3245,
-      "search_min": 14.1,
+      "search_usd": 24.2992,
+      "search_min": 13.6,
       "cid": 322,
       "credit": "negative",
       "archive": true,
@@ -14027,8 +14027,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.3245,
-      "search_min": 14.1,
+      "search_usd": 24.2992,
+      "search_min": 13.6,
       "cid": 323,
       "credit": "negative",
       "archive": true,
@@ -14036,8 +14036,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.3952,
-      "search_min": 14.2,
+      "search_usd": 24.3728,
+      "search_min": 13.7,
       "cid": 324,
       "credit": "negative",
       "archive": false,
@@ -14045,8 +14045,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.4345,
-      "search_min": 14.3,
+      "search_usd": 24.4121,
+      "search_min": 13.8,
       "cid": 325,
       "credit": "negative",
       "archive": false,
@@ -14054,8 +14054,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.5816,
-      "search_min": 14.3,
+      "search_usd": 24.5592,
+      "search_min": 13.8,
       "cid": 326,
       "credit": "neutral",
       "archive": false,
@@ -14063,8 +14063,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.7287,
-      "search_min": 14.3,
+      "search_usd": 24.7063,
+      "search_min": 13.8,
       "cid": 327,
       "credit": "neutral",
       "archive": false,
@@ -14072,8 +14072,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.7287,
-      "search_min": 14.3,
+      "search_usd": 24.7063,
+      "search_min": 13.8,
       "cid": 328,
       "credit": "negative",
       "archive": true,
@@ -14081,8 +14081,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.8758,
-      "search_min": 14.3,
+      "search_usd": 24.8534,
+      "search_min": 13.8,
       "cid": 329,
       "credit": "neutral",
       "archive": false,
@@ -14090,8 +14090,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.8758,
-      "search_min": 14.3,
+      "search_usd": 24.8534,
+      "search_min": 13.9,
       "cid": 330,
       "credit": "negative",
       "archive": true,
@@ -14099,8 +14099,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.8758,
-      "search_min": 14.3,
+      "search_usd": 24.8534,
+      "search_min": 13.9,
       "cid": 331,
       "credit": "negative",
       "archive": true,
@@ -14108,8 +14108,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.9443,
-      "search_min": 14.5,
+      "search_usd": 24.923,
+      "search_min": 14.0,
       "cid": 332,
       "credit": "negative",
       "archive": false,
@@ -14117,8 +14117,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 24.9836,
-      "search_min": 14.6,
+      "search_usd": 24.9623,
+      "search_min": 14.1,
       "cid": 333,
       "credit": "negative",
       "archive": false,
@@ -14126,8 +14126,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.1307,
-      "search_min": 14.6,
+      "search_usd": 25.1094,
+      "search_min": 14.1,
       "cid": 334,
       "credit": "neutral",
       "archive": false,
@@ -14135,8 +14135,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.2778,
-      "search_min": 14.6,
+      "search_usd": 25.2564,
+      "search_min": 14.1,
       "cid": 335,
       "credit": "neutral",
       "archive": false,
@@ -14144,8 +14144,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.4249,
-      "search_min": 14.6,
+      "search_usd": 25.4035,
+      "search_min": 14.1,
       "cid": 336,
       "credit": "neutral",
       "archive": false,
@@ -14153,8 +14153,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.4641,
-      "search_min": 14.7,
+      "search_usd": 25.4428,
+      "search_min": 14.2,
       "cid": 337,
       "credit": "negative",
       "archive": false,
@@ -14162,8 +14162,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.6112,
-      "search_min": 14.7,
+      "search_usd": 25.5899,
+      "search_min": 14.2,
       "cid": 338,
       "credit": "neutral",
       "archive": false,
@@ -14171,8 +14171,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.6829,
-      "search_min": 14.8,
+      "search_usd": 25.6649,
+      "search_min": 14.3,
       "cid": 339,
       "credit": "negative",
       "archive": false,
@@ -14180,8 +14180,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.755,
-      "search_min": 14.9,
+      "search_usd": 25.731,
+      "search_min": 14.4,
       "cid": 340,
       "credit": "negative",
       "archive": false,
@@ -14189,8 +14189,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.755,
-      "search_min": 14.9,
+      "search_usd": 25.731,
+      "search_min": 14.4,
       "cid": 341,
       "credit": "negative",
       "archive": true,
@@ -14198,8 +14198,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 25.9021,
-      "search_min": 14.9,
+      "search_usd": 25.8781,
+      "search_min": 14.4,
       "cid": 342,
       "credit": "neutral",
       "archive": false,
@@ -14207,8 +14207,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.0492,
-      "search_min": 14.9,
+      "search_usd": 26.0252,
+      "search_min": 14.4,
       "cid": 343,
       "credit": "neutral",
       "archive": false,
@@ -14216,8 +14216,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.1963,
-      "search_min": 14.9,
+      "search_usd": 26.1723,
+      "search_min": 14.4,
       "cid": 344,
       "credit": "neutral",
       "archive": false,
@@ -14225,8 +14225,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.1963,
-      "search_min": 14.9,
+      "search_usd": 26.1723,
+      "search_min": 14.4,
       "cid": 345,
       "credit": "negative",
       "archive": true,
@@ -14234,8 +14234,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.3434,
-      "search_min": 14.9,
+      "search_usd": 26.3194,
+      "search_min": 14.4,
       "cid": 346,
       "credit": "neutral",
       "archive": false,
@@ -14243,8 +14243,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.3434,
-      "search_min": 14.9,
+      "search_usd": 26.3194,
+      "search_min": 14.4,
       "cid": 347,
       "credit": "negative",
       "archive": true,
@@ -14252,8 +14252,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.3434,
-      "search_min": 14.9,
+      "search_usd": 26.3194,
+      "search_min": 14.4,
       "cid": 348,
       "credit": "negative",
       "archive": true,
@@ -14261,8 +14261,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.3434,
-      "search_min": 14.9,
+      "search_usd": 26.3194,
+      "search_min": 14.5,
       "cid": 349,
       "credit": "negative",
       "archive": true,
@@ -14270,8 +14270,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.4905,
-      "search_min": 14.9,
+      "search_usd": 26.4665,
+      "search_min": 14.5,
       "cid": 350,
       "credit": "neutral",
       "archive": false,
@@ -14279,8 +14279,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.5686,
-      "search_min": 15.1,
+      "search_usd": 26.54,
+      "search_min": 14.6,
       "cid": 351,
       "credit": "negative",
       "archive": false,
@@ -14288,8 +14288,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.6395,
-      "search_min": 15.2,
+      "search_usd": 26.6146,
+      "search_min": 14.7,
       "cid": 352,
       "credit": "negative",
       "archive": false,
@@ -14297,8 +14297,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.6788,
-      "search_min": 15.3,
+      "search_usd": 26.6539,
+      "search_min": 14.8,
       "cid": 353,
       "credit": "negative",
       "archive": false,
@@ -14306,8 +14306,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.8259,
-      "search_min": 15.3,
+      "search_usd": 26.801,
+      "search_min": 14.8,
       "cid": 354,
       "credit": "neutral",
       "archive": false,
@@ -14315,8 +14315,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.8259,
-      "search_min": 15.3,
+      "search_usd": 26.801,
+      "search_min": 14.8,
       "cid": 355,
       "credit": "negative",
       "archive": true,
@@ -14324,8 +14324,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.973,
-      "search_min": 15.3,
+      "search_usd": 26.948,
+      "search_min": 14.8,
       "cid": 356,
       "credit": "neutral",
       "archive": false,
@@ -14333,8 +14333,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 26.973,
-      "search_min": 15.3,
+      "search_usd": 26.948,
+      "search_min": 14.8,
       "cid": 357,
       "credit": "negative",
       "archive": true,
@@ -14342,8 +14342,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.1201,
-      "search_min": 15.3,
+      "search_usd": 27.0951,
+      "search_min": 14.8,
       "cid": 358,
       "credit": "neutral",
       "archive": false,
@@ -14351,8 +14351,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.1944,
-      "search_min": 15.4,
+      "search_usd": 27.1778,
+      "search_min": 15.0,
       "cid": 359,
       "credit": "negative",
       "archive": false,
@@ -14360,8 +14360,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.2687,
-      "search_min": 15.5,
+      "search_usd": 27.2496,
+      "search_min": 15.1,
       "cid": 360,
       "credit": "negative",
       "archive": false,
@@ -14369,8 +14369,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.4158,
-      "search_min": 15.5,
+      "search_usd": 27.3967,
+      "search_min": 15.1,
       "cid": 361,
       "credit": "neutral",
       "archive": false,
@@ -14378,8 +14378,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.4158,
-      "search_min": 15.5,
+      "search_usd": 27.3967,
+      "search_min": 15.1,
       "cid": 362,
       "credit": "negative",
       "archive": true,
@@ -14387,8 +14387,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.4982,
-      "search_min": 15.7,
+      "search_usd": 27.4675,
+      "search_min": 15.2,
       "cid": 363,
       "credit": "negative",
       "archive": false,
@@ -14396,8 +14396,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.6453,
-      "search_min": 15.7,
+      "search_usd": 27.6146,
+      "search_min": 15.2,
       "cid": 364,
       "credit": "neutral",
       "archive": false,
@@ -14405,8 +14405,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.7924,
-      "search_min": 15.7,
+      "search_usd": 27.7617,
+      "search_min": 15.2,
       "cid": 365,
       "credit": "neutral",
       "archive": false,
@@ -14414,8 +14414,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.7924,
-      "search_min": 15.7,
+      "search_usd": 27.7617,
+      "search_min": 15.2,
       "cid": 366,
       "credit": "negative",
       "archive": true,
@@ -14423,8 +14423,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.7924,
-      "search_min": 15.7,
+      "search_usd": 27.7617,
+      "search_min": 15.3,
       "cid": 367,
       "credit": "negative",
       "archive": true,
@@ -14432,8 +14432,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.9395,
-      "search_min": 15.7,
+      "search_usd": 27.9088,
+      "search_min": 15.3,
       "cid": 368,
       "credit": "neutral",
       "archive": false,
@@ -14441,8 +14441,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 27.9787,
-      "search_min": 15.8,
+      "search_usd": 27.9481,
+      "search_min": 15.3,
       "cid": 369,
       "credit": "negative",
       "archive": false,
@@ -14450,8 +14450,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.0501,
-      "search_min": 15.9,
+      "search_usd": 28.02,
+      "search_min": 15.5,
       "cid": 370,
       "credit": "negative",
       "archive": false,
@@ -14459,8 +14459,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.1236,
-      "search_min": 16.0,
+      "search_usd": 28.0963,
+      "search_min": 15.6,
       "cid": 371,
       "credit": "negative",
       "archive": false,
@@ -14468,8 +14468,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.2706,
-      "search_min": 16.0,
+      "search_usd": 28.2434,
+      "search_min": 15.6,
       "cid": 372,
       "credit": "neutral",
       "archive": false,
@@ -14477,8 +14477,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.2706,
-      "search_min": 16.0,
+      "search_usd": 28.2434,
+      "search_min": 15.6,
       "cid": 373,
       "credit": "negative",
       "archive": true,
@@ -14486,8 +14486,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.4177,
-      "search_min": 16.0,
+      "search_usd": 28.3905,
+      "search_min": 15.6,
       "cid": 374,
       "credit": "neutral",
       "archive": false,
@@ -14495,8 +14495,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.4962,
-      "search_min": 16.1,
+      "search_usd": 28.4621,
+      "search_min": 15.7,
       "cid": 375,
       "credit": "negative",
       "archive": false,
@@ -14504,8 +14504,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.4962,
-      "search_min": 16.1,
+      "search_usd": 28.4621,
+      "search_min": 15.7,
       "cid": 376,
       "credit": "negative",
       "archive": true,
@@ -14513,8 +14513,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.6433,
-      "search_min": 16.1,
+      "search_usd": 28.6092,
+      "search_min": 15.7,
       "cid": 377,
       "credit": "neutral",
       "archive": false,
@@ -14522,8 +14522,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.7153,
-      "search_min": 16.3,
+      "search_usd": 28.6794,
+      "search_min": 15.9,
       "cid": 378,
       "credit": "negative",
       "archive": false,
@@ -14531,8 +14531,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.7922,
-      "search_min": 16.4,
+      "search_usd": 28.7498,
+      "search_min": 16.0,
       "cid": 379,
       "credit": "negative",
       "archive": false,
@@ -14540,8 +14540,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 28.9393,
-      "search_min": 16.4,
+      "search_usd": 28.8969,
+      "search_min": 16.0,
       "cid": 380,
       "credit": "neutral",
       "archive": false,
@@ -14549,8 +14549,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.0863,
-      "search_min": 16.4,
+      "search_usd": 29.044,
+      "search_min": 16.0,
       "cid": 381,
       "credit": "neutral",
       "archive": false,
@@ -14558,8 +14558,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.2334,
-      "search_min": 16.4,
+      "search_usd": 29.191,
+      "search_min": 16.0,
       "cid": 382,
       "credit": "neutral",
       "archive": false,
@@ -14567,8 +14567,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.3058,
-      "search_min": 16.5,
+      "search_usd": 29.2683,
+      "search_min": 16.2,
       "cid": 383,
       "credit": "negative",
       "archive": false,
@@ -14576,8 +14576,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.3788,
-      "search_min": 16.6,
+      "search_usd": 29.3381,
+      "search_min": 16.3,
       "cid": 384,
       "credit": "negative",
       "archive": false,
@@ -14585,8 +14585,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.418,
-      "search_min": 16.7,
+      "search_usd": 29.3774,
+      "search_min": 16.4,
       "cid": 385,
       "credit": "negative",
       "archive": false,
@@ -14594,8 +14594,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.5651,
-      "search_min": 16.7,
+      "search_usd": 29.5245,
+      "search_min": 16.4,
       "cid": 386,
       "credit": "neutral",
       "archive": false,
@@ -14603,8 +14603,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.6356,
-      "search_min": 16.8,
+      "search_usd": 29.5928,
+      "search_min": 16.5,
       "cid": 387,
       "credit": "negative",
       "archive": false,
@@ -14612,8 +14612,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.7827,
-      "search_min": 16.8,
+      "search_usd": 29.7399,
+      "search_min": 16.5,
       "cid": 388,
       "credit": "neutral",
       "archive": false,
@@ -14621,8 +14621,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.7827,
-      "search_min": 16.8,
+      "search_usd": 29.7399,
+      "search_min": 16.5,
       "cid": 389,
       "credit": "negative",
       "archive": true,
@@ -14630,8 +14630,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 29.9298,
-      "search_min": 16.8,
+      "search_usd": 29.887,
+      "search_min": 16.5,
       "cid": 390,
       "credit": "neutral",
       "archive": false,
@@ -14639,8 +14639,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.0016,
-      "search_min": 16.9,
+      "search_usd": 29.9672,
+      "search_min": 16.6,
       "cid": 391,
       "credit": "negative",
       "archive": false,
@@ -14648,8 +14648,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.1487,
-      "search_min": 17.0,
+      "search_usd": 30.1143,
+      "search_min": 16.6,
       "cid": 392,
       "credit": "neutral",
       "archive": false,
@@ -14657,8 +14657,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.1487,
-      "search_min": 17.0,
+      "search_usd": 30.1143,
+      "search_min": 16.7,
       "cid": 393,
       "credit": "negative",
       "archive": true,
@@ -14666,8 +14666,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.1487,
-      "search_min": 17.0,
+      "search_usd": 30.1143,
+      "search_min": 16.7,
       "cid": 394,
       "credit": "negative",
       "archive": true,
@@ -14675,8 +14675,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.2958,
-      "search_min": 17.0,
+      "search_usd": 30.2614,
+      "search_min": 16.7,
       "cid": 395,
       "credit": "neutral",
       "archive": false,
@@ -14684,8 +14684,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.2958,
-      "search_min": 17.0,
+      "search_usd": 30.2614,
+      "search_min": 16.7,
       "cid": 396,
       "credit": "negative",
       "archive": true,
@@ -14693,8 +14693,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.4429,
-      "search_min": 17.0,
+      "search_usd": 30.4085,
+      "search_min": 16.7,
       "cid": 397,
       "credit": "neutral",
       "archive": false,
@@ -14702,8 +14702,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.5152,
-      "search_min": 17.1,
+      "search_usd": 30.4765,
+      "search_min": 16.8,
       "cid": 398,
       "credit": "negative",
       "archive": false,
@@ -14711,8 +14711,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.5152,
-      "search_min": 17.1,
+      "search_usd": 30.4765,
+      "search_min": 16.8,
       "cid": 399,
       "credit": "negative",
       "archive": true,
@@ -14720,8 +14720,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.5858,
-      "search_min": 17.2,
+      "search_usd": 30.553,
+      "search_min": 16.9,
       "cid": 400,
       "credit": "negative",
       "archive": false,
@@ -14729,8 +14729,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.625,
-      "search_min": 17.3,
+      "search_usd": 30.5923,
+      "search_min": 17.0,
       "cid": 401,
       "credit": "negative",
       "archive": false,
@@ -14738,8 +14738,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.625,
-      "search_min": 17.3,
+      "search_usd": 30.5923,
+      "search_min": 17.0,
       "cid": 402,
       "credit": "negative",
       "archive": true,
@@ -14747,8 +14747,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.7022,
-      "search_min": 17.4,
+      "search_usd": 30.6658,
+      "search_min": 17.1,
       "cid": 403,
       "credit": "negative",
       "archive": false,
@@ -14756,8 +14756,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.7022,
-      "search_min": 17.4,
+      "search_usd": 30.6658,
+      "search_min": 17.1,
       "cid": 404,
       "credit": "negative",
       "archive": true,
@@ -14765,8 +14765,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.8492,
-      "search_min": 17.4,
+      "search_usd": 30.8129,
+      "search_min": 17.1,
       "cid": 405,
       "credit": "neutral",
       "archive": false,
@@ -14774,8 +14774,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 30.9963,
-      "search_min": 17.4,
+      "search_usd": 30.96,
+      "search_min": 17.1,
       "cid": 406,
       "credit": "neutral",
       "archive": false,
@@ -14783,8 +14783,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.1434,
-      "search_min": 17.4,
+      "search_usd": 31.1071,
+      "search_min": 17.1,
       "cid": 407,
       "credit": "neutral",
       "archive": false,
@@ -14792,8 +14792,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.2905,
-      "search_min": 17.4,
+      "search_usd": 31.2542,
+      "search_min": 17.1,
       "cid": 408,
       "credit": "neutral",
       "archive": false,
@@ -14801,8 +14801,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.2905,
-      "search_min": 17.4,
+      "search_usd": 31.2542,
+      "search_min": 17.1,
       "cid": 409,
       "credit": "negative",
       "archive": true,
@@ -14810,8 +14810,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.2905,
-      "search_min": 17.4,
+      "search_usd": 31.2542,
+      "search_min": 17.2,
       "cid": 410,
       "credit": "negative",
       "archive": true,
@@ -14819,8 +14819,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.3649,
-      "search_min": 17.5,
+      "search_usd": 31.3314,
+      "search_min": 17.3,
       "cid": 411,
       "credit": "negative",
       "archive": false,
@@ -14828,8 +14828,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.436,
-      "search_min": 17.7,
+      "search_usd": 31.4012,
+      "search_min": 17.4,
       "cid": 412,
       "credit": "negative",
       "archive": false,
@@ -14837,8 +14837,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.5831,
-      "search_min": 17.7,
+      "search_usd": 31.5483,
+      "search_min": 17.4,
       "cid": 413,
       "credit": "neutral",
       "archive": false,
@@ -14846,8 +14846,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.7302,
-      "search_min": 17.7,
+      "search_usd": 31.6954,
+      "search_min": 17.4,
       "cid": 414,
       "credit": "neutral",
       "archive": false,
@@ -14855,8 +14855,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 31.8773,
-      "search_min": 17.7,
+      "search_usd": 31.8425,
+      "search_min": 17.4,
       "cid": 415,
       "credit": "neutral",
       "archive": false,
@@ -14864,8 +14864,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.0243,
-      "search_min": 17.7,
+      "search_usd": 31.9896,
+      "search_min": 17.4,
       "cid": 416,
       "credit": "neutral",
       "archive": false,
@@ -14873,8 +14873,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.1714,
-      "search_min": 17.7,
+      "search_usd": 32.1367,
+      "search_min": 17.4,
       "cid": 417,
       "credit": "neutral",
       "archive": false,
@@ -14882,8 +14882,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.1714,
-      "search_min": 17.7,
+      "search_usd": 32.1367,
+      "search_min": 17.4,
       "cid": 418,
       "credit": "negative",
       "archive": true,
@@ -14891,8 +14891,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.2439,
-      "search_min": 17.8,
+      "search_usd": 32.2098,
+      "search_min": 17.5,
       "cid": 419,
       "credit": "negative",
       "archive": false,
@@ -14900,8 +14900,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.391,
-      "search_min": 17.8,
+      "search_usd": 32.3569,
+      "search_min": 17.5,
       "cid": 420,
       "credit": "neutral",
       "archive": false,
@@ -14909,8 +14909,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.391,
-      "search_min": 17.8,
+      "search_usd": 32.3569,
+      "search_min": 17.5,
       "cid": 421,
       "credit": "negative",
       "archive": true,
@@ -14918,8 +14918,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.4619,
-      "search_min": 18.0,
+      "search_usd": 32.4287,
+      "search_min": 17.6,
       "cid": 422,
       "credit": "negative",
       "archive": false,
@@ -14927,8 +14927,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.5358,
-      "search_min": 18.2,
+      "search_usd": 32.5045,
+      "search_min": 17.8,
       "cid": 423,
       "credit": "negative",
       "archive": false,
@@ -14936,8 +14936,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.6829,
-      "search_min": 18.2,
+      "search_usd": 32.6516,
+      "search_min": 17.8,
       "cid": 424,
       "credit": "neutral",
       "archive": false,
@@ -14945,8 +14945,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.83,
-      "search_min": 18.2,
+      "search_usd": 32.7987,
+      "search_min": 17.8,
       "cid": 425,
       "credit": "neutral",
       "archive": false,
@@ -14954,8 +14954,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.9771,
-      "search_min": 18.2,
+      "search_usd": 32.9458,
+      "search_min": 17.8,
       "cid": 426,
       "credit": "neutral",
       "archive": false,
@@ -14963,8 +14963,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.9771,
-      "search_min": 18.2,
+      "search_usd": 32.9458,
+      "search_min": 17.8,
       "cid": 427,
       "credit": "negative",
       "archive": true,
@@ -14972,8 +14972,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 32.9771,
-      "search_min": 18.2,
+      "search_usd": 32.9458,
+      "search_min": 17.8,
       "cid": 428,
       "credit": "negative",
       "archive": true,
@@ -14981,8 +14981,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.1242,
-      "search_min": 18.2,
+      "search_usd": 33.0929,
+      "search_min": 17.8,
       "cid": 429,
       "credit": "neutral",
       "archive": false,
@@ -14990,8 +14990,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.2713,
-      "search_min": 18.2,
+      "search_usd": 33.24,
+      "search_min": 17.8,
       "cid": 430,
       "credit": "neutral",
       "archive": false,
@@ -14999,8 +14999,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.2713,
-      "search_min": 18.2,
+      "search_usd": 33.24,
+      "search_min": 17.8,
       "cid": 431,
       "credit": "negative",
       "archive": true,
@@ -15008,8 +15008,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.2713,
-      "search_min": 18.2,
+      "search_usd": 33.24,
+      "search_min": 17.8,
       "cid": 432,
       "credit": "negative",
       "archive": true,
@@ -15017,8 +15017,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.4184,
-      "search_min": 18.2,
+      "search_usd": 33.3871,
+      "search_min": 17.8,
       "cid": 433,
       "credit": "neutral",
       "archive": false,
@@ -15026,8 +15026,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.5655,
-      "search_min": 18.2,
+      "search_usd": 33.5342,
+      "search_min": 17.8,
       "cid": 434,
       "credit": "neutral",
       "archive": false,
@@ -15035,8 +15035,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.7126,
-      "search_min": 18.2,
+      "search_usd": 33.6813,
+      "search_min": 17.8,
       "cid": 435,
       "credit": "neutral",
       "archive": false,
@@ -15044,8 +15044,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.7126,
-      "search_min": 18.2,
+      "search_usd": 33.6813,
+      "search_min": 17.8,
       "cid": 436,
       "credit": "negative",
       "archive": true,
@@ -15053,8 +15053,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.7518,
-      "search_min": 18.3,
+      "search_usd": 33.7205,
+      "search_min": 17.9,
       "cid": 437,
       "credit": "negative",
       "archive": false,
@@ -15062,8 +15062,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.8191,
-      "search_min": 18.4,
+      "search_usd": 33.7923,
+      "search_min": 18.0,
       "cid": 438,
       "credit": "negative",
       "archive": false,
@@ -15071,8 +15071,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 33.9662,
-      "search_min": 18.4,
+      "search_usd": 33.9394,
+      "search_min": 18.0,
       "cid": 439,
       "credit": "neutral",
       "archive": false,
@@ -15080,8 +15080,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 34.1133,
-      "search_min": 18.4,
+      "search_usd": 34.0865,
+      "search_min": 18.1,
       "cid": 440,
       "credit": "neutral",
       "archive": false,
@@ -15089,8 +15089,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 34.2604,
-      "search_min": 18.4,
+      "search_usd": 34.2336,
+      "search_min": 18.1,
       "cid": 441,
       "credit": "neutral",
       "archive": false,
@@ -15098,8 +15098,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 34.3288,
-      "search_min": 18.6,
+      "search_usd": 34.305,
+      "search_min": 18.2,
       "cid": 442,
       "credit": "negative",
       "archive": false,
@@ -15107,8 +15107,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 34.4078,
-      "search_min": 18.7,
+      "search_usd": 34.3791,
+      "search_min": 18.3,
       "cid": 443,
       "credit": "negative",
       "archive": false,
@@ -15116,8 +15116,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 34.5549,
-      "search_min": 18.7,
+      "search_usd": 34.5262,
+      "search_min": 18.3,
       "cid": 444,
       "credit": "neutral",
       "archive": false,
@@ -15125,8 +15125,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 34.702,
-      "search_min": 18.7,
+      "search_usd": 34.6733,
+      "search_min": 18.3,
       "cid": 445,
       "credit": "neutral",
       "archive": false,
@@ -15134,8 +15134,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 34.8491,
-      "search_min": 18.7,
+      "search_usd": 34.8204,
+      "search_min": 18.3,
       "cid": 446,
       "credit": "neutral",
       "archive": false,
@@ -15143,8 +15143,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 34.9316,
-      "search_min": 18.9,
+      "search_usd": 34.8978,
+      "search_min": 18.5,
       "cid": 447,
       "credit": "negative",
       "archive": false,
@@ -15152,8 +15152,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.0006,
-      "search_min": 19.0,
+      "search_usd": 34.9688,
+      "search_min": 18.6,
       "cid": 448,
       "credit": "negative",
       "archive": false,
@@ -15161,8 +15161,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.1477,
-      "search_min": 19.0,
+      "search_usd": 35.1159,
+      "search_min": 18.6,
       "cid": 449,
       "credit": "neutral",
       "archive": false,
@@ -15170,8 +15170,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.2222,
-      "search_min": 19.1,
+      "search_usd": 35.1879,
+      "search_min": 18.7,
       "cid": 450,
       "credit": "negative",
       "archive": false,
@@ -15179,8 +15179,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.2222,
-      "search_min": 19.1,
+      "search_usd": 35.1879,
+      "search_min": 18.7,
       "cid": 451,
       "credit": "negative",
       "archive": true,
@@ -15188,8 +15188,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.2933,
-      "search_min": 19.2,
+      "search_usd": 35.2602,
+      "search_min": 18.9,
       "cid": 452,
       "credit": "negative",
       "archive": false,
@@ -15197,8 +15197,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.3325,
-      "search_min": 19.3,
+      "search_usd": 35.2994,
+      "search_min": 18.9,
       "cid": 453,
       "credit": "negative",
       "archive": false,
@@ -15206,8 +15206,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.4796,
-      "search_min": 19.3,
+      "search_usd": 35.4465,
+      "search_min": 18.9,
       "cid": 454,
       "credit": "neutral",
       "archive": false,
@@ -15215,8 +15215,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.4796,
-      "search_min": 19.3,
+      "search_usd": 35.4465,
+      "search_min": 18.9,
       "cid": 455,
       "credit": "negative",
       "archive": true,
@@ -15224,8 +15224,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.6267,
-      "search_min": 19.3,
+      "search_usd": 35.5936,
+      "search_min": 19.0,
       "cid": 456,
       "credit": "neutral",
       "archive": false,
@@ -15233,8 +15233,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.7738,
-      "search_min": 19.3,
+      "search_usd": 35.7407,
+      "search_min": 19.0,
       "cid": 457,
       "credit": "neutral",
       "archive": false,
@@ -15242,8 +15242,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.7738,
-      "search_min": 19.3,
+      "search_usd": 35.7407,
+      "search_min": 19.0,
       "cid": 458,
       "credit": "negative",
       "archive": true,
@@ -15251,8 +15251,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.9209,
-      "search_min": 19.3,
+      "search_usd": 35.8878,
+      "search_min": 19.0,
       "cid": 459,
       "credit": "neutral",
       "archive": false,
@@ -15260,8 +15260,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 35.9209,
-      "search_min": 19.3,
+      "search_usd": 35.8878,
+      "search_min": 19.0,
       "cid": 460,
       "credit": "negative",
       "archive": true,
@@ -15269,8 +15269,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.068,
-      "search_min": 19.4,
+      "search_usd": 36.0349,
+      "search_min": 19.0,
       "cid": 461,
       "credit": "neutral",
       "archive": false,
@@ -15278,8 +15278,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.1413,
-      "search_min": 19.5,
+      "search_usd": 36.1061,
+      "search_min": 19.1,
       "cid": 462,
       "credit": "negative",
       "archive": false,
@@ -15287,8 +15287,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.2884,
-      "search_min": 19.5,
+      "search_usd": 36.2532,
+      "search_min": 19.1,
       "cid": 463,
       "credit": "neutral",
       "archive": false,
@@ -15296,8 +15296,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.3589,
-      "search_min": 19.6,
+      "search_usd": 36.3191,
+      "search_min": 19.2,
       "cid": 464,
       "credit": "negative",
       "archive": false,
@@ -15305,8 +15305,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.506,
-      "search_min": 19.6,
+      "search_usd": 36.4662,
+      "search_min": 19.2,
       "cid": 465,
       "credit": "neutral",
       "archive": false,
@@ -15314,8 +15314,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.5807,
-      "search_min": 19.7,
+      "search_usd": 36.5381,
+      "search_min": 19.3,
       "cid": 466,
       "credit": "negative",
       "archive": false,
@@ -15323,8 +15323,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.5807,
-      "search_min": 19.7,
+      "search_usd": 36.5381,
+      "search_min": 19.3,
       "cid": 467,
       "credit": "negative",
       "archive": true,
@@ -15332,8 +15332,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.5807,
-      "search_min": 19.7,
+      "search_usd": 36.5381,
+      "search_min": 19.3,
       "cid": 468,
       "credit": "negative",
       "archive": true,
@@ -15341,8 +15341,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.62,
-      "search_min": 19.8,
+      "search_usd": 36.5774,
+      "search_min": 19.4,
       "cid": 469,
       "credit": "negative",
       "archive": false,
@@ -15350,8 +15350,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.6906,
-      "search_min": 19.9,
+      "search_usd": 36.6487,
+      "search_min": 19.5,
       "cid": 470,
       "credit": "negative",
       "archive": false,
@@ -15359,8 +15359,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.8376,
-      "search_min": 19.9,
+      "search_usd": 36.7958,
+      "search_min": 19.5,
       "cid": 471,
       "credit": "neutral",
       "archive": false,
@@ -15368,8 +15368,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.8376,
-      "search_min": 19.9,
+      "search_usd": 36.7958,
+      "search_min": 19.6,
       "cid": 472,
       "credit": "negative",
       "archive": true,
@@ -15377,8 +15377,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 36.8769,
-      "search_min": 20.0,
+      "search_usd": 36.8351,
+      "search_min": 19.6,
       "cid": 473,
       "credit": "negative",
       "archive": false,
@@ -15386,8 +15386,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.024,
-      "search_min": 20.0,
+      "search_usd": 36.9822,
+      "search_min": 19.6,
       "cid": 474,
       "credit": "neutral",
       "archive": false,
@@ -15395,8 +15395,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.095,
-      "search_min": 20.1,
+      "search_usd": 37.0585,
+      "search_min": 19.8,
       "cid": 475,
       "credit": "negative",
       "archive": false,
@@ -15404,8 +15404,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.1664,
-      "search_min": 20.2,
+      "search_usd": 37.1282,
+      "search_min": 19.9,
       "cid": 476,
       "credit": "negative",
       "archive": false,
@@ -15413,8 +15413,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.1664,
-      "search_min": 20.2,
+      "search_usd": 37.1282,
+      "search_min": 19.9,
       "cid": 477,
       "credit": "negative",
       "archive": true,
@@ -15422,8 +15422,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.1664,
-      "search_min": 20.2,
+      "search_usd": 37.1282,
+      "search_min": 19.9,
       "cid": 478,
       "credit": "negative",
       "archive": true,
@@ -15431,8 +15431,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.1664,
-      "search_min": 20.2,
+      "search_usd": 37.1282,
+      "search_min": 19.9,
       "cid": 479,
       "credit": "negative",
       "archive": true,
@@ -15440,8 +15440,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.1664,
-      "search_min": 20.2,
+      "search_usd": 37.1282,
+      "search_min": 19.9,
       "cid": 480,
       "credit": "negative",
       "archive": true,
@@ -15449,8 +15449,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.3134,
-      "search_min": 20.2,
+      "search_usd": 37.2753,
+      "search_min": 19.9,
       "cid": 481,
       "credit": "neutral",
       "archive": false,
@@ -15458,8 +15458,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.3839,
-      "search_min": 20.4,
+      "search_usd": 37.343,
+      "search_min": 20.0,
       "cid": 482,
       "credit": "negative",
       "archive": false,
@@ -15467,8 +15467,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.3839,
-      "search_min": 20.4,
+      "search_usd": 37.343,
+      "search_min": 20.0,
       "cid": 483,
       "credit": "negative",
       "archive": true,
@@ -15476,8 +15476,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.3839,
-      "search_min": 20.4,
+      "search_usd": 37.343,
+      "search_min": 20.0,
       "cid": 484,
       "credit": "negative",
       "archive": true,
@@ -15485,8 +15485,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.531,
-      "search_min": 20.4,
+      "search_usd": 37.4901,
+      "search_min": 20.0,
       "cid": 485,
       "credit": "neutral",
       "archive": false,
@@ -15494,8 +15494,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.531,
-      "search_min": 20.4,
+      "search_usd": 37.4901,
+      "search_min": 20.0,
       "cid": 486,
       "credit": "negative",
       "archive": true,
@@ -15503,8 +15503,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.6781,
-      "search_min": 20.4,
+      "search_usd": 37.6372,
+      "search_min": 20.0,
       "cid": 487,
       "credit": "neutral",
       "archive": false,
@@ -15512,8 +15512,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.8252,
-      "search_min": 20.4,
+      "search_usd": 37.7843,
+      "search_min": 20.0,
       "cid": 488,
       "credit": "neutral",
       "archive": false,
@@ -15521,8 +15521,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.8252,
-      "search_min": 20.4,
+      "search_usd": 37.7843,
+      "search_min": 20.1,
       "cid": 489,
       "credit": "negative",
       "archive": true,
@@ -15530,8 +15530,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.8252,
-      "search_min": 20.4,
+      "search_usd": 37.7843,
+      "search_min": 20.1,
       "cid": 490,
       "credit": "negative",
       "archive": true,
@@ -15539,8 +15539,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 37.9723,
-      "search_min": 20.4,
+      "search_usd": 37.9314,
+      "search_min": 20.1,
       "cid": 491,
       "credit": "neutral",
       "archive": false,
@@ -15548,8 +15548,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.1194,
-      "search_min": 20.4,
+      "search_usd": 38.0785,
+      "search_min": 20.1,
       "cid": 492,
       "credit": "neutral",
       "archive": false,
@@ -15557,8 +15557,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.2665,
-      "search_min": 20.4,
+      "search_usd": 38.2256,
+      "search_min": 20.1,
       "cid": 493,
       "credit": "neutral",
       "archive": false,
@@ -15566,8 +15566,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.4136,
-      "search_min": 20.4,
+      "search_usd": 38.3727,
+      "search_min": 20.1,
       "cid": 494,
       "credit": "neutral",
       "archive": false,
@@ -15575,8 +15575,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.5607,
-      "search_min": 20.4,
+      "search_usd": 38.5198,
+      "search_min": 20.1,
       "cid": 495,
       "credit": "neutral",
       "archive": false,
@@ -15584,8 +15584,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.6334,
-      "search_min": 20.6,
+      "search_usd": 38.5893,
+      "search_min": 20.2,
       "cid": 496,
       "credit": "negative",
       "archive": false,
@@ -15593,8 +15593,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.7805,
-      "search_min": 20.6,
+      "search_usd": 38.7364,
+      "search_min": 20.2,
       "cid": 497,
       "credit": "neutral",
       "archive": false,
@@ -15602,8 +15602,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.7805,
-      "search_min": 20.6,
+      "search_usd": 38.7364,
+      "search_min": 20.2,
       "cid": 498,
       "credit": "negative",
       "archive": true,
@@ -15611,8 +15611,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.7805,
-      "search_min": 20.6,
+      "search_usd": 38.7364,
+      "search_min": 20.2,
       "cid": 499,
       "credit": "negative",
       "archive": true,
@@ -15620,8 +15620,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.8567,
-      "search_min": 20.7,
+      "search_usd": 38.8058,
+      "search_min": 20.3,
       "cid": 500,
       "credit": "negative",
       "archive": false,
@@ -15629,8 +15629,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 38.8567,
-      "search_min": 20.7,
+      "search_usd": 38.8058,
+      "search_min": 20.3,
       "cid": 501,
       "credit": "negative",
       "archive": true,
@@ -15638,8 +15638,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.0038,
-      "search_min": 20.7,
+      "search_usd": 38.9529,
+      "search_min": 20.3,
       "cid": 502,
       "credit": "neutral",
       "archive": false,
@@ -15647,8 +15647,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.1509,
-      "search_min": 20.7,
+      "search_usd": 39.0999,
+      "search_min": 20.3,
       "cid": 503,
       "credit": "neutral",
       "archive": false,
@@ -15656,8 +15656,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.2228,
-      "search_min": 20.8,
+      "search_usd": 39.1722,
+      "search_min": 20.4,
       "cid": 504,
       "credit": "negative",
       "archive": false,
@@ -15665,8 +15665,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.3699,
-      "search_min": 20.8,
+      "search_usd": 39.3193,
+      "search_min": 20.5,
       "cid": 505,
       "credit": "neutral",
       "archive": false,
@@ -15674,8 +15674,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.4386,
-      "search_min": 20.9,
+      "search_usd": 39.3869,
+      "search_min": 20.5,
       "cid": 506,
       "credit": "negative",
       "archive": false,
@@ -15683,8 +15683,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.5857,
-      "search_min": 20.9,
+      "search_usd": 39.534,
+      "search_min": 20.6,
       "cid": 507,
       "credit": "neutral",
       "archive": false,
@@ -15692,8 +15692,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.6588,
-      "search_min": 21.0,
+      "search_usd": 39.6043,
+      "search_min": 20.7,
       "cid": 508,
       "credit": "negative",
       "archive": false,
@@ -15701,8 +15701,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.8059,
-      "search_min": 21.0,
+      "search_usd": 39.7514,
+      "search_min": 20.7,
       "cid": 509,
       "credit": "neutral",
       "archive": false,
@@ -15710,8 +15710,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.8059,
-      "search_min": 21.0,
+      "search_usd": 39.7514,
+      "search_min": 20.7,
       "cid": 510,
       "credit": "negative",
       "archive": true,
@@ -15719,8 +15719,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.8059,
-      "search_min": 21.0,
+      "search_usd": 39.7514,
+      "search_min": 20.7,
       "cid": 511,
       "credit": "negative",
       "archive": true,
@@ -15728,8 +15728,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.8059,
-      "search_min": 21.0,
+      "search_usd": 39.7514,
+      "search_min": 20.7,
       "cid": 512,
       "credit": "negative",
       "archive": true,
@@ -15737,8 +15737,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.8059,
-      "search_min": 21.0,
+      "search_usd": 39.7514,
+      "search_min": 20.7,
       "cid": 513,
       "credit": "negative",
       "archive": true,
@@ -15746,8 +15746,8 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 39.8767,
-      "search_min": 21.2,
+      "search_usd": 39.8224,
+      "search_min": 20.8,
       "cid": 514,
       "credit": "negative",
       "archive": false,
@@ -15755,10 +15755,19 @@
       "best_j_mean": 0.6719
     },
     {
-      "search_usd": 40.0238,
-      "search_min": 21.2,
+      "search_usd": 39.9695,
+      "search_min": 20.8,
       "cid": 515,
       "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 40.0381,
+      "search_min": 20.9,
+      "cid": 516,
+      "credit": "negative",
       "archive": false,
       "best_j_cb": 0.5021,
       "best_j_mean": 0.6719

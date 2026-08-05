@@ -8,7 +8,7 @@
   "llm_calls_per_task": 1.0,
   "tokens_per_task": 732.5,
   "p50_sec": 0.02,
-  "p95_sec": 0.03,
+  "p95_sec": 0.02,
   "total_usd": 0.1588,
   "wall_min": 0.0,
   "reserve_rejected": 10,

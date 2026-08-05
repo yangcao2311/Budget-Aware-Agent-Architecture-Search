@@ -31,7 +31,11 @@ EXP_DIR = Path(__file__).resolve().parent.parent / "experiments"
 HUMAN_SEEDS = ["direct", "cot", "strong_manual"]
 
 FIDELITIES = [24, 64, 120]  # F1 / F2 / F3, nested prefixes of dev
-EXEC_SEEDS = [(0,), (0, 1), (0, 1, 2)]  # execution seeds per fidelity
+# Search-phase estimates use ONE execution seed at the screening rungs and
+# two at the top rung; three-seed averaging is reserved for the frozen
+# confirmation runs. At n=24 the Hoeffding half-width is 0.277, so F0 can
+# only screen out disasters -- paying for extra seeds there buys nothing.
+EXEC_SEEDS = [(0,), (0,), (0, 1)]
 
 
 @dataclass
@@ -43,13 +47,15 @@ class Candidate:
     stats: dict = field(default_factory=dict)   # fidelity level (int) -> eval dict
     j_cb: float = -1.0      # conservative (LCB): racing stop rule only
     j_mean: float = -1.0    # fidelity-comparable: selection and ranking
+    j_ucb: float = 2.0      # optimistic: racing elimination
     feasible: bool = True
     fidelity: int = -1          # highest fidelity level reached
     credit: str = ""            # kept out of `stats`: that dict is int-keyed
 
     def record(self) -> dict:
         return {"cid": self.cid, "origin": self.origin, "parent": self.parent,
-                "j_cb": self.j_cb, "j_mean": self.j_mean, "feasible": self.feasible,
+                "j_cb": self.j_cb, "j_mean": self.j_mean, "j_ucb": self.j_ucb,
+                "feasible": self.feasible,
                 "fidelity": self.fidelity, "credit": self.credit,
                 "stats": self.stats, "wf": self.wf}
 
@@ -152,6 +158,7 @@ def hbws_search(family: str, tasks: list[dict], *, cap_usd: float,
             c.stats[lvl] = res
             c.j_cb = res["j_cb"]
             c.j_mean = res["j_mean"]
+            c.j_ucb = res["j_ucb"]
             c.feasible = c.feasible and res["feasible"]
             c.fidelity = lvl
             if not c.feasible:
@@ -159,10 +166,12 @@ def hbws_search(family: str, tasks: list[dict], *, cap_usd: float,
             # Racing: stop promoting if the optimistic bound cannot reach the
             # archive's incumbent J_CB (conservative slack of one CI width).
             if archive and lvl < upto_level:
-                # Racing compares like with like: only against archive
-                # members that reached at least this fidelity.
+                # Standard racing: eliminate only when even the OPTIMISTIC
+                # view of this candidate cannot reach the incumbent's
+                # conservative bound. Comparing LCB-to-LCB with a fixed slack
+                # made promotion from F0 mathematically impossible.
                 peers = [a.j_cb for a in archive if a.fidelity >= lvl]
-                if peers and c.j_cb + 0.10 < max(peers):
+                if peers and c.j_ucb < max(peers):
                     return
 
     # -- seed population ----------------------------------------------------

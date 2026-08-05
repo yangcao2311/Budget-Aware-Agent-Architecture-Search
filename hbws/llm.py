@@ -66,10 +66,28 @@ CACHE = Cache()
 RETRYABLE = (RateLimitError, APITimeoutError, APIError, ConnectionError)
 
 
+def _encoder():
+    if getattr(_local, "enc", None) is None:
+        import tiktoken
+        try:
+            _local.enc = tiktoken.encoding_for_model(
+                os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-4o"))
+        except KeyError:
+            _local.enc = tiktoken.get_encoding("o200k_base")
+    return _local.enc
+
+
 def estimate_in_tokens(messages: list[dict]) -> int:
-    """Conservative pre-call estimate: ~1 token / 3 chars (≈33% headroom over
-    the usual 1/4 ratio). Used only for reservation, never for billing."""
-    return sum(len(m.get("content", "")) for m in messages) // 3 + 16
+    """Upper bound on prompt tokens, for reservation only (never billing).
+
+    Exact tiktoken count plus per-message chat overhead and a 5% margin.
+    A char/3 heuristic was used first and UNDER-estimated punctuation-heavy
+    code by ~55% (71 chars -> 36 real tokens vs 23 estimated), producing 124
+    settle-overruns that were wrongly scored as infeasible candidates.
+    """
+    enc = _encoder()
+    n = sum(len(enc.encode(m.get("content", ""))) + 4 for m in messages) + 3
+    return int(n * 1.05) + 16
 
 
 def chat(messages: list[dict], ledger: TaskLedger, *,

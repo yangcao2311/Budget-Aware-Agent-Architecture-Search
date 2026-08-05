@@ -3,7 +3,7 @@
     "run": "A_hbws_code_s0",
     "at_usd": 40.0,
     "best_j_cb": 0.5021,
-    "candidates_evaluated": 178
+    "candidates_evaluated": 188
   },
   {
     "run": "A_static_tight_code_s0",
@@ -15,6 +15,6 @@
     "run": "A_static_loose_code_s0",
     "at_usd": 20.0,
     "best_j_cb": 0.6115,
-    "candidates_evaluated": 131
+    "candidates_evaluated": 129
   }
 ]

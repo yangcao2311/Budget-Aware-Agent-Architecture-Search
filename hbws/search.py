@@ -165,14 +165,28 @@ def random_workflow(rng: random.Random, n_mutations: int = 3, *,
 
 # -- cross-budget evaluation (方案 v4.0 §3) ---------------------------------
 
+def _hoeffding_halfwidth(n: int, alpha: float = 0.05) -> float:
+    import math as _m
+    return _m.sqrt(_m.log(2 / alpha) / (2 * n)) if n else 1.0
+
+
 def hoeffding_lcb(successes: int, n: int, alpha: float = 0.05) -> float:
     """Conservative anytime-usable lower bound on success rate.
     Preregistered fallback bound (PREREGISTRATION §4); may be upgraded to
     empirical-Bernstein before prereg-freeze, never after."""
-    import math as _m
     if n == 0:
         return 0.0
-    return max(0.0, successes / n - _m.sqrt(_m.log(2 / alpha) / (2 * n)))
+    return max(0.0, successes / n - _hoeffding_halfwidth(n, alpha))
+
+
+def hoeffding_ucb(successes: int, n: int, alpha: float = 0.05) -> float:
+    """Optimistic counterpart. Racing must compare a candidate's UCB against
+    the incumbent's LCB: a fixed slack cannot work, because the interval
+    half-width alone differs by 0.107 between n=24 and n=64, which silently
+    made promotion from the lowest fidelity impossible."""
+    if n == 0:
+        return 1.0
+    return min(1.0, successes / n + _hoeffding_halfwidth(n, alpha))
 
 
 def cross_budget_evaluate(wf: dict, tasks: list[dict], tiers: dict, *,
@@ -208,10 +222,12 @@ def cross_budget_evaluate(wf: dict, tasks: list[dict], tiers: dict, *,
         per_tier[tname] = {
             "success_rate": round(mean, 4),
             "lcb": round(hoeffding_lcb(int(round(mean * n)), n), 4),
+            "ucb": round(hoeffding_ucb(int(round(mean * n)), n), 4),
             "usd_per_task": round(usd_total / max(1, n * len(exec_seeds)), 5),
             "n": n,
         }
     lcbs = [v["lcb"] for v in per_tier.values()]
+    ucbs = [v["ucb"] for v in per_tier.values()]
     means = [v["success_rate"] for v in per_tier.values()]
     aubpc_lcb = sum(lcbs) / len(lcbs)
     # Two scores with different jobs. j_cb (LCB-based) is CONSERVATIVE and
@@ -221,9 +237,10 @@ def cross_budget_evaluate(wf: dict, tasks: list[dict], tiers: dict, *,
     # rewards having been evaluated more, not being better.
     j_cb = 0.5 * aubpc_lcb + 0.5 * min(lcbs)
     j_mean = 0.5 * (sum(means) / len(means)) + 0.5 * min(means)
+    j_ucb = 0.5 * (sum(ucbs) / len(ucbs)) + 0.5 * min(ucbs)
     return {"per_tier": per_tier, "aubpc_lcb": round(aubpc_lcb, 4),
             "j_cb": round(j_cb, 4), "j_mean": round(j_mean, 4),
-            "feasible": feasible}
+            "j_ucb": round(j_ucb, 4), "feasible": feasible}
 
 
 # -- successive halving ------------------------------------------------------
