@@ -1,8 +1,21 @@
-# PREREGISTRATION — Budget–Structure Envelope & HBWS (DRAFT v0.9)
+# PREREGISTRATION — Repair/Breakage Decomposition of Agent Workflow Structure, and HBWS (v1.0)
 
-Status: DRAFT. Freezes upon the commit tagged `prereg-freeze` (target: 2026-08-10,
-after the cost pilot fills the TBD thresholds). After that tag, changes are
-allowed only as dated deviation records appended to §9 — never edits in place.
+Status for PART I: **FROZEN** at the commit tagged `prereg-freeze-partI`
+(2026-08-05). The Part-I confirmatory hypotheses in §2A below were written
+BEFORE any frozen-test-set or OOD execution; all Part-I numbers seen so far
+come from the dev split and are exploratory. Changes after this tag are
+allowed only as dated deviation records in §9 — never edits in place.
+
+Status for PART II (HBWS search): DRAFT until `prereg-freeze-partII`
+(target 2026-08-17, before the first full search run).
+
+## 0. Confirmatory claims and how they will be tested (Part I)
+
+Every claim below is tested ONCE on the frozen test split
+(`data/{code,math}_test.jsonl`, 150 tasks each) with 3 execution seeds,
+seed-averaged per task, stratified paired bootstrap (10,000 resamples),
+Holm-corrected within the Part-I family. Dev-set results never appear as
+confirmatory evidence in the paper.
 
 ## 1. Frozen design decisions (already binding)
 
@@ -31,18 +44,49 @@ allowed only as dated deviation records appended to §9 — never edits in place
 - Search budgets: {tight, loose} only. Policies read continuous remaining
   fractions and reserve-feasibility, never tier IDs.
 
-## 2. Hypotheses — Part I (envelope)
+## 2A. CONFIRMATORY hypotheses — Part I (FROZEN 2026-08-05)
 
-- H-E1: In ≥1 task family, the best structure changes ≥2 times across the
-  5-tier budget axis, and the crossover tier positions are stable (±1 tier)
-  across 3 execution seeds.
-- H-E2: Degrading verifier reliability (code: visible-assert masking
-  1.0/0.5/0.25/0.0; math: critic k = 3/2/1) monotonically narrows the
-  budget range where verify-refine structures are optimal (ordered bootstrap
-  trend test).
-- H-E3: Under this single protocol, low tiers reproduce the single-agent-
-  dominant finding and high tiers with reliable verifiers reproduce the
-  structure-dominant finding (each with 95% CI excluding 0).
+Reference baseline per family = the strongest single-call structure:
+`direct` for code, `cot` for math (fixed by dev results, stated here before
+any test-set run). Contrast structure = `verify_refine_3` (vanilla) and
+`incumbent_refine` / `incumbent_refine_cot` (incumbent-protecting).
+
+- **C1 (net-zero of vanilla structure).** At `loose`, the success difference
+  vanilla − baseline has a 95% CI containing 0 in BOTH families, while the
+  same comparison consumes ≥2× the dollars per task. Directional prediction:
+  |difference| ≤ 0.05.
+- **C2 (budget floor).** At `tight`, vanilla − baseline is significantly
+  negative in the code family (95% CI upper bound < 0).
+- **C3 (verifier-signal dose-response).** In the code family at `loose`,
+  vanilla − baseline is monotone non-increasing across visible-test masking
+  1.0 → 0.5 → 0.0, and is significantly negative at mask 0.0 (CI < 0).
+- **C4 (incumbent protection).** In BOTH families and at ALL of
+  {tight, unseen, loose}: (i) breakage rate of the incumbent-protecting
+  structure on baseline-solved tasks ≤ 0.02, and (ii) success is
+  non-inferior to the baseline at δ = 0.02 (one-sided 95% LCB ≥ −0.02).
+  Additionally, in the code family the difference is significantly positive
+  (CI > 0) at ≥2 of the 3 tiers.
+- **C5 (repair is verifier-bounded).** Repair rate (fraction of
+  baseline-failed tasks solved by the incumbent-protecting structure) is
+  significantly higher in the code family (oracle tests) than in the math
+  family (non-oracle self-check); math repair rate 95% CI includes 0.
+
+Definitions fixed here: breakage rate = mean over tasks the baseline solves
+(seed-averaged success = 1.0) of (1 − structure success); repair rate = mean
+over tasks the baseline never solves (0.0) of structure success.
+
+Failure handling: any claim whose CI does not meet the stated criterion is
+reported as not supported, with the observed interval. No claim is restated
+post hoc to fit the data.
+
+## 2B. Superseded exploratory hypotheses (dev only, kept for the record)
+
+- H-E1 (≥2 stable crossovers): NOT supported at full resolution (dev).
+- H-E2 (degradation narrows the advantage): supported on dev; the
+  confirmatory version is C3.
+- H-E3 (reconciliation of the two literatures): reformulated as the
+  repair/breakage decomposition (C1–C5); the reconciliation is now argued
+  from the decomposition rather than from crossover positions.
 
 ## 3. Hypotheses — Part II (HBWS)
 
