@@ -1,0 +1,17 @@
+{
+  "run": "select/A_hbws_code_s2/c5_loose",
+  "seed": 0,
+  "n": 40,
+  "success_rate": 0.8,
+  "usd_per_task": 0.00255,
+  "usd_per_success": 0.00319,
+  "llm_calls_per_task": 1.38,
+  "tokens_per_task": 420.9,
+  "p50_sec": 0.02,
+  "p95_sec": 6.78,
+  "total_usd": 0.1022,
+  "wall_min": 0.2,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

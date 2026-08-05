@@ -1,0 +1,17 @@
+{
+  "run": "select/A_hbws_code_s0/c4_tight",
+  "seed": 0,
+  "n": 40,
+  "success_rate": 0.775,
+  "usd_per_task": 0.00235,
+  "usd_per_success": 0.00304,
+  "llm_calls_per_task": 1.32,
+  "tokens_per_task": 378.6,
+  "p50_sec": 2.8,
+  "p95_sec": 7.53,
+  "total_usd": 0.0941,
+  "wall_min": 0.4,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

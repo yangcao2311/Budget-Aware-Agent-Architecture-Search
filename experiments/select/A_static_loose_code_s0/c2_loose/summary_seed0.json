@@ -1,0 +1,17 @@
+{
+  "run": "select/A_static_loose_code_s0/c2_loose",
+  "seed": 0,
+  "n": 40,
+  "success_rate": 0.675,
+  "usd_per_task": 0.00881,
+  "usd_per_success": 0.01305,
+  "llm_calls_per_task": 1.68,
+  "tokens_per_task": 1262.9,
+  "p50_sec": 0.03,
+  "p95_sec": 6.36,
+  "total_usd": 0.3523,
+  "wall_min": 0.2,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

@@ -1,0 +1,17 @@
+{
+  "run": "final/A_static_tight_math_s0/c19_test_tight",
+  "seed": 2,
+  "n": 150,
+  "success_rate": 0.76,
+  "usd_per_task": 0.00838,
+  "usd_per_success": 0.01103,
+  "llm_calls_per_task": 1.15,
+  "tokens_per_task": 914.3,
+  "p50_sec": 6.12,
+  "p95_sec": 12.42,
+  "total_usd": 1.2571,
+  "wall_min": 2.2,
+  "reserve_rejected": 128,
+  "over_budget": 0,
+  "errors": 0
+}

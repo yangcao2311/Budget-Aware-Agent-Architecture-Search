@@ -1,0 +1,164 @@
+{
+  "cid": 5,
+  "origin": "seed:random",
+  "parent": null,
+  "j_cb": 0.5646,
+  "j_mean": 0.7344,
+  "j_ucb": 0.9041,
+  "feasible": true,
+  "fidelity": 1,
+  "credit": "",
+  "stats": {
+    "0": {
+      "per_tier": {
+        "tight": {
+          "success_rate": 0.5417,
+          "lcb": 0.2644,
+          "ucb": 0.8189,
+          "usd_per_task": 0.00291,
+          "n": 24
+        },
+        "loose": {
+          "success_rate": 0.5417,
+          "lcb": 0.2644,
+          "ucb": 0.8189,
+          "usd_per_task": 0.00403,
+          "n": 24
+        }
+      },
+      "aubpc_lcb": 0.2644,
+      "j_cb": 0.2644,
+      "j_mean": 0.5417,
+      "j_ucb": 0.8189,
+      "feasible": true
+    },
+    "1": {
+      "per_tier": {
+        "tight": {
+          "success_rate": 0.7344,
+          "lcb": 0.5646,
+          "ucb": 0.9041,
+          "usd_per_task": 0.00221,
+          "n": 64
+        },
+        "loose": {
+          "success_rate": 0.7344,
+          "lcb": 0.5646,
+          "ucb": 0.9041,
+          "usd_per_task": 0.00271,
+          "n": 64
+        }
+      },
+      "aubpc_lcb": 0.5646,
+      "j_cb": 0.5646,
+      "j_mean": 0.7344,
+      "j_ucb": 0.9041,
+      "feasible": true
+    }
+  },
+  "wf": {
+    "nodes": [
+      {
+        "id": "g",
+        "type": "generate",
+        "prompt_id": "solve_direct",
+        "params": {
+          "temperature": 0.7,
+          "max_output_tokens": 1536
+        }
+      },
+      {
+        "id": "v",
+        "type": "verify"
+      },
+      {
+        "id": "b",
+        "type": "branch"
+      },
+      {
+        "id": "r",
+        "type": "refine",
+        "prompt_id": "refine_from_feedback",
+        "params": {
+          "temperature": 0.7,
+          "max_output_tokens": 1536
+        }
+      },
+      {
+        "id": "n0",
+        "type": "verify"
+      },
+      {
+        "id": "n1",
+        "type": "branch"
+      },
+      {
+        "id": "n2",
+        "type": "refine",
+        "prompt_id": "refine_from_feedback",
+        "params": {
+          "temperature": 0.7,
+          "max_output_tokens": 1536
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "g",
+        "to": "v"
+      },
+      {
+        "from": "v",
+        "to": "END",
+        "cond": "verify_passed"
+      },
+      {
+        "from": "v",
+        "to": "b",
+        "cond": "verify_failed"
+      },
+      {
+        "from": "b",
+        "to": "r",
+        "cond": "budget_above:0.4"
+      },
+      {
+        "from": "b",
+        "to": "n0",
+        "cond": "always"
+      },
+      {
+        "from": "r",
+        "to": "v",
+        "loop": true,
+        "max_iter": 3
+      },
+      {
+        "from": "n0",
+        "to": "END",
+        "cond": "verify_passed"
+      },
+      {
+        "from": "n0",
+        "to": "n1",
+        "cond": "verify_failed"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "cond": "budget_above:0.85"
+      },
+      {
+        "from": "n1",
+        "to": "END",
+        "cond": "always"
+      },
+      {
+        "from": "n2",
+        "to": "n0",
+        "loop": true,
+        "max_iter": 3
+      }
+    ]
+  }
+}

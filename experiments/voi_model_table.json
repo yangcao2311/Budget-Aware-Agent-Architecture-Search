@@ -1,0 +1,82 @@
+[
+  {
+    "condition": "code vanilla @loose (oracle tests)",
+    "p": 0.7266666666666667,
+    "r_eff": 0.20512820512820512,
+    "b_eff": 0.14018691588785048,
+    "delta_measured": -0.03333333333333334,
+    "n_hard": 39,
+    "n_easy": 107,
+    "predicted": -0.04580078281012862
+  },
+  {
+    "condition": "code vanilla @loose (50% tests)",
+    "p": 0.7266666666666667,
+    "r_eff": 0.2222222222222222,
+    "b_eff": 0.14641744548286606,
+    "delta_measured": -0.03333333333333334,
+    "n_hard": 39,
+    "n_easy": 107,
+    "predicted": -0.045655936310141934
+  },
+  {
+    "condition": "code vanilla @loose (NO signal)",
+    "p": 0.7266666666666667,
+    "r_eff": 0.17094017094017092,
+    "b_eff": 0.2336448598130841,
+    "delta_measured": -0.11777777777777779,
+    "n_hard": 39,
+    "n_easy": 107,
+    "predicted": -0.12305828474052774
+  },
+  {
+    "condition": "code vanilla @tight (budget floor)",
+    "p": 0.7266666666666667,
+    "r_eff": 0.1623931623931624,
+    "b_eff": 0.22429906542056077,
+    "delta_measured": -0.10444444444444445,
+    "n_hard": 39,
+    "n_easy": 107,
+    "predicted": -0.1186031898181431
+  },
+  {
+    "condition": "code INCUMBENT-PROTECTED @loose",
+    "p": 0.7266666666666667,
+    "r_eff": 0.05982905982905983,
+    "b_eff": 0.0,
+    "delta_measured": 0.02,
+    "n_hard": 39,
+    "n_easy": 107,
+    "predicted": 0.016353276353276353
+  },
+  {
+    "condition": "code INCUMBENT-PROTECTED @tight",
+    "p": 0.7266666666666667,
+    "r_eff": 0.034188034188034185,
+    "b_eff": 0.0,
+    "delta_measured": 0.013333333333333334,
+    "n_hard": 39,
+    "n_easy": 107,
+    "predicted": 0.009344729344729344
+  },
+  {
+    "condition": "math vanilla @loose (non-oracle critic)",
+    "p": 0.7,
+    "r_eff": 0.11711711711711711,
+    "b_eff": 0.03819444444444445,
+    "delta_measured": 0.015555555555555553,
+    "n_hard": 37,
+    "n_easy": 96,
+    "predicted": 0.008399024024024024
+  },
+  {
+    "condition": "math INCUMBENT-PROTECTED @loose",
+    "p": 0.7,
+    "r_eff": 0.036036036036036036,
+    "b_eff": 0.0,
+    "delta_measured": 0.01111111111111111,
+    "n_hard": 37,
+    "n_easy": 96,
+    "predicted": 0.010810810810810813
+  }
+]

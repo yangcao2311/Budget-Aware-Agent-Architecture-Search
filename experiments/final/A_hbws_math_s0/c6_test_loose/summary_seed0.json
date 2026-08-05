@@ -1,0 +1,17 @@
+{
+  "run": "final/A_hbws_math_s0/c6_test_loose",
+  "seed": 0,
+  "n": 150,
+  "success_rate": 0.7667,
+  "usd_per_task": 0.01851,
+  "usd_per_success": 0.02414,
+  "llm_calls_per_task": 2.37,
+  "tokens_per_task": 2144.3,
+  "p50_sec": 15.36,
+  "p95_sec": 33.23,
+  "total_usd": 2.7761,
+  "wall_min": 5.5,
+  "reserve_rejected": 27,
+  "over_budget": 0,
+  "errors": 0
+}

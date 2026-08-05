@@ -1,0 +1,17 @@
+{
+  "run": "select/A_hbws_math_s0/c8_tight",
+  "seed": 0,
+  "n": 40,
+  "success_rate": 0.675,
+  "usd_per_task": 0.00787,
+  "usd_per_success": 0.01165,
+  "llm_calls_per_task": 1.15,
+  "tokens_per_task": 877.9,
+  "p50_sec": 6.2,
+  "p95_sec": 15.5,
+  "total_usd": 0.3146,
+  "wall_min": 0.7,
+  "reserve_rejected": 34,
+  "over_budget": 0,
+  "errors": 0
+}

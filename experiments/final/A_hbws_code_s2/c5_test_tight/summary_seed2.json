@@ -1,0 +1,17 @@
+{
+  "run": "final/A_hbws_code_s2/c5_test_tight",
+  "seed": 2,
+  "n": 150,
+  "success_rate": 0.7667,
+  "usd_per_task": 0.00221,
+  "usd_per_success": 0.00288,
+  "llm_calls_per_task": 1.21,
+  "tokens_per_task": 336.8,
+  "p50_sec": 2.3,
+  "p95_sec": 5.59,
+  "total_usd": 0.3314,
+  "wall_min": 0.9,
+  "reserve_rejected": 2,
+  "over_budget": 0,
+  "errors": 0
+}

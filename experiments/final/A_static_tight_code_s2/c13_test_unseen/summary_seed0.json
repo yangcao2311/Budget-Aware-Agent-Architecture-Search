@@ -1,0 +1,17 @@
+{
+  "run": "final/A_static_tight_code_s2/c13_test_unseen",
+  "seed": 0,
+  "n": 150,
+  "success_rate": 0.76,
+  "usd_per_task": 0.00165,
+  "usd_per_success": 0.00217,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 228.0,
+  "p50_sec": 1.9,
+  "p95_sec": 3.69,
+  "total_usd": 0.2476,
+  "wall_min": 0.7,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

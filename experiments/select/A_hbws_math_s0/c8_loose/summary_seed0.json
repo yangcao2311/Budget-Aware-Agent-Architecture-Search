@@ -1,0 +1,17 @@
+{
+  "run": "select/A_hbws_math_s0/c8_loose",
+  "seed": 0,
+  "n": 40,
+  "success_rate": 0.675,
+  "usd_per_task": 0.01688,
+  "usd_per_success": 0.02501,
+  "llm_calls_per_task": 2.23,
+  "tokens_per_task": 1930.3,
+  "p50_sec": 5.57,
+  "p95_sec": 14.95,
+  "total_usd": 0.6754,
+  "wall_min": 0.6,
+  "reserve_rejected": 1,
+  "over_budget": 0,
+  "errors": 0
+}

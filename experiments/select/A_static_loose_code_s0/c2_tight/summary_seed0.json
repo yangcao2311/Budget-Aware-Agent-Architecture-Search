@@ -1,0 +1,17 @@
+{
+  "run": "select/A_static_loose_code_s0/c2_tight",
+  "seed": 0,
+  "n": 40,
+  "success_rate": 0.6,
+  "usd_per_task": 0.00611,
+  "usd_per_success": 0.01018,
+  "llm_calls_per_task": 1.02,
+  "tokens_per_task": 697.3,
+  "p50_sec": 7.64,
+  "p95_sec": 13.73,
+  "total_usd": 0.2442,
+  "wall_min": 0.8,
+  "reserve_rejected": 12,
+  "over_budget": 0,
+  "errors": 0
+}

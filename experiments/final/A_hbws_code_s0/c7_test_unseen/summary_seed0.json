@@ -1,0 +1,17 @@
+{
+  "run": "final/A_hbws_code_s0/c7_test_unseen",
+  "seed": 0,
+  "n": 150,
+  "success_rate": 0.7533,
+  "usd_per_task": 0.00225,
+  "usd_per_success": 0.00298,
+  "llm_calls_per_task": 1.21,
+  "tokens_per_task": 344.1,
+  "p50_sec": 2.19,
+  "p95_sec": 5.17,
+  "total_usd": 0.3369,
+  "wall_min": 0.9,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

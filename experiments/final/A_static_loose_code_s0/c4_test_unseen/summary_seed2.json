@@ -1,0 +1,17 @@
+{
+  "run": "final/A_static_loose_code_s0/c4_test_unseen",
+  "seed": 2,
+  "n": 150,
+  "success_rate": 0.78,
+  "usd_per_task": 0.00263,
+  "usd_per_success": 0.00337,
+  "llm_calls_per_task": 1.36,
+  "tokens_per_task": 422.6,
+  "p50_sec": 2.18,
+  "p95_sec": 9.05,
+  "total_usd": 0.3947,
+  "wall_min": 1.1,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}
