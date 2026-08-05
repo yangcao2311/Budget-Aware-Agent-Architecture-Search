@@ -1,0 +1,17 @@
+{
+  "run": "envelope_test/incumbent_refine_code_tight",
+  "seed": 2,
+  "n": 150,
+  "success_rate": 0.74,
+  "usd_per_task": 0.00218,
+  "usd_per_success": 0.00294,
+  "llm_calls_per_task": 1.22,
+  "tokens_per_task": 332.0,
+  "p50_sec": 0.02,
+  "p95_sec": 3.95,
+  "total_usd": 0.3267,
+  "wall_min": 0.2,
+  "reserve_rejected": 12,
+  "over_budget": 3,
+  "errors": 0
+}

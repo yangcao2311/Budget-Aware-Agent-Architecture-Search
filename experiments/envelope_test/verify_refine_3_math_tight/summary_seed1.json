@@ -1,0 +1,17 @@
+{
+  "run": "envelope_test/verify_refine_3_math_tight",
+  "seed": 1,
+  "n": 150,
+  "success_rate": 0.7,
+  "usd_per_task": 0.00748,
+  "usd_per_success": 0.01069,
+  "llm_calls_per_task": 1.13,
+  "tokens_per_task": 810.0,
+  "p50_sec": 6.34,
+  "p95_sec": 10.6,
+  "total_usd": 1.1224,
+  "wall_min": 2.2,
+  "reserve_rejected": 121,
+  "over_budget": 11,
+  "errors": 0
+}

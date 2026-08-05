@@ -169,4 +169,28 @@ baselines, 3 search seeds, $0.15 unseen evaluation.
 
 ## 9. Post-freeze deviation log
 
-(append-only; empty until prereg-freeze)
+(append-only)
+
+- **2026-08-05 — Part-I confirmatory run executed once on the frozen test
+  split (150 tasks/family, 3 execution seeds). Verdicts, recorded verbatim
+  with no post-hoc restatement:**
+  - C1 SUPPORTED. Vanilla verify-refine vs baseline @ loose: code
+    −0.033 [−0.087, +0.020] at 5.5× the cost; math +0.016 [−0.016, +0.047]
+    at 2.2× the cost. Net-zero quality for multiplied spend, both families.
+  - C2 SUPPORTED. Code @ tight: −0.104 [−0.162, −0.047].
+  - C3 SUPPORTED. Code @ loose across visible-test masking 1.0 → 0.5 → 0.0:
+    −0.033, −0.033, −0.118 [−0.178, −0.058]; monotone and significantly
+    harmful with no signal.
+  - C4 SUPPORTED. Incumbent protection: breakage 0.000 in every family ×
+    tier cell; code significant at 3/3 tiers (+0.013, +0.020, +0.020);
+    math non-inferior at all tiers and significant at loose (+0.011
+    [+0.002, +0.022]).
+  - **C5 NOT SUPPORTED.** Predicted: oracle-verified repair strictly
+    exceeds non-oracle repair, with the math CI containing 0. Observed:
+    code repair 0.060 [0.000, 0.137] (n=39), math repair 0.036
+    [0.009, 0.072] (n=37). The intervals overlap and the math interval
+    EXCLUDES zero — non-oracle self-check does produce real repair, and the
+    oracle/non-oracle gap is not resolvable at this sample size. The dev
+    split had shown math repair = 0.000; that was not reproduced. No
+    claim about verifier-type-bounded repair will be made in the paper
+    beyond the observed intervals.

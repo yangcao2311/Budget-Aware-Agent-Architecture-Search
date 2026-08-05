@@ -1,0 +1,17 @@
+{
+  "run": "envelope_test_mask0.5_k1/verify_refine_3_code_loose",
+  "seed": 0,
+  "n": 150,
+  "success_rate": 0.72,
+  "usd_per_task": 0.00876,
+  "usd_per_success": 0.01216,
+  "llm_calls_per_task": 1.62,
+  "tokens_per_task": 1231.6,
+  "p50_sec": 0.02,
+  "p95_sec": 8.5,
+  "total_usd": 1.3137,
+  "wall_min": 0.5,
+  "reserve_rejected": 1,
+  "over_budget": 0,
+  "errors": 0
+}
