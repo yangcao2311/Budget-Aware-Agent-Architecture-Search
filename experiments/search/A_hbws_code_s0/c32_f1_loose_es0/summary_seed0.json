@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_code_s0/c32_f1_loose_es0",
+  "seed": 0,
+  "n": 64,
+  "success_rate": 0.7656,
+  "usd_per_task": 0.0072,
+  "usd_per_success": 0.0094,
+  "llm_calls_per_task": 1.31,
+  "tokens_per_task": 948.2,
+  "p50_sec": 0.02,
+  "p95_sec": 4.57,
+  "total_usd": 0.4606,
+  "wall_min": 0.1,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

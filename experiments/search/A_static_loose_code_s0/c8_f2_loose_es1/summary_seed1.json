@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_loose_code_s0/c8_f2_loose_es1",
+  "seed": 1,
+  "n": 120,
+  "success_rate": 0.7167,
+  "usd_per_task": 0.00324,
+  "usd_per_success": 0.00452,
+  "llm_calls_per_task": 2.0,
+  "tokens_per_task": 445.5,
+  "p50_sec": 4.61,
+  "p95_sec": 7.99,
+  "total_usd": 0.3891,
+  "wall_min": 1.4,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

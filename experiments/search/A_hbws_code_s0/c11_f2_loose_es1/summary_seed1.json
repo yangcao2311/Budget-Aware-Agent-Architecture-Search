@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_code_s0/c11_f2_loose_es1",
+  "seed": 1,
+  "n": 120,
+  "success_rate": 0.7083,
+  "usd_per_task": 0.00249,
+  "usd_per_success": 0.00351,
+  "llm_calls_per_task": 1.29,
+  "tokens_per_task": 385.5,
+  "p50_sec": 0.03,
+  "p95_sec": 4.88,
+  "total_usd": 0.2986,
+  "wall_min": 0.3,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

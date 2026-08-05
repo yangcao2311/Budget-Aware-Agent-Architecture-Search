@@ -1,20 +1,20 @@
 [
   {
     "run": "A_hbws_code_s0",
-    "at_usd": 40.0,
-    "best_j_cb": 0.5021,
-    "candidates_evaluated": 188
+    "at_usd": 60.0,
+    "best_j_cb": 0.6031,
+    "candidates_evaluated": 32
   },
   {
     "run": "A_static_tight_code_s0",
-    "at_usd": 20.0,
-    "best_j_cb": 0.5021,
-    "candidates_evaluated": 273
+    "at_usd": 30.0,
+    "best_j_cb": 0.5677,
+    "candidates_evaluated": 45
   },
   {
     "run": "A_static_loose_code_s0",
-    "at_usd": 20.0,
+    "at_usd": 30.0,
     "best_j_cb": 0.6115,
-    "candidates_evaluated": 129
+    "candidates_evaluated": 18
   }
 ]
