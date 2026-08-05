@@ -9,16 +9,21 @@ inside \\boxed{}.
 CODE_FORMAT = ("Write a self-contained Python function solving the task. "
                "Return ONLY one ```python code block with the complete solution.")
 MATH_FORMAT = ("End your response with the final answer in \\boxed{...}.")
+LOGIC_FORMAT = ("End your response with the final answer choice in "
+                "\\boxed{...}, e.g. \\boxed{(A)}.")
 
 PROMPTS = {
     "solve_direct": {
         "code": "{task}\n\n" + CODE_FORMAT,
         "math": "{task}\n\n" + MATH_FORMAT,
+        "logic": "{task}\n\n" + LOGIC_FORMAT,
     },
     "solve_cot": {
         "code": ("{task}\n\nFirst reason step by step about edge cases and the "
                  "algorithm, then " + CODE_FORMAT),
         "math": ("{task}\n\nReason step by step, checking each step. " + MATH_FORMAT),
+        "logic": ("{task}\n\nWork through the constraints one at a time, "
+                  "eliminating options as you go. " + LOGIC_FORMAT),
     },
     "self_check": {
         "code": ("Task:\n{task}\n\nCandidate solution:\n{solution}\n\n"
@@ -27,6 +32,9 @@ PROMPTS = {
         "math": ("Problem:\n{task}\n\nCandidate solution:\n{solution}\n\n"
                  "Verify each step. If correct, restate the answer; otherwise "
                  "redo the solution. " + MATH_FORMAT),
+        "logic": ("Problem:\n{task}\n\nCandidate answer:\n{solution}\n\n"
+                  "Re-check every constraint. If consistent, restate the answer; "
+                  "otherwise redo it. " + LOGIC_FORMAT),
     },
     "refine_from_feedback": {
         "code": ("Task:\n{task}\n\nPrevious attempt:\n{solution}\n\n"
@@ -35,6 +43,9 @@ PROMPTS = {
         "math": ("Problem:\n{task}\n\nPrevious attempt:\n{solution}\n\n"
                  "Feedback:\n{feedback}\n\n"
                  "Rework the solution carefully. " + MATH_FORMAT),
+        "logic": ("Problem:\n{task}\n\nPrevious attempt:\n{solution}\n\n"
+                  "Feedback:\n{feedback}\n\n"
+                  "Rework it, re-checking each constraint. " + LOGIC_FORMAT),
     },
     "decompose": {
         "code": ("{task}\n\nBreak this task into 2-4 subproblems (input handling, "
@@ -55,6 +66,9 @@ PROMPTS = {
         "math": ("Solve this problem completely independently, step by step. "
                  "Do not assume any previous attempt is correct.\n\n"
                  "Problem:\n{task}\n\n" + MATH_FORMAT),
+        "logic": ("Solve this problem completely independently, checking every "
+                  "constraint yourself. Do not assume any previous attempt is "
+                  "correct.\n\nProblem:\n{task}\n\n" + LOGIC_FORMAT),
     },
 }
 

@@ -68,7 +68,8 @@ def main():
     ap.add_argument("--families", nargs="+", default=["code", "math"])
     ap.add_argument("--n", type=int, default=120)
     ap.add_argument("--split", default="dev",
-                    choices=["dev", "val", "test", "ood", "ood_visible"])
+                    choices=["dev", "val", "test", "ood", "ood_visible",
+                             "logic_prospective"])
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--mask-tests", type=float, default=1.0)
     ap.add_argument("--critic-k", type=int, default=1)
@@ -84,6 +85,9 @@ def main():
         if args.split == "ood_visible":
             from hbws.data import load_ood_visible
             tasks = load_ood_visible()[:args.n]
+        elif args.split == "logic_prospective":
+            from hbws.data import load_logic
+            tasks = load_logic()[:args.n]
         else:
             tasks = load_split(fam, args.split)[:args.n]
         if fam == "code" and args.mask_tests < 1.0:

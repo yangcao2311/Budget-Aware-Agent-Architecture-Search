@@ -96,7 +96,11 @@ class WorkflowRun:
                         max_tokens=1536, seed=(self.seed or 0) * 100 + 50 + i,
                         use_cache=self.use_cache)
                     a2 = verify.extract_boxed(check)
-                    if a1 is not None and a2 is not None and verify.math_equal(a1, a2):
+                    if a1 is None or a2 is None:
+                        continue
+                    same = (verify.same_choice(a1, a2) if fam == "logic"
+                            else verify.math_equal(a1, a2))
+                    if same:
                         agree += 1
                 ok = agree * 2 > k
                 fb = ("independent check agrees" if ok else
@@ -110,7 +114,7 @@ class WorkflowRun:
 
     def _majority(self, answers: list[str]) -> str:
         fam = self.task["family"]
-        if fam == "math":
+        if fam in ("math", "logic"):
             keyf = lambda a: verify._norm(verify.extract_boxed(a) or "")
         else:
             keyf = lambda a: verify.extract_code(a)

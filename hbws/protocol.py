@@ -23,6 +23,8 @@ def grade(task: dict, solution: str) -> bool:
     if task["family"] == "code":
         ok, _ = verify.run_code_tests(solution, task["grading_tests"])
         return ok
+    if task["family"] == "logic":
+        return verify.grade_choice(solution, task["gold_answer"])
     return verify.grade_math(solution, task["gold_answer"])
 
 

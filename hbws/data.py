@@ -121,3 +121,36 @@ def load_ood_visible() -> list[dict]:
     yielded parsable examples are returned."""
     rows = [json.loads(l) for l in open(DATA_DIR / "code_ood_visible.jsonl")]
     return [r for r in rows if r["feedback_tests"].strip()]
+
+
+# ---------------------------------------------------------------------------
+# Third domain, added 2026-08-05 for PROSPECTIVE validation only.
+# BIG-Bench Hard logical-deduction and related deterministic reasoning tasks:
+# neither code nor math, multiple-choice, exact-match grading. Never used in
+# any search, tuning, or selection.
+# ---------------------------------------------------------------------------
+
+BBH_SUBTASKS = ["logical_deduction_five_objects",
+                "logical_deduction_seven_objects",
+                "tracking_shuffled_objects_five_objects",
+                "date_understanding"]
+
+
+def prepare_logic(n: int = 120):
+    from datasets import load_dataset
+    rng = random.Random(SPLIT_SEED)
+    rows = []
+    for sub in BBH_SUBTASKS:
+        ds = load_dataset("lukaemon/bbh", sub, split="test")
+        for i, ex in enumerate(ds):
+            if not re.match(r"^\([A-Z]\)$", ex["target"].strip()):
+                continue
+            rows.append({"id": f"bbh_{sub}_{i}", "family": "logic",
+                         "prompt": ex["input"], "gold_answer": ex["target"].strip(),
+                         "subject": sub})
+    rng.shuffle(rows)
+    _dump("logic_prospective.jsonl", rows[:n])
+
+
+def load_logic() -> list[dict]:
+    return [json.loads(l) for l in open(DATA_DIR / "logic_prospective.jsonl")]

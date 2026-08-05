@@ -118,6 +118,28 @@ def math_equal(pred: str | None, gold: str) -> bool:
         return False
 
 
+_CHOICE = re.compile(r"\(([A-Z])\)")
+
+
+def same_choice(a: str, b: str) -> bool:
+    """Do two answer strings name the same multiple-choice option?
+    Tolerates "(A)" vs "A" vs "Option A"."""
+    ca = _CHOICE.findall(a) or re.findall(r"\b([A-Z])\b", a)
+    cb = _CHOICE.findall(b) or re.findall(r"\b([A-Z])\b", b)
+    return bool(ca) and bool(cb) and ca[-1] == cb[-1]
+
+
+def grade_choice(solution_text: str, gold_answer: str) -> bool:
+    """Multiple-choice grading for the logic family: compare the boxed
+    choice label, falling back to the last (X) mentioned."""
+    pred = extract_boxed(solution_text)
+    cand = _CHOICE.findall(pred or "") or _CHOICE.findall(solution_text or "")
+    gold = _CHOICE.findall(gold_answer or "")
+    if not cand or not gold:
+        return False
+    return cand[-1] == gold[-1]
+
+
 def grade_math(solution_text: str, gold_answer: str) -> bool:
     """FINAL grading only. Gold answers must never reach a workflow's verify
     node (label leakage): the runner's internal math verifier is an LLM
