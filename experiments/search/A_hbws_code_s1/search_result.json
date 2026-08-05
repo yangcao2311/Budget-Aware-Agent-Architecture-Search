@@ -1,0 +1,2157 @@
+{
+  "run": "A_hbws_code_s1",
+  "family": "code",
+  "mode": "hbws",
+  "seed": 1,
+  "cap_usd": 60.0,
+  "search_usd": 60.288,
+  "search_min": 27.8,
+  "n_candidates": 34,
+  "archive": [
+    {
+      "cid": 8,
+      "origin": "mut:gen1",
+      "parent": 2,
+      "j_cb": 0.6031,
+      "j_mean": 0.7271,
+      "j_ucb": 0.8511,
+      "feasible": true,
+      "fidelity": 2,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00303,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "ucb": 0.8606,
+              "usd_per_task": 0.00384,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.2853,
+          "j_cb": 0.2748,
+          "j_mean": 0.5521,
+          "j_ucb": 0.8293,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.75,
+              "lcb": 0.5802,
+              "ucb": 0.9198,
+              "usd_per_task": 0.00215,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.7344,
+              "lcb": 0.5646,
+              "ucb": 0.9041,
+              "usd_per_task": 0.00272,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.5724,
+          "j_cb": 0.5685,
+          "j_mean": 0.7383,
+          "j_ucb": 0.908,
+          "feasible": true
+        },
+        "2": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7333,
+              "lcb": 0.6094,
+              "ucb": 0.8573,
+              "usd_per_task": 0.00233,
+              "n": 120
+            },
+            "loose": {
+              "success_rate": 0.725,
+              "lcb": 0.601,
+              "ucb": 0.849,
+              "usd_per_task": 0.00282,
+              "n": 120
+            }
+          },
+          "aubpc_lcb": 0.6052,
+          "j_cb": 0.6031,
+          "j_mean": 0.7271,
+          "j_ucb": 0.8511,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "r",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 2
+          }
+        ]
+      }
+    },
+    {
+      "cid": 25,
+      "origin": "mut:gen5",
+      "parent": 19,
+      "j_cb": 0.5969,
+      "j_mean": 0.7239,
+      "j_ucb": 0.8448,
+      "feasible": true,
+      "fidelity": 2,
+      "credit": "neutral",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00249,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00252,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.2644,
+          "j_cb": 0.2644,
+          "j_mean": 0.5417,
+          "j_ucb": 0.8189,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7344,
+              "lcb": 0.5646,
+              "ucb": 0.9041,
+              "usd_per_task": 0.00203,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.7344,
+              "lcb": 0.5646,
+              "ucb": 0.9041,
+              "usd_per_task": 0.00203,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.5646,
+          "j_cb": 0.5646,
+          "j_mean": 0.7344,
+          "j_ucb": 0.9041,
+          "feasible": true
+        },
+        "2": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7208,
+              "lcb": 0.5927,
+              "ucb": 0.8406,
+              "usd_per_task": 0.00207,
+              "n": 120
+            },
+            "loose": {
+              "success_rate": 0.7333,
+              "lcb": 0.6094,
+              "ucb": 0.8573,
+              "usd_per_task": 0.00205,
+              "n": 120
+            }
+          },
+          "aubpc_lcb": 0.6011,
+          "j_cb": 0.5969,
+          "j_mean": 0.7239,
+          "j_ucb": 0.8448,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "b",
+            "type": "branch"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "b",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "b",
+            "to": "r",
+            "cond": "budget_above:0.7"
+          },
+          {
+            "from": "b",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 3
+          }
+        ]
+      }
+    },
+    {
+      "cid": 19,
+      "origin": "mut:gen4",
+      "parent": 9,
+      "j_cb": 0.5948,
+      "j_mean": 0.7218,
+      "j_ucb": 0.8427,
+      "feasible": true,
+      "fidelity": 2,
+      "credit": "neutral",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.0025,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.0025,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.2644,
+          "j_cb": 0.2644,
+          "j_mean": 0.5417,
+          "j_ucb": 0.8189,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7344,
+              "lcb": 0.5646,
+              "ucb": 0.9041,
+              "usd_per_task": 0.00202,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.7344,
+              "lcb": 0.5646,
+              "ucb": 0.9041,
+              "usd_per_task": 0.00204,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.5646,
+          "j_cb": 0.5646,
+          "j_mean": 0.7344,
+          "j_ucb": 0.9041,
+          "feasible": true
+        },
+        "2": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7208,
+              "lcb": 0.5927,
+              "ucb": 0.8406,
+              "usd_per_task": 0.00205,
+              "n": 120
+            },
+            "loose": {
+              "success_rate": 0.725,
+              "lcb": 0.601,
+              "ucb": 0.849,
+              "usd_per_task": 0.00207,
+              "n": 120
+            }
+          },
+          "aubpc_lcb": 0.5968,
+          "j_cb": 0.5948,
+          "j_mean": 0.7218,
+          "j_ucb": 0.8427,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "b",
+            "type": "branch"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "b",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "b",
+            "to": "r",
+            "cond": "budget_above:0.75"
+          },
+          {
+            "from": "b",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 3
+          }
+        ]
+      }
+    },
+    {
+      "cid": 0,
+      "origin": "seed:direct",
+      "parent": null,
+      "j_cb": 0.549,
+      "j_mean": 0.7188,
+      "j_ucb": 0.8885,
+      "feasible": true,
+      "fidelity": 1,
+      "credit": "",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "ucb": 0.8606,
+              "usd_per_task": 0.00172,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "ucb": 0.8606,
+              "usd_per_task": 0.00172,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.3061,
+          "j_cb": 0.3061,
+          "j_mean": 0.5833,
+          "j_ucb": 0.8606,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7188,
+              "lcb": 0.549,
+              "ucb": 0.8885,
+              "usd_per_task": 0.00165,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.7188,
+              "lcb": 0.549,
+              "ucb": 0.8885,
+              "usd_per_task": 0.00165,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.549,
+          "j_cb": 0.549,
+          "j_mean": 0.7188,
+          "j_ucb": 0.8885,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1024
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 11,
+      "origin": "mut:gen2",
+      "parent": 9,
+      "j_cb": 0.5865,
+      "j_mean": 0.7104,
+      "j_ucb": 0.8344,
+      "feasible": true,
+      "fidelity": 2,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00182,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00247,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.2644,
+          "j_cb": 0.2644,
+          "j_mean": 0.5417,
+          "j_ucb": 0.8189,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7188,
+              "lcb": 0.549,
+              "ucb": 0.8885,
+              "usd_per_task": 0.00167,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.7344,
+              "lcb": 0.5646,
+              "ucb": 0.9041,
+              "usd_per_task": 0.00204,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.5568,
+          "j_cb": 0.5529,
+          "j_mean": 0.7227,
+          "j_ucb": 0.8924,
+          "feasible": true
+        },
+        "2": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7083,
+              "lcb": 0.5844,
+              "ucb": 0.8323,
+              "usd_per_task": 0.00164,
+              "n": 120
+            },
+            "loose": {
+              "success_rate": 0.7167,
+              "lcb": 0.5927,
+              "ucb": 0.8406,
+              "usd_per_task": 0.00206,
+              "n": 120
+            }
+          },
+          "aubpc_lcb": 0.5886,
+          "j_cb": 0.5865,
+          "j_mean": 0.7104,
+          "j_ucb": 0.8344,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "b",
+            "type": "branch"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "b",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "b",
+            "to": "r",
+            "cond": "budget_above:0.8"
+          },
+          {
+            "from": "b",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 3
+          }
+        ]
+      }
+    },
+    {
+      "cid": 15,
+      "origin": "mut:gen3",
+      "parent": 9,
+      "j_cb": 0.5844,
+      "j_mean": 0.7083,
+      "j_ucb": 0.8323,
+      "feasible": true,
+      "fidelity": 2,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00182,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00182,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.2644,
+          "j_cb": 0.2644,
+          "j_mean": 0.5417,
+          "j_ucb": 0.8189,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7188,
+              "lcb": 0.549,
+              "ucb": 0.8885,
+              "usd_per_task": 0.00167,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.7188,
+              "lcb": 0.549,
+              "ucb": 0.8885,
+              "usd_per_task": 0.00167,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.549,
+          "j_cb": 0.549,
+          "j_mean": 0.7188,
+          "j_ucb": 0.8885,
+          "feasible": true
+        },
+        "2": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7083,
+              "lcb": 0.5844,
+              "ucb": 0.8323,
+              "usd_per_task": 0.00164,
+              "n": 120
+            },
+            "loose": {
+              "success_rate": 0.7083,
+              "lcb": 0.5844,
+              "ucb": 0.8323,
+              "usd_per_task": 0.00164,
+              "n": 120
+            }
+          },
+          "aubpc_lcb": 0.5844,
+          "j_cb": 0.5844,
+          "j_mean": 0.7083,
+          "j_ucb": 0.8323,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "b",
+            "type": "branch"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "b",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "b",
+            "to": "r",
+            "cond": "budget_above:0.85"
+          },
+          {
+            "from": "b",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 3
+          }
+        ]
+      }
+    },
+    {
+      "cid": 28,
+      "origin": "mut:gen6",
+      "parent": 25,
+      "j_cb": 0.5844,
+      "j_mean": 0.7083,
+      "j_ucb": 0.8323,
+      "feasible": true,
+      "fidelity": 2,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00182,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00182,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.2644,
+          "j_cb": 0.2644,
+          "j_mean": 0.5417,
+          "j_ucb": 0.8189,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7188,
+              "lcb": 0.549,
+              "ucb": 0.8885,
+              "usd_per_task": 0.00167,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.7188,
+              "lcb": 0.549,
+              "ucb": 0.8885,
+              "usd_per_task": 0.00167,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.549,
+          "j_cb": 0.549,
+          "j_mean": 0.7188,
+          "j_ucb": 0.8885,
+          "feasible": true
+        },
+        "2": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.7083,
+              "lcb": 0.5844,
+              "ucb": 0.8323,
+              "usd_per_task": 0.00164,
+              "n": 120
+            },
+            "loose": {
+              "success_rate": 0.7083,
+              "lcb": 0.5844,
+              "ucb": 0.8323,
+              "usd_per_task": 0.00164,
+              "n": 120
+            }
+          },
+          "aubpc_lcb": 0.5844,
+          "j_cb": 0.5844,
+          "j_mean": 0.7083,
+          "j_ucb": 0.8323,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "b",
+            "type": "branch"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "b",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "b",
+            "to": "r",
+            "cond": "budget_above:0.85"
+          },
+          {
+            "from": "b",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 3
+          }
+        ]
+      }
+    },
+    {
+      "cid": 13,
+      "origin": "mut:gen2",
+      "parent": 1,
+      "j_cb": 0.5677,
+      "j_mean": 0.6917,
+      "j_ucb": 0.8156,
+      "feasible": true,
+      "fidelity": 2,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.4583,
+              "lcb": 0.1811,
+              "ucb": 0.7356,
+              "usd_per_task": 0.00174,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.4583,
+              "lcb": 0.1811,
+              "ucb": 0.7356,
+              "usd_per_task": 0.00174,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.1811,
+          "j_cb": 0.1811,
+          "j_mean": 0.4583,
+          "j_ucb": 0.7356,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.6719,
+              "lcb": 0.5021,
+              "ucb": 0.8416,
+              "usd_per_task": 0.00159,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.6719,
+              "lcb": 0.5021,
+              "ucb": 0.8416,
+              "usd_per_task": 0.00159,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.5021,
+          "j_cb": 0.5021,
+          "j_mean": 0.6719,
+          "j_ucb": 0.8416,
+          "feasible": true
+        },
+        "2": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.6917,
+              "lcb": 0.5677,
+              "ucb": 0.8156,
+              "usd_per_task": 0.0016,
+              "n": 120
+            },
+            "loose": {
+              "success_rate": 0.6917,
+              "lcb": 0.5677,
+              "ucb": 0.8156,
+              "usd_per_task": 0.0016,
+              "n": 120
+            }
+          },
+          "aubpc_lcb": 0.5677,
+          "j_cb": 0.5677,
+          "j_mean": 0.6917,
+          "j_ucb": 0.8156,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 2,
+      "origin": "seed:strong_manual",
+      "parent": null,
+      "j_cb": 0.4943,
+      "j_mean": 0.6641,
+      "j_ucb": 0.8338,
+      "feasible": true,
+      "fidelity": 1,
+      "credit": "",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5417,
+              "lcb": 0.2644,
+              "ucb": 0.8189,
+              "usd_per_task": 0.00662,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.6667,
+              "lcb": 0.3894,
+              "ucb": 0.9439,
+              "usd_per_task": 0.01049,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.3269,
+          "j_cb": 0.2957,
+          "j_mean": 0.5729,
+          "j_ucb": 0.8501,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.625,
+              "lcb": 0.4552,
+              "ucb": 0.7948,
+              "usd_per_task": 0.00632,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.7812,
+              "lcb": 0.6115,
+              "ucb": 0.951,
+              "usd_per_task": 0.00815,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.5333,
+          "j_cb": 0.4943,
+          "j_mean": 0.6641,
+          "j_ucb": 0.8338,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "r",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 2
+          }
+        ]
+      }
+    },
+    {
+      "cid": 3,
+      "origin": "seed:random",
+      "parent": null,
+      "j_cb": 0.0453,
+      "j_mean": 0.1146,
+      "j_ucb": 0.3918,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.4583,
+              "lcb": 0.1811,
+              "ucb": 0.7356,
+              "usd_per_task": 0.01272,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0906,
+          "j_cb": 0.0453,
+          "j_mean": 0.1146,
+          "j_ucb": 0.3918,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.8,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 5,
+      "origin": "seed:random",
+      "parent": null,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "j_ucb": 0.2772,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "j_ucb": 0.2772,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "self_check",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "r"
+          },
+          {
+            "from": "r",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 6,
+      "origin": "mut:gen1",
+      "parent": 0,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "j_ucb": 0.2772,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "j_ucb": 0.2772,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1024
+            },
+            "k": 4,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 20,
+      "origin": "mut:gen4",
+      "parent": 0,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "j_ucb": 0.2772,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "j_ucb": 0.2772,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1024
+            },
+            "k": 5,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 22,
+      "origin": "mut:gen5",
+      "parent": 8,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "j_ucb": 0.2772,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "j_ucb": 0.2772,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            },
+            "k": 4,
+            "aggregator": "majority"
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "r",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 2
+          }
+        ]
+      }
+    },
+    {
+      "cid": 23,
+      "origin": "mut:gen5",
+      "parent": 9,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "j_ucb": 0.2772,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "j_ucb": 0.2772,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "b",
+            "type": "branch"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "b",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "b",
+            "to": "r",
+            "cond": "budget_above:0.3"
+          },
+          {
+            "from": "b",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 3
+          }
+        ]
+      }
+    },
+    {
+      "cid": 27,
+      "origin": "mut:gen6",
+      "parent": 9,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "j_ucb": 0.2772,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "j_ucb": 0.2772,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            },
+            "k": 4,
+            "aggregator": "majority"
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "b",
+            "type": "branch"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "b",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "b",
+            "to": "r",
+            "cond": "budget_above:0.3"
+          },
+          {
+            "from": "b",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 3
+          }
+        ]
+      }
+    },
+    {
+      "cid": 30,
+      "origin": "mut:gen7",
+      "parent": 8,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "j_ucb": 0.2772,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "j_ucb": 0.2772,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "r",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 2
+          }
+        ]
+      }
+    },
+    {
+      "cid": 32,
+      "origin": "mut:gen7",
+      "parent": 25,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "j_ucb": 0.2772,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "ucb": 0.2772,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "j_ucb": 0.2772,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_direct",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "b",
+            "type": "branch"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "b",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "b",
+            "to": "r",
+            "cond": "budget_above:0.7"
+          },
+          {
+            "from": "b",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 3
+          }
+        ]
+      }
+    }
+  ],
+  "anytime": [
+    {
+      "search_usd": 0.2933,
+      "search_min": 0.3,
+      "cid": 0,
+      "best_j_cb": 0.549,
+      "best_j_mean": 0.7188
+    },
+    {
+      "search_usd": 1.3593,
+      "search_min": 0.4,
+      "cid": 1,
+      "best_j_cb": 0.549,
+      "best_j_mean": 0.7188
+    },
+    {
+      "search_usd": 2.6963,
+      "search_min": 0.8,
+      "cid": 2,
+      "best_j_cb": 0.549,
+      "best_j_mean": 0.7188
+    },
+    {
+      "search_usd": 3.0015,
+      "search_min": 0.8,
+      "cid": 3,
+      "best_j_cb": 0.549,
+      "best_j_mean": 0.7188
+    },
+    {
+      "search_usd": 4.3708,
+      "search_min": 1.3,
+      "cid": 4,
+      "best_j_cb": 0.549,
+      "best_j_mean": 0.7188
+    },
+    {
+      "search_usd": 4.3708,
+      "search_min": 1.3,
+      "cid": 5,
+      "best_j_cb": 0.549,
+      "best_j_mean": 0.7188
+    },
+    {
+      "search_usd": 4.3708,
+      "search_min": 1.3,
+      "cid": 6,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.549,
+      "best_j_mean": 0.7188
+    },
+    {
+      "search_usd": 8.6629,
+      "search_min": 1.9,
+      "cid": 7,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.549,
+      "best_j_mean": 0.7188
+    },
+    {
+      "search_usd": 10.3751,
+      "search_min": 4.4,
+      "cid": 8,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 12.2321,
+      "search_min": 6.5,
+      "cid": 9,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 17.1665,
+      "search_min": 7.9,
+      "cid": 10,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 18.3962,
+      "search_min": 8.9,
+      "cid": 11,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 22.3239,
+      "search_min": 9.0,
+      "cid": 12,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 23.3798,
+      "search_min": 9.8,
+      "cid": 13,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 25.104,
+      "search_min": 11.6,
+      "cid": 14,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 26.1939,
+      "search_min": 12.3,
+      "cid": 15,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 30.1216,
+      "search_min": 12.4,
+      "cid": 16,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 34.6274,
+      "search_min": 13.1,
+      "cid": 17,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 36.3442,
+      "search_min": 14.8,
+      "cid": 18,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 37.7127,
+      "search_min": 16.0,
+      "cid": 19,
+      "credit": "neutral",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 37.7127,
+      "search_min": 16.0,
+      "cid": 20,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 42.6542,
+      "search_min": 17.5,
+      "cid": 21,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 42.6542,
+      "search_min": 17.5,
+      "cid": 22,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 42.6542,
+      "search_min": 17.5,
+      "cid": 23,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 47.6057,
+      "search_min": 18.9,
+      "cid": 24,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 48.9745,
+      "search_min": 20.2,
+      "cid": 25,
+      "credit": "neutral",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 50.6969,
+      "search_min": 21.9,
+      "cid": 26,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 50.6969,
+      "search_min": 21.9,
+      "cid": 27,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 51.7868,
+      "search_min": 22.6,
+      "cid": 28,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 53.5028,
+      "search_min": 24.3,
+      "cid": 29,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 53.5028,
+      "search_min": 24.3,
+      "cid": 30,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 55.3321,
+      "search_min": 26.3,
+      "cid": 31,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 55.3321,
+      "search_min": 26.3,
+      "cid": 32,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    },
+    {
+      "search_usd": 60.288,
+      "search_min": 27.8,
+      "cid": 33,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.6031,
+      "best_j_mean": 0.7271
+    }
+  ]
+}

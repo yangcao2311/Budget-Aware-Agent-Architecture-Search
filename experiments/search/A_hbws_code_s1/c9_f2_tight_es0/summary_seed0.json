@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_code_s1/c9_f2_tight_es0",
+  "seed": 0,
+  "n": 120,
+  "success_rate": 0.7167,
+  "usd_per_task": 0.00237,
+  "usd_per_success": 0.00331,
+  "llm_calls_per_task": 1.22,
+  "tokens_per_task": 358.5,
+  "p50_sec": 0.02,
+  "p95_sec": 4.65,
+  "total_usd": 0.2847,
+  "wall_min": 0.3,
+  "reserve_rejected": 4,
+  "over_budget": 0,
+  "errors": 0
+}

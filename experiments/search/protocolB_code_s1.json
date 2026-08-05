@@ -1,0 +1,20 @@
+[
+  {
+    "run": "A_hbws_code_s1",
+    "at_usd": 60.0,
+    "best_j_cb": 0.6031,
+    "candidates_evaluated": 33
+  },
+  {
+    "run": "A_static_tight_code_s1",
+    "at_usd": 30.0,
+    "best_j_cb": 0.601,
+    "candidates_evaluated": 37
+  },
+  {
+    "run": "A_static_loose_code_s1",
+    "at_usd": 30.0,
+    "best_j_cb": 0.6115,
+    "candidates_evaluated": 22
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_loose_code_s2/c29_f0_loose_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.7083,
+  "usd_per_task": 0.0113,
+  "usd_per_success": 0.01595,
+  "llm_calls_per_task": 2.17,
+  "tokens_per_task": 1694.9,
+  "p50_sec": 0.11,
+  "p95_sec": 11.64,
+  "total_usd": 0.2712,
+  "wall_min": 0.2,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

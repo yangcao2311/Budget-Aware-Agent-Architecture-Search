@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_tight_math_s0/c33_f0_tight_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.5833,
+  "usd_per_task": 0.00897,
+  "usd_per_success": 0.01538,
+  "llm_calls_per_task": 1.46,
+  "tokens_per_task": 1008.9,
+  "p50_sec": 0.0,
+  "p95_sec": 0.01,
+  "total_usd": 0.2153,
+  "wall_min": 0.0,
+  "reserve_rejected": 24,
+  "over_budget": 0,
+  "errors": 0
+}

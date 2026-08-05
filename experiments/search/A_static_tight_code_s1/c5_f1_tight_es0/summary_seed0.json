@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_tight_code_s1/c5_f1_tight_es0",
+  "seed": 0,
+  "n": 64,
+  "success_rate": 0.6719,
+  "usd_per_task": 0.00471,
+  "usd_per_success": 0.00701,
+  "llm_calls_per_task": 2.22,
+  "tokens_per_task": 776.7,
+  "p50_sec": 2.02,
+  "p95_sec": 5.76,
+  "total_usd": 0.3015,
+  "wall_min": 0.3,
+  "reserve_rejected": 8,
+  "over_budget": 0,
+  "errors": 0
+}

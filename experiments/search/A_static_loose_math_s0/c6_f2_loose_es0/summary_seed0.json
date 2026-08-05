@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_loose_math_s0/c6_f2_loose_es0",
+  "seed": 0,
+  "n": 120,
+  "success_rate": 0.7,
+  "usd_per_task": 0.02584,
+  "usd_per_success": 0.03692,
+  "llm_calls_per_task": 3.79,
+  "tokens_per_task": 2946.5,
+  "p50_sec": 0.02,
+  "p95_sec": 0.03,
+  "total_usd": 3.1013,
+  "wall_min": 0.0,
+  "reserve_rejected": 44,
+  "over_budget": 0,
+  "errors": 0
+}

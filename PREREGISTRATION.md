@@ -6,8 +6,11 @@ BEFORE any frozen-test-set or OOD execution; all Part-I numbers seen so far
 come from the dev split and are exploratory. Changes after this tag are
 allowed only as dated deviation records in §9 — never edits in place.
 
-Status for PART II (HBWS search): DRAFT until `prereg-freeze-partII`
-(target 2026-08-17, before the first full search run).
+Status for PART II (HBWS search): **FROZEN** at the commit tagged
+`prereg-freeze-partII` (2026-08-05). The confirmatory hypotheses in §3A were
+written after the dev-set searches (which are exploratory and reported as
+such) but BEFORE any searched policy touched the validation or frozen test
+splits.
 
 ## 0. Confirmatory claims and how they will be tested (Part I)
 
@@ -88,7 +91,38 @@ post hoc to fit the data.
   repair/breakage decomposition (C1–C5); the reconciliation is now argued
   from the decomposition rather than from crossover positions.
 
-## 3. Hypotheses — Part II (HBWS)
+## 3A. CONFIRMATORY hypotheses — Part II (FROZEN 2026-08-05, written
+## BEFORE any frozen-test-set execution of searched policies)
+
+Policies are selected ONCE on the validation split (top-3 archive members by
+mean success over {tight, loose}, best taken) and then run on the frozen
+test split at tight / unseen / loose with 3 execution seeds. Search seeds
+0,1,2 (code) and 0 (math) are reported individually and pooled.
+
+- **P1 (single policy, many budgets — non-inferiority).** For both seen
+  tiers, the HBWS policy is non-inferior to the static policy searched
+  specifically for that tier: one-sided 95% LCB of the paired difference
+  ≥ −0.03. Both tiers must pass. Static received 2× the search budget, so
+  this is a deliberately unfavourable comparison for HBWS.
+- **P2 (deployment cost).** At `loose`, the HBWS policy's dollars per task
+  are lower than the static policy's, by ≥20% in the code family.
+- **P3 (unseen budget).** At the never-searched $0.15 tier, the HBWS policy
+  is non-inferior (same δ = 0.03) to the preregistered static transfer
+  control: the static policy chosen on validation between {tight-searched
+  policy run at $0.15, loose-searched policy hard-capped at $0.15}.
+- **P4 (principle convergence — descriptive, no test).** Report, for every
+  search arm, whether the selected policy has the incumbent-protection
+  shape: a temperature-0 first draft that is never overwritten unless a
+  verifier rejects it. Report the fraction of selected HBWS policies that
+  retain a budget predicate, and the thresholds retained.
+- **P5 (amortization).** Report N* = ⌈search$ / (baseline $/task − HBWS
+  $/task)⌉ per tier and under 10/50/90% tier mixtures; N* = ∞ when the
+  deployment cost is not lower or P1 fails.
+
+Failure handling as in §2A: intervals reported as observed, no post-hoc
+restatement. Dev-set search numbers are exploratory throughout.
+
+## 3B. Superseded Part-II draft hypotheses (never tested as stated)
 
 - H1a: HBWS AUBPC > Human Strong Workflow and > Random Search (paired
   bootstrap, Holm within the H1 family).

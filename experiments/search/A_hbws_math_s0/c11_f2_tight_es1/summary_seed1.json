@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_math_s0/c11_f2_tight_es1",
+  "seed": 1,
+  "n": 120,
+  "success_rate": 0.6583,
+  "usd_per_task": 0.0084,
+  "usd_per_success": 0.01276,
+  "llm_calls_per_task": 1.32,
+  "tokens_per_task": 929.2,
+  "p50_sec": 5.93,
+  "p95_sec": 13.98,
+  "total_usd": 1.0077,
+  "wall_min": 1.8,
+  "reserve_rejected": 120,
+  "over_budget": 0,
+  "errors": 0
+}

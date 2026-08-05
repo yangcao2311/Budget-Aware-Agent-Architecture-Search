@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_math_s0/c7_f0_loose_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.625,
+  "usd_per_task": 0.0251,
+  "usd_per_success": 0.04016,
+  "llm_calls_per_task": 3.29,
+  "tokens_per_task": 3068.2,
+  "p50_sec": 0.03,
+  "p95_sec": 0.04,
+  "total_usd": 0.6024,
+  "wall_min": 0.0,
+  "reserve_rejected": 10,
+  "over_budget": 0,
+  "errors": 0
+}

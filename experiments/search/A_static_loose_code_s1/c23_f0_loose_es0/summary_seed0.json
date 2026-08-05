@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_loose_code_s1/c23_f0_loose_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.7083,
+  "usd_per_task": 0.01716,
+  "usd_per_success": 0.02423,
+  "llm_calls_per_task": 2.96,
+  "tokens_per_task": 2294.5,
+  "p50_sec": 0.04,
+  "p95_sec": 10.12,
+  "total_usd": 0.4119,
+  "wall_min": 0.3,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}
