@@ -18,7 +18,13 @@ from .prompts import PROMPTS
 from .protocol import evaluate
 
 GENERATIVE_PROMPTS = [p for p in PROMPTS if p != "check_math"]
-BRANCH_THRESHOLDS = [0.3, 0.4, 0.5, 0.6]
+# Thresholds must cover the region where the remaining-budget signal actually
+# separates the deployment tiers, otherwise the policy class cannot express
+# tier-dependent behaviour at all. Measured 2026-08-05 (probe_budget_signal.py):
+# after generate(+verify) the min remaining fraction is ~0.62 at tight, ~0.74 at
+# unseen, ~0.81 at loose, so the discriminating band is 0.62-0.81; the original
+# grid (0.3-0.6) fired identically in every tier.
+BRANCH_THRESHOLDS = [0.3, 0.4, 0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85]
 
 
 # -- mutation operators ------------------------------------------------------

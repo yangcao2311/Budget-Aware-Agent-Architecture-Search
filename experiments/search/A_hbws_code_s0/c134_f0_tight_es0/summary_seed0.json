@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_code_s0/c134_f0_tight_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.4167,
+  "usd_per_task": 0.00297,
+  "usd_per_success": 0.00713,
+  "llm_calls_per_task": 1.5,
+  "tokens_per_task": 475.4,
+  "p50_sec": 0.03,
+  "p95_sec": 4.64,
+  "total_usd": 0.0713,
+  "wall_min": 0.1,
+  "reserve_rejected": 2,
+  "over_budget": 1,
+  "errors": 0
+}

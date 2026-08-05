@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_code_s0/c144_f0_loose_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.6667,
+  "usd_per_task": 0.00865,
+  "usd_per_success": 0.01297,
+  "llm_calls_per_task": 1.62,
+  "tokens_per_task": 1209.7,
+  "p50_sec": 0.02,
+  "p95_sec": 6.9,
+  "total_usd": 0.2076,
+  "wall_min": 0.1,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

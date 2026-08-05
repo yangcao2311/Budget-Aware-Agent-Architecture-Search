@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_tight_code_s0/c447_f0_tight_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.4583,
+  "usd_per_task": 0.00344,
+  "usd_per_success": 0.0075,
+  "llm_calls_per_task": 1.67,
+  "tokens_per_task": 563.1,
+  "p50_sec": 0.02,
+  "p95_sec": 5.88,
+  "total_usd": 0.0825,
+  "wall_min": 0.1,
+  "reserve_rejected": 6,
+  "over_budget": 1,
+  "errors": 0
+}

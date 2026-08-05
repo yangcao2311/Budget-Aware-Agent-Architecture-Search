@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_loose_code_s0/c112_f0_loose_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.7083,
+  "usd_per_task": 0.01651,
+  "usd_per_success": 0.0233,
+  "llm_calls_per_task": 2.79,
+  "tokens_per_task": 2174.0,
+  "p50_sec": 0.06,
+  "p95_sec": 7.57,
+  "total_usd": 0.3961,
+  "wall_min": 0.2,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

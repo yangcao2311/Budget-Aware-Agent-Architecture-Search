@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_code_s0/c159_f0_tight_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.4583,
+  "usd_per_task": 0.00246,
+  "usd_per_success": 0.00536,
+  "llm_calls_per_task": 1.29,
+  "tokens_per_task": 374.5,
+  "p50_sec": 0.03,
+  "p95_sec": 2.57,
+  "total_usd": 0.059,
+  "wall_min": 0.1,
+  "reserve_rejected": 0,
+  "over_budget": 1,
+  "errors": 0
+}

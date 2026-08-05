@@ -194,3 +194,17 @@ baselines, 3 search seeds, $0.15 unseen evaluation.
     split had shown math repair = 0.000; that was not reproduced. No
     claim about verifier-type-bounded repair will be made in the paper
     beyond the observed intervals.
+
+- **2026-08-05 (Part II, still pre-freeze) — search-space defect found and
+  fixed by measurement, not by outcome-peeking.** A budget-contingent policy
+  sees normalized remaining budget, which equals 1.0 in every tier at task
+  start; tiers differ only in how fast a call consumes the budget. Probe
+  (`scripts/probe_budget_signal.py`, zero API cost) measured the min
+  remaining fraction after generate: tight 0.616, unseen 0.744, loose 0.808.
+  The mutation operators' threshold grid was [0.3, 0.4, 0.5, 0.6] — every
+  value fires identically in all tiers, so the policy class provably could
+  not express tier-dependent behaviour, which is the premise of Part II.
+  Grid extended to [0.3, 0.4, 0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85]; the
+  values 0.65-0.8 separate tiers. Searches run before this fix
+  (A_hbws_code_s0 and its static counterparts) are superseded and will be
+  reported, if at all, only as a search-space ablation.

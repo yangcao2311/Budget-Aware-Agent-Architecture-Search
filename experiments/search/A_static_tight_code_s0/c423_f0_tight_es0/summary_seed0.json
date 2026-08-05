@@ -1,0 +1,17 @@
+{
+  "run": "search/A_static_tight_code_s0/c423_f0_tight_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.5,
+  "usd_per_task": 0.00308,
+  "usd_per_success": 0.00616,
+  "llm_calls_per_task": 1.5,
+  "tokens_per_task": 486.9,
+  "p50_sec": 0.02,
+  "p95_sec": 6.28,
+  "total_usd": 0.0739,
+  "wall_min": 0.2,
+  "reserve_rejected": 5,
+  "over_budget": 1,
+  "errors": 0
+}

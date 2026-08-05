@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_code_s0/c102_f0_tight_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.5,
+  "usd_per_task": 0.00244,
+  "usd_per_success": 0.00489,
+  "llm_calls_per_task": 1.29,
+  "tokens_per_task": 373.3,
+  "p50_sec": 0.02,
+  "p95_sec": 3.53,
+  "total_usd": 0.0586,
+  "wall_min": 0.1,
+  "reserve_rejected": 0,
+  "over_budget": 1,
+  "errors": 0
+}

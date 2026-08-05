@@ -1,0 +1,17 @@
+{
+  "run": "search/A_hbws_code_s0/c103_f0_loose_es0",
+  "seed": 0,
+  "n": 24,
+  "success_rate": 0.6667,
+  "usd_per_task": 0.01438,
+  "usd_per_success": 0.02157,
+  "llm_calls_per_task": 2.5,
+  "tokens_per_task": 1817.1,
+  "p50_sec": 0.04,
+  "p95_sec": 7.35,
+  "total_usd": 0.3451,
+  "wall_min": 0.1,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

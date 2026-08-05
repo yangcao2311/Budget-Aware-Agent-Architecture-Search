@@ -1,0 +1,5035 @@
+{
+  "run": "A_hbws_code_s0",
+  "family": "code",
+  "mode": "hbws",
+  "seed": 0,
+  "cap_usd": 40.0,
+  "search_usd": 40.3072,
+  "search_min": 25.3,
+  "n_candidates": 179,
+  "archive": [
+    {
+      "cid": 1,
+      "origin": "seed:cot",
+      "parent": null,
+      "j_cb": 0.5021,
+      "j_mean": 0.6719,
+      "feasible": true,
+      "fidelity": 1,
+      "credit": "",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.00613,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.00613,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.3061,
+          "j_cb": 0.3061,
+          "j_mean": 0.5833,
+          "feasible": true
+        },
+        "1": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.6719,
+              "lcb": 0.5021,
+              "usd_per_task": 0.00605,
+              "n": 64
+            },
+            "loose": {
+              "success_rate": 0.6719,
+              "lcb": 0.5021,
+              "usd_per_task": 0.00605,
+              "n": 64
+            }
+          },
+          "aubpc_lcb": 0.5021,
+          "j_cb": 0.5021,
+          "j_mean": 0.6719,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 132,
+      "origin": "mut:gen34",
+      "parent": 1,
+      "j_cb": 0.3478,
+      "j_mean": 0.625,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "positive",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.00613,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.75,
+              "lcb": 0.4728,
+              "usd_per_task": 0.00788,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.3894,
+          "j_cb": 0.3478,
+          "j_mean": 0.625,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "generate",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.3"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 32,
+      "origin": "mut:gen7",
+      "parent": 14,
+      "j_cb": 0.1182,
+      "j_mean": 0.1875,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.75,
+              "lcb": 0.4728,
+              "usd_per_task": 0.01379,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.2364,
+          "j_cb": 0.1182,
+          "j_mean": 0.1875,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "n3",
+            "type": "verify"
+          },
+          {
+            "id": "n4",
+            "type": "branch"
+          },
+          {
+            "id": "n5",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "n3",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          },
+          {
+            "from": "n3",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n3",
+            "to": "n4",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n4",
+            "to": "n5",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n4",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n5",
+            "to": "n3",
+            "loop": true,
+            "max_iter": 2
+          }
+        ]
+      }
+    },
+    {
+      "cid": 9,
+      "origin": "mut:gen2",
+      "parent": 1,
+      "j_cb": 0.0765,
+      "j_mean": 0.1458,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.01222,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.153,
+          "j_cb": 0.0765,
+          "j_mean": 0.1458,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 33,
+      "origin": "mut:gen8",
+      "parent": 1,
+      "j_cb": 0.0765,
+      "j_mean": 0.1458,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.01222,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.153,
+          "j_cb": 0.0765,
+          "j_mean": 0.1458,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 45,
+      "origin": "mut:gen11",
+      "parent": 1,
+      "j_cb": 0.0765,
+      "j_mean": 0.1458,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.01222,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.153,
+          "j_cb": 0.0765,
+          "j_mean": 0.1458,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 101,
+      "origin": "mut:gen26",
+      "parent": 1,
+      "j_cb": 0.0765,
+      "j_mean": 0.1458,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.01222,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.153,
+          "j_cb": 0.0765,
+          "j_mean": 0.1458,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 120,
+      "origin": "mut:gen31",
+      "parent": 1,
+      "j_cb": 0.0765,
+      "j_mean": 0.1458,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.01222,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.153,
+          "j_cb": 0.0765,
+          "j_mean": 0.1458,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 140,
+      "origin": "mut:gen36",
+      "parent": 1,
+      "j_cb": 0.0765,
+      "j_mean": 0.1458,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.01222,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.153,
+          "j_cb": 0.0765,
+          "j_mean": 0.1458,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 171,
+      "origin": "mut:gen44",
+      "parent": 1,
+      "j_cb": 0.0765,
+      "j_mean": 0.1458,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.5833,
+              "lcb": 0.3061,
+              "usd_per_task": 0.01222,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.153,
+          "j_cb": 0.0765,
+          "j_mean": 0.1458,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 2,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 20,
+      "origin": "mut:gen4",
+      "parent": 2,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "v",
+            "type": "verify"
+          },
+          {
+            "id": "r",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "v"
+          },
+          {
+            "from": "v",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "v",
+            "to": "r",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "r",
+            "to": "v",
+            "loop": true,
+            "max_iter": 2
+          }
+        ]
+      }
+    },
+    {
+      "cid": 24,
+      "origin": "mut:gen5",
+      "parent": 17,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.4"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 2
+          }
+        ]
+      }
+    },
+    {
+      "cid": 26,
+      "origin": "mut:gen6",
+      "parent": 12,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 28,
+      "origin": "mut:gen6",
+      "parent": 14,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 4,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          },
+          {
+            "id": "n3",
+            "type": "verify"
+          },
+          {
+            "id": "n4",
+            "type": "branch"
+          },
+          {
+            "id": "n5",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "n3",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          },
+          {
+            "from": "n3",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n3",
+            "to": "n4",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n4",
+            "to": "n5",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n4",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n5",
+            "to": "n3",
+            "loop": true,
+            "max_iter": 2
+          }
+        ]
+      }
+    },
+    {
+      "cid": 30,
+      "origin": "mut:gen7",
+      "parent": 12,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 39,
+      "origin": "mut:gen9",
+      "parent": 22,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.3"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 40,
+      "origin": "mut:gen9",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 44,
+      "origin": "mut:gen10",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 46,
+      "origin": "mut:gen11",
+      "parent": 12,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 4,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 47,
+      "origin": "mut:gen12",
+      "parent": 1,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 50,
+      "origin": "mut:gen12",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 61,
+      "origin": "mut:gen15",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 63,
+      "origin": "mut:gen16",
+      "parent": 12,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 67,
+      "origin": "mut:gen17",
+      "parent": 12,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 79,
+      "origin": "mut:gen20",
+      "parent": 22,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 4,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.3"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 83,
+      "origin": "mut:gen21",
+      "parent": 22,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 4,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.3"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 84,
+      "origin": "mut:gen21",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 89,
+      "origin": "mut:gen23",
+      "parent": 1,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 4,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 91,
+      "origin": "mut:gen23",
+      "parent": 22,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.3"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 93,
+      "origin": "mut:gen24",
+      "parent": 1,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 107,
+      "origin": "mut:gen27",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 116,
+      "origin": "mut:gen30",
+      "parent": 1,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 117,
+      "origin": "mut:gen30",
+      "parent": 12,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 119,
+      "origin": "mut:gen30",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 124,
+      "origin": "mut:gen32",
+      "parent": 1,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 125,
+      "origin": "mut:gen32",
+      "parent": 12,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 143,
+      "origin": "mut:gen36",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 161,
+      "origin": "mut:gen41",
+      "parent": 12,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 163,
+      "origin": "mut:gen41",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 5,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    },
+    {
+      "cid": 167,
+      "origin": "mut:gen43",
+      "parent": 1,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "END"
+          }
+        ]
+      }
+    },
+    {
+      "cid": 170,
+      "origin": "mut:gen43",
+      "parent": 35,
+      "j_cb": 0.0,
+      "j_mean": 0.0,
+      "feasible": true,
+      "fidelity": 0,
+      "credit": "negative",
+      "stats": {
+        "0": {
+          "per_tier": {
+            "tight": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            },
+            "loose": {
+              "success_rate": 0.0,
+              "lcb": 0.0,
+              "usd_per_task": 0.0,
+              "n": 24
+            }
+          },
+          "aubpc_lcb": 0.0,
+          "j_cb": 0.0,
+          "j_mean": 0.0,
+          "feasible": true
+        }
+      },
+      "wf": {
+        "nodes": [
+          {
+            "id": "g",
+            "type": "vote",
+            "prompt_id": "solve_cot",
+            "params": {
+              "temperature": 0.0,
+              "max_output_tokens": 1536
+            },
+            "k": 3,
+            "aggregator": "majority"
+          },
+          {
+            "id": "n0",
+            "type": "verify"
+          },
+          {
+            "id": "n1",
+            "type": "branch"
+          },
+          {
+            "id": "n2",
+            "type": "refine",
+            "prompt_id": "refine_from_feedback",
+            "params": {
+              "temperature": 0.7,
+              "max_output_tokens": 1536
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "g",
+            "to": "n0"
+          },
+          {
+            "from": "n0",
+            "to": "END",
+            "cond": "verify_passed"
+          },
+          {
+            "from": "n0",
+            "to": "n1",
+            "cond": "verify_failed"
+          },
+          {
+            "from": "n1",
+            "to": "n2",
+            "cond": "budget_above:0.6"
+          },
+          {
+            "from": "n1",
+            "to": "END",
+            "cond": "always"
+          },
+          {
+            "from": "n2",
+            "to": "n0",
+            "loop": true,
+            "max_iter": 1
+          }
+        ]
+      }
+    }
+  ],
+  "anytime": [
+    {
+      "search_usd": 0.0775,
+      "search_min": 0.2,
+      "cid": 0,
+      "best_j_cb": -1,
+      "best_j_mean": -1
+    },
+    {
+      "search_usd": 1.9208,
+      "search_min": 0.2,
+      "cid": 1,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 2.3218,
+      "search_min": 0.5,
+      "cid": 2,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 2.7087,
+      "search_min": 0.9,
+      "cid": 3,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 2.8374,
+      "search_min": 1.1,
+      "cid": 4,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 3.1688,
+      "search_min": 1.2,
+      "cid": 5,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 3.2473,
+      "search_min": 1.4,
+      "cid": 6,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 3.6575,
+      "search_min": 1.7,
+      "cid": 7,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 3.9888,
+      "search_min": 1.8,
+      "cid": 8,
+      "credit": "neutral",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 4.282,
+      "search_min": 1.8,
+      "cid": 9,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 4.6705,
+      "search_min": 1.9,
+      "cid": 10,
+      "credit": "neutral",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 4.8262,
+      "search_min": 2.4,
+      "cid": 11,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 5.1693,
+      "search_min": 2.5,
+      "cid": 12,
+      "credit": "positive",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 5.2478,
+      "search_min": 2.6,
+      "cid": 13,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 5.5951,
+      "search_min": 2.9,
+      "cid": 14,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 6.0002,
+      "search_min": 3.1,
+      "cid": 15,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 6.4058,
+      "search_min": 3.2,
+      "cid": 16,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 6.7655,
+      "search_min": 3.4,
+      "cid": 17,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 6.902,
+      "search_min": 3.7,
+      "cid": 18,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 7.0433,
+      "search_min": 3.9,
+      "cid": 19,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 7.0433,
+      "search_min": 3.9,
+      "cid": 20,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 7.3884,
+      "search_min": 4.0,
+      "cid": 21,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 7.732,
+      "search_min": 4.2,
+      "cid": 22,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 7.8734,
+      "search_min": 4.5,
+      "cid": 23,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 7.8734,
+      "search_min": 4.5,
+      "cid": 24,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 7.9519,
+      "search_min": 4.7,
+      "cid": 25,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 7.9519,
+      "search_min": 4.7,
+      "cid": 26,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 8.1031,
+      "search_min": 5.0,
+      "cid": 27,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 8.1031,
+      "search_min": 5.0,
+      "cid": 28,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 8.1816,
+      "search_min": 5.1,
+      "cid": 29,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 8.1816,
+      "search_min": 5.1,
+      "cid": 30,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 8.3332,
+      "search_min": 5.4,
+      "cid": 31,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 8.6643,
+      "search_min": 5.5,
+      "cid": 32,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 8.9574,
+      "search_min": 5.5,
+      "cid": 33,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 9.0966,
+      "search_min": 5.7,
+      "cid": 34,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 9.4368,
+      "search_min": 5.9,
+      "cid": 35,
+      "credit": "neutral",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 9.5747,
+      "search_min": 6.1,
+      "cid": 36,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 9.9374,
+      "search_min": 6.3,
+      "cid": 37,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 10.2859,
+      "search_min": 6.4,
+      "cid": 38,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 10.2859,
+      "search_min": 6.4,
+      "cid": 39,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 10.2859,
+      "search_min": 6.4,
+      "cid": 40,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 10.3644,
+      "search_min": 6.6,
+      "cid": 41,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 10.5047,
+      "search_min": 6.8,
+      "cid": 42,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 10.8567,
+      "search_min": 6.9,
+      "cid": 43,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 10.8567,
+      "search_min": 7.0,
+      "cid": 44,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 11.1499,
+      "search_min": 7.0,
+      "cid": 45,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 11.1499,
+      "search_min": 7.0,
+      "cid": 46,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 11.1499,
+      "search_min": 7.0,
+      "cid": 47,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 11.2888,
+      "search_min": 7.2,
+      "cid": 48,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 11.6353,
+      "search_min": 7.3,
+      "cid": 49,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 11.6353,
+      "search_min": 7.3,
+      "cid": 50,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 11.9851,
+      "search_min": 7.5,
+      "cid": 51,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 12.32,
+      "search_min": 7.6,
+      "cid": 52,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 12.6667,
+      "search_min": 7.7,
+      "cid": 53,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 12.8039,
+      "search_min": 8.0,
+      "cid": 54,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 13.1477,
+      "search_min": 8.1,
+      "cid": 55,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 13.3023,
+      "search_min": 8.3,
+      "cid": 56,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 13.4382,
+      "search_min": 8.6,
+      "cid": 57,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 13.8,
+      "search_min": 8.7,
+      "cid": 58,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 14.1448,
+      "search_min": 8.9,
+      "cid": 59,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 14.4872,
+      "search_min": 9.0,
+      "cid": 60,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 14.4872,
+      "search_min": 9.0,
+      "cid": 61,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 14.5657,
+      "search_min": 9.2,
+      "cid": 62,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 14.5657,
+      "search_min": 9.2,
+      "cid": 63,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 14.9133,
+      "search_min": 9.3,
+      "cid": 64,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 15.2607,
+      "search_min": 9.5,
+      "cid": 65,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 15.3392,
+      "search_min": 9.6,
+      "cid": 66,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 15.3392,
+      "search_min": 9.6,
+      "cid": 67,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 15.6828,
+      "search_min": 9.7,
+      "cid": 68,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 16.0308,
+      "search_min": 9.9,
+      "cid": 69,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 16.1093,
+      "search_min": 10.0,
+      "cid": 70,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 16.4519,
+      "search_min": 10.2,
+      "cid": 71,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 16.8017,
+      "search_min": 10.3,
+      "cid": 72,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 17.1483,
+      "search_min": 10.4,
+      "cid": 73,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 17.5001,
+      "search_min": 10.6,
+      "cid": 74,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 17.8437,
+      "search_min": 10.7,
+      "cid": 75,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 18.1782,
+      "search_min": 10.8,
+      "cid": 76,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 18.2567,
+      "search_min": 10.9,
+      "cid": 77,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 18.6028,
+      "search_min": 11.1,
+      "cid": 78,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 18.6028,
+      "search_min": 11.1,
+      "cid": 79,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 18.936,
+      "search_min": 11.2,
+      "cid": 80,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 19.2986,
+      "search_min": 11.4,
+      "cid": 81,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 19.6424,
+      "search_min": 11.5,
+      "cid": 82,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 19.6424,
+      "search_min": 11.5,
+      "cid": 83,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 19.6424,
+      "search_min": 11.5,
+      "cid": 84,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 19.997,
+      "search_min": 11.7,
+      "cid": 85,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 20.1328,
+      "search_min": 11.9,
+      "cid": 86,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 20.2855,
+      "search_min": 12.2,
+      "cid": 87,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 20.6317,
+      "search_min": 12.3,
+      "cid": 88,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 20.6317,
+      "search_min": 12.3,
+      "cid": 89,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 20.9703,
+      "search_min": 12.5,
+      "cid": 90,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 20.9703,
+      "search_min": 12.5,
+      "cid": 91,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 21.3214,
+      "search_min": 12.7,
+      "cid": 92,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 21.3214,
+      "search_min": 12.7,
+      "cid": 93,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 21.6691,
+      "search_min": 12.9,
+      "cid": 94,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 22.0155,
+      "search_min": 13.0,
+      "cid": 95,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 22.3643,
+      "search_min": 13.1,
+      "cid": 96,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 22.4429,
+      "search_min": 13.2,
+      "cid": 97,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 22.7861,
+      "search_min": 13.5,
+      "cid": 98,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 22.9358,
+      "search_min": 13.7,
+      "cid": 99,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 23.2772,
+      "search_min": 13.8,
+      "cid": 100,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 23.5704,
+      "search_min": 13.8,
+      "cid": 101,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 23.7103,
+      "search_min": 14.1,
+      "cid": 102,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 24.0554,
+      "search_min": 14.2,
+      "cid": 103,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 24.404,
+      "search_min": 14.5,
+      "cid": 104,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 24.5419,
+      "search_min": 14.7,
+      "cid": 105,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 24.6903,
+      "search_min": 15.0,
+      "cid": 106,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 24.6903,
+      "search_min": 15.0,
+      "cid": 107,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 25.0331,
+      "search_min": 15.2,
+      "cid": 108,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 25.1707,
+      "search_min": 15.4,
+      "cid": 109,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 25.3229,
+      "search_min": 15.7,
+      "cid": 110,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 25.6698,
+      "search_min": 15.8,
+      "cid": 111,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 26.04,
+      "search_min": 16.0,
+      "cid": 112,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 26.3874,
+      "search_min": 16.2,
+      "cid": 113,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 26.7306,
+      "search_min": 16.3,
+      "cid": 114,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 27.0827,
+      "search_min": 16.4,
+      "cid": 115,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 27.0827,
+      "search_min": 16.5,
+      "cid": 116,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 27.0827,
+      "search_min": 16.5,
+      "cid": 117,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 27.2251,
+      "search_min": 16.7,
+      "cid": 118,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 27.2251,
+      "search_min": 16.7,
+      "cid": 119,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 27.5183,
+      "search_min": 16.7,
+      "cid": 120,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 27.8631,
+      "search_min": 16.8,
+      "cid": 121,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 28.0172,
+      "search_min": 17.1,
+      "cid": 122,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 28.3615,
+      "search_min": 17.2,
+      "cid": 123,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 28.3615,
+      "search_min": 17.2,
+      "cid": 124,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 28.3615,
+      "search_min": 17.2,
+      "cid": 125,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 28.5105,
+      "search_min": 17.6,
+      "cid": 126,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 28.8471,
+      "search_min": 17.7,
+      "cid": 127,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 28.9256,
+      "search_min": 17.9,
+      "cid": 128,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 29.0636,
+      "search_min": 18.1,
+      "cid": 129,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 29.2131,
+      "search_min": 18.3,
+      "cid": 130,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 29.3538,
+      "search_min": 18.6,
+      "cid": 131,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 29.6899,
+      "search_min": 18.7,
+      "cid": 132,
+      "credit": "positive",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 30.0271,
+      "search_min": 18.9,
+      "cid": 133,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 30.1767,
+      "search_min": 19.1,
+      "cid": 134,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 30.5223,
+      "search_min": 19.2,
+      "cid": 135,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 30.6008,
+      "search_min": 19.4,
+      "cid": 136,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 30.9434,
+      "search_min": 19.5,
+      "cid": 137,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 31.2929,
+      "search_min": 19.6,
+      "cid": 138,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 31.6406,
+      "search_min": 19.8,
+      "cid": 139,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 31.9338,
+      "search_min": 19.8,
+      "cid": 140,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 32.0747,
+      "search_min": 20.0,
+      "cid": 141,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 32.2235,
+      "search_min": 20.3,
+      "cid": 142,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 32.2235,
+      "search_min": 20.3,
+      "cid": 143,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 32.5781,
+      "search_min": 20.5,
+      "cid": 144,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 32.9196,
+      "search_min": 20.6,
+      "cid": 145,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 33.2683,
+      "search_min": 20.7,
+      "cid": 146,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 33.6167,
+      "search_min": 20.9,
+      "cid": 147,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 33.6952,
+      "search_min": 21.1,
+      "cid": 148,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 33.8287,
+      "search_min": 21.3,
+      "cid": 149,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 33.9772,
+      "search_min": 21.5,
+      "cid": 150,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 34.3251,
+      "search_min": 21.7,
+      "cid": 151,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 34.4036,
+      "search_min": 21.9,
+      "cid": 152,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 34.7488,
+      "search_min": 22.0,
+      "cid": 153,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 35.0891,
+      "search_min": 22.1,
+      "cid": 154,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 35.4371,
+      "search_min": 22.3,
+      "cid": 155,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 35.8006,
+      "search_min": 22.4,
+      "cid": 156,
+      "credit": "positive",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 36.1406,
+      "search_min": 22.6,
+      "cid": 157,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 36.4873,
+      "search_min": 22.7,
+      "cid": 158,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 36.6269,
+      "search_min": 22.9,
+      "cid": 159,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 36.7054,
+      "search_min": 23.1,
+      "cid": 160,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 36.7054,
+      "search_min": 23.1,
+      "cid": 161,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 37.0512,
+      "search_min": 23.3,
+      "cid": 162,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 37.0512,
+      "search_min": 23.3,
+      "cid": 163,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 37.1297,
+      "search_min": 23.5,
+      "cid": 164,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 37.2675,
+      "search_min": 23.7,
+      "cid": 165,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 37.6111,
+      "search_min": 23.9,
+      "cid": 166,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 37.6111,
+      "search_min": 23.9,
+      "cid": 167,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 37.9543,
+      "search_min": 24.0,
+      "cid": 168,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 38.3019,
+      "search_min": 24.1,
+      "cid": 169,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 38.3019,
+      "search_min": 24.1,
+      "cid": 170,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 38.595,
+      "search_min": 24.1,
+      "cid": 171,
+      "credit": "negative",
+      "archive": true,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 38.7322,
+      "search_min": 24.3,
+      "cid": 172,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 39.0742,
+      "search_min": 24.5,
+      "cid": 173,
+      "credit": "neutral",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 39.4118,
+      "search_min": 24.6,
+      "cid": 174,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 39.4903,
+      "search_min": 24.7,
+      "cid": 175,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 39.6251,
+      "search_min": 25.0,
+      "cid": 176,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 39.9725,
+      "search_min": 25.1,
+      "cid": 177,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    },
+    {
+      "search_usd": 40.3072,
+      "search_min": 25.3,
+      "cid": 178,
+      "credit": "negative",
+      "archive": false,
+      "best_j_cb": 0.5021,
+      "best_j_mean": 0.6719
+    }
+  ]
+}
