@@ -423,9 +423,61 @@ badly wrong for vanilla ones (errors $0.169$ and $0.108$). This is the
 constrained-versus-unconstrained asymmetry of \S\ref{sec:theory}: pinning
 $\brate$ to zero removes one of two drifting parameters.
 
-\paragraph{Prospective validation.} \textsc{[placeholder: BBH logic domain,
-predictions PV1--PV4 locked under tag \texttt{prospective-locked} before any
-execution; results pending.]}
+\paragraph{Prospective validation in a third domain.} The tests above are
+retrospective: the domains were chosen, then the framework was applied. To test
+the framework prospectively we selected a third domain that no part of this
+project had touched---BIG-Bench Hard logical deduction, shuffled-object tracking
+and date understanding (120 tasks, multiple choice, exact-match grading, a
+gold-free self-consistency verifier)---wrote down what the framework predicts,
+committed it under tag \texttt{prospective-locked}, and only then ran anything.
+The predictions were deliberately structural, since \S\ref{sec:external} had
+already shown that $\rrate,\brate$ do not transfer quantitatively:
+\textbf{PV1}, incumbent-protecting breakage $\le 0.02$ at both budgets;
+\textbf{PV2}, vanilla breakage materially higher ($>0.02$ and $\ge 3\times$);
+\textbf{PV3}, incumbent-protecting effect $\ge -0.01$ (never materially
+harmful); and \textbf{PV4}, explicitly no prediction about repair magnitude or
+absolute accuracy.
+
+\begin{table}[t]
+\caption{Prospective validation on BIG-Bench Hard (120 tasks, 3 seeds), a domain
+untouched by any search, tuning or exploratory run. Predictions were locked
+before execution. This is a demanding regime: the baseline is strong
+($p=0.919$--$0.944$), so the threshold of \eqref{eq:rule} is only
+$(1-p)/p = 0.088$ and even small breakage should flip the sign.}
+\label{tab:prospective}
+\centering
+\small
+\begin{tabular}{llrrr}
+\toprule
+Budget & Workflow (vs.\ own first draft) & $\Delta$ (95\% CI) & breakage & repair \\
+\midrule
+tight & vanilla (draft \texttt{direct}) & $+0.000$ $[-0.031,+0.033]$ & $0.026$ & $0.200$ \\
+tight & protected (draft \texttt{direct}) & $+0.000$ $[+0.000,+0.000]$ & $\mathbf{0.000}$ & $0.000$ \\
+tight & protected (draft \texttt{cot}) & $+0.000$ $[+0.000,+0.000]$ & $\mathbf{0.000}$ & $0.000$ \\
+loose & vanilla (draft \texttt{direct}) & $+0.025$ $[-0.000,+0.056]$ & $0.006$ & $0.200$ \\
+loose & protected (draft \texttt{direct}) & $+0.025$ $[+0.003,+0.050]$ & $\mathbf{0.006}$ & $0.200$ \\
+loose & protected (draft \texttt{cot}) & $+0.014$ $[+0.000,+0.028]$ & $\mathbf{0.003}$ & $0.000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{PV1 holds} in all four cells ($0.000$, $0.006$, $0.000$, $0.003$): the
+breakage guarantee, stated in advance, survived transfer to a domain with a
+different task format, a different answer type and a much stronger baseline.
+\textbf{PV3 holds} in all four cells. \textbf{PV2 does not}: at \texttt{loose},
+vanilla breakage is $0.006$---no worse than protected. The reason is visible in
+the same table and is a boundary we did not anticipate. Breakage requires that
+refinement be \emph{able} to destroy a correct answer. Here answers are single
+multiple-choice labels and the baseline is right $94\%$ of the time, so an
+unprotected refinement pass has little to damage; at \texttt{tight}, where
+refinement acts under pressure, the gap reappears ($0.026$--$0.029$ vs
+$0.000$). Incumbent protection is insurance, and its premium is only visible
+where the risk is real.
+
+We regard this as the strongest evidence in the paper for the mechanism, and
+also as its sharpest limit: the structural prediction transferred prospectively,
+the comparative prediction did not, and the failure localises exactly when the
+construction is worth adopting.
 
 \section{Limitations}
 \label{sec:limitations}

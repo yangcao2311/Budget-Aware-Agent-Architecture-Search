@@ -1,0 +1,17 @@
+{
+  "run": "envelope_logic_prospective/verify_refine_3_logic_loose",
+  "seed": 2,
+  "n": 120,
+  "success_rate": 0.9333,
+  "usd_per_task": 0.01296,
+  "usd_per_success": 0.01388,
+  "llm_calls_per_task": 2.25,
+  "tokens_per_task": 1685.3,
+  "p50_sec": 0.01,
+  "p95_sec": 9.83,
+  "total_usd": 1.5547,
+  "wall_min": 0.6,
+  "reserve_rejected": 9,
+  "over_budget": 0,
+  "errors": 0
+}

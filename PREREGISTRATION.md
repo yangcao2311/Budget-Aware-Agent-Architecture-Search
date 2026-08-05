@@ -307,3 +307,22 @@ baselines, 3 search seeds, $0.15 unseen evaluation.
   values 0.65-0.8 separate tiers. Searches run before this fix
   (A_hbws_code_s0 and its static counterparts) are superseded and will be
   reported, if at all, only as a search-space ablation.
+
+- **2026-08-05 — Prospective validation (tag `prospective-locked`) scored on
+  BIG-Bench Hard (120 tasks, 3 seeds), a domain untouched by any prior run.**
+  - **PV1 SUPPORTED.** Incumbent-protecting breakage <= 0.02 in all four
+    cells: 0.000 (tight/direct-draft), 0.006 (loose/direct-draft), 0.000
+    (tight/cot-draft), 0.003 (loose/cot-draft). The structural guarantee,
+    stated in advance, transferred to a new domain with a different answer
+    type and a much stronger baseline (p = 0.919-0.944).
+  - **PV3 SUPPORTED.** Incumbent-protecting effect >= -0.01 in all four
+    cells (+0.000, +0.025, +0.000, +0.014).
+  - **PV2 NOT SUPPORTED.** Vanilla breakage was predicted to exceed 0.02 and
+    to be >= 3x the incumbent value. Held at tight (0.026 and 0.029 vs
+    0.000) but failed at loose (0.006 vs 0.006 / 0.003). Observed reason,
+    stated as post-hoc interpretation: breakage requires that refinement be
+    able to destroy a correct answer; with single-label answers and a 94%
+    baseline there is little to destroy at the looser budget. Incumbent
+    protection therefore matters where breakage risk is real, which is a
+    boundary we did not anticipate and did not predict.
+  - **PV4** was an explicit non-prediction and is not scored.
