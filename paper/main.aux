@@ -21,41 +21,45 @@
 \@writefile{toc}{\contentsline {paragraph}{A design rule follows.}{3}{section*.10}\protected@file@percent }
 \newlabel{eq:rule}{{3}{3}{A design rule follows}{equation.4.3}{}}
 \@writefile{toc}{\contentsline {paragraph}{What does and does not transfer.}{3}{section*.11}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The decomposition, on frozen test splits. Repair (blue, above the axis) and breakage (orange, below) are of comparable size for a standard verify--refine workflow, so the net effect (black, 95\% CI) sits near zero or below it --- the quantity the literature reports is a difference of two large terms. Protecting the incumbent answer removes the lower term entirely (breakage $0.000$ in all cells) and the same machinery becomes a small, reliable gain. Both panels share an axis.}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:decomposition}{{1}{4}{The decomposition, on frozen test splits. Repair (blue, above the axis) and breakage (orange, below) are of comparable size for a standard verify--refine workflow, so the net effect (black, 95\% CI) sits near zero or below it --- the quantity the literature reports is a difference of two large terms. Protecting the incumbent answer removes the lower term entirely (breakage $0.000$ in all cells) and the same machinery becomes a small, reliable gain. Both panels share an axis}{figure.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Frozen test splits, 150 tasks per family, 3 execution seeds. Baselines are the strongest single-call structure per family (\texttt  {direct} for code, \texttt  {cot} for math). Intervals are stratified paired bootstrap 95\% CIs. \emph  {vanilla} is generate$\to $verify$\to $refine with up to 3 iterations; \emph  {protected} is the same loop with a temperature-0 incumbent that is replaced only on verifier rejection.}}{4}{table.1}\protected@file@percent }
 \newlabel{tab:parti}{{1}{4}{Frozen test splits, 150 tasks per family, 3 execution seeds. Baselines are the strongest single-call structure per family (\texttt {direct} for code, \texttt {cot} for math). Intervals are stratified paired bootstrap 95\% CIs. \emph {vanilla} is generate$\to $verify$\to $refine with up to 3 iterations; \emph {protected} is the same loop with a temperature-0 incumbent that is replaced only on verifier rejection}{table.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Part I: confirmatory experiments}{4}{section.5}\protected@file@percent }
 \newlabel{sec:parti}{{5}{4}{Part I: confirmatory experiments}{section.5}{}}
 \@writefile{toc}{\contentsline {paragraph}{C1 (net-zero), supported.}{4}{section*.12}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{C2 (budget floor), supported.}{4}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{C3 (verifier dose--response), supported.}{4}{section*.14}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{C4 (incumbent protection), supported.}{4}{section*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{C5 (repair is verifier-type-bounded), \textcolor {red}{refuted}.}{4}{section*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Part II: automated search as a bias check}{4}{section.6}\protected@file@percent }
-\newlabel{sec:partii}{{6}{4}{Part II: automated search as a bias check}{section.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{C3 (verifier dose--response), supported.}{5}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{C4 (incumbent protection), supported.}{5}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{C5 (repair is verifier-type-bounded), \textcolor {red}{refuted}.}{5}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Part II: automated search as a bias check}{5}{section.6}\protected@file@percent }
+\newlabel{sec:partii}{{6}{5}{Part II: automated search as a bias check}{section.6}{}}
 \@writefile{toc}{\contentsline {paragraph}{Searcher.}{5}{section*.17}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Two bugs that would have invalidated this section.}{5}{section*.18}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Convergence (dev, exploratory).}{5}{section*.19}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Confirmatory results (frozen test), reported as they landed.}{5}{section*.20}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{What we take from this.}{5}{section*.21}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Breakage of the incumbent-protecting workflow across verifier regimes and domains. The guarantee tracks verifier signal, not domain. The single violation is the one condition without signal, and restoring signal on the \emph  {same tasks} restores the guarantee.}}{6}{table.2}\protected@file@percent }
 \newlabel{tab:regimes}{{2}{6}{Breakage of the incumbent-protecting workflow across verifier regimes and domains. The guarantee tracks verifier signal, not domain. The single violation is the one condition without signal, and restoring signal on the \emph {same tasks} restores the guarantee}{table.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{What we take from this.}{6}{section*.21}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7}External validity}{6}{section.7}\protected@file@percent }
 \newlabel{sec:external}{{7}{6}{External validity}{section.7}{}}
 \@writefile{toc}{\contentsline {paragraph}{A locked prediction that failed.}{6}{section*.22}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Diagnosis: our confound, not the framework's.}{6}{section*.23}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Decoupling.}{6}{section*.24}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{What transfers.}{6}{section*.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Prospective validation in a third domain.}{6}{section*.26}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Left: degrading the verifier is a causal manipulation of the breakage term. As visible tests are withheld, breakage rises and the net effect falls to $-0.118$ $[-0.178,-0.058]$. Right: breakage of the incumbent-protecting construction across every condition we measured. It stays below the predicted bound wherever the verifier carries signal --- including out of domain, and in a third domain whose prediction was locked before execution --- and exceeds it in exactly the one condition with no signal. Restoring signal on the \emph  {same} tasks restores the guarantee.}}{7}{figure.2}\protected@file@percent }
+\newlabel{fig:signal}{{2}{7}{Left: degrading the verifier is a causal manipulation of the breakage term. As visible tests are withheld, breakage rises and the net effect falls to $-0.118$ $[-0.178,-0.058]$. Right: breakage of the incumbent-protecting construction across every condition we measured. It stays below the predicted bound wherever the verifier carries signal --- including out of domain, and in a third domain whose prediction was locked before execution --- and exceeds it in exactly the one condition with no signal. Restoring signal on the \emph {same} tasks restores the guarantee}{figure.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Prospective validation on BIG-Bench Hard (120 tasks, 3 seeds), a domain untouched by any search, tuning or exploratory run. Predictions were locked before execution. This is a demanding regime: the baseline is strong ($p=0.919$--$0.944$), so the threshold of equation~\ref {eq:rule} is only $(1-p)/p = 0.088$ and even small breakage should flip the sign.}}{7}{table.3}\protected@file@percent }
 \newlabel{tab:prospective}{{3}{7}{Prospective validation on BIG-Bench Hard (120 tasks, 3 seeds), a domain untouched by any search, tuning or exploratory run. Predictions were locked before execution. This is a demanding regime: the baseline is strong ($p=0.919$--$0.944$), so the threshold of \eqref {eq:rule} is only $(1-p)/p = 0.088$ and even small breakage should flip the sign}{table.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{7}{section.8}\protected@file@percent }
-\newlabel{sec:limitations}{{8}{7}{Limitations}{section.8}{}}
-\@writefile{toc}{\contentsline {paragraph}{One model.}{7}{section*.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The identity is not a prediction.}{7}{section*.28}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Selection variance in Part II (P4).}{7}{section*.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Math family boundary in Part II.}{7}{section*.30}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Small hard-task strata out of domain.}{7}{section*.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Restricted design space.}{7}{section*.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Verifier taxonomy is coarse.}{7}{section*.33}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{8}{section.9}\protected@file@percent }
-\gdef \@abspage@last{8}
+\@writefile{toc}{\contentsline {paragraph}{What transfers.}{7}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Prospective validation in a third domain.}{7}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{8}{section.8}\protected@file@percent }
+\newlabel{sec:limitations}{{8}{8}{Limitations}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{One model.}{8}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The identity is not a prediction.}{8}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Selection variance in Part II (P4).}{8}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Math family boundary in Part II.}{8}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Small hard-task strata out of domain.}{8}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Restricted design space.}{8}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Verifier taxonomy is coarse.}{8}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{9}{section.9}\protected@file@percent }
+\gdef \@abspage@last{9}

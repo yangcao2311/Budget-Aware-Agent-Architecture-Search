@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  5 AUG 2026 18:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  5 AUG 2026 20:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -439,23 +439,35 @@ LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-[2] [3] [4] [5] [6]
-Underfull \vbox (badness 2293) has occurred while \output is active []
+[2]
+<fig1_decomposition.pdf, id=79, 421.28203pt x 195.77542pt>
+File: fig1_decomposition.pdf Graphic file (type pdf)
+<use fig1_decomposition.pdf>
+Package pdftex.def Info: fig1_decomposition.pdf  used on input line 233.
+(pdftex.def)             Requested size: 397.48499pt x 184.72794pt.
+ [3] [4 <./fig1_decomposition.pdf>] [5]
+<fig2_signal.pdf, id=174, 348.66751pt x 203.1466pt>
+File: fig2_signal.pdf Graphic file (type pdf)
+<use fig2_signal.pdf>
+Package pdftex.def Info: fig2_signal.pdf  used on input line 418.
+(pdftex.def)             Requested size: 397.48499pt x 231.59572pt.
+ [6] [7 <./fig2_signal.pdf>]
+Underfull \vbox (badness 1983) has occurred while \output is active []
 
- [7]
-Underfull \hbox (badness 5787) in paragraph at lines 548--556
+ [8]
+Underfull \hbox (badness 5787) in paragraph at lines 579--587
 \OT1/ptm/m/n/10 All splits are hashed and frozen; all con-fir-ma-tory claims ar
 e git-tagged be-fore the
  []
 
 
-Underfull \hbox (badness 4303) in paragraph at lines 548--556
+Underfull \hbox (badness 4303) in paragraph at lines 579--587
 \OT1/ptm/m/n/10 cor-re-spond-ing split is ex-e-cuted (\OT1/pcr/m/n/10 prereg-fr
 eeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/10
  ,
  []
 
-[8] (./main.aux)
+[9] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -464,13 +476,13 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 54A0573ADD50590482851359CFBEE151;1510.
  ) 
 Here is how much of TeX's memory you used:
- 11496 strings out of 474222
- 166104 string characters out of 5748734
- 1946975 words of memory out of 5000000
- 33506 multiletter control sequences out of 15000+600000
+ 11517 strings out of 474222
+ 166616 string characters out of 5748734
+ 1944975 words of memory out of 5000000
+ 33524 multiletter control sequences out of 15000+600000
  588610 words of font info for 102 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,559b,560s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,713b,560s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texliv
@@ -484,10 +496,10 @@ onts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a
 hare/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (8 pages, 188297 bytes).
+Output written on main.pdf (9 pages, 226277 bytes).
 PDF statistics:
- 231 PDF objects out of 1000 (max. 8388607)
- 190 compressed objects within 2 object streams
- 63 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 355 PDF objects out of 1000 (max. 8388607)
+ 217 compressed objects within 3 object streams
+ 66 named destinations out of 1000 (max. 500000)
+ 83 words of extra memory for PDF output out of 10000 (max. 10000000)
 

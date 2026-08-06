@@ -227,6 +227,20 @@ Five claims (C1--C5) were written, committed and git-tagged
 (\texttt{prereg-freeze-partI}) before any frozen test split was executed. We
 report all five as they landed.
 
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig1_decomposition.pdf}
+\caption{The decomposition, on frozen test splits. Repair (blue, above the
+axis) and breakage (orange, below) are of comparable size for a standard
+verify--refine workflow, so the net effect (black, 95\% CI) sits near zero or
+below it --- the quantity the literature reports is a difference of two large
+terms. Protecting the incumbent answer removes the lower term entirely
+(breakage $0.000$ in all cells) and the same machinery becomes a small,
+reliable gain. Both panels share an axis.}
+\label{fig:decomposition}
+\end{figure}
+
 \begin{table}[t]
 \caption{Frozen test splits, 150 tasks per family, 3 execution seeds. Baselines
 are the strongest single-call structure per family (\texttt{direct} for code,
@@ -258,6 +272,8 @@ math & loose  & protected & $+0.011$ $[+0.002,+0.022]$ & $0.036$ & $\mathbf{0.00
 \end{tabular}
 \end{table}
 
+Figure~\ref{fig:decomposition} shows the decomposition directly; Table~\ref{tab:parti} gives the numbers.
+
 \paragraph{C1 (net-zero), supported.} At \texttt{loose}, vanilla verify--refine
 differs from the baseline by $-0.033$ $[-0.087,+0.020]$ in code and $+0.016$
 $[-0.016,+0.047]$ in math, while costing $5.5\times$ and $2.2\times$ the dollars
@@ -277,7 +293,7 @@ $1.0\to 0.5\to 0.0$ moves the code/\texttt{loose} effect monotonically:
 $-0.033$, $-0.033$, $-0.118$ $[-0.178,-0.058]$. With no signal every answer is
 flagged, breakage climbs from $0.140$ to $0.234$, and refinement becomes
 actively destructive. Because masking changes only the verifier, this is a
-causal manipulation of the $\brate$ term.
+causal manipulation of the $\brate$ term (Figure~\ref{fig:signal}, left).
 
 \paragraph{C4 (incumbent protection), supported.} Breakage is $0.000$ in all
 twelve family$\times$budget cells. In code the protected workflow is
@@ -393,8 +409,23 @@ terms and we do not make it.
 
 \paragraph{Decoupling.} We recovered visible tests for the same OOD tasks by
 parsing docstring examples ($68/100$ tasks), yielding a condition that differs
-from in-domain only in domain. Table~\ref{tab:regimes} shows the result: breakage
-returns to $0.000$.
+from in-domain only in domain. Table~\ref{tab:regimes} and Figure~\ref{fig:signal} (right) show
+the result: breakage returns to $0.000$.
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig2_signal.pdf}
+\caption{Left: degrading the verifier is a causal manipulation of the breakage
+term. As visible tests are withheld, breakage rises and the net effect falls to
+$-0.118$ $[-0.178,-0.058]$. Right: breakage of the incumbent-protecting
+construction across every condition we measured. It stays below the predicted
+bound wherever the verifier carries signal --- including out of domain, and in
+a third domain whose prediction was locked before execution --- and exceeds it
+in exactly the one condition with no signal. Restoring signal on the
+\emph{same} tasks restores the guarantee.}
+\label{fig:signal}
+\end{figure}
 
 \begin{table}[t]
 \caption{Breakage of the incumbent-protecting workflow across verifier regimes
