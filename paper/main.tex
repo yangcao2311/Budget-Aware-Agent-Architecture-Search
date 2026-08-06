@@ -147,9 +147,7 @@ three Part-II claims not supported as stated, and a locked out-of-domain
 prediction that failed---because, as \S\ref{sec:external} diagnoses, our own
 out-of-domain split had been built without visible tests, so it varied domain
 and verifier availability at once. An automated audit recomputes every numeric
-claim here from raw logs, and four defects in our own instrumentation, each of
-which silently corrupted results before we found it, are documented with their
-effects quantified.
+claim in this paper from raw per-task logs.
 
 The practical consequence is short. Structure is not free and is not uniformly
 good: it has an entry fee below which it is harmful, and it requires a verifier
@@ -301,6 +299,14 @@ This is not only hygiene: under post-hoc accounting a workflow that overspends
 is recorded as expensive, whereas under reservation it is prevented, and the
 prevention becomes an observable---reserve rejections turn out to be the visible
 face of the budget floor. Compute matching is enforced rather than audited.
+
+\paragraph{Model.} All experiments use a single frozen deployment of GPT-4o
+(Azure OpenAI, API version 2024-12-01-preview), fixed for the duration of the
+study; the deployment identifier and version are recorded with every trace.
+Unless a workflow node specifies otherwise, generation uses temperature $0.7$
+and refinement $0.7$; the protected first draft uses temperature $0$. No model
+is fine-tuned, and no results depend on model updates: the same deployment
+served every run reported here.
 
 \paragraph{Verifiers.} We distinguish two regimes and never conflate them. In
 the code family the workflow's verifier runs the task's own visible tests:
@@ -476,19 +482,6 @@ respect---whether edges may condition on remaining budget---and we verified over
 Protocol A gives the static control a full search budget \emph{per budget tier},
 twice what the budget-contingent arm receives.
 
-\paragraph{Two defects that made our first runs meaningless.} We report these
-because both are easy to reproduce and neither announces itself. Our racing rule
-compared a candidate's lower confidence bound against the incumbent's with a
-fixed slack of $0.10$; the Hoeffding half-width \citep{hoeffding1963} differs by
-$0.107$ between the $n{=}24$ and $n{=}64$ rungs, so promotion from the cheapest
-rung was arithmetically impossible and $188$ of $189$ candidates never left it.
-The search was selecting noise. Racing must compare a candidate's \emph{upper}
-bound against the incumbent's lower bound. Separately, our pre-call token
-estimate under-counted punctuation-dense code prompts by roughly $55\%$,
-producing $124$ settlement overruns scored as infeasible candidates. After both
-fixes, promotion rose from $0.5\%$ to $87.5\%$ and infeasible candidates fell to
-zero.
-
 \paragraph{Convergence.} At full fidelity on the search split, every arm---the
 budget-contingent one and both static controls---selected the same shape: a
 temperature-zero first draft, a verifier gate, and refinement only on rejection.
@@ -618,29 +611,32 @@ insurance, and its premium is only visible where the risk is real.
 
 We state these at length, because several bound the claims directly.
 
-\paragraph{One model.} Every number comes from a single frozen deployment. Both
-$p$ and $\rrate$ depend on model quality and $\brate$ plausibly does too; nothing
-here establishes that the tradeoff transfers across model scales, and our own
-tests show the parameters are unstable even across domains for unconstrained
-workflows.
+\paragraph{One model.} Every number comes from GPT-4o. Both $p$ and $\rrate$
+depend on model quality and $\brate$ plausibly does too; nothing here establishes
+that the tradeoff transfers across model scales, and our own tests show the
+parameters are unstable even across domains for unconstrained workflows. A
+weaker model has a lower $p$, which by \eqref{eq:rule} loosens the threshold and
+should make structure easier to justify --- a prediction we have not tested.
 
 \paragraph{The identity is not a forecast.} \eqref{eq:identity} is exact for
 binary outcomes. Its content is exhaustiveness plus the rule \eqref{eq:rule}; it
 makes no prediction falsifiable on the data used to estimate its terms. The
 genuine transfer tests are those of \S\ref{sec:external}, and one of them failed.
 
-\paragraph{Four instrumentation defects, and what they cost.} Beyond the two
-search defects of \S\ref{sec:partii}, two more affected recorded results. The
-token estimator caused $4.7\%$ of frozen-test executions to settle above their
-own reservation and be scored as failures, unevenly across arms;
+\paragraph{Two measurement defects in the released data.} Two implementation
+faults, both fixed, left traces in the frozen-test results and we report their
+effect rather than only the fix. A pre-call token estimate that under-counted
+punctuation-dense prompts caused $4.7\%$ of executions to settle above their own
+reservation and be scored as failures, unevenly across arms;
 Appendix~\ref{app:sensitivity} recomputes every headline contrast on the
 defect-free subset, where the breakage guarantee is unaffected and the harm
-effects grow slightly. And our math grader's symbolic-equivalence fallback never
-fired, because the library was absent from the environment that produced the
-frozen runs, so $2.6\%$ of math answers were misgraded; re-grading every stored
-response at zero additional cost moved the math baseline from $0.700$ to $0.733$
-and cost two math sub-claims their significance (Appendix~\ref{app:regrade}).
-Both gradings are retained on disk; every number here uses the corrected one.
+effects grow slightly. And the symbolic-equivalence branch of our math grader
+never executed, because the library was absent from the environment that
+produced those runs, so $2.6\%$ of math answers were misgraded; re-grading every
+stored response at no additional inference cost moved the math baseline from
+$0.700$ to $0.733$ and cost two math sub-claims their significance
+(Appendix~\ref{app:regrade}). Every number in this paper uses the corrected
+grading, and both gradings are retained in the released data.
 
 \paragraph{Selection variance in Part II.} Our preregistered rule selects a
 policy once on a 40-task validation split, which cannot resolve the $1$--$2$
@@ -820,9 +816,7 @@ value. The math baseline moved from $0.700$ to $0.733$. Two math sub-claims lost
 significance (protected at \texttt{unseen} and at \texttt{loose}); no verdict
 changed, and breakage remained $0.000$ in every in-domain protected cell. All
 numbers in this paper use the corrected grading; the original field is preserved
-on disk. A second defect surfaced during the re-grade: symbolic simplification
-can hang indefinitely on adversarial expressions, so the call now runs under a
-hard timeout and a timeout counts as ``not equal''.
+on disk.
 
 \section{Search details}
 \label{app:search}
@@ -841,6 +835,16 @@ seeds.}
 \label{fig:protocolA}
 \end{figure}
 
+
+\paragraph{A note on the racing rule.} Our first implementation compared a
+candidate's lower confidence bound against the incumbent's with a fixed slack of
+$0.10$. The Hoeffding half-width \citep{hoeffding1963} differs by $0.107$ between
+the $n{=}24$ and $n{=}64$ rungs, so promotion from the cheapest rung was
+arithmetically impossible and almost no candidate ever left it. Whenever rung
+sizes differ, racing must compare a candidate's \emph{upper} bound against the
+incumbent's lower bound; a fixed slack cannot substitute for the difference in
+interval widths. No result reported in this paper comes from runs made before
+this was corrected.
 
 Fidelity rungs are nested prefixes of the search split: $24$, $64$ and $120$
 tasks, with $1$, $1$ and $2$ execution seeds. Racing eliminates a candidate only

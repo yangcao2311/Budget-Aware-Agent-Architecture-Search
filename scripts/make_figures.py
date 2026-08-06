@@ -85,8 +85,8 @@ def _despine(ax, which=("top", "right")):
 
 # --------------------------------------------------------------- Fig. 1 ----
 def fig1():
-    conds = [("code\ntight", "code", "tight"), ("code\nloose", "code", "loose"),
-             ("math\ntight", "math", "tight"), ("math\nloose", "math", "loose")]
+    conds = [("code\n\\$0.10", "code", "tight"), ("code\n\\$0.25", "code", "loose"),
+             ("math\n\\$0.10", "math", "tight"), ("math\n\\$0.25", "math", "loose")]
     fig, axes = plt.subplots(1, 2, figsize=(5.5, 1.8), sharey=True)
     for ax, which, title in [(axes[0], "vanilla", "vanilla verify–refine"),
                              (axes[1], "protected", "incumbent-protected")]:
@@ -108,7 +108,7 @@ def fig1():
                     ecolor=INK, elinewidth=1.0, capsize=2.5, zorder=5,
                     label="net effect (95% CI)")
         ax.axhline(0, color=INK2, lw=0.7)
-        ax.set_xticks(xs, [c[0] for c in conds])
+        ax.set_xticks(xs, [c[0] for c in conds], fontsize=7)
         ax.set_title(title, color=INK, pad=3)
         ax.set_ylim(-0.28, 0.28)
         ax.grid(axis="y", color=GRID, lw=0.5)
@@ -120,8 +120,10 @@ def fig1():
                         fontsize=6.2, color=BREAK)
     axes[0].set_ylabel("rate")
     h, l = axes[0].get_legend_handles_labels()
+    # Legend sits clear of the tick labels; a one-line tick label plus this
+    # offset leaves a visible gap at the figure's cropped bounding box.
     fig.legend(h, l, loc="lower center", ncol=3, frameon=False, handlelength=1.2,
-               borderpad=0.15, columnspacing=1.3, bbox_to_anchor=(0.5, -0.13))
+               borderpad=0.15, columnspacing=1.3, bbox_to_anchor=(0.5, -0.30))
     fig.savefig(ROOT / "paper" / "fig1_decomposition.pdf")
     print("fig1 written")
 
@@ -219,8 +221,12 @@ def fig5():
     cols = [BREAK if v > 0.02 else REPAIR for v in vals]
     ax.bar(range(len(vals)), vals, 0.62, color=cols, linewidth=0)
     ax.axhline(0.02, color=INK2, lw=0.8, ls=":")
-    ax.text(-0.4, 0.026, "predicted bound (0.02)", ha="left", fontsize=6.3,
-            color=INK2)
+    # Park the annotation in the empty upper-left quadrant (those bars are
+    # 0.000) and lead to the rule, so it cannot collide with a value label.
+    ax.annotate("predicted bound (0.02)", xy=(1.45, 0.021), xytext=(-0.35, 0.072),
+                ha="left", fontsize=6.3, color=INK2,
+                arrowprops=dict(arrowstyle="->", lw=0.6, color=INK2,
+                                shrinkA=1, shrinkB=1))
     ax.set_xticks(range(len(labs)), labs, fontsize=6.6, rotation=28,
                   ha="right", rotation_mode="anchor")
     ax.set_ylabel("breakage")
@@ -229,7 +235,7 @@ def fig5():
     ax.set_axisbelow(True)
     _despine(ax)
     for i, v in enumerate(vals):
-        ax.text(i, v + 0.004, f"{v:.3f}", ha="center", fontsize=6.3,
+        ax.text(i, v + 0.005, f"{v:.3f}", ha="center", fontsize=6.3,
                 color=BREAK if v > 0.02 else INK2)
     fig.savefig(ROOT / "paper" / "fig5_regimes.pdf")
     print("fig5 written")
