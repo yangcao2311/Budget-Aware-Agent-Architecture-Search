@@ -1001,16 +1001,29 @@ claim it does.
 \section{Cost accounting}
 \label{app:cost}
 
-All per-task dollar figures are \emph{logical} costs: what the workflow would
-cost without response caching, which is the quantity relevant to deployment.
-Response caching was enabled for the structure-library runs, including those on
-the frozen test split; it does not change any reported quantity, since the
-ledger charges a cached call exactly as it charges a fresh one, but it does mean
-the actual invoice was below the logical figure and that identically configured
-calls returned identical text (see \S\ref{sec:theory}). Only the searched-policy
-evaluations of Appendix~\ref{app:searchdetail} ran with caching disabled. Summed over every
-experiment reported here, logical spend was \$1{,}317.74 against a global hard
-cap of \$2{,}000 enforced by the ledger's circuit breaker.
+We separate two cost figures that are easy to conflate.
+
+\textbf{Per-task deployment cost} --- every dollar figure in the tables --- is a
+\emph{logical} cost: what the workflow would cost with no response caching. This
+is the quantity a deployment faces, because a deployed system meets new tasks and
+cannot serve them from a cache of its own past answers. Reporting cache-assisted
+prices in those tables would understate deployment cost substantially.
+
+\textbf{Study cost} is the actual invoice, which is much smaller. Response
+caching was enabled for the structure-library runs, including those on the
+frozen test split, so identical calls across arms resolved to a single API
+request. The ledger charges a cached call exactly as it charges a fresh one,
+which is why no reported quantity changes; but it also means the two figures
+diverge by the cache hit rate. Summed over every experiment reported here the
+logical figure is \$1{,}317.74, against \$2{,}000 as the ledger's
+circuit-breaker cap, while the billed figure is roughly \$300 --- consistent
+with $77{,}942$ unique cached responses serving $194{,}318$ task executions.
+Only the searched-policy evaluations of Appendix~\ref{app:searchdetail} ran with
+caching disabled.
+
+Caching also has a methodological consequence used elsewhere in this paper: it
+is why identically configured calls returned identical text, and therefore why
+$\Pr[I{=}B]=1$ held exactly rather than approximately (\S\ref{sec:theory}).
 
 \section{Preregistration and outcomes}
 \label{app:prereg}
