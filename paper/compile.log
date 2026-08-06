@@ -56,6 +56,7 @@ For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)))
+(/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
 (./main.aux) (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -69,17 +70,16 @@ For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [1{/var/lib/texmf/fo
 nts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips
 /base/8r.enc}] (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd)
-[2] [3] [4 <./fig1_decomposition.pdf>] [5] [6] [7 <./fig2_signal.pdf>]
-Underfull \vbox (badness 1983) has occurred while \output is active [8]
-Underfull \hbox (badness 5787) in paragraph at lines 579--587
+[2] [3] [4 <./fig1_decomposition.pdf>] [5] [6] [7 <./fig2_signal.pdf>] [8]
+Underfull \hbox (badness 5787) in paragraph at lines 595--603
 \OT1/ptm/m/n/10 All splits are hashed and frozen; all con-fir-ma-tory claims ar
 e git-tagged be-fore the
 
-Underfull \hbox (badness 4303) in paragraph at lines 579--587
+Underfull \hbox (badness 4303) in paragraph at lines 595--603
 \OT1/ptm/m/n/10 cor-re-spond-ing split is ex-e-cuted (\OT1/pcr/m/n/10 prereg-fr
 eeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/10
  ,
-[9] (./main.aux) )
+[9] [10] [11] (./main.aux) )
 (see the transcript file for additional information)</usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/typ
@@ -90,8 +90,9 @@ onts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
-s/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (9 pages, 226277 bytes).
+f-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/t
+imes/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (11 pages, 248824 bytes).
 Transcript written on main.log.

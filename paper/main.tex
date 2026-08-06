@@ -8,6 +8,8 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{amsthm}
+\newtheorem{proposition}{Proposition}
 
 \title{Hard Budgets Expose the Repair--Breakage \\ Tradeoff in Agent Workflows}
 
@@ -298,8 +300,11 @@ causal manipulation of the $\brate$ term (Figure~\ref{fig:signal}, left).
 \paragraph{C4 (incumbent protection), supported.} Breakage is $0.000$ in all
 twelve family$\times$budget cells. In code the protected workflow is
 significantly positive at all three budgets ($+0.013$, $+0.020$, $+0.020$); in
-math it is non-inferior everywhere and significantly positive at \texttt{loose}
-($+0.011$ $[+0.002,+0.022]$). Protection also costs less than vanilla refinement
+math it is non-inferior everywhere and positive at \texttt{loose}
+($+0.011$ $[+0.002,+0.022]$; this last interval is the one result that
+does not survive the robustness check of Appendix~\ref{app:sensitivity},
+where it becomes $[+0.000,+0.020]$, so we read it as non-inferior rather
+than significantly positive). Protection also costs less than vanilla refinement
 ($\$0.0025$ vs $\$0.0090$ per task at code/\texttt{loose}) because most tasks
 exit at the first verifier pass.
 
@@ -545,6 +550,17 @@ predicts a (marginal) \emph{benefit}, and the measured structure-vs-baseline
 effect is indeed $+0.004$. The rule therefore does not explain the
 policy-vs-policy result, and we do not claim it does.
 
+\paragraph{A ledger defect in the frozen test data.} The frozen test runs
+were executed before we replaced a characters-per-token heuristic with an exact
+tokeniser count. The heuristic under-counted punctuation-dense prompts, so
+$4.7\%$ of executions settled above their own reservation and were scored as
+failures; the rate is uneven across arms (protected $6.5\%$, vanilla $4.5\%$,
+baseline $3.6\%$). Appendix~\ref{app:sensitivity} recomputes every headline
+contrast on the subset where neither arm hit the defect. The breakage guarantee
+is unaffected ($0.000$ under both views in all six cells) and the harm effects
+grow slightly, but the math/\texttt{loose} protected interval loses
+significance, and we report the weaker reading.
+
 \paragraph{Small hard-task strata out of domain.} On OOD code with signal
 restored, the baseline solves $62$ of $68$ tasks, leaving $5$ hard tasks. The
 repair estimate there ($0.067$) is correspondingly noisy, though the breakage
@@ -584,5 +600,177 @@ validator, the reservation ledger with its fuzz harness, every search registry
 with parent/mutation lineage, all raw per-task traces, the preregistration with
 its append-only deviation log including the refuted claims, and a single command
 that recomputes every table from raw logs.
+
+
+\appendix
+\section{Workflow DSL}
+\label{app:dsl}
+
+A workflow is a JSON graph validated statically before any spend. Node
+whitelist: \texttt{generate}, \texttt{refine}, \texttt{vote} ($k\le 5$),
+\texttt{verify}, \texttt{decompose}, \texttt{aggregate}, \texttt{branch},
+\texttt{END}. Structural constraints: at most $8$ nodes; at most $2$ loops,
+each with \texttt{max\_iter} $\le 3$; every node must reach \texttt{END} via
+non-loop edges (checked by reachability). Edge conditions are drawn from a
+fixed grammar: \texttt{always}, \texttt{verify\_passed},
+\texttt{verify\_failed}, \texttt{budget\_below:$q$},
+\texttt{budget\_above:$q$}, with $q\in(0,1)$ read against the ledger's
+most-binding remaining fraction. The meta-agent emits JSON patches only; no
+model-generated text is ever executed as program logic. Candidate solutions to
+code tasks are executed, but only inside a network-isolated subprocess with a
+5\,s CPU limit and a 4\,GB address-space limit.
+
+Invalid candidates are rejected by the validator at zero API cost; we report
+the invalid rate alongside search cost rather than hiding it.
+
+\section{Budget safety}
+\label{app:safety}
+
+\begin{proposition}
+Fix a task, a budget profile $C$, and any workflow expressible in the DSL. If
+(i) every metered call is preceded by a successful \texttt{reserve} of an
+upper bound on its billable vector, (ii) concurrent calls reserve their full
+aggregate before any of them starts, and (iii) every settlement reports actual
+usage no greater than its reservation, then cumulative usage never exceeds $C$
+in any countable dimension.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Induct on the number of settled calls. The invariant is
+$\textit{used} + \textit{reserved} \le C$ componentwise. It holds initially.
+\texttt{reserve} admits a vector only if the invariant survives its addition to
+\textit{reserved}; \texttt{settle} moves a quantity no larger than the
+reservation from \textit{reserved} to \textit{used} and releases the remainder,
+which cannot increase the sum. Rejected reservations leave the state unchanged
+and divert control flow, so no unreserved call can occur.
+\end{proof}
+
+Wall-clock time is not reservable (its consumption is not known in advance);
+it is metered continuously and enforced by admission checks plus per-call
+deadlines. Provider-side cancellation latency is reported separately from
+policy-attributable overruns.
+
+\paragraph{Empirical check.} A fuzz sweep of $3{,}000$ randomly generated legal
+workflows against randomly drawn budget profiles, with a mocked model, produced
+zero cap violations in any dimension.
+
+\paragraph{Where the guarantee was violated in practice, and why.} Assumption
+(iii) is an assumption about the \emph{estimator}, and ours was initially
+wrong: a characters/3 heuristic under-counted punctuation-dense code prompts by
+roughly $55\%$, so some settlements exceeded their own reservations. The
+implementation surfaces these as defects rather than absorbing them, which is
+how we found them. Appendix~\ref{app:sensitivity} quantifies the residual
+effect on the frozen test results, which were collected before the estimator
+was replaced with an exact tokeniser count plus a $5\%$ margin.
+
+\section{Failure taxonomy}
+\label{app:failures}
+
+Categories were fixed before inspection. Counts are over all failures in the
+frozen test split at seed 0, pooled across structures and budgets
+($n=792$).
+
+\begin{center}
+\small
+\begin{tabular}{lrl}
+\toprule
+Category & share & example \\
+\midrule
+first draft wrong, no refinement triggered & $28.4\%$ & \texttt{direct}, mbpp\_103 \\
+premature budget exhaustion (reserve rejected) & $26.3\%$ & \texttt{protected math}, algebra\_1071 \\
+verifier passed a wrong answer & $19.8\%$ & \texttt{protected code}, mbpp\_113 \\
+ledger defect (settle overrun; see \ref{app:sensitivity}) & $18.4\%$ & \texttt{protected code}, mbpp\_578 \\
+refined but still wrong (signal insufficient) & $7.1\%$ & \texttt{protected code}, mbpp\_160 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The third row is the mechanism behind $\brate$: a verifier that accepts an
+incorrect answer cannot trigger the repair that would fix it, and a verifier
+that rejects a correct one invites the breakage that destroys it.
+
+\section{Sensitivity to the ledger defect}
+\label{app:sensitivity}
+
+$4.7\%$ of frozen-test executions ($466/9{,}900$) terminated with a settlement
+overrun, unevenly distributed across arms (protected $6.5\%$, vanilla $4.5\%$,
+baseline $3.6\%$). Those tasks were scored as failures. We therefore recompute
+every headline contrast on the subset of tasks where \emph{neither} arm hit the
+defect in \emph{any} seed, and report both views.
+
+\begin{center}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Contrast & all tasks & defect-free subset & $n$ \\
+\midrule
+C1 code loose, vanilla $-$ direct & $-0.033$ $[-0.087,+0.020]$ & $-0.046$ $[-0.096,+0.005]$ & 146 \\
+C1 math loose, vanilla $-$ cot & $+0.016$ $[-0.016,+0.047]$ & $+0.027$ $[-0.000,+0.058]$ & 110 \\
+C2 code tight, vanilla $-$ direct & $-0.104$ $[-0.162,-0.047]$ & $-0.115$ $[-0.173,-0.056]$ & 148 \\
+C3 code loose, no signal & $-0.118$ $[-0.178,-0.058]$ & $-0.132$ $[-0.192,-0.074]$ & 144 \\
+C4 code tight, protected & $+0.013$ $[+0.002,+0.031]$ & $+0.014$ $[+0.002,+0.032]$ & 147 \\
+C4 code loose, protected & $+0.020$ $[+0.002,+0.042]$ & $+0.018$ $[+0.002,+0.041]$ & 145 \\
+C4 code unseen, protected & $+0.020$ $[+0.002,+0.042]$ & $+0.021$ $[+0.002,+0.043]$ & 146 \\
+C4 math tight, protected & $+0.000$ $[+0.000,+0.000]$ & $+0.000$ $[+0.000,+0.000]$ & 139 \\
+C4 math loose, protected & $+0.011$ $[+0.002,+0.022]$ & $+0.009$ $[+0.000,+0.020]$ & 114 \\
+C4 math unseen, protected & $+0.004$ $[+0.000,+0.011]$ & $+0.005$ $[+0.000,+0.012]$ & 135 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Breakage of the protected construction is $0.000$ under both views in all six
+cells, so C4's structural claim is unaffected. The C1--C3 harm effects become
+slightly \emph{larger} on the defect-free subset, so those conclusions are not
+artifacts of the defect. Exactly one sub-claim is fragile: math/\texttt{loose}
+protected moves from $[+0.002,+0.022]$ to $[+0.000,+0.020]$, i.e.\ from
+significantly positive to non-inferior-but-not-significant. We report the
+weaker reading in the main text.
+
+\section{Search details}
+\label{app:search}
+
+Fidelity rungs are nested prefixes of the search split: $24$, $64$, $120$
+tasks, with $1$, $1$ and $2$ execution seeds. Racing eliminates a candidate
+only when its Hoeffding upper bound falls below the incumbent's lower bound at
+the same or higher rung; a fixed-slack lower-bound comparison is incorrect
+because the interval half-width itself differs by $0.107$ between the first two
+rungs. Selection and archive ranking use a fidelity-comparable mean-based
+score; the conservative bound is used only for the racing rule.
+
+\begin{center}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Run (code, search seed 0) & candidates & spend & rung distribution & archive \\
+\midrule
+budget-contingent & 33 & \$63.0 & 9/5/19 & 11 \\
+static @ tight & 76 & \$60.7 & 35/5/36 & 38 \\
+static @ loose & 30 & \$61.6 & 5/5/20 & 8 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Cost accounting}
+\label{app:cost}
+
+All per-task dollar figures in the paper are \emph{logical} costs: what the
+workflow would cost without response caching, which is the quantity relevant to
+deployment. Search-phase caching reduced the actual invoice below this figure;
+final evaluation runs were executed with caching disabled. Summed over every
+experiment reported here, logical spend was \$1{,}317.74 against a global hard
+cap of \$2{,}000 enforced by the ledger's circuit breaker.
+
+\section{Preregistration and outcomes}
+\label{app:prereg}
+
+The repository contains the preregistration with an append-only deviation log.
+Claims were committed and git-tagged before the corresponding frozen split was
+executed: \texttt{prereg-freeze-partI}, \texttt{prereg-freeze-partII},
+\texttt{ood-predictions-locked}, \texttt{prospective-locked}. Outcomes as
+recorded: Part I C1--C4 supported, C5 refuted; Part II P1--P3 not supported as
+stated, P4 weaker than on the search split, P5 reported; the locked
+out-of-domain transfer prediction failed; the prospective predictions PV1 and
+PV3 held and PV2 did not. An automated audit recomputes all $115$ numeric
+claims in this paper from raw per-task logs.
 
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  5 AUG 2026 20:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  5 AUG 2026 20:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -353,51 +353,64 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 \Gin@req@height=\dimen172
 \Gin@req@width=\dimen173
 )
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
-9.
+(/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks23
+\thm@bodyfont=\toks24
+\thm@headfont=\toks25
+\thm@notefont=\toks26
+\thm@headpunct=\toks27
+\thm@preskip=\skip65
+\thm@postskip=\skip66
+\thm@headsep=\skip67
+\dth@everypar=\toks28
+)
+\c@proposition=\count295
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 2
+1.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count295
+\l__color_backend_stack_int=\count296
 \l__pdf_internal_box=\box55
 )
 (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count296
+\scratchcounter=\count297
 \scratchdimen=\dimen174
 \scratchbox=\box56
-\nofMPsegments=\count297
-\nofMParguments=\count298
-\everyMPshowfont=\toks23
-\MPscratchCnt=\count299
+\nofMPsegments=\count298
+\nofMParguments=\count299
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count300
 \MPscratchDim=\dimen175
-\MPnumerator=\count300
-\makeMPintoPDFobject=\count301
-\everyMPtoPDFconversion=\toks24
+\MPnumerator=\count301
+\makeMPintoPDFobject=\count302
+\everyMPtoPDFconversion=\toks30
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -407,26 +420,26 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 19.
+Package hyperref Info: Link coloring OFF on input line 21.
 
 (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 21.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 23.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 21.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 23.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 7
-5.
+7.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
@@ -435,52 +448,51 @@ f-dist/fonts/enc/dvips/base/8r.enc}
 
 ]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-41.
+43.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 [2]
-<fig1_decomposition.pdf, id=79, 421.28203pt x 195.77542pt>
+<fig1_decomposition.pdf, id=107, 421.28203pt x 195.77542pt>
 File: fig1_decomposition.pdf Graphic file (type pdf)
 <use fig1_decomposition.pdf>
-Package pdftex.def Info: fig1_decomposition.pdf  used on input line 233.
+Package pdftex.def Info: fig1_decomposition.pdf  used on input line 235.
 (pdftex.def)             Requested size: 397.48499pt x 184.72794pt.
  [3] [4 <./fig1_decomposition.pdf>] [5]
-<fig2_signal.pdf, id=174, 348.66751pt x 203.1466pt>
+<fig2_signal.pdf, id=204, 348.66751pt x 203.1466pt>
 File: fig2_signal.pdf Graphic file (type pdf)
 <use fig2_signal.pdf>
-Package pdftex.def Info: fig2_signal.pdf  used on input line 418.
+Package pdftex.def Info: fig2_signal.pdf  used on input line 423.
 (pdftex.def)             Requested size: 397.48499pt x 231.59572pt.
- [6] [7 <./fig2_signal.pdf>]
-Underfull \vbox (badness 1983) has occurred while \output is active []
-
- [8]
-Underfull \hbox (badness 5787) in paragraph at lines 579--587
+ [6] [7 <./fig2_signal.pdf>] [8]
+Underfull \hbox (badness 5787) in paragraph at lines 595--603
 \OT1/ptm/m/n/10 All splits are hashed and frozen; all con-fir-ma-tory claims ar
 e git-tagged be-fore the
  []
 
 
-Underfull \hbox (badness 4303) in paragraph at lines 579--587
+Underfull \hbox (badness 4303) in paragraph at lines 595--603
 \OT1/ptm/m/n/10 cor-re-spond-ing split is ex-e-cuted (\OT1/pcr/m/n/10 prereg-fr
 eeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/10
  ,
  []
 
-[9] (./main.aux)
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <10> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 631.
+[9] [10] [11] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 54A0573ADD50590482851359CFBEE151;1510.
+(rerunfilecheck)             Checksum: C73DE55A804E42724D153A680291D4D7;2508.
  ) 
 Here is how much of TeX's memory you used:
- 11517 strings out of 474222
- 166616 string characters out of 5748734
+ 11651 strings out of 474222
+ 168745 string characters out of 5748734
  1944975 words of memory out of 5000000
- 33524 multiletter control sequences out of 15000+600000
- 588610 words of font info for 102 fonts, out of 8000000 for 9000
+ 33639 multiletter control sequences out of 15000+600000
+ 590323 words of font info for 106 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,11n,79p,713b,560s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr
@@ -492,14 +504,15 @@ onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (9 pages, 226277 bytes).
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
+mes/utmri8a.pfb>
+Output written on main.pdf (11 pages, 248824 bytes).
 PDF statistics:
- 355 PDF objects out of 1000 (max. 8388607)
- 217 compressed objects within 3 object streams
- 66 named destinations out of 1000 (max. 500000)
- 83 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 408 PDF objects out of 1000 (max. 8388607)
+ 266 compressed objects within 3 object streams
+ 79 named destinations out of 1000 (max. 500000)
+ 139 words of extra memory for PDF output out of 10000 (max. 10000000)
 
