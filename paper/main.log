@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  5 AUG 2026 23:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  6 AUG 2026 00:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -724,20 +724,17 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 28.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<fig1_decomposition.pdf, id=75, 419.0236pt x 162.12169pt>
+<fig1_decomposition.pdf, id=79, 419.0236pt x 162.12169pt>
 File: fig1_decomposition.pdf Graphic file (type pdf)
 <use fig1_decomposition.pdf>
-Package pdftex.def Info: fig1_decomposition.pdf  used on input line 59.
+Package pdftex.def Info: fig1_decomposition.pdf  used on input line 61.
 (pdftex.def)             Requested size: 397.48499pt x 153.79456pt.
-
-Underfull \vbox (badness 1824) has occurred while \output is active []
-
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf
 -dist/fonts/enc/dvips/base/8r.enc}
 
  <./fig1_decomposition.pdf>]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
-08.
+10.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
@@ -745,74 +742,78 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
-Underfull \hbox (badness 1609) in paragraph at lines 186--194
+Underfull \hbox (badness 1609) in paragraph at lines 190--198
  []\OT1/ptm/b/n/10 Budget-aware in-fer-ence.[] []\OT1/ptm/m/n/10 Li et al.[] ([
 ]2026[]) con-di-tion inference-tree node se-lec-tion on the
  []
 
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 2
-83.
+89.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [3] [4]
-<fig3_budget_floor.pdf, id=269, 352.96313pt x 141.93716pt>
+) [3]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4]
+<fig3_budget_floor.pdf, id=273, 352.96313pt x 141.93716pt>
 File: fig3_budget_floor.pdf Graphic file (type pdf)
 <use fig3_budget_floor.pdf>
-Package pdftex.def Info: fig3_budget_floor.pdf  used on input line 421.
+Package pdftex.def Info: fig3_budget_floor.pdf  used on input line 437.
 (pdftex.def)             Requested size: 397.48499pt x 159.85pt.
 
-Underfull \hbox (badness 5667) in paragraph at lines 430--438
+Underfull \hbox (badness 5667) in paragraph at lines 451--463
  []\OT1/ptm/b/n/10 Structure has an en-try fee (C2, sup-ported).[] \OT1/ptm/m/n
 /10 At \OT1/pcr/m/n/10 tight\OT1/ptm/m/n/10 , code vanilla is $\OMS/cmsy/m/n/10
  ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 104$
  []
 
 [5] [6 <./fig3_budget_floor.pdf>]
-<fig4_dose_response.pdf, id=352, 211.06166pt x 138.00359pt>
+<fig4_dose_response.pdf, id=359, 211.06166pt x 138.00359pt>
 File: fig4_dose_response.pdf Graphic file (type pdf)
 <use fig4_dose_response.pdf>
-Package pdftex.def Info: fig4_dose_response.pdf  used on input line 525.
+Package pdftex.def Info: fig4_dose_response.pdf  used on input line 532.
 (pdftex.def)             Requested size: 192.78046pt x 126.05724pt.
-<fig5_regimes.pdf, id=353, 209.54034pt x 160.03552pt>
+<fig5_regimes.pdf, id=360, 209.54034pt x 160.03552pt>
 File: fig5_regimes.pdf Graphic file (type pdf)
 <use fig5_regimes.pdf>
-Package pdftex.def Info: fig5_regimes.pdf  used on input line 529.
+Package pdftex.def Info: fig5_regimes.pdf  used on input line 536.
 (pdftex.def)             Requested size: 192.78046pt x 147.23933pt.
  [7 <./fig4_dose_response.pdf> <./fig5_regimes.pdf>] [8]
-Underfull \hbox (badness 2229) in paragraph at lines 675--684
+Underfull \hbox (badness 2229) in paragraph at lines 700--709
 \OT1/ptm/m/n/10 All splits are hashed and frozen. Ev-ery con-fir-ma-tory claim 
 was git-tagged be-fore the
  []
 
 
-Underfull \hbox (badness 1275) in paragraph at lines 675--684
+Underfull \hbox (badness 1275) in paragraph at lines 700--709
 \OT1/ptm/m/n/10 cor-re-spond-ing split was ex-e-cuted (\OT1/pcr/m/n/10 prereg-f
 reeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/1
 0 ,
  []
 
-(./main.bbl [9] [10]) [11]
-<fig6_protocolA.pdf, id=491, 404.90334pt x 133.70079pt>
+[9] (./main.bbl [10]) [11] [12] [13]
+<fig6_protocolA.pdf, id=517, 404.90334pt x 133.70079pt>
 File: fig6_protocolA.pdf Graphic file (type pdf)
 <use fig6_protocolA.pdf>
-Package pdftex.def Info: fig6_protocolA.pdf  used on input line 826.
+Package pdftex.def Info: fig6_protocolA.pdf  used on input line 906.
 (pdftex.def)             Requested size: 397.48499pt x 131.25844pt.
- [12] [13 <./fig6_protocolA.pdf>] (./main.aux)
+ [14 <./fig6_protocolA.pdf>] [15]
+(./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 252DDEFF1ABD0DA2CD5991F3D35868BC;2602.
+(rerunfilecheck)             Checksum: 1707317A2496C40DE34BF3001735D777;2920.
  ) 
 Here is how much of TeX's memory you used:
- 22762 strings out of 474222
- 415500 string characters out of 5748734
+ 22771 strings out of 474222
+ 415598 string characters out of 5748734
  1949975 words of memory out of 5000000
- 44511 multiletter control sequences out of 15000+600000
+ 44514 multiletter control sequences out of 15000+600000
  595368 words of font info for 110 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,12n,87p,735b,893s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,12n,87p,893b,893s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texliv
@@ -829,10 +830,10 @@ ve/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
 rw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on main.pdf (13 pages, 317887 bytes).
+Output written on main.pdf (15 pages, 325142 bytes).
 PDF statistics:
- 642 PDF objects out of 1000 (max. 8388607)
- 393 compressed objects within 4 object streams
- 97 named destinations out of 1000 (max. 500000)
- 174 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 669 PDF objects out of 1000 (max. 8388607)
+ 415 compressed objects within 5 object streams
+ 103 named destinations out of 1000 (max. 500000)
+ 182 words of extra memory for PDF output out of 10000 (max. 10000000)
 
