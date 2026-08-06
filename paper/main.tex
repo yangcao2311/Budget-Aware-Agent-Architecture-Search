@@ -44,12 +44,15 @@ netting $-3.3$ points while spending $5.5\times$ the dollars. The decomposition
 is an exact identity rather than a fitted model, and it yields a design rule
 that we then verify causally: the term that gating cannot remove is the one
 where a verifier accepts a workflow's own wrong draft, and it vanishes only if
-that draft is the reference system's actual output. Under this condition,
-which we verify holds exactly in our runs, breakage is $0.000$ in all six
-family$\times$budget cells and bounded above by the verifier's false-rejection
-rate---a quantity measurable from the verifier alone, before deployment. The
-bound holds in all ten conditions we ran, across false-rejection rates from
-$0.009$ to $1.000$. Withholding the verifier's
+that draft is the reference system's actual output. Where that condition holds in our runs---exactly, though
+through an implementation detail rather than by design---breakage is $0.000$ in
+all six family$\times$budget cells. The accompanying bound, that breakage cannot
+exceed the verifier's false-rejection rate, involves a quantity measurable from
+the verifier alone before deployment, and holds in all ten conditions we ran
+across false-rejection rates from $0.009$ to $1.000$. We reached this account by
+auditing an earlier and wrong one: our preregistered claim attributed the effect
+to a control-flow difference the two arms did not in fact have, and we report
+that claim as unsupported. Withholding the verifier's
 signal moves the tradeoff in the direction the identity predicts, costing
 $11.8$ points. Our evidence comes from one model family and is
 strongest where verification is executable, so we state the scope narrowly and
@@ -524,30 +527,33 @@ is a causal manipulation of the $\brate$ term (Figure~\ref{fig:signal}, left).
 It also supplies a mechanism for the sceptical literature: refinement without
 external signal does not merely fail to help, it destroys correct work.
 
-\paragraph{Reference preservation coincides with zero breakage (C4,
-supported).} No breakage event is observed in any of the six reference-preserving
-cells. A zero count is not a zero rate: with $107$ baseline-correct tasks at
-code/\texttt{loose}, a task-clustered one-sided $95\%$ upper bound is $0.027$,
-consistent with \eqref{eq:bound} and a measured false-rejection rate of
-$0.009$. We write $0.000$ in tables for the observed rate and carry the bound
-in the text.
+\paragraph{C4, \textcolor{red}{unsupported as preregistered}.} We registered
+the claim that adding incumbent protection---understood as a structural change,
+gating the refiner on the verifier---would eliminate breakage. An audit of our
+own implementation, carried out after the confirmatory runs, showed that both
+compared workflows already had that gate: their control flow is identical edge
+for edge. The comparison therefore never manipulated the variable the claim was
+about, and we mark C4 unsupported as stated rather than restate it to fit what
+the comparison did manipulate.
 
-We state plainly what this does and does not show. Both compared workflows gate
-the refiner on the verifier; the gate is not the difference between them, and
-an earlier version of this paper wrongly attributed the effect to it. What
-differs is provenance, and \eqref{eq:twoterm} says provenance is what closes
-the accepting path. The result is therefore closer to a construction than to a
-discovery: if you want a workflow not to regress against a reference, hand it
-the reference's own output and change it only on rejection. Its empirical
-content lies in the false-rejection rates, which are small for executable tests
-and not zero elsewhere. In code the protected workflow
-is significantly positive at all three budgets ($+0.013$, $+0.020$, $+0.020$);
-The two workflows differ only as shown in Figure~\ref{fig:mechanism}(b). In math it is non-inferior everywhere and positive but not significant at
-\texttt{loose} ($+0.007$ $[-0.002,+0.018]$). It is also cheaper than vanilla
-refinement---$\$0.0025$ against $\$0.0090$ per task at code/\texttt{loose}
----because most tasks exit at the first verifier pass. The gain is modest, and
-that is the point: what changed is not how much the workflow repairs but that it
-no longer pays for repair with damage.
+\paragraph{What the comparison did manipulate, and a post-hoc proposition.} The
+arms differed in where the incumbent came from. In the reference-preserving arm
+the first call is configured exactly as the baseline's and, because both resolve
+to the same response-cache entry, returns byte-identical text: among executions
+where the verifier accepted, $402/402$ code and $396/396$ math outputs are
+identical to the baseline's. Under that condition \eqref{eq:twoterm} gives a
+proposition we did not preregister and state here as \emph{post hoc}, motivated
+by the audit: if a workflow emits the reference system's own output as its
+incumbent, emits it unchanged on acceptance, and can reach a different answer
+only after rejection, then acceptance-path regression is impossible and
+$\brate \le \Pr(R \mid B\text{ correct})$. Consistent with it, no breakage event
+occurs in any of the six reference-preserving cells; at code/\texttt{loose} a
+task-clustered one-sided $95\%$ upper bound over $107$ baseline-correct tasks is
+$0.027$, against a measured false-rejection rate of $0.009$. Two cautions belong
+with this: $I=B$ is a property of our \emph{implementation}, delivered by a
+shared cache entry rather than by decoding determinism; and a proposition
+formulated after seeing the data cannot be confirmed by it
+(\S\ref{sec:limitations}).
 
 \paragraph{Repair is not bounded by verifier type (C5,
 \textcolor{red}{refuted}).} We predicted that oracle-verified repair would
@@ -572,27 +578,6 @@ per-claim result.
 
 \section{External validity}
 \label{sec:external}
-
-\begin{figure}[t]
-\centering
-\begin{minipage}[t]{0.485\textwidth}
-\centering
-\includegraphics[width=\textwidth]{fig4_dose_response.pdf}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.485\textwidth}
-\centering
-\includegraphics[width=\textwidth]{fig5_regimes.pdf}
-\end{minipage}
-\caption{\textbf{Left:} withholding the verifier's signal is a causal
-manipulation of the breakage term. As visible tests are removed, breakage rises
-and repair falls, and the net effect drops to $-0.118$ $[-0.178,-0.058]$.
-\textbf{Right:} breakage of the incumbent-protecting construction across every
-condition we measured, including a third domain whose prediction was locked
-before execution. It stays at or near the predicted bound wherever the verifier
-carries signal and jumps to $0.114$ in the single condition with none;
-restoring signal on the \emph{same} tasks restores the guarantee.}
-\label{fig:signal}
-\end{figure}
 
 \paragraph{A locked prediction that failed.} Before computing any out-of-domain
 effect we committed (tag \texttt{ood-predictions-locked}) predictions for
@@ -671,6 +656,14 @@ binary outcomes; its content is exhaustiveness plus the rule \eqref{eq:rule},
 and it makes no prediction falsifiable on the data used to estimate its terms.
 The genuine transfer tests are those of \S\ref{sec:external}, one of which failed.
 
+\paragraph{The reference-preservation proposition is untested.} It was
+formulated after auditing our implementation and is not established by the runs
+that motivated it. Testing it needs arms differing only in incumbent
+provenance---one reusing a stored reference output by explicit assignment rather
+than by cache coincidence, one regenerating under the same policy, one drafting
+under a different policy---with cross-arm caching disabled so the first two are
+distinguishable. We have not run it.
+
 \paragraph{Two measurement defects in the released data.} A token estimator
 that under-counted punctuation-dense prompts caused $4.7\%$ of frozen-test
 executions to be scored as failures, unevenly across arms, and our math
@@ -683,15 +676,12 @@ subset. The breakage results are unaffected and the harm effects grow slightly.
 Appendices~\ref{app:sensitivity} and \ref{app:regrade} give both analyses in
 full; both gradings are retained in the released data.
 
-\paragraph{Two further limits, stated in full in Appendix~\ref{app:scope}.} We
+\paragraph{Further limits, stated in full in Appendix~\ref{app:scope}.} We
 cannot explain with data why the searched policy is better at math/\texttt{loose}
-and worse at math/\texttt{tight}, and our preregistered one-shot selection uses a
-40-task validation split whose variance swamps the gaps between candidates.
-
-\paragraph{Scope of the space we searched.} Results about ``structure'' are
-results about our restricted language, and our three-way verifier taxonomy
-stands in for what is really a continuum of sensitivity and specificity;
-Appendix~\ref{app:scope} states both limits.
+and worse at math/\texttt{tight}; our one-shot selection uses a 40-task split
+whose variance swamps the gaps between candidates; results about ``structure''
+are results about our restricted language; and our three-way verifier taxonomy
+stands in for a continuum of sensitivity and specificity.
 
 \section{Conclusion}
 
@@ -811,8 +801,29 @@ The third row is the mechanism behind $\brate$: a verifier that accepts an
 incorrect answer cannot trigger the repair that would fix it, and one that
 rejects a correct answer invites the breakage that destroys it.
 
-\section{Budget profiles and the movement of both terms}
+\section{Budget profiles and verifier signal}
 \label{app:floor}
+
+\begin{figure}[t]
+\centering
+\begin{minipage}[t]{0.485\textwidth}
+\centering
+\includegraphics[width=\textwidth]{fig4_dose_response.pdf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\centering
+\includegraphics[width=\textwidth]{fig5_regimes.pdf}
+\end{minipage}
+\caption{\textbf{Left:} withholding the verifier's signal is a causal
+manipulation of the breakage term. As visible tests are removed, breakage rises
+and repair falls, and the net effect drops to $-0.118$ $[-0.178,-0.058]$.
+\textbf{Right:} breakage of the incumbent-protecting construction across every
+condition we measured, including a third domain whose prediction was locked
+before execution. It stays at or near the predicted bound wherever the verifier
+carries signal and jumps to $0.114$ in the single condition with none;
+restoring signal on the \emph{same} tasks restores the guarantee.}
+\label{fig:signal}
+\end{figure}
 
 \begin{figure}[t]
 \centering
@@ -1030,7 +1041,9 @@ $\Pr[I{=}B]=1$ held exactly rather than approximately (\S\ref{sec:theory}).
 
 The repository contains the preregistration with an append-only deviation log.
 Claims were committed and git-tagged before the corresponding frozen split was
-executed. Outcomes as recorded: Part I C1--C4 supported and C5 refuted; Part II
+executed. Outcomes as recorded: Part I C1--C3 supported, C4 unsupported as
+preregistered (the comparison did not manipulate the registered variable) and
+C5 refuted; Part II
 P1--P3 not supported as stated, P4 weaker than on the search split, P5 reported;
 the locked out-of-domain transfer prediction failed; the prospective predictions
 PV1 and PV3 held and PV2 did not.

@@ -52,7 +52,7 @@
 \@writefile{toc}{\contentsline {paragraph}{Evaluation.}{4}{section*.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}Hard budgets and a reservation ledger}{4}{section.3}\protected@file@percent }
 \newlabel{sec:setup}{{3}{4}{Hard budgets and a reservation ledger}{section.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Model.}{4}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Model.}{5}{section*.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Verifiers.}{5}{section*.8}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Tasks.}{5}{section*.9}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}The repair--breakage decomposition}{5}{section.4}\protected@file@percent }
@@ -70,26 +70,25 @@
 \newlabel{tab:parti}{{1}{7}{Frozen test splits, 150 tasks per family, three execution seeds. Baselines are the strongest single-call structure per family (direct prompting for code, chain-of-thought for math). \emph {Vanilla} is generate$\to $verify$\to $refine with up to three iterations; \emph {protected} is the same loop with a temperature-zero incumbent replaced only on verifier rejection. Intervals are stratified paired bootstrap 95\% CIs. The \texttt {unseen} (\$0.15) budget behaves between the two shown and is reported in Appendix~\ref {app:floor}}{table.1}{}}
 \@writefile{toc}{\contentsline {paragraph}{Structure has an entry fee (C2, supported).}{7}{section*.11}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Breakage is controlled by the verifier (C3, supported).}{7}{section*.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Reference preservation coincides with zero breakage (C4, supported).}{7}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Repair is not bounded by verifier type (C5, \textcolor {red}{refuted}).}{7}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{C4, \textcolor {red}{unsupported as preregistered}.}{7}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What the comparison did manipulate, and a post-hoc proposition.}{7}{section*.14}\protected@file@percent }
 \citation{suzgun2023bbh}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Left:} withholding the verifier's signal is a causal manipulation of the breakage term. As visible tests are removed, breakage rises and repair falls, and the net effect drops to $-0.118$ $[-0.178,-0.058]$. \textbf  {Right:} breakage of the incumbent-protecting construction across every condition we measured, including a third domain whose prediction was locked before execution. It stays at or near the predicted bound wherever the verifier carries signal and jumps to $0.114$ in the single condition with none; restoring signal on the \emph  {same} tasks restores the guarantee.}}{8}{figure.4}\protected@file@percent }
-\newlabel{fig:signal}{{4}{8}{\textbf {Left:} withholding the verifier's signal is a causal manipulation of the breakage term. As visible tests are removed, breakage rises and repair falls, and the net effect drops to $-0.118$ $[-0.178,-0.058]$. \textbf {Right:} breakage of the incumbent-protecting construction across every condition we measured, including a third domain whose prediction was locked before execution. It stays at or near the predicted bound wherever the verifier carries signal and jumps to $0.114$ in the single condition with none; restoring signal on the \emph {same} tasks restores the guarantee}{figure.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{A check on our own design space.}{8}{section*.15}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Breakage of the reference-preserving workflow across verifier regimes and domains. Consistent with equation~\ref {eq:bound}, what varies is the verifier rather than the domain: the one condition whose verifier has no signal is an order of magnitude worse than the rest, and restoring signal on the same tasks restores the result.}}{8}{table.2}\protected@file@percent }
+\newlabel{tab:regimes}{{2}{8}{Breakage of the reference-preserving workflow across verifier regimes and domains. Consistent with \eqref {eq:bound}, what varies is the verifier rather than the domain: the one condition whose verifier has no signal is an order of magnitude worse than the rest, and restoring signal on the same tasks restores the result}{table.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Repair is not bounded by verifier type (C5, \textcolor {red}{refuted}).}{8}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{A check on our own design space.}{8}{section*.16}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {6}External validity}{8}{section.6}\protected@file@percent }
 \newlabel{sec:external}{{6}{8}{External validity}{section.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{A locked prediction that failed.}{8}{section*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The confound was ours.}{8}{section*.17}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{A prospective test in a third domain.}{8}{section*.18}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Breakage of the reference-preserving workflow across verifier regimes and domains. Consistent with equation~\ref {eq:bound}, what varies is the verifier rather than the domain: the one condition whose verifier has no signal is an order of magnitude worse than the rest, and restoring signal on the same tasks restores the result.}}{9}{table.2}\protected@file@percent }
-\newlabel{tab:regimes}{{2}{9}{Breakage of the reference-preserving workflow across verifier regimes and domains. Consistent with \eqref {eq:bound}, what varies is the verifier rather than the domain: the one condition whose verifier has no signal is an order of magnitude worse than the rest, and restoring signal on the same tasks restores the result}{table.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{A locked prediction that failed.}{8}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The confound was ours.}{8}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{A prospective test in a third domain.}{8}{section*.19}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7}Limitations}{9}{section.7}\protected@file@percent }
 \newlabel{sec:limitations}{{7}{9}{Limitations}{section.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{One model.}{9}{section*.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The identity is not a forecast.}{9}{section*.20}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Two measurement defects in the released data.}{9}{section*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Two further limits, stated in full in Appendix~\ref {app:scope}.}{9}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Scope of the space we searched.}{9}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{One model.}{9}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The identity is not a forecast.}{9}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The reference-preservation proposition is untested.}{9}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Two measurement defects in the released data.}{9}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Further limits, stated in full in Appendix~\ref {app:scope}.}{9}{section*.24}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{9}{section.8}\protected@file@percent }
 \bibdata{refs}
 \bibcite{verification2025granularity}{{1}{2025}{{Anonymous}}{{}}}
@@ -134,31 +133,33 @@
 \newlabel{app:dsl}{{A}{12}{Workflow language}{appendix.A}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {B}Budget safety}{12}{appendix.B}\protected@file@percent }
 \newlabel{app:safety}{{B}{12}{Budget safety}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Failure taxonomy}{12}{appendix.C}\protected@file@percent }
+\newlabel{app:failures}{{C}{12}{Failure taxonomy}{appendix.C}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Left:} withholding the verifier's signal is a causal manipulation of the breakage term. As visible tests are removed, breakage rises and repair falls, and the net effect drops to $-0.118$ $[-0.178,-0.058]$. \textbf  {Right:} breakage of the incumbent-protecting construction across every condition we measured, including a third domain whose prediction was locked before execution. It stays at or near the predicted bound wherever the verifier carries signal and jumps to $0.114$ in the single condition with none; restoring signal on the \emph  {same} tasks restores the guarantee.}}{13}{figure.4}\protected@file@percent }
+\newlabel{fig:signal}{{4}{13}{\textbf {Left:} withholding the verifier's signal is a causal manipulation of the breakage term. As visible tests are removed, breakage rises and repair falls, and the net effect drops to $-0.118$ $[-0.178,-0.058]$. \textbf {Right:} breakage of the incumbent-protecting construction across every condition we measured, including a third domain whose prediction was locked before execution. It stays at or near the predicted bound wherever the verifier carries signal and jumps to $0.114$ in the single condition with none; restoring signal on the \emph {same} tasks restores the guarantee}{figure.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Both terms move together as the budget profile tightens: the workflow affords fewer refinement iterations, repair falls, breakage rises, and in the code family they cross where the net effect turns significantly negative. Profiles are named rather than dollar-valued because the dollar cap is not the binding constraint --- realized spend is \$0.002--\$0.015 against caps of \$0.10--\$0.25, and admission failures are caused by the call and output-token caps. \texttt  {tight} $=$ (4 calls, 8k in, 2k out, \$0.10); \texttt  {unseen} $=$ (6, 12k, 3k, \$0.15); \texttt  {loose} $=$ (8, 16k, 4k, \$0.25). Which dimension binds is not identified by these composite profiles; see \S  \ref {sec:limitations}. Frozen test splits, 95\% CIs on the net effect.}}{13}{figure.5}\protected@file@percent }
 \newlabel{fig:floor}{{5}{13}{Both terms move together as the budget profile tightens: the workflow affords fewer refinement iterations, repair falls, breakage rises, and in the code family they cross where the net effect turns significantly negative. Profiles are named rather than dollar-valued because the dollar cap is not the binding constraint --- realized spend is \$0.002--\$0.015 against caps of \$0.10--\$0.25, and admission failures are caused by the call and output-token caps. \texttt {tight} $=$ (4 calls, 8k in, 2k out, \$0.10); \texttt {unseen} $=$ (6, 12k, 3k, \$0.15); \texttt {loose} $=$ (8, 16k, 4k, \$0.25). Which dimension binds is not identified by these composite profiles; see \S \ref {sec:limitations}. Frozen test splits, 95\% CIs on the net effect}{figure.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {C}Failure taxonomy}{13}{appendix.C}\protected@file@percent }
-\newlabel{app:failures}{{C}{13}{Failure taxonomy}{appendix.C}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D}Budget profiles and the movement of both terms}{13}{appendix.D}\protected@file@percent }
-\newlabel{app:floor}{{D}{13}{Budget profiles and the movement of both terms}{appendix.D}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E}Sensitivity to the ledger defect}{13}{appendix.E}\protected@file@percent }
-\newlabel{app:sensitivity}{{E}{13}{Sensitivity to the ledger defect}{appendix.E}{}}
 \citation{jamieson2016successive}
-\citation{jamieson2016successive}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Budget profiles and verifier signal}{14}{appendix.D}\protected@file@percent }
+\newlabel{app:floor}{{D}{14}{Budget profiles and verifier signal}{appendix.D}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}Sensitivity to the ledger defect}{14}{appendix.E}\protected@file@percent }
+\newlabel{app:sensitivity}{{E}{14}{Sensitivity to the ledger defect}{appendix.E}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {F}Math re-grading}{14}{appendix.F}\protected@file@percent }
 \newlabel{app:regrade}{{F}{14}{Math re-grading}{appendix.F}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {G}Automated search: protocol and per-claim results}{14}{appendix.G}\protected@file@percent }
 \newlabel{app:searchdetail}{{G}{14}{Automated search: protocol and per-claim results}{appendix.G}{}}
+\citation{jamieson2016successive}
 \citation{hoeffding1963}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Protocol A on the frozen test split: one budget-contingent policy against the static policy searched specifically for each budget, which received twice the total search budget. We deliberately do not plot the two search procedures' internal scores against each other---the budget-contingent score is a cross-budget minimum and the static score is a single-budget value, so one axis would compare incomparable quantities. Deployment accuracy at a given budget is comparable, and is what is shown. Code figures average three search seeds.}}{15}{figure.6}\protected@file@percent }
 \newlabel{fig:protocolA}{{6}{15}{Protocol A on the frozen test split: one budget-contingent policy against the static policy searched specifically for each budget, which received twice the total search budget. We deliberately do not plot the two search procedures' internal scores against each other---the budget-contingent score is a cross-budget minimum and the static score is a single-budget value, so one axis would compare incomparable quantities. Deployment accuracy at a given budget is comparable, and is what is shown. Code figures average three search seeds}{figure.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Selection variance in Part II.}{15}{section*.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Restricted design space, coarse verifier taxonomy.}{15}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Selection variance in Part II.}{15}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Restricted design space, coarse verifier taxonomy.}{15}{section*.29}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {H}Search details}{15}{appendix.H}\protected@file@percent }
 \newlabel{app:search}{{H}{15}{Search details}{appendix.H}{}}
-\@writefile{toc}{\contentsline {paragraph}{A note on the racing rule.}{15}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{A note on the racing rule.}{15}{section*.30}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {I}Scope of the design space and verifier taxonomy}{16}{appendix.I}\protected@file@percent }
 \newlabel{app:scope}{{I}{16}{Scope of the design space and verifier taxonomy}{appendix.I}{}}
-\@writefile{toc}{\contentsline {paragraph}{No mechanism for the math search boundary.}{16}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{No mechanism for the math search boundary.}{16}{section*.31}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {J}Cost accounting}{16}{appendix.J}\protected@file@percent }
 \newlabel{app:cost}{{J}{16}{Cost accounting}{appendix.J}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {K}Preregistration and outcomes}{16}{appendix.K}\protected@file@percent }
