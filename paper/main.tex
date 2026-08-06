@@ -523,7 +523,8 @@ a single-dimension scan is required and we do not have one.
 visible tests at $1.0 \to 0.5 \to 0.0$ moves the code/\texttt{loose} effect
 monotonically: $-0.033$, $-0.033$, $-0.118$ $[-0.178,-0.058]$, with breakage
 climbing from $0.140$ to $0.234$. Because masking changes only the verifier this
-is a causal manipulation of the $\brate$ term (Figure~\ref{fig:signal}, left).
+is a causal manipulation of the $\brate$ term (Figure~\ref{fig:signal},
+Appendix~\ref{app:floor}, left panel).
 It also supplies a mechanism for the sceptical literature: refinement without
 external signal does not merely fail to help, it destroys correct work.
 
@@ -537,7 +538,8 @@ about, and we mark C4 unsupported as stated rather than restate it to fit what
 the comparison did manipulate.
 
 \paragraph{What the comparison did manipulate, and a post-hoc proposition.} The
-arms differed in where the incumbent came from. In the reference-preserving arm
+arms differed in where the incumbent came from (Figure~\ref{fig:mechanism}(b)).
+In the reference-preserving arm
 the first call is configured exactly as the baseline's and, because both resolve
 to the same response-cache entry, returns byte-identical text: among executions
 where the verifier accepted, $402/402$ code and $396/396$ math outputs are
@@ -572,7 +574,8 @@ gate, and the space does not contain the choice that \eqref{eq:twoterm} says
 matters---whether to reuse a reference system's stored output. Of five
 preregistered claims, three fail, including cost reduction and non-inferiority
 in the math family; what survives is that at an unseen \$0.15 budget the code
-policy is indistinguishable from its preregistered static control at half the
+policy is indistinguishable from its preregistered static control
+(Figure~\ref{fig:protocolA}, Appendix~\ref{app:searchdetail}) at half the
 search cost. Appendix~\ref{app:searchdetail} gives the protocol and every
 per-claim result.
 

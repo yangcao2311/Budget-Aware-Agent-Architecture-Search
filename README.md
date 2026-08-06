@@ -1,4 +1,4 @@
-# Hard Budgets Expose the Repair–Breakage Tradeoff in Agent Workflows
+# When Verification Helps: Repair, Breakage, and Hard Budgets in Agent Workflows
 
 Anonymous submission. This repository reproduces every number, table and figure
 in the paper from raw per-task logs.
@@ -23,14 +23,15 @@ Everything below recomputes the paper from logs already in `experiments/`.
 ```bash
 python -m venv .venv && .venv/bin/pip install -r requirements.txt
 
-.venv/bin/python scripts/audit_claims.py        # all 115 paper numbers vs raw logs
-.venv/bin/python scripts/confirm_partI.py       # C1-C5 confirmatory verdicts
-.venv/bin/python scripts/confirm_partII.py      # P1-P5 confirmatory verdicts
+.venv/bin/python scripts/audit_claims.py        # all 117 paper numbers vs raw logs
+.venv/bin/python scripts/confirm_partI.py       # C1-C5 verdicts (C4 unsupported as stated)
+.venv/bin/python scripts/confirm_partII.py      # P1-P5 verdicts (three unsupported)
+.venv/bin/python scripts/false_rejection.py     # the bound b <= P(false reject), 10 conditions
 .venv/bin/python scripts/score_ood_predictions.py   # the locked OOD prediction (it failed)
 .venv/bin/python scripts/sensitivity_ledger.py  # robustness to the ledger defect
 .venv/bin/python scripts/voi_model.py           # decomposition identity + transfer tests
-.venv/bin/python scripts/make_figures.py        # regenerate Figures 1-2
-cd paper && pdflatex main.tex && pdflatex main.tex
+.venv/bin/python scripts/make_figures.py        # regenerate all figures
+cd paper && pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
 ```
 
 `audit_claims.py` exits non-zero if any number in `paper/main.tex` disagrees
@@ -77,7 +78,13 @@ done; done
 # external validity + the prospective third domain
 .venv/bin/python scripts/run_envelope.py --split ood --n 100 --seed 0 ...
 .venv/bin/python scripts/run_envelope.py --split logic_prospective --families logic --n 120 --seed 0 ...
+
+# apply the corrected math grading to stored responses (no inference)
+.venv/bin/python scripts/apply_regrade.py
 ```
+
+Note that `run_envelope.py` enables the response cache. Runs that must not share
+first drafts across arms have to disable it; see Appendix G of the paper.
 
 ## Data
 
@@ -111,16 +118,41 @@ design confound that caused it.
 
 ## Known defects, and where they are quantified
 
-- The frozen test runs predate an exact tokeniser; $4.7\%$ of executions
-  settled above their reservation and were scored as failures.
+- **A preregistered claim does not hold.** C4 asserted that adding a verifier
+  gate eliminates breakage. Auditing the implementation showed both compared
+  workflows already had that gate --- their control flow is identical edge for
+  edge --- so the comparison never manipulated the registered variable. The
+  paper marks C4 unsupported as preregistered and states the
+  reference-preservation account separately, labelled post hoc.
+- **Response caching was on for the structure-library runs**, including the
+  frozen test split, contrary to an earlier version of the paper. Appendix G
+  audits what this did and did not affect: execution seeds were not collapsed
+  (the cache key includes the seed, and 102-150 of 150 tasks per cell differ
+  across seeds), and cache hits still consume the full budget (the reservation
+  precedes the lookup). It did couple the baseline and reference-preserving
+  arms into a shared first draft, which the paper treats as part of the
+  treatment definition.
+- The frozen test runs predate an exact tokeniser; 4.7% of executions settled
+  above their reservation and were scored as failures.
   `scripts/sensitivity_ledger.py` recomputes every headline contrast on the
-  defect-free subset. Appendix D of the paper reports both views.
-- Two search bugs invalidated our first Part-II runs (a racing rule whose
-  fixed slack was smaller than the confidence-interval gap between rungs, and
-  the token estimator above). Both are described in the paper; the fixes are
-  in `hbws/search.py` and `hbws/llm.py`.
+  defect-free subset.
+- The math grader's symbolic-equivalence branch never fired because sympy was
+  absent from the environment that produced those runs, misgrading 2.6% of math
+  answers. Every stored response was re-graded at no inference cost; both
+  gradings are in the data (`success` and `success_symbolic`).
+- Two search bugs invalidated our first Part-II runs (a racing rule whose fixed
+  slack was smaller than the confidence-interval gap between rungs, and the
+  token estimator above). Fixes are in `hbws/search.py` and `hbws/llm.py`.
 
 ## Requirements
 
-Python 3.12, `openai`, `datasets`, `tiktoken`, `matplotlib`, `sympy`. CPU only;
-no GPU is used anywhere.
+Python 3.12; see `requirements.txt`. CPU only, no GPU anywhere.
+
+`sympy` (with `antlr4-python3-runtime`) is **required, not optional**: the math
+grader falls back to symbolic equivalence, and that branch fails silently if the
+library is absent -- which is exactly the defect described in Appendix F of the
+paper. Verify it is importable before re-grading anything:
+
+```bash
+.venv/bin/python -c "from sympy.parsing.latex import parse_latex; print('ok')"
+```

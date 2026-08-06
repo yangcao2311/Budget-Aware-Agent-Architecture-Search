@@ -187,31 +187,22 @@ Underfull \hbox (badness 5667) in paragraph at lines 509--521
 /10 At \OT1/pcr/m/n/10 tight\OT1/ptm/m/n/10 , code vanilla is $\OMS/cmsy/m/n/10
  ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 104$
 [7] [8]
-Underfull \hbox (badness 1953) in paragraph at lines 667--678
+Underfull \hbox (badness 1953) in paragraph at lines 670--681
  []\OT1/ptm/b/n/10 Two mea-sure-ment de-fects in the re-leased data.[] \OT1/ptm
 /m/n/10 A to-ken es-ti-ma-tor that under-counted
 
-Underfull \hbox (badness 2229) in paragraph at lines 702--711
+Underfull \hbox (badness 2229) in paragraph at lines 705--714
 \OT1/ptm/m/n/10 All splits are hashed and frozen. Ev-ery con-fir-ma-tory claim 
 was git-tagged be-fore the
 
-Underfull \hbox (badness 1275) in paragraph at lines 702--711
+Underfull \hbox (badness 1275) in paragraph at lines 705--714
 \OT1/ptm/m/n/10 cor-re-spond-ing split was ex-e-cuted (\OT1/pcr/m/n/10 prereg-f
 reeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/1
 0 ,
 [9] (./main.bbl [10] [11]) [12]
 Underfull \vbox (badness 10000) has occurred while \output is active [13 <./fig
 4_dose_response.pdf> <./fig5_regimes.pdf> <./fig3_budget_floor.pdf>] [14]
-[15 <./fig6_protocolA.pdf>] [16] [17] (./main.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
- )
+[15 <./fig6_protocolA.pdf>] [16] [17] (./main.aux) )
 (see the transcript file for additional information)</usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/typ
@@ -226,5 +217,5 @@ mf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/font
 s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
 es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 
-Output written on main.pdf (17 pages, 329618 bytes).
+Output written on main.pdf (17 pages, 329942 bytes).
 Transcript written on main.log.
