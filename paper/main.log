@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  6 AUG 2026 02:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  6 AUG 2026 02:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -724,7 +724,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<fig1_decomposition.pdf, id=83, 419.0236pt x 162.12169pt>
+<fig1_decomposition.pdf, id=87, 419.0236pt x 162.12169pt>
 File: fig1_decomposition.pdf Graphic file (type pdf)
 <use fig1_decomposition.pdf>
 Package pdftex.def Info: fig1_decomposition.pdf  used on input line 66.
@@ -754,7 +754,7 @@ Underfull \vbox (badness 3343) has occurred while \output is active []
 
  [4]
 [5]
-<fig_bound.pdf, id=321, 405.18439pt x 179.7395pt>
+<fig_bound.pdf, id=325, 405.18439pt x 179.7395pt>
 File: fig_bound.pdf Graphic file (type pdf)
 <use fig_bound.pdf>
 Package pdftex.def Info: fig_bound.pdf  used on input line 450.
@@ -786,17 +786,17 @@ reeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/1
  []
 
 [9] (./main.bbl [10] [11]) [12]
-<fig4_dose_response.pdf, id=462, 211.06166pt x 138.00359pt>
+<fig4_dose_response.pdf, id=466, 211.06166pt x 138.00359pt>
 File: fig4_dose_response.pdf Graphic file (type pdf)
 <use fig4_dose_response.pdf>
 Package pdftex.def Info: fig4_dose_response.pdf  used on input line 811.
 (pdftex.def)             Requested size: 192.78046pt x 126.05724pt.
-<fig5_regimes.pdf, id=463, 209.54034pt x 160.03552pt>
+<fig5_regimes.pdf, id=467, 209.54034pt x 160.03552pt>
 File: fig5_regimes.pdf Graphic file (type pdf)
 <use fig5_regimes.pdf>
 Package pdftex.def Info: fig5_regimes.pdf  used on input line 815.
 (pdftex.def)             Requested size: 192.78046pt x 147.23933pt.
-<fig3_budget_floor.pdf, id=464, 352.96313pt x 141.93716pt>
+<fig3_budget_floor.pdf, id=468, 352.96313pt x 141.93716pt>
 File: fig3_budget_floor.pdf Graphic file (type pdf)
 <use fig3_budget_floor.pdf>
 Package pdftex.def Info: fig3_budget_floor.pdf  used on input line 830.
@@ -806,25 +806,25 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [13 <./fig4_dose_response.pdf> <./fig5_regimes.pdf> <./fig3_budget_floor.pdf>]
  [14]
-<fig6_protocolA.pdf, id=619, 404.90334pt x 133.70079pt>
+<fig6_protocolA.pdf, id=623, 404.90334pt x 133.70079pt>
 File: fig6_protocolA.pdf Graphic file (type pdf)
 <use fig6_protocolA.pdf>
 Package pdftex.def Info: fig6_protocolA.pdf  used on input line 960.
 (pdftex.def)             Requested size: 397.48499pt x 131.25844pt.
 
-[15 <./fig6_protocolA.pdf>] [16] (./main.aux)
+[15 <./fig6_protocolA.pdf>] [16] [17] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 901855CC17CE4839E7F73820F38B1700;3216.
+(rerunfilecheck)             Checksum: A604F37B781C6AF36C814ED5D507B03B;3502.
  ) 
 Here is how much of TeX's memory you used:
- 22814 strings out of 474222
- 416675 string characters out of 5748734
+ 22821 strings out of 474222
+ 416753 string characters out of 5748734
  1946975 words of memory out of 5000000
- 44543 multiletter control sequences out of 15000+600000
+ 44545 multiletter control sequences out of 15000+600000
  593684 words of font info for 108 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,12n,87p,1041b,893s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -841,10 +841,10 @@ a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (16 pages, 326602 bytes).
+Output written on main.pdf (17 pages, 329753 bytes).
 PDF statistics:
- 768 PDF objects out of 1000 (max. 8388607)
- 471 compressed objects within 5 object streams
- 118 named destinations out of 1000 (max. 500000)
- 195 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 783 PDF objects out of 1000 (max. 8388607)
+ 485 compressed objects within 5 object streams
+ 123 named destinations out of 1000 (max. 500000)
+ 203 words of extra memory for PDF output out of 10000 (max. 10000000)
 

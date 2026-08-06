@@ -1009,6 +1009,41 @@ predicted by \eqref{eq:rule}; the measured ratio sits essentially on the
 threshold, so the rule is silent there and does not predict harm. We do not
 claim it does.
 
+\section{What response caching did and did not affect}
+\label{app:cacheaudit}
+
+Caching was enabled for the structure-library runs (Appendix~\ref{app:cost}),
+which is how the reference-preserving arm came to hold a byte-identical copy of
+the baseline's output. A reader is entitled to ask what else it touched. We
+audited three questions against the implementation and the stored logs.
+
+\paragraph{Were the three execution seeds collapsed into one?} No. The cache key
+is a hash over the deployment name, the message list, and a parameter dictionary
+that includes the execution seed, so runs at different seeds cannot share an
+entry. Empirically, across the frozen test split, $102$--$150$ of $150$ tasks
+per cell produce different outputs across the three seeds. The seed-averaging
+and the intervals built on it therefore rest on genuinely repeated executions.
+
+\paragraph{Did a cache hit escape the budget ledger?} No. The reservation is
+taken \emph{before} the cache is consulted, and a hit is settled against that
+reservation with the stored token counts, so a cached call consumes call count,
+tokens, and dollars exactly as a fresh one does and can be refused by the same
+admission check. The budget-floor result of \S\ref{sec:parti} is consequently
+not an artifact of caching; what caching changes is the invoice and the wall
+clock, neither of which carries a claim in this paper.
+
+\paragraph{What caching did change.} Two things. It made the invoice roughly a
+quarter of the logical figure. And, because the baseline's call and the
+reference-preserving arm's first call are configured identically at a given
+seed, it made them resolve to one entry --- which is why $\Pr[I{=}B]=1$ holds
+exactly rather than approximately. That is a coupling between arms, and we
+treat it as part of the treatment definition rather than as an incidental
+detail: the comparison is between an arm holding the reference's own output and
+an arm holding a different draft, and caching is the mechanism that made the
+first arm's incumbent exact. A design that wants the property rather than
+inheriting it should assign the stored reference output directly, as
+\S\ref{sec:limitations} notes.
+
 \section{Cost accounting}
 \label{app:cost}
 

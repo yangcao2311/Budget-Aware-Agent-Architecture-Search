@@ -202,7 +202,7 @@ reeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/1
 [9] (./main.bbl [10] [11]) [12]
 Underfull \vbox (badness 10000) has occurred while \output is active [13 <./fig
 4_dose_response.pdf> <./fig5_regimes.pdf> <./fig3_budget_floor.pdf>] [14]
-[15 <./fig6_protocolA.pdf>] [16] (./main.aux)
+[15 <./fig6_protocolA.pdf>] [16] [17] (./main.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
@@ -226,5 +226,5 @@ mf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/font
 s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
 es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 
-Output written on main.pdf (16 pages, 326610 bytes).
+Output written on main.pdf (17 pages, 329618 bytes).
 Transcript written on main.log.
