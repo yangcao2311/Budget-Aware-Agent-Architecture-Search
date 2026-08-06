@@ -175,34 +175,30 @@ s.geometric.code.tex))
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd) [1{/var/lib/texmf/fo
 nts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips
 /base/8r.enc}] (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
-[2 <./fig1_decomposition.pdf>]
-Underfull \hbox (badness 1609) in paragraph at lines 196--204
+Underfull \vbox (badness 5203) has occurred while \output is active [2 <./fig1_
+decomposition.pdf>]
+Underfull \hbox (badness 1609) in paragraph at lines 197--205
  []\OT1/ptm/b/n/10 Budget-aware in-fer-ence.[] []\OT1/ptm/m/n/10 Li et al.[] ([
 ]2026[]) con-di-tion inference-tree node se-lec-tion on the
-[3] (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd)
-Underfull \vbox (badness 3343) has occurred while \output is active [4]
-[5] [6 <./fig_bound.pdf>]
-Underfull \hbox (badness 5667) in paragraph at lines 509--521
+[3] (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd) [4] [5]
+Underfull \vbox (badness 10000) has occurred while \output is active [6 <./fig_
+bound.pdf>]
+Underfull \hbox (badness 5667) in paragraph at lines 520--532
  []\OT1/ptm/b/n/10 Structure has an en-try fee (C2, sup-ported).[] \OT1/ptm/m/n
 /10 At \OT1/pcr/m/n/10 tight\OT1/ptm/m/n/10 , code vanilla is $\OMS/cmsy/m/n/10
  ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 104$
-[7] [8]
-Underfull \hbox (badness 1953) in paragraph at lines 670--681
- []\OT1/ptm/b/n/10 Two mea-sure-ment de-fects in the re-leased data.[] \OT1/ptm
-/m/n/10 A to-ken es-ti-ma-tor that under-counted
-
-Underfull \hbox (badness 2229) in paragraph at lines 705--714
+[7] [8] [9]
+Underfull \hbox (badness 2229) in paragraph at lines 724--733
 \OT1/ptm/m/n/10 All splits are hashed and frozen. Ev-ery con-fir-ma-tory claim 
 was git-tagged be-fore the
 
-Underfull \hbox (badness 1275) in paragraph at lines 705--714
+Underfull \hbox (badness 1275) in paragraph at lines 724--733
 \OT1/ptm/m/n/10 cor-re-spond-ing split was ex-e-cuted (\OT1/pcr/m/n/10 prereg-f
 reeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/1
 0 ,
-[9] (./main.bbl [10] [11]) [12]
-Underfull \vbox (badness 10000) has occurred while \output is active [13 <./fig
-4_dose_response.pdf> <./fig5_regimes.pdf> <./fig3_budget_floor.pdf>] [14]
-[15 <./fig6_protocolA.pdf>] [16] [17] (./main.aux) )
+(./main.bbl [10] [11]) [12] [13 <./fig4_dose_response.pdf> <./fig5_regimes.pdf>
+] [14 <./fig3_budget_floor.pdf>] [15 <./fig6_protocolA.pdf>] [16] [17]
+(./main.aux) )
 (see the transcript file for additional information)</usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/typ
@@ -217,5 +213,5 @@ mf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/font
 s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
 es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 
-Output written on main.pdf (17 pages, 329942 bytes).
+Output written on main.pdf (17 pages, 333674 bytes).
 Transcript written on main.log.
