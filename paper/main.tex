@@ -16,7 +16,8 @@
 \definecolor{breakorange}{HTML}{eb6834}
 \definecolor{inkgrey}{HTML}{52514e}
 
-\title{Hard Budgets Expose the Repair--Breakage \\ Tradeoff in Agent Workflows}
+\title{When Verification Helps: Repair, Breakage, and \\
+Hard Budgets in Agent Workflows}
 
 \author{Anonymous authors\\Paper under double-blind review}
 
@@ -41,19 +42,20 @@ baseline already solves. On frozen test splits a standard verify--refine
 workflow repairs $20.5\%$ of failures and breaks $14.0\%$ of successes,
 netting $-3.3$ points while spending $5.5\times$ the dollars. The decomposition
 is an exact identity rather than a fitted model, and it yields a design rule
-that we then verify causally: gating the refiner on the verifier---so that a
-draft is replaced only when it is actively rejected---coincides with breakage
-of $0.000$ in all six family$\times$budget cells and with a small, reliable
-gain over the baseline. Because the compared workflows also differ in draft
-prompt and temperature, we report this as an association awaiting a factorial,
-not as an isolated cause. Withholding the verifier's
+that we then verify causally: the term that gating cannot remove is the one
+where a verifier accepts a workflow's own wrong draft, and it vanishes only if
+that draft is the reference system's actual output. Under this condition,
+which we verify holds exactly in our runs, breakage is $0.000$ in all six
+family$\times$budget cells and bounded above by the verifier's false-rejection
+rate---a quantity measurable from the verifier alone, before deployment. The
+bound holds in all ten conditions we ran, across false-rejection rates from
+$0.009$ to $1.000$. Withholding the verifier's
 signal moves the tradeoff in the direction the identity predicts, costing
-$11.8$ points. An automated search over a restricted workflow language, run to
-check that incumbent protection is not an artifact of our own design
-intuitions, rediscovers the same shape unprompted. We report every
-preregistered claim as it landed, including one refuted claim, three
-unsupported ones, and a locked out-of-domain prediction that failed because of
-a confound in our own experiment design.
+$11.8$ points. Our evidence comes from one model family and is
+strongest where verification is executable, so we state the scope narrowly and
+report every preregistered claim as it landed, including one refuted claim,
+three unsupported ones, and a locked out-of-domain prediction that failed
+because of a confound in our own experiment design.
 \end{abstract}
 
 \begin{figure}[!ht]
@@ -125,13 +127,14 @@ What it does buy is exhaustiveness---every effect a workflow has on accuracy is
 repair or breakage, and there is no third channel---and, rearranged, a design
 rule: refinement pays exactly when the breakage-to-repair ratio falls below
 $(1-p)/p$, where $p$ is baseline accuracy. Because the ratio is a design choice,
-the rule is actionable. \emph{Incumbent protection}---emit a draft and replace
-it only when a verifier actively rejects it---accompanies breakage of $0.000$
-in all six of our in-domain family$\times$budget cells, and refinement
-machinery that was net-negative becomes a small, significant and considerably
-cheaper gain. We flag immediately that our compared workflows also differ in
-draft prompt and temperature, so this paper establishes the association and
-not the isolated causal contribution of the gate.
+the rule is actionable---though not in the way we first assumed. Breakage has
+two paths, and gating the refiner closes only one of them: a workflow that
+drafts its own answer can be wrong where the reference is right, and an
+accepting verifier passes that answer through without refinement ever running.
+The path closes only when the workflow's incumbent \emph{is} the reference
+system's output. Under that condition, which we verify holds exactly in our
+runs, breakage is $0.000$ in all six in-domain cells and is bounded by the
+verifier's false-rejection rate.
 
 A design principle derived by us from our own decomposition and then tested by
 us is a route by which an intuition can be mistaken for a finding. We therefore
@@ -206,6 +209,26 @@ crossovers reported there are crossovers in a net quantity, and the mechanism we
 identify---that structure destroys correct answers at a rate governed by
 verifier specificity---is invisible to it.
 
+\paragraph{Abstention, deferral and conservative updates.} Declining to act on
+a low-confidence prediction is old: the reject option dates to
+\citet{chow1970reject} and reappears as selective classification
+\citep{geifman2017selective} and learning to defer
+\citep{madras2018defer, mozannar2020defer}. Detector cascades
+\citep{viola2001cascade} and their language-model descendants
+\citep{chen2023frugalgpt} gate expensive stages on a cheap one; conservative
+policy updates \citep{thomas2015safe, garcelon2020conservative} refuse changes
+that cannot be shown not to regress; and regression testing
+\citep{cohen1995regression} exists to stop a change from breaking what already
+worked. Reference preservation as we state it is a member of this family: a
+guarded fallback whose guard is a verifier and whose fallback is a reference
+system's own output. What we add is not the idea of guarding but its
+consequences under explicit inference budgets --- an exhaustive accounting of
+where a workflow's effect comes from, a bound tying the residual to a verifier
+property that can be measured beforehand, and the observation that the guard is
+useless unless the guarded object is the reference's actual output.
+Calibration of model self-assessment \citep{kadavath2022know} is the missing
+ingredient our verifier taxonomy stands in for.
+
 \paragraph{Evaluation.} We use MBPP+ and HumanEval+ \citep{austin2021mbpp,
 chen2021humaneval} in the rigorous-test formulation of EvalPlus
 \citep{liu2023evalplus}, MATH \citep{hendrycks2021math} and BIG-Bench Hard
@@ -241,46 +264,41 @@ paired bootstrap \citep{efron1994bootstrap} with Holm correction
 \end{minipage}\hfill
 \begin{minipage}[b]{0.56\textwidth}
 \centering
-{\small\textbf{(b) the two workflows compared}}\\[3pt]
+{\small\textbf{(b) identical control flow, different incumbent}}\\[3pt]
 \begin{tikzpicture}[
   font=\small, node distance=4mm,
   box/.style={draw=inkgrey, rounded corners=1.5pt, minimum height=5.5mm,
               inner xsep=3pt, align=center, font=\scriptsize},
   gen/.style={box, draw=repairblue, thick},
-  ref/.style={box, draw=breakorange, thick},
+  alt/.style={box, draw=breakorange, thick},
   term/.style={box, fill=black!6, draw=none},
   ar/.style={-{Latex[length=1.5mm]}, draw=inkgrey},
   lab/.style={font=\tiny, inner sep=1.5pt}]
-% vanilla
-\node[gen] (g1) {generate\\[-1pt]$T{=}0.7$};
-\node[box, right=7mm of g1] (v1) {verify};
-\node[ref, right=7mm of v1] (r1) {refine};
-\draw[ar] (g1) -- (v1);
-\draw[ar] (v1) -- node[lab, above]{fail} (r1);
-\draw[ar] (r1.north) .. controls +(0,4.5mm) and +(0,4.5mm) .. (v1.north);
-\node[lab, right=4mm of r1, align=left] {\emph{vanilla}:\\draft is overwritten};
-% protected
-\node[gen, below=11mm of g1] (g2) {generate\\[-1pt]$T{=}0$};
-\node[box, right=7mm of g2] (v2) {verify};
-\node[ref, right=7mm of v2] (r2) {refine};
-\draw[ar] (g2) -- (v2);
-\draw[ar] (v2) -- node[lab, above]{fail} (r2);
-\draw[ar] (r2.north) .. controls +(0,4.5mm) and +(0,4.5mm) .. (v2.north);
-\node[term, right=4mm of r2] (e2) {END};
-\draw[ar, draw=repairblue, thick] (v2.south) .. controls +(0,-5mm) and +(0,-5mm) ..
-      node[lab, below]{pass: incumbent kept} (e2.south);
-\node[lab, below=8mm of g2, align=left]
-  {\emph{protected}: gate gives $\brate\!\le\!\Pr(\text{false reject})$};
+\node[box] (v) {verify};
+\node[box, right=8mm of v] (r) {refine};
+\node[term, above right=3mm and 8mm of v] (e) {END};
+\draw[ar] (v) -- node[lab, above]{reject} (r);
+\draw[ar] (r.north) .. controls +(0,4.5mm) and +(0,4.5mm) .. (v.north);
+\draw[ar] (v) -- node[lab, above right, pos=0.35]{accept} (e);
+\node[gen, left=9mm of v, yshift=4.5mm] (i1) {incumbent $=$\\[-1pt]baseline output};
+\node[alt, left=9mm of v, yshift=-6mm] (i2) {incumbent $=$\\[-1pt]a different draft};
+\draw[ar, draw=repairblue, thick] (i1) -- (v);
+\draw[ar, draw=breakorange, thick] (i2) -- (v);
+\node[lab, below=8mm of v, align=left]
+  {the gate is present in both; only the incumbent's provenance differs};
 \end{tikzpicture}
 \end{minipage}
 \caption{\textbf{(a)} Every metered call reserves an upper bound on its billable
 cost before executing; a node that cannot reserve does not run, and control
 follows a fallback edge. Overruns are prevented rather than recorded.
-\textbf{(b)} The two workflows we compare. They differ in three respects, not
-one: the first-draft prompt, its temperature, and whether a verifier pass ends
-the run. Only the third is the mechanism of interest, so
-\S\ref{sec:limitations} treats the attribution as unresolved pending a
-factorial that holds prompt and temperature fixed.}
+\textbf{(b)} The two workflows we compare have \emph{identical} control flow:
+both terminate on an accepted draft and refine only on rejection. What differs
+is where the incumbent comes from. One reuses the reference baseline's own
+output; the other independently produces a different draft (a different prompt
+at a different temperature). \S\ref{sec:theory} shows this is the operative
+distinction, and \S\ref{sec:limitations} records that our two arms also differ
+in prompt and temperature, so the isolated contribution of each is not
+established.}
 \label{fig:mechanism}
 \end{figure}
 
@@ -369,20 +387,47 @@ baseline is strong---which, for a competent model on a standard benchmark, it
 is. The threshold is punishing: $p=0.73$ demands $\brate/\rrate < 0.38$ and
 $p=0.92$ demands $\brate/\rrate < 0.09$.
 
-The rule is actionable because its left-hand side is a design choice. Suppose a
-workflow modifies its draft only after the verifier rejects it, and has no other
-path to a different answer. Writing $R$ for that rejection event,
+The rule is actionable because its left-hand side is a design choice, though not
+the one we first supposed. Consider a workflow that emits an incumbent $I$,
+accepts it when a verifier does, and otherwise refines it into $J$. Writing $R$
+for rejection, breakage decomposes into two paths:
 \begin{equation}
-\brate = \Pr(R \mid B\text{ correct}) \cdot
-        \Pr(W\text{ wrong} \mid R,\, B\text{ correct})
-      \;\le\; \Pr(R \mid B\text{ correct}),
+\brate = \underbrace{\Pr(\neg R,\, I \text{ wrong} \mid B\text{ correct})}
+         _{\text{a wrong incumbent the verifier accepted}}
+       + \underbrace{\Pr(R,\, J \text{ wrong} \mid B\text{ correct})}
+         _{\text{refinement failed after a rejection}} .
+\label{eq:twoterm}
+\end{equation}
+The first term is the one that matters and the one the gate does not touch: if
+the workflow's incumbent is some answer of its own, it can be wrong on a task
+the reference solves, and an accepting verifier then hands that wrong answer
+straight through. No refinement is involved. Gating the refiner cannot remove
+this path, because the path never reaches the refiner.
+
+It vanishes under one condition. If $I = B$ --- the workflow's incumbent is the
+reference system's actual output, not merely an answer produced under the same
+configuration --- then $B$ correct implies $I$ correct, the first term is
+identically zero, and
+\begin{equation}
+\brate = \Pr(R,\, J\text{ wrong} \mid B\text{ correct})
+       \;\le\; \Pr(R \mid B\text{ correct}).
 \label{eq:bound}
 \end{equation}
-so breakage is bounded above by the verifier's false-rejection rate, with
-equality only if every false rejection ends in a wrong answer. \emph{Incumbent
-protection} is this construction. It removes breakage caused by unconditional
-overwriting; it does not make breakage impossible, and a verifier that rejects
-correct answers will still produce some.
+We call this \emph{reference preservation}. It is a condition on provenance
+rather than a control-flow feature: a workflow does not regress against a
+reference unless the verifier first falsely rejects that reference's own
+answer. Equality in \eqref{eq:bound} holds only if every false rejection ends
+in a wrong answer.
+
+The distinction matters because $I=B$ is not implied by configuring the
+incumbent's generator identically to the baseline. Nominally deterministic
+decoding does not guarantee byte-identical outputs across calls. In our runs
+the condition does hold exactly --- among executions where the verifier
+accepted, the workflow's output is byte-identical to the baseline's in
+$402/402$ code and $396/396$ math cases --- but it holds because both calls
+resolve to the same response-cache entry, not because determinism was
+established. A deployment that wants the guarantee should reuse the reference's
+stored output rather than regenerate it.
 
 Unlike \eqref{eq:identity}, \eqref{eq:bound} is falsifiable on data: its
 left-hand side is measured on the workflow and its right-hand side on the
@@ -427,7 +472,9 @@ Baselines are the strongest single-call structure per family (direct prompting
 for code, chain-of-thought for math). \emph{Vanilla} is
 generate$\to$verify$\to$refine with up to three iterations; \emph{protected} is
 the same loop with a temperature-zero incumbent replaced only on verifier
-rejection. Intervals are stratified paired bootstrap 95\% CIs.}
+rejection. Intervals are stratified paired bootstrap 95\% CIs. The
+\texttt{unseen} (\$0.15) budget behaves between the two shown and is reported in
+Appendix~\ref{app:floor}.}
 \label{tab:parti}
 \centering
 \small
@@ -437,15 +484,11 @@ Family & Budget & Workflow & $\Delta$ (95\% CI) & repair & breakage & \$/task \\
 \midrule
 code & tight  & vanilla   & $-0.104$ $[-0.162,-0.047]$ & $0.162$ & $0.224$ & $0.0062$ \\
 code & tight  & protected & $+0.013$ $[+0.002,+0.031]$ & $0.034$ & $\mathbf{0.000}$ & $0.0022$ \\
-code & unseen & vanilla   & $-0.038$ $[-0.093,+0.018]$ & $0.214$ & $0.150$ & $0.0085$ \\
-code & unseen & protected & $+0.020$ $[+0.002,+0.042]$ & $0.060$ & $\mathbf{0.000}$ & $0.0025$ \\
 code & loose  & vanilla   & $-0.033$ $[-0.087,+0.020]$ & $0.205$ & $0.140$ & $0.0090$ \\
 code & loose  & protected & $+0.020$ $[+0.002,+0.042]$ & $0.060$ & $\mathbf{0.000}$ & $0.0025$ \\
 \midrule
 math & tight  & vanilla   & $+0.007$ $[-0.027,+0.040]$ & $0.140$ & $0.050$ & $0.0076$ \\
 math & tight  & protected & $+0.000$ $[+0.000,+0.000]$ & $0.000$ & $\mathbf{0.000}$ & $0.0075$ \\
-math & unseen & vanilla   & $+0.013$ $[-0.020,+0.044]$ & $0.129$ & $0.040$ & $0.0141$ \\
-math & unseen & protected & $+0.000$ $[-0.009,+0.009]$ & $0.022$ & $\mathbf{0.000}$ & $0.0141$ \\
 math & loose  & vanilla   & $+0.020$ $[-0.011,+0.051]$ & $0.129$ & $0.037$ & $0.0153$ \\
 math & loose  & protected & $+0.007$ $[-0.002,+0.018]$ & $0.032$ & $\mathbf{0.000}$ & $0.0153$ \\
 \bottomrule
@@ -481,13 +524,23 @@ is a causal manipulation of the $\brate$ term (Figure~\ref{fig:signal}, left).
 It also supplies a mechanism for the sceptical literature: refinement without
 external signal does not merely fail to help, it destroys correct work.
 
-\paragraph{Incumbent protection accompanies the loss of the lower term (C4,
-supported).} No breakage event is observed in any of the six protected cells.
-A zero count is not a zero rate: with $109$ baseline-correct tasks at
+\paragraph{Reference preservation coincides with zero breakage (C4,
+supported).} No breakage event is observed in any of the six reference-preserving
+cells. A zero count is not a zero rate: with $107$ baseline-correct tasks at
 code/\texttt{loose}, a task-clustered one-sided $95\%$ upper bound is $0.027$,
-which is what \eqref{eq:bound} would predict from a verifier that rarely
-rejects correct code. We write $0.000$ in tables for the observed rate and
-carry the bound in the text. In code the protected workflow
+consistent with \eqref{eq:bound} and a measured false-rejection rate of
+$0.009$. We write $0.000$ in tables for the observed rate and carry the bound
+in the text.
+
+We state plainly what this does and does not show. Both compared workflows gate
+the refiner on the verifier; the gate is not the difference between them, and
+an earlier version of this paper wrongly attributed the effect to it. What
+differs is provenance, and \eqref{eq:twoterm} says provenance is what closes
+the accepting path. The result is therefore closer to a construction than to a
+discovery: if you want a workflow not to regress against a reference, hand it
+the reference's own output and change it only on rejection. Its empirical
+content lies in the false-rejection rates, which are small for executable tests
+and not zero elsewhere. In code the protected workflow
 is significantly positive at all three budgets ($+0.013$, $+0.020$, $+0.020$);
 The two workflows differ only as shown in Figure~\ref{fig:mechanism}(b). In math it is non-inferior everywhere and positive but not significant at
 \texttt{loose} ($+0.007$ $[-0.002,+0.018]$). It is also cheaper than vanilla
@@ -504,35 +557,18 @@ $[0.000,0.075]$. The intervals overlap substantially. Gold-free self-consistency
 checking produces real repair, and we make no claim about verifier-type-bounded
 repair beyond these intervals.
 
-\section{A check against our own design bias}
-\label{sec:partii}
-
-Incumbent protection was derived by us, from our own decomposition, and tested
-by us. We therefore asked whether a search procedure, given a design space we
-specified in advance and no access to that derivation, selects the same
-construction. It is a bound on our design bias, not an independent replication:
-the node whitelist, the edge grammar and the objective are ours.
-
-The searcher evolves workflows in the restricted language of
-Appendix~\ref{app:dsl} under multi-fidelity racing
-\citep{jamieson2016successive}, scoring candidates jointly at both searched
-budgets. Its budget-contingent and static arms differ only in whether edges may
-read remaining budget. At full fidelity on the search split every arm selected
-the same shape---a low-temperature draft, a verifier gate, refinement only on
-rejection---and the budget-contingent arm additionally gated refinement on
-remaining budget. Of five preregistered confirmatory claims
-(\texttt{prereg-freeze-partII}), three fail: non-inferiority holds in code at
-both budgets and at math/\texttt{loose} but not at math/\texttt{tight}; the cost
-reduction reaches $10.5\%$ against a $20\%$ threshold, and in math the searched
-policy is $191\%$ \emph{more} expensive in exchange for $+0.049$ accuracy, a
-Pareto trade rather than a saving; and only $3$ of $12$ selected policies retain
-the gated shape, because the preregistered one-shot selection uses a 40-task
-validation split whose variance swamps the $1$--$2$ point gaps between
-candidates. What survives is narrow: at an unseen \$0.15 budget the code policy
-is indistinguishable from the preregistered static control ($-0.001$
-$[-0.013,+0.010]$) at half the search cost, and a search over our design space
-does select the gated pattern there. Appendix~\ref{app:searchdetail} gives the
-full protocol and per-claim results.
+\paragraph{A check on our own design space.} Reference preservation was derived
+by us and tested by us, so we asked whether a search procedure given a design
+space we specified in advance, and no access to the derivation, selects the same
+construction. It does select low-temperature drafts behind a verifier gate, but
+we do not read this as rediscovery: every candidate in the space carries the
+gate, and the space does not contain the choice that \eqref{eq:twoterm} says
+matters---whether to reuse a reference system's stored output. Of five
+preregistered claims, three fail, including cost reduction and non-inferiority
+in the math family; what survives is that at an unseen \$0.15 budget the code
+policy is indistinguishable from its preregistered static control at half the
+search cost. Appendix~\ref{app:searchdetail} gives the protocol and every
+per-claim result.
 
 \section{External validity}
 \label{sec:external}
@@ -580,10 +616,11 @@ vanilla ones ($0.169$, $0.108$)---the constrained-versus-unconstrained asymmetry
 of \S\ref{sec:theory}.
 
 \begin{table}[t]
-\caption{Breakage of the incumbent-protecting workflow across verifier regimes
-and domains. The guarantee tracks verifier signal rather than domain: the one
-condition without signal is an order of magnitude worse than the rest, and
-restoring signal on the same tasks restores it.}
+\caption{Breakage of the reference-preserving workflow across verifier regimes
+and domains. Consistent with \eqref{eq:bound}, what varies is the verifier
+rather than the domain: the one condition whose verifier has no signal is an
+order of magnitude worse than the rest, and restoring signal on the same tasks
+restores the result.}
 \label{tab:regimes}
 \centering
 \small
@@ -602,33 +639,25 @@ new domain (BIG-Bench Hard) & non-oracle check & $0.006$ & $+0.025$ $[+0.003,+0.
 \end{table}
 
 \paragraph{A prospective test in a third domain.} Everything above is
-retrospective: the domains were chosen and the framework then applied. To test
-it prospectively we chose a domain no part of this project had touched---
-BIG-Bench Hard logical deduction, shuffled-object tracking and date
-understanding \citep{suzgun2023bbh}, 120 multiple-choice tasks with exact-match
-grading and a gold-free verifier---wrote down what the framework predicts,
-committed it (\texttt{prospective-locked}), and only then ran anything. The
-predictions were structural rather than quantitative, since the parameters had
-already been shown not to transfer: \textbf{PV1}, protected breakage $\le 0.02$
-at both budgets; \textbf{PV2}, vanilla breakage materially higher; \textbf{PV3},
-protected effect $\ge -0.01$; \textbf{PV4}, explicitly no prediction about
-repair magnitude.
-
-PV1 holds in all four cells ($0.000$, $0.006$, $0.000$, $0.003$) and PV3 in all
-four. This is a demanding regime: the baseline is right $92$--$94\%$ of the time,
-so \eqref{eq:rule} demands $\brate/\rrate < 0.09$ and even small breakage should
-flip the sign. PV2 does not hold---at \texttt{loose}, vanilla breakage is
-$0.006$, no worse than protected. The reason is visible in the data and is a
-boundary we did not anticipate. Breakage requires that refinement be \emph{able}
-to destroy a correct answer; with single-label answers and a $94\%$ baseline
-there is little to damage, and at \texttt{tight}, where refinement acts under
-pressure, the gap reappears ($0.026$ against $0.000$). Incumbent protection is
-insurance, and its premium is only visible where the risk is real.
+retrospective. To test the account prospectively we chose a domain no part of
+this project had touched---BIG-Bench Hard logical deduction, shuffled-object
+tracking and date understanding \citep{suzgun2023bbh}, 120 multiple-choice tasks
+with exact-match grading and a gold-free verifier---committed our predictions
+(\texttt{prospective-locked}), and only then ran anything. They were structural,
+since the parameters had already been shown not to transfer: breakage
+$\le 0.02$ under reference preservation, materially higher without it, and a
+non-negative effect. The first and third hold in all four cells ($0.000$,
+$0.006$, $0.000$, $0.003$; effects $\ge 0$), in a demanding regime where the
+baseline is right $92$--$94\%$ of the time so \eqref{eq:rule} demands
+$\brate/\rrate < 0.09$. The second does not: at \texttt{loose} the unprotected
+variant also breaks only $0.006$. Breakage requires that refinement be
+\emph{able} to destroy a correct answer, and with single-label answers and a
+$94\%$ baseline there is little to destroy; at \texttt{tight}, where refinement
+acts under pressure, the gap reappears ($0.026$ against $0.000$). Reference
+preservation is insurance, and its premium is visible only where the risk is.
 
 \section{Limitations}
 \label{sec:limitations}
-
-We state these at length, because several bound the claims directly.
 
 \paragraph{One model.} Every number comes from GPT-4o. Both $p$ and $\rrate$
 depend on model quality and $\brate$ plausibly does too; nothing here establishes
@@ -638,74 +667,45 @@ weaker model has a lower $p$, which by \eqref{eq:rule} loosens the threshold and
 should make structure easier to justify --- a prediction we have not tested.
 
 \paragraph{The identity is not a forecast.} \eqref{eq:identity} is exact for
-binary outcomes. Its content is exhaustiveness plus the rule \eqref{eq:rule}; it
-makes no prediction falsifiable on the data used to estimate its terms. The
-genuine transfer tests are those of \S\ref{sec:external}, and one of them failed.
+binary outcomes; its content is exhaustiveness plus the rule \eqref{eq:rule},
+and it makes no prediction falsifiable on the data used to estimate its terms.
+The genuine transfer tests are those of \S\ref{sec:external}, one of which failed.
 
-\paragraph{Two measurement defects in the released data.} Two implementation
-faults, both fixed, left traces in the frozen-test results and we report their
-effect rather than only the fix. A pre-call token estimate that under-counted
-punctuation-dense prompts caused $4.7\%$ of executions to settle above their own
-reservation and be scored as failures, unevenly across arms;
-Appendix~\ref{app:sensitivity} recomputes every headline contrast on the
-defect-free subset, where the breakage guarantee is unaffected and the harm
-effects grow slightly. And the symbolic-equivalence branch of our math grader
-never executed, because the library was absent from the environment that
-produced those runs, so $2.6\%$ of math answers were misgraded; re-grading every
-stored response at no additional inference cost moved the math baseline from
-$0.700$ to $0.733$ and cost two math sub-claims their significance
-(Appendix~\ref{app:regrade}). Every number in this paper uses the corrected
-grading, and both gradings are retained in the released data.
+\paragraph{Two measurement defects in the released data.} A token estimator
+that under-counted punctuation-dense prompts caused $4.7\%$ of frozen-test
+executions to be scored as failures, unevenly across arms, and our math
+grader's symbolic-equivalence branch never executed, misgrading $2.6\%$ of
+math answers. Both are fixed; both left traces in the released data. We
+re-graded every stored response at no additional inference cost, which moved
+the math baseline from $0.700$ to $0.733$ and cost two math sub-claims their
+significance, and we recompute every headline contrast on the defect-free
+subset. The breakage results are unaffected and the harm effects grow slightly.
+Appendices~\ref{app:sensitivity} and \ref{app:regrade} give both analyses in
+full; both gradings are retained in the released data.
 
-\paragraph{Attribution of the gate is not isolated.} The vanilla and protected
-workflows differ in first-draft prompt, first-draft temperature and the
-overwrite rule. Everything we report is consistent with the gate being the
-operative difference---it is the only one that touches a correct incumbent---but
-a temperature-zero draft is also more stable, and we have not run the factorial
-that would separate them. The protected-versus-own-baseline comparisons (C4)
-are not affected, since there the draft configuration is shared; the
-protected-versus-vanilla narrative is.
+\paragraph{Two further limits, stated in full in Appendix~\ref{app:scope}.} We
+cannot explain with data why the searched policy is better at math/\texttt{loose}
+and worse at math/\texttt{tight}, and our preregistered one-shot selection uses a
+40-task validation split whose variance swamps the gaps between candidates.
 
-\paragraph{Matched caps are not matched compute.} Our ledger equalises the
-budget \emph{cap}, not realized spend, and the vanilla workflow spends about
-$5.5\times$ the baseline. This paper therefore does not settle whether
-structure improves the compute--accuracy frontier against equal-cost
-structure-free alternatives such as best-of-$k$ or self-consistency at matched
-token spend; that comparison is not in our experiments and the question
-motivating \S1 remains open in that stronger form.
-
-\paragraph{Selection variance in Part II.} Our preregistered rule selects a
-policy once on a 40-task validation split, which cannot resolve the $1$--$2$
-point gaps between candidates---hence shape convergence is universal in the
-search-split analysis but $3/12$ among selected policies. A larger validation
-split is the fix; we did not retrofit it after the freeze.
-
-\paragraph{No mechanism for the math Part-II boundary.} The budget-contingent
-policy is better at math/\texttt{loose} and worse at math/\texttt{tight} and we
-cannot explain this with data. It would be easy to present it as a boundary
-condition predicted by \eqref{eq:rule}; we checked, and the measured ratio sits
-essentially on the threshold, so the rule is silent there and does not predict
-harm. We therefore do not claim it does.
-
-\paragraph{Restricted design space, coarse verifier taxonomy.} Results about
-``structure'' are results about a space of at most eight nodes and two loops with
-a fixed whitelist, and we treat verifiers as oracle, non-oracle-with-signal or
-no-signal, whereas real verifiers vary continuously in sensitivity and
-specificity. \eqref{eq:identity} folds both into $\rrate$ and $\brate$;
-separating them would give a sharper rule and is the obvious next step.
+\paragraph{Scope of the space we searched.} Results about ``structure'' are
+results about our restricted language, and our three-way verifier taxonomy
+stands in for what is really a continuum of sensitivity and specificity;
+Appendix~\ref{app:scope} states both limits.
 
 \section{Conclusion}
 
 Whether agent workflow structure helps has no budget-free answer, and reporting
 a net effect conceals why. Structure repairs and structure breaks; under matched
-hard budgets the two are of comparable size, so their difference is small,
-unstable, and reads differently depending on where in the budget range one
-measures. Once separated, the design question becomes concrete: bound breakage rather
-than hope it is small. Gating the refiner on the verifier does that, and
-\eqref{eq:bound} says how far it can go---no further than the verifier's
-false-rejection rate. It is also what a search procedure selects when asked to
-explore our design space without access to the derivation. It fails precisely where the
-mechanism says it must: when the verifier has no signal to gate on.
+hard budgets the two are of comparable size, so their difference is small and
+reads differently depending on where in the budget range one measures. Once
+separated, \eqref{eq:twoterm} shows the design question is not whether to gate
+the refiner---gating leaves untouched the path where a verifier accepts a
+workflow's own wrong draft---but whose answer the workflow is holding when the
+verifier speaks. Hand it the reference system's output and that path closes,
+leaving a residual bounded by a quantity anyone can measure from the verifier
+alone. What remains open is the comparison this construction invites: whether,
+at genuinely matched spend, any of this beats sampling more and picking well.
 
 \subsubsection*{Reproducibility statement}
 
@@ -878,6 +878,40 @@ on disk.
 \label{app:searchdetail}
 
 Incumbent protection was derived by us, from our own decomposition, and tested
+by us. We therefore asked whether a search procedure, given a design space we
+specified in advance and no access to that derivation, selects the same
+construction. It is a bound on our design bias, not an independent replication:
+the node whitelist, the edge grammar and the objective are ours.
+
+The searcher evolves workflows in the restricted language of
+Appendix~\ref{app:dsl} under multi-fidelity racing
+\citep{jamieson2016successive}, scoring candidates jointly at both searched
+budgets. Its budget-contingent and static arms differ only in whether edges may
+read remaining budget. At full fidelity on the search split every arm selected
+the same shape---a low-temperature draft, a verifier gate, refinement only on
+rejection. We no longer read this as the search having rediscovered our
+principle. Every candidate in the space carries the verifier gate, so selecting
+it is not evidence about the mechanism of \eqref{eq:twoterm}; and the space does
+not contain the choice that matters, namely whether to reuse a reference
+system's stored output as the incumbent. What the search does show is a
+preference for low-temperature drafts, which is consistent with, but does not
+isolate, reference preservation. Of five preregistered confirmatory claims
+(\texttt{prereg-freeze-partII}), three fail: non-inferiority holds in code at
+both budgets and at math/\texttt{loose} but not at math/\texttt{tight}; the cost
+reduction reaches $10.5\%$ against a $20\%$ threshold, and in math the searched
+policy is $191\%$ \emph{more} expensive in exchange for $+0.049$ accuracy, a
+Pareto trade rather than a saving; and only $3$ of $12$ selected policies retain
+the gated shape, because the preregistered one-shot selection uses a 40-task
+validation split whose variance swamps the $1$--$2$ point gaps between
+candidates. What survives is narrow: at an unseen \$0.15 budget the code policy
+is indistinguishable from the preregistered static control ($-0.001$
+$[-0.013,+0.010]$) at half the search cost, and a search over our design space
+does select the gated pattern there. Appendix~\ref{app:searchdetail} gives the
+full protocol and per-claim results.
+
+
+
+Incumbent protection was derived by us, from our own decomposition, and tested
 by us. We therefore built a searcher to check whether a procedure with no access to
 that reasoning selects the same construction from a space we specified in
 advance.
@@ -894,40 +928,18 @@ condition on remaining budget; over 200 sampled workflows the static arm never
 emitted a budget predicate. Protocol A gives the static control a full search
 budget \emph{per} budget tier, twice what the budget-contingent arm receives.
 
-\paragraph{Convergence.} At full fidelity on the search split, every arm---the
-budget-contingent one and both static controls---selected the same shape: a
-temperature-zero first draft, a verifier gate, and refinement only on rejection.
-The budget-contingent arm additionally gated refinement on remaining budget
-(threshold $0.6$; one variant used a two-stage $0.3/0.6$). A search procedure operating inside our own prespecified design space and
-objective, without access to \eqref{eq:identity}, frequently selected the gated
-pattern in the code setting. This is a check against our having read the
-prescription into the design space, not an independent replication: the node
-whitelist, the edge grammar and the objective are all ours.
+\paragraph{Selection variance in Part II.} Our preregistered rule selects a
+policy once on a 40-task validation split, which cannot resolve the $1$--$2$
+point gaps between candidates---hence shape convergence is universal in the
+search-split analysis but $3/12$ among selected policies. A larger validation
+split is the fix; we did not retrofit it after the freeze.
 
-\paragraph{Confirmatory results, as they landed.} Five claims were tagged
-(\texttt{prereg-freeze-partII}) before any searched policy touched validation or
-test, and three do not survive. \textbf{P1} (non-inferiority at both budgets)
-holds in code at both budgets and at math/\texttt{loose} (where the policy is
-significantly better, $+0.049$ $[+0.009,+0.091]$) but fails at math/\texttt{tight}
-($-0.022$, LCB $-0.049$), and P1 required all four cells. \textbf{P2} (a
-$\geq 20\%$ cost reduction) fails: code achieved $10.5\%$ and math was $191\%$
-more expensive, the selected budget-contingent policy verifying and refining
-where the selected static policy is a bare generate---a Pareto trade, not a cost
-win. \textbf{P3} (the unseen \$0.15 budget) holds in code, where the policy is
-indistinguishable from the preregistered static transfer control ($-0.001$
-$[-0.013,+0.010]$) at a budget no search ever saw, and fails in math. For
-\textbf{P4}, only $3$ of $12$ selected policies show the gated shape against
-every arm on the search split; the preregistered one-shot selection uses a
-40-task validation split whose variance swamps the $1$--$2$ point gaps between
-candidates, and we report this as a protocol defect rather than repairing it
-after the freeze. \textbf{P5}: in code the budget-contingent search costs \$60
-against \$120 and deploys $\$0.00029$ per task cheaper; in math it does not.
-
-Figure~\ref{fig:protocolA} in Appendix~\ref{app:search} shows the deployment comparison. The defensible readings are narrow. A search over our own design space selects
-the gated pattern in the code family, which bounds---without eliminating---the
-risk that we read the principle into that space. One policy can cover several budgets, including an unseen
-one, at half the design cost, in the code family. Neither transfers to math.
-
+\paragraph{Restricted design space, coarse verifier taxonomy.} Results about
+``structure'' are results about a space of at most eight nodes and two loops with
+a fixed whitelist, and we treat verifiers as oracle, non-oracle-with-signal or
+no-signal, whereas real verifiers vary continuously in sensitivity and
+specificity. \eqref{eq:identity} folds both into $\rrate$ and $\brate$;
+separating them would give a sharper rule and is the obvious next step.
 
 \section{Search details}
 \label{app:search}
@@ -976,13 +988,27 @@ static @ loose & 30 & \$61.6 & 5/5/20 & 8 \\
 \end{tabular}
 \end{center}
 
+\section{Scope of the design space and verifier taxonomy}
+\label{app:scope}
+
+\paragraph{No mechanism for the math search boundary.} The budget-contingent
+policy is better at math/\texttt{loose} and worse at math/\texttt{tight}, and we
+cannot explain this with data. It would be easy to present it as a boundary
+predicted by \eqref{eq:rule}; the measured ratio sits essentially on the
+threshold, so the rule is silent there and does not predict harm. We do not
+claim it does.
+
 \section{Cost accounting}
 \label{app:cost}
 
 All per-task dollar figures are \emph{logical} costs: what the workflow would
 cost without response caching, which is the quantity relevant to deployment.
-Search-phase caching reduced the actual invoice below this figure; final
-evaluation runs were executed with caching disabled. Summed over every
+Response caching was enabled for the structure-library runs, including those on
+the frozen test split; it does not change any reported quantity, since the
+ledger charges a cached call exactly as it charges a fresh one, but it does mean
+the actual invoice was below the logical figure and that identically configured
+calls returned identical text (see \S\ref{sec:theory}). Only the searched-policy
+evaluations of Appendix~\ref{app:searchdetail} ran with caching disabled. Summed over every
 experiment reported here, logical spend was \$1{,}317.74 against a global hard
 cap of \$2{,}000 enforced by the ledger's circuit breaker.
 

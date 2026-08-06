@@ -174,21 +174,22 @@ s.geometric.code.tex))
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd) [1{/var/lib/texmf/fo
 nts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips
-/base/8r.enc} <./fig1_decomposition.pdf>]
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
-Underfull \vbox (badness 10000) has occurred while \output is active [2]
-Underfull \hbox (badness 1609) in paragraph at lines 190--198
+/base/8r.enc}] (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+[2 <./fig1_decomposition.pdf>]
+Underfull \hbox (badness 1609) in paragraph at lines 193--201
  []\OT1/ptm/b/n/10 Budget-aware in-fer-ence.[] []\OT1/ptm/m/n/10 Li et al.[] ([
 ]2026[]) con-di-tion inference-tree node se-lec-tion on the
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd) [3]
-Underfull \vbox (badness 10000) has occurred while \output is active [4]
-Underfull \hbox (badness 5667) in paragraph at lines 463--475
+[3] (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd) [4] [5] [6 <./fi
+g_bound.pdf>]
+Underfull \hbox (badness 5667) in paragraph at lines 506--518
  []\OT1/ptm/b/n/10 Structure has an en-try fee (C2, sup-ported).[] \OT1/ptm/m/n
 /10 At \OT1/pcr/m/n/10 tight\OT1/ptm/m/n/10 , code vanilla is $\OMS/cmsy/m/n/10
  ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 104$
-[5]
-Underfull \vbox (badness 4108) has occurred while \output is active [6 <./fig_b
-ound.pdf>] [7] [8 <./fig4_dose_response.pdf> <./fig5_regimes.pdf>] [9]
+[7] [8 <./fig4_dose_response.pdf> <./fig5_regimes.pdf>]
+Underfull \hbox (badness 1953) in paragraph at lines 674--685
+ []\OT1/ptm/b/n/10 Two mea-sure-ment de-fects in the re-leased data.[] \OT1/ptm
+/m/n/10 A to-ken es-ti-ma-tor that under-counted
+[9]
 Underfull \hbox (badness 2229) in paragraph at lines 712--721
 \OT1/ptm/m/n/10 All splits are hashed and frozen. Ev-ery con-fir-ma-tory claim 
 was git-tagged be-fore the
@@ -197,24 +198,24 @@ Underfull \hbox (badness 1275) in paragraph at lines 712--721
 \OT1/ptm/m/n/10 cor-re-spond-ing split was ex-e-cuted (\OT1/pcr/m/n/10 prereg-f
 reeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/1
 0 ,
-(./main.bbl [10]) [11] [12]
-Underfull \vbox (badness 2495) has occurred while \output is active [13 <./fig3
-_budget_floor.pdf>] [14] [15 <./fig6_protocolA.pdf>] (./main.aux) )
+(./main.bbl [10] [11]) [12]
+Underfull \vbox (badness 1859) has occurred while \output is active [13 <./fig3
+_budget_floor.pdf>] [14]
+Underfull \vbox (badness 2846) has occurred while \output is active [15 <./fig6
+_protocolA.pdf>] [16] (./main.aux) )
 (see the transcript file for additional information)</usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
-/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8
-a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (15 pages, 345682 bytes).
+ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/font
+s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
+es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+
+Output written on main.pdf (16 pages, 325516 bytes).
 Transcript written on main.log.

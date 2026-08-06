@@ -1,4 +1,4 @@
-\begin{thebibliography}{27}
+\begin{thebibliography}{37}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -30,6 +30,12 @@ Jacob Austin, Augustus Odena, Maxwell Nye, Maarten Bosma, Henryk Michalewski,
 \newblock Program synthesis with large language models.
 \newblock \emph{arXiv preprint arXiv:2108.07732}, 2021.
 
+\bibitem[Chen et~al.(2023)Chen, Zaharia, and Zou]{chen2023frugalgpt}
+Lingjiao Chen, Matei Zaharia, and James Zou.
+\newblock {FrugalGPT}: How to use large language models while reducing cost and
+  improving performance.
+\newblock \emph{arXiv preprint arXiv:2305.05176}, 2023.
+
 \bibitem[Chen et~al.(2021)Chen, Tworek, Jun, Yuan, de~Oliveira~Pinto, Kaplan,
   Edwards, Burda, Joseph, Brockman, et~al.]{chen2021humaneval}
 Mark Chen, Jerry Tworek, Heewoo Jun, Qiming Yuan, Henrique~Ponde
@@ -37,6 +43,12 @@ Mark Chen, Jerry Tworek, Heewoo Jun, Qiming Yuan, Henrique~Ponde
   Greg Brockman, et~al.
 \newblock Evaluating large language models trained on code.
 \newblock \emph{arXiv preprint arXiv:2107.03374}, 2021.
+
+\bibitem[Chow(1970)]{chow1970reject}
+C~Chow.
+\newblock On optimum recognition error and reject tradeoff.
+\newblock \emph{IEEE Transactions on Information Theory}, 16\penalty0
+  (1):\penalty0 41--46, 1970.
 
 \bibitem[Du et~al.(2024)Du, Li, Torralba, Tenenbaum, and
   Mordatch]{du2024debate}
@@ -49,6 +61,17 @@ Yilun Du, Shuang Li, Antonio Torralba, Joshua~B Tenenbaum, and Igor Mordatch.
 Bradley Efron and Robert~J Tibshirani.
 \newblock \emph{An Introduction to the Bootstrap}.
 \newblock Chapman and Hall/CRC, 1994.
+
+\bibitem[Garcelon et~al.(2020)Garcelon, Ghavamzadeh, Lazaric, and
+  Pirotta]{garcelon2020conservative}
+Evrard Garcelon, Mohammad Ghavamzadeh, Alessandro Lazaric, and Matteo Pirotta.
+\newblock Conservative exploration in reinforcement learning.
+\newblock In \emph{Artificial Intelligence and Statistics}, 2020.
+
+\bibitem[Geifman \& El-Yaniv(2017)Geifman and El-Yaniv]{geifman2017selective}
+Yonatan Geifman and Ran El-Yaniv.
+\newblock Selective classification for deep neural networks.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2017.
 
 \bibitem[Hendrycks et~al.(2021)Hendrycks, Burns, Kadavath, Arora, Basart, Tang,
   Song, and Steinhardt]{hendrycks2021math}
@@ -88,6 +111,17 @@ Kevin Jamieson and Ameet Talwalkar.
   optimization.
 \newblock In \emph{Artificial Intelligence and Statistics}, 2016.
 
+\bibitem[Kadavath et~al.(2022)Kadavath, Conerly, Askell, Henighan,
+  et~al.]{kadavath2022know}
+Saurav Kadavath, Tom Conerly, Amanda Askell, Tom Henighan, et~al.
+\newblock Language models (mostly) know what they know.
+\newblock \emph{arXiv preprint arXiv:2207.05221}, 2022.
+
+\bibitem[Leung \& White(1989)Leung and White]{cohen1995regression}
+Hareton K~N Leung and Lee White.
+\newblock Insights into regression testing.
+\newblock In \emph{IEEE Conference on Software Maintenance}, 1989.
+
 \bibitem[Li et~al.(2018)Li, Jamieson, DeSalvo, Rostamizadeh, and
   Talwalkar]{li2018hyperband}
 Lisha Li, Kevin Jamieson, Giulia DeSalvo, Afshin Rostamizadeh, and Ameet
@@ -115,6 +149,17 @@ Aman Madaan, Niket Tandon, Prakhar Gupta, Skyler Hallinan, Luyu Gao, Sarah
   Wiegreffe, Uri Alon, Nouha Dziri, Shrimai Prabhumoye, Yiming Yang, et~al.
 \newblock Self-refine: Iterative refinement with self-feedback.
 \newblock In \emph{Advances in Neural Information Processing Systems}, 2023.
+
+\bibitem[Madras et~al.(2018)Madras, Pitassi, and Zemel]{madras2018defer}
+David Madras, Toniann Pitassi, and Richard Zemel.
+\newblock Predict responsibly: Improving fairness and accuracy by learning to
+  defer.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2018.
+
+\bibitem[Mozannar \& Sontag(2020)Mozannar and Sontag]{mozannar2020defer}
+Hussein Mozannar and David Sontag.
+\newblock Consistent estimators for learning to defer to an expert.
+\newblock In \emph{International Conference on Machine Learning}, 2020.
 
 \bibitem[Nosek et~al.(2018)Nosek, Ebersole, DeHaven, and
   Mellor]{nosek2018preregistration}
@@ -151,6 +196,18 @@ Mirac Suzgun, Nathan Scales, Nathanael Sch{\"a}rli, Sebastian Gehrmann, Yi~Tay,
   them.
 \newblock In \emph{Findings of the Association for Computational Linguistics},
   2023.
+
+\bibitem[Thomas et~al.(2015)Thomas, Theocharous, and
+  Ghavamzadeh]{thomas2015safe}
+Philip~S Thomas, Georgios Theocharous, and Mohammad Ghavamzadeh.
+\newblock High-confidence off-policy evaluation.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}, 2015.
+
+\bibitem[Viola \& Jones(2001)Viola and Jones]{viola2001cascade}
+Paul Viola and Michael Jones.
+\newblock Rapid object detection using a boosted cascade of simple features.
+\newblock In \emph{IEEE Conference on Computer Vision and Pattern Recognition},
+  2001.
 
 \bibitem[Wang et~al.(2023)Wang, Wei, Schuurmans, Le, Chi, Narang, Chowdhery,
   and Zhou]{wang2023selfconsistency}
