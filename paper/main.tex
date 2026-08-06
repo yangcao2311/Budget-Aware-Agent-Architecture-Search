@@ -9,7 +9,12 @@
 \usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 \newtheorem{proposition}{Proposition}
+\definecolor{repairblue}{HTML}{2a78d6}
+\definecolor{breakorange}{HTML}{eb6834}
+\definecolor{inkgrey}{HTML}{52514e}
 
 \title{Hard Budgets Expose the Repair--Breakage \\ Tradeoff in Agent Workflows}
 
@@ -49,7 +54,7 @@ unsupported ones, and a locked out-of-domain prediction that failed because of
 a confound in our own experiment design.
 \end{abstract}
 
-\begin{figure}[b]
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=\textwidth]{fig1_decomposition.pdf}
 \caption{The same experiment, read two ways. \textbf{Left:} a standard
@@ -139,13 +144,12 @@ Every confirmatory hypothesis was written, committed and git-tagged before the
 corresponding frozen split was executed \citep{nosek2018preregistration}, and we
 report all of them as they landed: four Part-I claims supported and one refuted,
 three Part-II claims not supported as stated, and a locked out-of-domain
-prediction that failed---because, as we diagnose in \S\ref{sec:external}, our
-own out-of-domain split had been built without visible tests, so it varied
-domain and verifier availability at once. Building the corrected condition
-restored the prediction. An automated audit recomputes every numeric claim in
-this paper from raw per-task logs, and four distinct defects in our own
-instrumentation, each of which silently corrupted results before we found it,
-are documented with their effects quantified.
+prediction that failed---because, as \S\ref{sec:external} diagnoses, our own
+out-of-domain split had been built without visible tests, so it varied domain
+and verifier availability at once. An automated audit recomputes every numeric
+claim here from raw logs, and four defects in our own instrumentation, each of
+which silently corrupted results before we found it, are documented with their
+effects quantified.
 
 The practical consequence is short. Structure is not free and is not uniformly
 good: it has an entry fee below which it is harmful, and it requires a verifier
@@ -202,14 +206,79 @@ verifier specificity---is invisible to it.
 
 \paragraph{Evaluation.} We use MBPP+ and HumanEval+ \citep{austin2021mbpp,
 chen2021humaneval} in the rigorous-test formulation of EvalPlus
-\citep{liu2023evalplus}, MATH \citep{hendrycks2021math}, and BIG-Bench Hard
-\citep{suzgun2023bbh}. Multi-fidelity screening follows successive halving
-\citep{jamieson2016successive, li2018hyperband}; intervals are stratified paired
-bootstrap \citep{efron1994bootstrap} with Holm correction \citep{holm1979}
-within each hypothesis family.
+\citep{liu2023evalplus}, MATH \citep{hendrycks2021math} and BIG-Bench Hard
+\citep{suzgun2023bbh}; multi-fidelity screening follows successive halving
+\citep{jamieson2016successive, li2018hyperband}, and intervals are stratified
+paired bootstrap \citep{efron1994bootstrap} with Holm correction
+\citep{holm1979}.
 
 \section{Hard budgets and a reservation ledger}
 \label{sec:setup}
+
+\begin{figure}[t]
+\centering
+\begin{minipage}[b]{0.40\textwidth}
+\centering
+{\small\textbf{(a) reservation ledger}}\\[3pt]
+\begin{tikzpicture}[
+  font=\small, node distance=4mm,
+  box/.style={draw=inkgrey, rounded corners=1.5pt, minimum height=5.5mm,
+              inner xsep=3pt, align=center, font=\scriptsize},
+  term/.style={box, fill=black!6, draw=none},
+  ar/.style={-{Latex[length=1.5mm]}, draw=inkgrey},
+  lab/.style={font=\tiny, inner sep=1.5pt}]
+\node[box] (res) {reserve\\[-1pt]worst-case vector};
+\node[box, below=6mm of res] (call) {call};
+\node[box, below=6mm of call] (set) {settle\\[-1pt]actual, release rest};
+\node[term, right=9mm of res] (fb) {fallback\\/ END};
+\draw[ar] (res) -- node[lab, right]{ok} (call);
+\draw[ar] (call) -- (set);
+\draw[ar] (res) -- node[lab, above]{reject} (fb);
+\draw[ar, dashed] (set.west) -- ++(-5mm,0) |- (res.west);
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.56\textwidth}
+\centering
+{\small\textbf{(b) the two workflows compared}}\\[3pt]
+\begin{tikzpicture}[
+  font=\small, node distance=4mm,
+  box/.style={draw=inkgrey, rounded corners=1.5pt, minimum height=5.5mm,
+              inner xsep=3pt, align=center, font=\scriptsize},
+  gen/.style={box, draw=repairblue, thick},
+  ref/.style={box, draw=breakorange, thick},
+  term/.style={box, fill=black!6, draw=none},
+  ar/.style={-{Latex[length=1.5mm]}, draw=inkgrey},
+  lab/.style={font=\tiny, inner sep=1.5pt}]
+% vanilla
+\node[gen] (g1) {generate\\[-1pt]$T{=}0.7$};
+\node[box, right=7mm of g1] (v1) {verify};
+\node[ref, right=7mm of v1] (r1) {refine};
+\draw[ar] (g1) -- (v1);
+\draw[ar] (v1) -- node[lab, above]{fail} (r1);
+\draw[ar] (r1.north) .. controls +(0,4.5mm) and +(0,4.5mm) .. (v1.north);
+\node[lab, right=4mm of r1, align=left] {\emph{vanilla}:\\draft is overwritten};
+% protected
+\node[gen, below=11mm of g1] (g2) {generate\\[-1pt]$T{=}0$};
+\node[box, right=7mm of g2] (v2) {verify};
+\node[ref, right=7mm of v2] (r2) {refine};
+\draw[ar] (g2) -- (v2);
+\draw[ar] (v2) -- node[lab, above]{fail} (r2);
+\draw[ar] (r2.north) .. controls +(0,4.5mm) and +(0,4.5mm) .. (v2.north);
+\node[term, right=4mm of r2] (e2) {END};
+\draw[ar, draw=repairblue, thick] (v2.south) .. controls +(0,-5mm) and +(0,-5mm) ..
+      node[lab, below]{pass: incumbent kept} (e2.south);
+\node[lab, below=8mm of g2, align=left]
+  {\emph{protected}: $\brate\!\to\!0$ by construction};
+\end{tikzpicture}
+\end{minipage}
+\caption{\textbf{(a)} Every metered call reserves an upper bound on its billable
+cost before executing; a node that cannot reserve does not run, and control
+follows a fallback edge. Overruns are prevented rather than recorded.
+\textbf{(b)} The only structural difference between the two workflows we compare
+throughout: the protected variant emits a temperature-zero draft and exits at
+the first verifier pass, so a correct incumbent is never handed to a refiner.}
+\label{fig:mechanism}
+\end{figure}
 
 A deployment budget is a vector of caps on input tokens, output tokens, LLM
 calls, tool calls, wall-clock seconds and dollars. We use five profiles from
@@ -224,15 +293,14 @@ does not run: control follows a fallback edge or terminates with the current
 answer. After the call, actual usage is settled and the surplus released, and a
 settlement exceeding its own reservation is surfaced as a defect rather than
 absorbed. Concurrent calls, such as the $k$ branches of a vote, reserve their
-full aggregate before any of them starts. Appendix~\ref{app:safety} states and
-proves the resulting invariant and reports a $3{,}000$-workflow fuzz sweep with
+full aggregate before any of them starts. Figure~\ref{fig:mechanism}(a) shows the discipline and
+Appendix~\ref{app:safety} proves the resulting invariant and reports a $3{,}000$-workflow fuzz sweep with
 zero cap violations in any dimension.
 
-This is not only hygiene. Under post-hoc accounting a workflow that overspends
-is recorded as expensive; under reservation it is prevented, and the prevention
-becomes an observable---we report reserve rejections separately, and they turn
-out to be the visible face of the budget floor. Compute matching is enforced
-rather than audited.
+This is not only hygiene: under post-hoc accounting a workflow that overspends
+is recorded as expensive, whereas under reservation it is prevented, and the
+prevention becomes an observable---reserve rejections turn out to be the visible
+face of the budget floor. Compute matching is enforced rather than audited.
 
 \paragraph{Verifiers.} We distinguish two regimes and never conflate them. In
 the code family the workflow's verifier runs the task's own visible tests:
@@ -243,12 +311,11 @@ self-consistency check that re-derives the answer independently and compares.
 Gold answers never enter workflow state in any family.
 
 \paragraph{Tasks.} Code: MBPP+, split 120/40/150 for search, selection and
-confirmation, with HumanEval+ held out entirely. Math: MATH levels 4--5 over
-four subjects, split 120/40/150, with two further subjects held out. Logic:
-BIG-Bench Hard, 120 tasks, reserved for the prospective test of
-\S\ref{sec:external} and used nowhere else. Splits were generated once with a
-fixed seed, hashed, and never regenerated; the generator refuses to overwrite an
-existing split. All final numbers use three execution seeds, seed-averaged per
+confirmation, with HumanEval+ held out. Math: MATH levels 4--5 over four
+subjects, split 120/40/150, with two further subjects held out. Logic:
+BIG-Bench Hard, 120 tasks, reserved for \S\ref{sec:external} and used nowhere
+else. Splits were generated once with a fixed seed, hashed, and never
+regenerated. All final numbers use three execution seeds, seed-averaged per
 task, with stratified paired bootstrap intervals over $10{,}000$ resamples.
 
 \section{The repair--breakage decomposition}
@@ -266,7 +333,7 @@ so that the net change in accuracy is
 \label{eq:identity}
 \end{equation}
 
-Equation~\eqref{eq:identity} holds exactly, by the law of total probability, for
+Equation~\ref{eq:identity} holds exactly, by the law of total probability, for
 binary per-task outcomes. We state this plainly because it determines what the
 equation is good for. It cannot be ``validated'' by estimating $\rrate$ and
 $\brate$ on a dataset and checking that it reproduces $\Delta$ there; that check
@@ -284,11 +351,11 @@ running:
 \end{equation}
 Two regimes follow. With an oracle verifier that never rejects a correct answer,
 $\brate \to 0$ and refinement cannot hurt. With a verifier carrying no
-information, every answer is flagged, $\brate$ rises to the unconditional rate at
+information every answer is flagged, $\brate$ rises to the unconditional rate at
 which revision damages correct answers, and \eqref{eq:rule} fails whenever the
 baseline is strong---which, for a competent model on a standard benchmark, it
-is. The threshold is punishing: at $p=0.73$ it demands $\brate/\rrate < 0.38$,
-and at $p=0.92$ it demands $\brate/\rrate < 0.09$.
+is. The threshold is punishing: $p=0.73$ demands $\brate/\rrate < 0.38$ and
+$p=0.92$ demands $\brate/\rrate < 0.09$.
 
 The rule is actionable because its left-hand side is a design choice.
 \emph{Incumbent protection} is the constructive route to $\brate \approx 0$
@@ -343,11 +410,22 @@ nothing measurable at several times the price. The decomposition shows what is
 happening underneath---in code it repairs a fifth of the baseline's failures and
 destroys a seventh of its successes.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig3_budget_floor.pdf}
+\caption{The budget floor is a movement of both terms at once. As the per-task
+budget tightens, the workflow can afford fewer refinement iterations: repair
+falls and breakage rises, and in the code family they cross, which is where the
+net effect turns significantly negative. Frozen test splits, 95\% CIs on the
+net effect.}
+\label{fig:floor}
+\end{figure}
+
 \paragraph{Structure has an entry fee (C2, supported).} At \texttt{tight}, code
 vanilla is $-0.104$ $[-0.162,-0.047]$. Moving from \texttt{loose} to
 \texttt{tight}, repair falls from $0.205$ to $0.162$ while breakage rises from
 $0.140$ to $0.224$: with fewer affordable iterations the loop is likelier to
-leave a task mid-revision, having already discarded a working answer. The
+leave a task mid-revision, having already discarded a working answer. Figure~\ref{fig:floor} shows both terms moving. The
 mechanism is visible in the ledger---35 of 150 tasks could not fund a planned
 refinement call. Below its entry fee, structure is not merely inefficient but
 harmful.
@@ -363,7 +441,7 @@ external signal does not merely fail to help, it destroys correct work.
 \paragraph{Incumbent protection removes the lower term (C4, supported).}
 Breakage is $0.000$ in all six protected cells. In code the protected workflow
 is significantly positive at all three budgets ($+0.013$, $+0.020$, $+0.020$);
-in math it is non-inferior everywhere and positive but not significant at
+The two workflows differ only as shown in Figure~\ref{fig:mechanism}(b). In math it is non-inferior everywhere and positive but not significant at
 \texttt{loose} ($+0.007$ $[-0.002,+0.018]$). It is also cheaper than vanilla
 refinement---$\$0.0025$ against $\$0.0090$ per task at code/\texttt{loose}
 ---because most tasks exit at the first verifier pass. The gain is modest, and
@@ -439,7 +517,7 @@ repairing it after the freeze. \textbf{P5}: in code the budget-contingent search
 costs \$60 against \$120 for per-budget static search and deploys $\$0.00029$ per
 task cheaper, so it dominates from the first task; in math it does not.
 
-The defensible readings are narrow. An independent optimiser reconstructs
+Figure~\ref{fig:protocolA} in Appendix~\ref{app:search} shows the deployment comparison. The defensible readings are narrow. An independent optimiser reconstructs
 incumbent protection in the code family, which is evidence that the principle is
 not our design bias. One policy can cover several budgets, including an unseen
 one, at half the design cost, in the code family. Neither transfers to math.
@@ -449,15 +527,22 @@ one, at half the design cost, in the code family. Neither transfers to math.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{fig2_signal.pdf}
+\begin{minipage}[t]{0.485\textwidth}
+\centering
+\includegraphics[width=\textwidth]{fig4_dose_response.pdf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\centering
+\includegraphics[width=\textwidth]{fig5_regimes.pdf}
+\end{minipage}
 \caption{\textbf{Left:} withholding the verifier's signal is a causal
-manipulation of the breakage term; as visible tests are removed, breakage rises
-and the net effect falls to $-0.118$ $[-0.178,-0.058]$. \textbf{Right:} breakage
-of the incumbent-protecting construction across every condition we measured,
-including a third domain whose prediction was locked before execution. It stays
-at or near the predicted bound wherever the verifier carries signal and jumps to
-$0.114$ in the single condition with none; restoring signal on the \emph{same}
-tasks restores the guarantee.}
+manipulation of the breakage term. As visible tests are removed, breakage rises
+and repair falls, and the net effect drops to $-0.118$ $[-0.178,-0.058]$.
+\textbf{Right:} breakage of the incumbent-protecting construction across every
+condition we measured, including a third domain whose prediction was locked
+before execution. It stays at or near the predicted bound wherever the verifier
+carries signal and jumps to $0.114$ in the single condition with none;
+restoring signal on the \emph{same} tasks restores the guarantee.}
 \label{fig:signal}
 \end{figure}
 
@@ -535,9 +620,9 @@ We state these at length, because several bound the claims directly.
 
 \paragraph{One model.} Every number comes from a single frozen deployment. Both
 $p$ and $\rrate$ depend on model quality and $\brate$ plausibly does too; nothing
-here establishes that the numerical tradeoff transfers across model scales, and
-our own transfer tests show the parameters are not stable even across domains for
-unconstrained workflows.
+here establishes that the tradeoff transfers across model scales, and our own
+tests show the parameters are unstable even across domains for unconstrained
+workflows.
 
 \paragraph{The identity is not a forecast.} \eqref{eq:identity} is exact for
 binary outcomes. Its content is exhaustiveness plus the rule \eqref{eq:rule}; it
@@ -545,53 +630,49 @@ makes no prediction falsifiable on the data used to estimate its terms. The
 genuine transfer tests are those of \S\ref{sec:external}, and one of them failed.
 
 \paragraph{Four instrumentation defects, and what they cost.} Beyond the two
-search defects of \S\ref{sec:partii}, two more affected recorded results.
-$4.7\%$ of frozen-test executions settled above their own reservation because of
-the token estimator and were scored as failures, unevenly across arms (protected
-$6.5\%$, vanilla $4.5\%$, baseline $3.6\%$); Appendix~\ref{app:sensitivity}
-recomputes every headline contrast on the defect-free subset, where the breakage
-guarantee is unaffected and the harm effects grow slightly. Separately, our math
-grader's symbolic-equivalence fallback never fired, because the library was
-absent from the environment that produced the frozen runs, so $2.6\%$ of math
-answers were misgraded; we re-graded every stored response at zero additional
-cost, which moved the math baseline from $0.700$ to $0.733$ and cost two math
-sub-claims their significance. Both gradings are retained on disk and every
-number reported here uses the corrected one.
+search defects of \S\ref{sec:partii}, two more affected recorded results. The
+token estimator caused $4.7\%$ of frozen-test executions to settle above their
+own reservation and be scored as failures, unevenly across arms;
+Appendix~\ref{app:sensitivity} recomputes every headline contrast on the
+defect-free subset, where the breakage guarantee is unaffected and the harm
+effects grow slightly. And our math grader's symbolic-equivalence fallback never
+fired, because the library was absent from the environment that produced the
+frozen runs, so $2.6\%$ of math answers were misgraded; re-grading every stored
+response at zero additional cost moved the math baseline from $0.700$ to $0.733$
+and cost two math sub-claims their significance (Appendix~\ref{app:regrade}).
+Both gradings are retained on disk; every number here uses the corrected one.
 
 \paragraph{Selection variance in Part II.} Our preregistered rule selects a
 policy once on a 40-task validation split, which cannot resolve the $1$--$2$
-point gaps between candidates. This is why shape convergence is universal in the
-search-split analysis and $3/12$ among selected policies. A larger validation
+point gaps between candidates---hence shape convergence is universal in the
+search-split analysis but $3/12$ among selected policies. A larger validation
 split is the fix; we did not retrofit it after the freeze.
 
 \paragraph{No mechanism for the math Part-II boundary.} The budget-contingent
-policy is significantly better at math/\texttt{loose} and worse at
-math/\texttt{tight}, and we cannot explain this with data. It would be easy to
-present it as a boundary condition predicted by \eqref{eq:rule}; we checked, and
-at math/\texttt{tight} the measured ratio sits essentially on the threshold, so
-the rule is silent there and certainly does not predict harm. We therefore do
-not claim it does.
+policy is better at math/\texttt{loose} and worse at math/\texttt{tight} and we
+cannot explain this with data. It would be easy to present it as a boundary
+condition predicted by \eqref{eq:rule}; we checked, and the measured ratio sits
+essentially on the threshold, so the rule is silent there and does not predict
+harm. We therefore do not claim it does.
 
 \paragraph{Restricted design space, coarse verifier taxonomy.} Results about
 ``structure'' are results about a space of at most eight nodes and two loops with
-a fixed whitelist. And we treat verifiers as oracle, non-oracle-with-signal, or
+a fixed whitelist, and we treat verifiers as oracle, non-oracle-with-signal or
 no-signal, whereas real verifiers vary continuously in sensitivity and
-specificity; \eqref{eq:identity} folds both into $\rrate$ and $\brate$ rather
-than separating them. Separating them would give a sharper rule and is the
-obvious next step.
+specificity. \eqref{eq:identity} folds both into $\rrate$ and $\brate$;
+separating them would give a sharper rule and is the obvious next step.
 
 \section{Conclusion}
 
-The question of whether agent workflow structure helps has no budget-free answer,
-and reporting a net effect conceals why. Structure repairs and structure breaks;
-under matched hard budgets the two are of comparable size, so their difference is
-small, unstable, and reads differently depending on where in the budget range one
+Whether agent workflow structure helps has no budget-free answer, and reporting
+a net effect conceals why. Structure repairs and structure breaks; under matched
+hard budgets the two are of comparable size, so their difference is small,
+unstable, and reads differently depending on where in the budget range one
 measures. Once separated, the design question becomes concrete: make breakage
 impossible. Protecting the incumbent answer does that---breakage $0.000$ across
-every in-domain cell, across two verifier types and three domains---and it is
-what an independent optimiser converges to when asked to search the space itself.
-It fails precisely where the mechanism says it must: when the verifier has no
-signal to gate on.
+every in-domain cell and three domains---and it is what an independent optimiser
+converges to when asked to search the space itself. It fails precisely where the
+mechanism says it must: when the verifier has no signal to gate on.
 
 \subsubsection*{Reproducibility statement}
 
@@ -745,6 +826,21 @@ hard timeout and a timeout counts as ``not equal''.
 
 \section{Search details}
 \label{app:search}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig6_protocolA.pdf}
+\caption{Protocol A on the frozen test split: one budget-contingent policy
+against the static policy searched specifically for each budget, which received
+twice the total search budget. We deliberately do not plot the two search
+procedures' internal scores against each other---the budget-contingent score is
+a cross-budget minimum and the static score is a single-budget value, so one
+axis would compare incomparable quantities. Deployment accuracy at a given
+budget is comparable, and is what is shown. Code figures average three search
+seeds.}
+\label{fig:protocolA}
+\end{figure}
+
 
 Fidelity rungs are nested prefixes of the search split: $24$, $64$ and $120$
 tasks, with $1$, $1$ and $2$ execution seeds. Racing eliminates a candidate only
