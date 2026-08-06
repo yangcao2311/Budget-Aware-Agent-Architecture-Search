@@ -25,6 +25,17 @@ NB = 10000
 
 from hbws import verify  # noqa: E402
 
+# Memoise the symbolic check: the same (prediction, gold) pair recurs across
+# seeds and structures, and each sympy LaTeX parse costs ~0.5-2s.
+_SYM = {}
+
+
+def sym_equal(pred, gold):
+    k = (pred, gold)
+    if k not in _SYM:
+        _SYM[k] = verify.math_equal(pred, gold)
+    return _SYM[k]
+
 
 def gold_map():
     g = {}
@@ -62,8 +73,11 @@ def per_task(dirname, symbolic):
             if g is None:
                 acc[r["task_id"]].append(bool(r["success"]))
                 continue
-            ok = (verify.grade_math(r["solution"], g) if symbolic
-                  else grade_string_only(r["solution"], g))
+            if symbolic:
+                pred = verify.extract_boxed(r["solution"])
+                ok = pred is not None and sym_equal(pred, g)
+            else:
+                ok = grade_string_only(r["solution"], g)
             acc[r["task_id"]].append(ok)
     return {t: sum(v) / len(v) for t, v in acc.items()}
 

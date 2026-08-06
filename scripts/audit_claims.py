@@ -25,7 +25,8 @@ def per_task(dirname):
         p = EXP / dirname / f"results_seed{s}.jsonl"
         if p.exists():
             for r in map(json.loads, open(p)):
-                acc[r["task_id"]].append(bool(r["success"]))
+                ok = bool(r.get("success_symbolic", r["success"]))
+                acc[r["task_id"]].append(ok)
     return {t: sum(v) / len(v) for t, v in acc.items()}
 
 
@@ -84,7 +85,7 @@ def main():
     checks.append(check("abstract/C3: no-signal -11.8pt", -0.118, 0.001,
                         lambda: rm["delta"]))
     rmath = stat(f"{T}/verify_refine_3_math_loose", f"{T}/cot_math_loose")
-    checks.append(check("C1 math delta +0.016", 0.016, 0.001, lambda: rmath["delta"]))
+    checks.append(check("C1 math delta +0.020", 0.020, 0.001, lambda: rmath["delta"]))
     checks.append(check("C1 math 2.2x cost", 2.2, 0.06, lambda: rmath["cs"] / rmath["cb"]))
 
     # --- Table 1: every cell ---
@@ -97,12 +98,12 @@ def main():
         ("code", "unseen", "inc"): (0.020, 0.002, 0.042, 0.060, 0.000, 0.0025),
         ("code", "loose", "verify_refine_3"): (-0.033, -0.087, 0.020, 0.205, 0.140, 0.0090),
         ("code", "loose", "inc"): (0.020, 0.002, 0.042, 0.060, 0.000, 0.0025),
-        ("math", "tight", "verify_refine_3"): (0.004, -0.029, 0.038, 0.126, 0.052, 0.0076),
+        ("math", "tight", "verify_refine_3"): (0.007, -0.027, 0.040, 0.140, 0.050, 0.0076),
         ("math", "tight", "inc"): (0.000, 0.000, 0.000, 0.000, 0.000, 0.0075),
-        ("math", "unseen", "verify_refine_3"): (0.009, -0.022, 0.040, 0.117, 0.042, 0.0141),
-        ("math", "unseen", "inc"): (0.004, 0.000, 0.011, 0.018, 0.000, 0.0141),
-        ("math", "loose", "verify_refine_3"): (0.016, -0.016, 0.047, 0.117, 0.038, 0.0153),
-        ("math", "loose", "inc"): (0.011, 0.002, 0.022, 0.036, 0.000, 0.0153),
+        ("math", "unseen", "verify_refine_3"): (0.013, -0.020, 0.044, 0.129, 0.040, 0.0141),
+        ("math", "unseen", "inc"): (0.000, -0.009, 0.009, 0.022, 0.000, 0.0141),
+        ("math", "loose", "verify_refine_3"): (0.020, -0.011, 0.051, 0.129, 0.037, 0.0153),
+        ("math", "loose", "inc"): (0.007, -0.002, 0.018, 0.032, 0.000, 0.0153),
     }
     for (fam, tier, w), (d, lo, hi, rep, brk, c) in tab1.items():
         wf = INC[fam] if w == "inc" else w
@@ -136,19 +137,21 @@ def main():
     rc = stat(f"{T}/incumbent_refine_code_loose", f"{T}/direct_code_loose")
     rmi = stat(f"{T}/incumbent_refine_cot_math_loose", f"{T}/cot_math_loose")
     checks.append(check("C5 code repair 0.060", 0.060, 0.001, lambda: rc["rep"]))
-    checks.append(check("C5 math repair 0.036", 0.036, 0.001, lambda: rmi["rep"]))
+    checks.append(check("C5 math repair 0.032", 0.032, 0.001, lambda: rmi["rep"]))
 
     # --- Table 2: verifier regimes ---
     tab2 = [("in-domain code", f"{T}/incumbent_refine_code_loose",
              f"{T}/direct_code_loose", 0.000, 0.020),
             ("in-domain math", f"{T}/incumbent_refine_cot_math_loose",
-             f"{T}/cot_math_loose", 0.000, 0.011),
+             f"{T}/cot_math_loose", 0.000, 0.007),
             ("OOD math", f"{OD}/incumbent_refine_cot_math_loose",
-             f"{OD}/cot_math_loose", 0.000, 0.003),
+             f"{OD}/cot_math_loose", 0.025, -0.003),
             ("OOD code no-signal", f"{OD}/incumbent_refine_code_loose",
              f"{OD}/direct_code_loose", 0.114, -0.087),
             ("OOD code restored", f"{TV}/incumbent_refine_code_loose",
-             f"{TV}/direct_code_loose", 0.000, 0.005)]
+             f"{TV}/direct_code_loose", 0.000, 0.005),
+            ("BBH new domain", f"{TP}/incumbent_refine_logic_loose",
+             f"{TP}/direct_logic_loose", 0.006, 0.025)]
     for name, sd, bd, brk, d in tab2:
         st = stat(sd, bd)
         checks.append(check(f"Tab2 {name} breakage", brk, 0.001, lambda st=st: st["brk"]))

@@ -2,81 +2,129 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{madaan2023selfrefine}
+\citation{shinn2023reflexion}
+\citation{du2024debate}
+\citation{wang2023selfconsistency}
+\citation{multiagent2026pareto}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Related work}{2}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Automated workflow design.}{2}{section*.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Budget-aware inference.}{2}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Test-time compute allocation.}{2}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The dispute we address.}{2}{section*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Setup: hard budgets and a reservation ledger}{2}{section.3}\protected@file@percent }
-\newlabel{sec:setup}{{3}{2}{Setup: hard budgets and a reservation ledger}{section.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Budget profiles.}{2}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Reservation ledger.}{2}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Verifier taxonomy.}{3}{section*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Tasks and splits.}{3}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}The repair--breakage decomposition}{3}{section.4}\protected@file@percent }
-\newlabel{sec:theory}{{4}{3}{The repair--breakage decomposition}{section.4}{}}
-\newlabel{eq:identity}{{2}{3}{The repair--breakage decomposition}{equation.4.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{This is an identity, and saying so matters.}{3}{section*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{A design rule follows.}{3}{section*.10}\protected@file@percent }
-\newlabel{eq:rule}{{3}{3}{A design rule follows}{equation.4.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{What does and does not transfer.}{3}{section*.11}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The decomposition, on frozen test splits. Repair (blue, above the axis) and breakage (orange, below) are of comparable size for a standard verify--refine workflow, so the net effect (black, 95\% CI) sits near zero or below it --- the quantity the literature reports is a difference of two large terms. Protecting the incumbent answer removes the lower term entirely (breakage $0.000$ in all cells) and the same machinery becomes a small, reliable gain. Both panels share an axis.}}{4}{figure.1}\protected@file@percent }
-\newlabel{fig:decomposition}{{1}{4}{The decomposition, on frozen test splits. Repair (blue, above the axis) and breakage (orange, below) are of comparable size for a standard verify--refine workflow, so the net effect (black, 95\% CI) sits near zero or below it --- the quantity the literature reports is a difference of two large terms. Protecting the incumbent answer removes the lower term entirely (breakage $0.000$ in all cells) and the same machinery becomes a small, reliable gain. Both panels share an axis}{figure.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Frozen test splits, 150 tasks per family, 3 execution seeds. Baselines are the strongest single-call structure per family (\texttt  {direct} for code, \texttt  {cot} for math). Intervals are stratified paired bootstrap 95\% CIs. \emph  {vanilla} is generate$\to $verify$\to $refine with up to 3 iterations; \emph  {protected} is the same loop with a temperature-0 incumbent that is replaced only on verifier rejection.}}{4}{table.1}\protected@file@percent }
-\newlabel{tab:parti}{{1}{4}{Frozen test splits, 150 tasks per family, 3 execution seeds. Baselines are the strongest single-call structure per family (\texttt {direct} for code, \texttt {cot} for math). Intervals are stratified paired bootstrap 95\% CIs. \emph {vanilla} is generate$\to $verify$\to $refine with up to 3 iterations; \emph {protected} is the same loop with a temperature-0 incumbent that is replaced only on verifier rejection}{table.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Part I: confirmatory experiments}{4}{section.5}\protected@file@percent }
-\newlabel{sec:parti}{{5}{4}{Part I: confirmatory experiments}{section.5}{}}
-\@writefile{toc}{\contentsline {paragraph}{C1 (net-zero), supported.}{4}{section*.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{C2 (budget floor), supported.}{4}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{C3 (verifier dose--response), supported.}{5}{section*.14}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{C4 (incumbent protection), supported.}{5}{section*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{C5 (repair is verifier-type-bounded), \textcolor {red}{refuted}.}{5}{section*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Part II: automated search as a bias check}{5}{section.6}\protected@file@percent }
-\newlabel{sec:partii}{{6}{5}{Part II: automated search as a bias check}{section.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Searcher.}{5}{section*.17}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Two bugs that would have invalidated this section.}{5}{section*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Convergence (dev, exploratory).}{5}{section*.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Confirmatory results (frozen test), reported as they landed.}{5}{section*.20}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Breakage of the incumbent-protecting workflow across verifier regimes and domains. The guarantee tracks verifier signal, not domain. The single violation is the one condition without signal, and restoring signal on the \emph  {same tasks} restores the guarantee.}}{6}{table.2}\protected@file@percent }
-\newlabel{tab:regimes}{{2}{6}{Breakage of the incumbent-protecting workflow across verifier regimes and domains. The guarantee tracks verifier signal, not domain. The single violation is the one condition without signal, and restoring signal on the \emph {same tasks} restores the guarantee}{table.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{What we take from this.}{6}{section*.21}\protected@file@percent }
+\citation{nosek2018preregistration}
+\citation{madaan2023selfrefine}
+\citation{shinn2023reflexion}
+\citation{du2024debate}
+\citation{wang2023selfconsistency}
+\citation{huang2024selfcorrect}
+\citation{zhuge2024gptswarm}
+\citation{hu2024adas}
+\citation{zhang2025aflow}
+\citation{shang2024agentsquare}
+\citation{zhang2025evoflow}
+\citation{wang2025evoagentx}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Background and related work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Iterative refinement and its discontents.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Automated workflow design.}{2}{section*.2}\protected@file@percent }
+\citation{li2026bavt}
+\citation{agentuct2026}
+\citation{snell2024scaling}
+\citation{verification2025granularity}
+\citation{austin2021mbpp,chen2021humaneval}
+\citation{liu2023evalplus}
+\citation{hendrycks2021math}
+\citation{suzgun2023bbh}
+\citation{jamieson2016successive,li2018hyperband}
+\citation{efron1994bootstrap}
+\citation{holm1979}
+\@writefile{toc}{\contentsline {paragraph}{Budget-aware inference.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Test-time compute allocation.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evaluation.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Hard budgets and a reservation ledger}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Hard budgets and a reservation ledger}{section.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Verifiers.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Tasks.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}The repair--breakage decomposition}{4}{section.4}\protected@file@percent }
+\newlabel{sec:theory}{{4}{4}{The repair--breakage decomposition}{section.4}{}}
+\newlabel{eq:identity}{{2}{4}{The repair--breakage decomposition}{equation.4.2}{}}
+\newlabel{eq:rule}{{3}{4}{The repair--breakage decomposition}{equation.4.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Confirmatory experiments}{4}{section.5}\protected@file@percent }
+\newlabel{sec:parti}{{5}{4}{Confirmatory experiments}{section.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{The net effect is zero and the terms are not (C1, supported).}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Structure has an entry fee (C2, supported).}{4}{section*.9}\protected@file@percent }
+\citation{jamieson2016successive}
+\citation{hoeffding1963}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Frozen test splits, 150 tasks per family, three execution seeds. Baselines are the strongest single-call structure per family (direct prompting for code, chain-of-thought for math). \emph  {Vanilla} is generate$\to $verify$\to $refine with up to three iterations; \emph  {protected} is the same loop with a temperature-zero incumbent replaced only on verifier rejection. Intervals are stratified paired bootstrap 95\% CIs.}}{5}{table.1}\protected@file@percent }
+\newlabel{tab:parti}{{1}{5}{Frozen test splits, 150 tasks per family, three execution seeds. Baselines are the strongest single-call structure per family (direct prompting for code, chain-of-thought for math). \emph {Vanilla} is generate$\to $verify$\to $refine with up to three iterations; \emph {protected} is the same loop with a temperature-zero incumbent replaced only on verifier rejection. Intervals are stratified paired bootstrap 95\% CIs}{table.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Breakage is controlled by the verifier (C3, supported).}{5}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Incumbent protection removes the lower term (C4, supported).}{5}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Repair is not bounded by verifier type (C5, \textcolor {red}{refuted}).}{5}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Automated search as a bias check}{5}{section.6}\protected@file@percent }
+\newlabel{sec:partii}{{6}{5}{Automated search as a bias check}{section.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Two defects that made our first runs meaningless.}{5}{section*.13}\protected@file@percent }
+\citation{suzgun2023bbh}
+\@writefile{toc}{\contentsline {paragraph}{Convergence.}{6}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Confirmatory results, as they landed.}{6}{section*.15}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7}External validity}{6}{section.7}\protected@file@percent }
 \newlabel{sec:external}{{7}{6}{External validity}{section.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{A locked prediction that failed.}{6}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Diagnosis: our confound, not the framework's.}{6}{section*.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Decoupling.}{6}{section*.24}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Left: degrading the verifier is a causal manipulation of the breakage term. As visible tests are withheld, breakage rises and the net effect falls to $-0.118$ $[-0.178,-0.058]$. Right: breakage of the incumbent-protecting construction across every condition we measured. It stays below the predicted bound wherever the verifier carries signal --- including out of domain, and in a third domain whose prediction was locked before execution --- and exceeds it in exactly the one condition with no signal. Restoring signal on the \emph  {same} tasks restores the guarantee.}}{7}{figure.2}\protected@file@percent }
-\newlabel{fig:signal}{{2}{7}{Left: degrading the verifier is a causal manipulation of the breakage term. As visible tests are withheld, breakage rises and the net effect falls to $-0.118$ $[-0.178,-0.058]$. Right: breakage of the incumbent-protecting construction across every condition we measured. It stays below the predicted bound wherever the verifier carries signal --- including out of domain, and in a third domain whose prediction was locked before execution --- and exceeds it in exactly the one condition with no signal. Restoring signal on the \emph {same} tasks restores the guarantee}{figure.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Prospective validation on BIG-Bench Hard (120 tasks, 3 seeds), a domain untouched by any search, tuning or exploratory run. Predictions were locked before execution. This is a demanding regime: the baseline is strong ($p=0.919$--$0.944$), so the threshold of equation~\ref {eq:rule} is only $(1-p)/p = 0.088$ and even small breakage should flip the sign.}}{7}{table.3}\protected@file@percent }
-\newlabel{tab:prospective}{{3}{7}{Prospective validation on BIG-Bench Hard (120 tasks, 3 seeds), a domain untouched by any search, tuning or exploratory run. Predictions were locked before execution. This is a demanding regime: the baseline is strong ($p=0.919$--$0.944$), so the threshold of \eqref {eq:rule} is only $(1-p)/p = 0.088$ and even small breakage should flip the sign}{table.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{What transfers.}{7}{section*.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Prospective validation in a third domain.}{7}{section*.26}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{8}{section.8}\protected@file@percent }
-\newlabel{sec:limitations}{{8}{8}{Limitations}{section.8}{}}
-\@writefile{toc}{\contentsline {paragraph}{One model.}{8}{section*.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The identity is not a prediction.}{8}{section*.28}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Selection variance in Part II (P4).}{8}{section*.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Math family boundary in Part II.}{8}{section*.30}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{A ledger defect in the frozen test data.}{8}{section*.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Small hard-task strata out of domain.}{8}{section*.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Restricted design space.}{8}{section*.33}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Verifier taxonomy is coarse.}{9}{section*.34}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{9}{section.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A}Workflow DSL}{9}{appendix.A}\protected@file@percent }
-\newlabel{app:dsl}{{A}{9}{Workflow DSL}{appendix.A}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Budget safety}{9}{appendix.B}\protected@file@percent }
-\newlabel{app:safety}{{B}{9}{Budget safety}{appendix.B}{}}
-\@writefile{toc}{\contentsline {paragraph}{Empirical check.}{10}{section*.36}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Where the guarantee was violated in practice, and why.}{10}{section*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{A locked prediction that failed.}{6}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The confound was ours.}{6}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{A prospective test in a third domain.}{6}{section*.18}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Breakage of the incumbent-protecting workflow across verifier regimes and domains. The guarantee tracks verifier signal rather than domain: the one condition without signal is an order of magnitude worse than the rest, and restoring signal on the same tasks restores it.}}{7}{table.2}\protected@file@percent }
+\newlabel{tab:regimes}{{2}{7}{Breakage of the incumbent-protecting workflow across verifier regimes and domains. The guarantee tracks verifier signal rather than domain: the one condition without signal is an order of magnitude worse than the rest, and restoring signal on the same tasks restores it}{table.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{7}{section.8}\protected@file@percent }
+\newlabel{sec:limitations}{{8}{7}{Limitations}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{One model.}{7}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The identity is not a forecast.}{7}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Four instrumentation defects, and what they cost.}{7}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Selection variance in Part II.}{7}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{No mechanism for the math Part-II boundary.}{7}{section*.23}\protected@file@percent }
+\bibdata{refs}
+\bibcite{verification2025granularity}{{1}{2025}{{Anonymous}}{{}}}
+\bibcite{agentuct2026}{{2}{2026{a}}{{Anonymous}}{{}}}
+\bibcite{multiagent2026pareto}{{3}{2026{b}}{{Anonymous}}{{}}}
+\bibcite{austin2021mbpp}{{4}{2021}{{Austin et~al.}}{{Austin, Odena, Nye, Bosma, Michalewski, Dohan, Jiang, Cai, Terry, Le, et~al.}}}
+\bibcite{chen2021humaneval}{{5}{2021}{{Chen et~al.}}{{Chen, Tworek, Jun, Yuan, de~Oliveira~Pinto, Kaplan, Edwards, Burda, Joseph, Brockman, et~al.}}}
+\bibcite{du2024debate}{{6}{2024}{{Du et~al.}}{{Du, Li, Torralba, Tenenbaum, and Mordatch}}}
+\bibcite{efron1994bootstrap}{{7}{1994}{{Efron \& Tibshirani}}{{Efron and Tibshirani}}}
+\@writefile{toc}{\contentsline {paragraph}{Restricted design space, coarse verifier taxonomy.}{8}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{8}{section.9}\protected@file@percent }
+\bibcite{hendrycks2021math}{{8}{2021}{{Hendrycks et~al.}}{{Hendrycks, Burns, Kadavath, Arora, Basart, Tang, Song, and Steinhardt}}}
+\bibcite{hoeffding1963}{{9}{1963}{{Hoeffding}}{{}}}
+\bibcite{holm1979}{{10}{1979}{{Holm}}{{}}}
+\bibcite{hu2024adas}{{11}{2024}{{Hu et~al.}}{{Hu, Lu, and Clune}}}
+\bibcite{huang2024selfcorrect}{{12}{2024}{{Huang et~al.}}{{Huang, Chen, Mishra, Zheng, Yu, Song, and Zhou}}}
+\bibcite{jamieson2016successive}{{13}{2016}{{Jamieson \& Talwalkar}}{{Jamieson and Talwalkar}}}
+\bibcite{li2018hyperband}{{14}{2018}{{Li et~al.}}{{Li, Jamieson, DeSalvo, Rostamizadeh, and Talwalkar}}}
+\bibcite{li2026bavt}{{15}{2026}{{Li et~al.}}{{}}}
+\bibcite{liu2023evalplus}{{16}{2023}{{Liu et~al.}}{{Liu, Xia, Wang, and Zhang}}}
+\bibcite{madaan2023selfrefine}{{17}{2023}{{Madaan et~al.}}{{Madaan, Tandon, Gupta, Hallinan, Gao, Wiegreffe, Alon, Dziri, Prabhumoye, Yang, et~al.}}}
+\bibcite{nosek2018preregistration}{{18}{2018}{{Nosek et~al.}}{{Nosek, Ebersole, DeHaven, and Mellor}}}
+\bibcite{shang2024agentsquare}{{19}{2024}{{Shang et~al.}}{{Shang, Li, Zhao, Ma, Liu, Xu, and Li}}}
+\bibcite{shinn2023reflexion}{{20}{2023}{{Shinn et~al.}}{{Shinn, Cassano, Gopinath, Narasimhan, and Yao}}}
+\bibcite{snell2024scaling}{{21}{2024}{{Snell et~al.}}{{Snell, Lee, Xu, and Kumar}}}
+\bibcite{suzgun2023bbh}{{22}{2023}{{Suzgun et~al.}}{{Suzgun, Scales, Sch{\"a}rli, Gehrmann, Tay, Chung, Chowdhery, Le, Chi, Zhou, and Wei}}}
+\bibcite{wang2023selfconsistency}{{23}{2023}{{Wang et~al.}}{{Wang, Wei, Schuurmans, Le, Chi, Narang, Chowdhery, and Zhou}}}
+\bibcite{wang2025evoagentx}{{24}{2025}{{Wang et~al.}}{{Wang, Liu, Fang, and Meng}}}
+\bibcite{zhang2025evoflow}{{25}{2025{a}}{{Zhang et~al.}}{{Zhang, Niu, Ma, Yang, Cheng, and Wang}}}
+\bibcite{zhang2025aflow}{{26}{2025{b}}{{Zhang et~al.}}{{Zhang, Xiang, Yu, Teng, Chen, Chen, Zhuge, Cheng, Hong, Wang, et~al.}}}
+\bibcite{zhuge2024gptswarm}{{27}{2024}{{Zhuge et~al.}}{{Zhuge, Wang, Kirsch, Faccio, Khizbullin, and Schmidhuber}}}
+\bibstyle{iclr2027_conference}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Workflow language}{10}{appendix.A}\protected@file@percent }
+\newlabel{app:dsl}{{A}{10}{Workflow language}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Budget safety}{10}{appendix.B}\protected@file@percent }
+\newlabel{app:safety}{{B}{10}{Budget safety}{appendix.B}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {C}Failure taxonomy}{10}{appendix.C}\protected@file@percent }
 \newlabel{app:failures}{{C}{10}{Failure taxonomy}{appendix.C}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D}Sensitivity to the ledger defect}{10}{appendix.D}\protected@file@percent }
-\newlabel{app:sensitivity}{{D}{10}{Sensitivity to the ledger defect}{appendix.D}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E}Search details}{10}{appendix.E}\protected@file@percent }
-\newlabel{app:search}{{E}{10}{Search details}{appendix.E}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {F}Cost accounting}{11}{appendix.F}\protected@file@percent }
-\newlabel{app:cost}{{F}{11}{Cost accounting}{appendix.F}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {G}Preregistration and outcomes}{11}{appendix.G}\protected@file@percent }
-\newlabel{app:prereg}{{G}{11}{Preregistration and outcomes}{appendix.G}{}}
-\gdef \@abspage@last{11}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Sensitivity to the ledger defect}{11}{appendix.D}\protected@file@percent }
+\newlabel{app:sensitivity}{{D}{11}{Sensitivity to the ledger defect}{appendix.D}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}Math re-grading}{11}{appendix.E}\protected@file@percent }
+\newlabel{app:regrade}{{E}{11}{Math re-grading}{appendix.E}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F}Search details}{11}{appendix.F}\protected@file@percent }
+\newlabel{app:search}{{F}{11}{Search details}{appendix.F}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {G}Cost accounting}{12}{appendix.G}\protected@file@percent }
+\newlabel{app:cost}{{G}{12}{Cost accounting}{appendix.G}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {H}Preregistration and outcomes}{12}{appendix.H}\protected@file@percent }
+\newlabel{app:prereg}{{H}{12}{Preregistration and outcomes}{appendix.H}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The same experiment, read two ways. \textbf  {Left:} a standard verify--refine workflow repairs many tasks the baseline fails (blue, above the axis) and destroys many the baseline solves (orange, below), so the net effect (black, 95\% CI)---the quantity the literature reports---is small and can take either sign. \textbf  {Right:} protecting the incumbent answer removes the lower term entirely and the same machinery becomes a small, reliable gain. Frozen test splits, three execution seeds, matched hard budgets; panels share an axis.}}{13}{figure.1}\protected@file@percent }
+\newlabel{fig:decomposition}{{1}{13}{The same experiment, read two ways. \textbf {Left:} a standard verify--refine workflow repairs many tasks the baseline fails (blue, above the axis) and destroys many the baseline solves (orange, below), so the net effect (black, 95\% CI)---the quantity the literature reports---is small and can take either sign. \textbf {Right:} protecting the incumbent answer removes the lower term entirely and the same machinery becomes a small, reliable gain. Frozen test splits, three execution seeds, matched hard budgets; panels share an axis}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Left:} withholding the verifier's signal is a causal manipulation of the breakage term; as visible tests are removed, breakage rises and the net effect falls to $-0.118$ $[-0.178,-0.058]$. \textbf  {Right:} breakage of the incumbent-protecting construction across every condition we measured, including a third domain whose prediction was locked before execution. It stays at or near the predicted bound wherever the verifier carries signal and jumps to $0.114$ in the single condition with none; restoring signal on the \emph  {same} tasks restores the guarantee.}}{13}{figure.2}\protected@file@percent }
+\newlabel{fig:signal}{{2}{13}{\textbf {Left:} withholding the verifier's signal is a causal manipulation of the breakage term; as visible tests are removed, breakage rises and the net effect falls to $-0.118$ $[-0.178,-0.058]$. \textbf {Right:} breakage of the incumbent-protecting construction across every condition we measured, including a third domain whose prediction was locked before execution. It stays at or near the predicted bound wherever the verifier carries signal and jumps to $0.114$ in the single condition with none; restoring signal on the \emph {same} tasks restores the guarantee}{figure.2}{}}
+\gdef \@abspage@last{13}

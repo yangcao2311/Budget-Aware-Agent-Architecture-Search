@@ -22,7 +22,8 @@ def per_task(dirname):
         p = EXP / dirname / f"results_seed{s}.jsonl"
         if p.exists():
             for r in map(json.loads, open(p)):
-                acc[r["task_id"]].append(bool(r["success"]))
+                ok = bool(r.get("success_symbolic", r["success"]))
+                acc[r["task_id"]].append(ok)
     return {t: sum(v) / len(v) for t, v in acc.items()}
 
 

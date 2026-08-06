@@ -110,12 +110,32 @@ def math_equal(pred: str | None, gold: str) -> bool:
             return True
     except ValueError:
         pass
+    return _symbolic_equal(p, g)
+
+
+def _symbolic_equal(p: str, g: str, timeout_s: int = 5) -> bool:
+    """Symbolic fallback with a hard timeout.
+
+    sympy.simplify can hang indefinitely on adversarial expressions, so the
+    call runs under SIGALRM and a timeout counts as "not equal" rather than
+    blocking the grader. (Found the hard way: an unguarded version stalled a
+    full re-grading pass.)"""
+    import signal
+
+    def _bail(signum, frame):
+        raise TimeoutError
+
+    old = signal.signal(signal.SIGALRM, _bail)
+    signal.alarm(timeout_s)
     try:
         from sympy.parsing.latex import parse_latex
         import sympy
         return sympy.simplify(parse_latex(p) - parse_latex(g)) == 0
     except Exception:
         return False
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, old)
 
 
 _CHOICE = re.compile(r"\(([A-Z])\)")

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  5 AUG 2026 20:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.9)  5 AUG 2026 22:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -336,6 +336,18 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 )
+(/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks23
+\thm@bodyfont=\toks24
+\thm@headfont=\toks25
+\thm@notefont=\toks26
+\thm@headpunct=\toks27
+\thm@preskip=\skip65
+\thm@postskip=\skip66
+\thm@headsep=\skip67
+\dth@everypar=\toks28
+)
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
@@ -352,18 +364,6 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 )
 \Gin@req@height=\dimen172
 \Gin@req@width=\dimen173
-)
-(/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
-Package: amsthm 2020/05/29 v2.20.6
-\thm@style=\toks23
-\thm@bodyfont=\toks24
-\thm@headfont=\toks25
-\thm@notefont=\toks26
-\thm@headpunct=\toks27
-\thm@preskip=\skip65
-\thm@postskip=\skip66
-\thm@headsep=\skip67
-\dth@everypar=\toks28
 )
 \c@proposition=\count295
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 2
@@ -438,81 +438,91 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 23.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 7
-7.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texm
-f-dist/fonts/enc/dvips/base/8r.enc}
-
-]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-43.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-[2]
-<fig1_decomposition.pdf, id=107, 421.28203pt x 195.77542pt>
+<fig1_decomposition.pdf, id=72, 421.28203pt x 195.77542pt>
 File: fig1_decomposition.pdf Graphic file (type pdf)
 <use fig1_decomposition.pdf>
-Package pdftex.def Info: fig1_decomposition.pdf  used on input line 235.
+Package pdftex.def Info: fig1_decomposition.pdf  used on input line 54.
 (pdftex.def)             Requested size: 397.48499pt x 184.72794pt.
- [3] [4 <./fig1_decomposition.pdf>] [5]
-<fig2_signal.pdf, id=204, 348.66751pt x 203.1466pt>
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf
+-dist/fonts/enc/dvips/base/8r.enc}
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
+03.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+[2]
+Underfull \hbox (badness 1609) in paragraph at lines 184--192
+ []\OT1/ptm/b/n/10 Budget-aware in-fer-ence.[] []\OT1/ptm/m/n/10 Li et al.[] ([
+]2026[]) con-di-tion inference-tree node se-lec-tion on the
+ []
+
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 2
+16.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+) [3]
+Underfull \hbox (badness 5667) in paragraph at lines 346--354
+ []\OT1/ptm/b/n/10 Structure has an en-try fee (C2, sup-ported).[] \OT1/ptm/m/n
+/10 At \OT1/pcr/m/n/10 tight\OT1/ptm/m/n/10 , code vanilla is $\OMS/cmsy/m/n/10
+ ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 104$
+ []
+
+[4] [5]
+<fig2_signal.pdf, id=230, 348.66751pt x 203.1466pt>
 File: fig2_signal.pdf Graphic file (type pdf)
 <use fig2_signal.pdf>
-Package pdftex.def Info: fig2_signal.pdf  used on input line 423.
+Package pdftex.def Info: fig2_signal.pdf  used on input line 452.
 (pdftex.def)             Requested size: 397.48499pt x 231.59572pt.
- [6] [7 <./fig2_signal.pdf>] [8]
-Underfull \hbox (badness 5787) in paragraph at lines 595--603
-\OT1/ptm/m/n/10 All splits are hashed and frozen; all con-fir-ma-tory claims ar
-e git-tagged be-fore the
+ [6] [7]
+Underfull \hbox (badness 2229) in paragraph at lines 598--607
+\OT1/ptm/m/n/10 All splits are hashed and frozen. Ev-ery con-fir-ma-tory claim 
+was git-tagged be-fore the
  []
 
 
-Underfull \hbox (badness 4303) in paragraph at lines 595--603
-\OT1/ptm/m/n/10 cor-re-spond-ing split is ex-e-cuted (\OT1/pcr/m/n/10 prereg-fr
-eeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/10
- ,
+Underfull \hbox (badness 1275) in paragraph at lines 598--607
+\OT1/ptm/m/n/10 cor-re-spond-ing split was ex-e-cuted (\OT1/pcr/m/n/10 prereg-f
+reeze-partI\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 prereg-freeze-partII\OT1/ptm/m/n/1
+0 ,
  []
 
-LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <10> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 631.
-[9] [10] [11] (./main.aux)
+(./main.bbl [8] [9]) [10]
+Underfull \vbox (badness 1412) has occurred while \output is active []
+
+ [11]
+[12] [13 <./fig1_decomposition.pdf> <./fig2_signal.pdf>] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C73DE55A804E42724D153A680291D4D7;2508.
+(rerunfilecheck)             Checksum: 252DDEFF1ABD0DA2CD5991F3D35868BC;2602.
  ) 
 Here is how much of TeX's memory you used:
- 11651 strings out of 474222
- 168745 string characters out of 5748734
- 1944975 words of memory out of 5000000
- 33639 multiletter control sequences out of 15000+600000
- 590323 words of font info for 106 fonts, out of 8000000 for 9000
+ 11747 strings out of 474222
+ 171171 string characters out of 5748734
+ 1948975 words of memory out of 5000000
+ 33721 multiletter control sequences out of 15000+600000
+ 589395 words of font info for 103 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,713b,560s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,718b,605s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
-mes/utmri8a.pfb>
-Output written on main.pdf (11 pages, 248824 bytes).
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
+/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhv
+b8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (13 pages, 237849 bytes).
 PDF statistics:
- 408 PDF objects out of 1000 (max. 8388607)
- 266 compressed objects within 3 object streams
- 79 named destinations out of 1000 (max. 500000)
- 139 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 483 PDF objects out of 1000 (max. 8388607)
+ 345 compressed objects within 4 object streams
+ 93 named destinations out of 1000 (max. 500000)
+ 147 words of extra memory for PDF output out of 10000 (max. 10000000)
 
