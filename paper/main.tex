@@ -382,10 +382,38 @@ so breakage is bounded above by the verifier's false-rejection rate, with
 equality only if every false rejection ends in a wrong answer. \emph{Incumbent
 protection} is this construction. It removes breakage caused by unconditional
 overwriting; it does not make breakage impossible, and a verifier that rejects
-correct answers will still produce some. Sections~\ref{sec:parti} and
+correct answers will still produce some.
+
+Unlike \eqref{eq:identity}, \eqref{eq:bound} is falsifiable on data: its
+left-hand side is measured on the workflow and its right-hand side on the
+verifier alone, so a single condition with breakage above its own
+false-rejection rate would refute it. Figure~\ref{fig:bound} puts it to that
+test in all ten conditions we ran, spanning verifiers that almost never reject a
+correct draft and verifiers that reject every draft. It holds in all ten, and is
+close to tight in the middle of that range. The practical reading is that the
+false-rejection rate is measurable before deployment, from the verifier alone,
+and it caps how much a gated workflow can cost you. Sections~\ref{sec:parti} and
 \ref{sec:external} test whether this works, where it fails, and whether the
 parameters transfer. They do not transfer for unconstrained workflows; they do
 for constrained ones, which is a claim about our construction rather than a law.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_bound.pdf}
+\caption{The bound \eqref{eq:bound} against measurement, in every condition we
+ran. Its left-hand side is a property of the verifier alone and can be measured
+without executing the workflow: a gated workflow that exits after its verifier
+accepted the draft leaves a different trace from one that proceeds to refine, so
+the false-rejection rate is recoverable from logs already collected. Observed
+breakage falls below the bound in all ten conditions, across the full range from
+a verifier that almost never rejects a correct draft ($0.009$) to one that
+rejects every draft because it has no information ($1.000$). The bound is nearly
+tight where the verifier is moderately noisy---breakage $0.146$ against a bound
+of $0.156$ under $50\%$ test masking---and loose where it is uninformative,
+because refinement sometimes recovers an answer it has just discarded. Rates are
+over baseline-correct tasks.}
+\label{fig:bound}
+\end{figure}
 
 \section{Confirmatory experiments}
 \label{sec:parti}
@@ -432,27 +460,11 @@ nothing measurable at several times the price. The decomposition shows what is
 happening underneath---in code it repairs a fifth of the baseline's failures and
 destroys a seventh of its successes.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig3_budget_floor.pdf}
-\caption{Both terms move together as the budget profile tightens: the workflow
-affords fewer refinement iterations, repair falls, breakage rises, and in the
-code family they cross where the net effect turns significantly negative.
-Profiles are named rather than dollar-valued because the dollar cap is not the
-binding constraint --- realized spend is \$0.002--\$0.015 against caps of
-\$0.10--\$0.25, and admission failures are caused by the call and output-token
-caps. \texttt{tight} $=$ (4 calls, 8k in, 2k out, \$0.10);
-\texttt{unseen} $=$ (6, 12k, 3k, \$0.15); \texttt{loose} $=$ (8, 16k, 4k,
-\$0.25). Which dimension binds is not identified by these composite profiles;
-see \S\ref{sec:limitations}. Frozen test splits, 95\% CIs on the net effect.}
-\label{fig:floor}
-\end{figure}
-
 \paragraph{Structure has an entry fee (C2, supported).} At \texttt{tight}, code
 vanilla is $-0.104$ $[-0.162,-0.047]$. Moving from \texttt{loose} to
 \texttt{tight}, repair falls from $0.205$ to $0.162$ while breakage rises from
 $0.140$ to $0.224$: with fewer affordable iterations the loop is likelier to
-leave a task mid-revision, having already discarded a working answer. Figure~\ref{fig:floor} shows both terms moving. The
+leave a task mid-revision, having already discarded a working answer. Both terms move together (Figure~\ref{fig:floor}, Appendix~\ref{app:floor}). The
 mechanism is visible in the ledger: 35 of 150 tasks could not fund a planned
 refinement call, and at the point of refusal the ledger shows three or four
 calls used against a cap of four, with dollars at $\$0.008$ against a cap of
@@ -798,6 +810,25 @@ refined but still wrong (signal insufficient) & $7.1\%$ & protected code, mbpp\_
 The third row is the mechanism behind $\brate$: a verifier that accepts an
 incorrect answer cannot trigger the repair that would fix it, and one that
 rejects a correct answer invites the breakage that destroys it.
+
+\section{Budget profiles and the movement of both terms}
+\label{app:floor}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig3_budget_floor.pdf}
+\caption{Both terms move together as the budget profile tightens: the workflow
+affords fewer refinement iterations, repair falls, breakage rises, and in the
+code family they cross where the net effect turns significantly negative.
+Profiles are named rather than dollar-valued because the dollar cap is not the
+binding constraint --- realized spend is \$0.002--\$0.015 against caps of
+\$0.10--\$0.25, and admission failures are caused by the call and output-token
+caps. \texttt{tight} $=$ (4 calls, 8k in, 2k out, \$0.10);
+\texttt{unseen} $=$ (6, 12k, 3k, \$0.15); \texttt{loose} $=$ (8, 16k, 4k,
+\$0.25). Which dimension binds is not identified by these composite profiles;
+see \S\ref{sec:limitations}. Frozen test splits, 95\% CIs on the net effect.}
+\label{fig:floor}
+\end{figure}
 
 \section{Sensitivity to the ledger defect}
 \label{app:sensitivity}

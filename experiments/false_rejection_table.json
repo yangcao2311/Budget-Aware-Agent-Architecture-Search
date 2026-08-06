@@ -1,0 +1,82 @@
+[
+  {
+    "condition": "code, oracle tests, loose",
+    "n_tasks": 107,
+    "reject": 0.009345794392523364,
+    "reject_ub": 0.028037383177570093,
+    "breakage": 0.0,
+    "breakage_ub": 0.0
+  },
+  {
+    "condition": "code, oracle tests, tight",
+    "n_tasks": 107,
+    "reject": 0.009345794392523364,
+    "reject_ub": 0.028037383177570093,
+    "breakage": 0.0,
+    "breakage_ub": 0.0
+  },
+  {
+    "condition": "code, 50% tests, loose",
+    "n_tasks": 107,
+    "reject": 0.1557632398753894,
+    "reject_ub": 0.19937694704049844,
+    "breakage": 0.14641744548286603,
+    "breakage_ub": 0.19003115264797507
+  },
+  {
+    "condition": "code, NO tests, loose",
+    "n_tasks": 107,
+    "reject": 1.0,
+    "reject_ub": 1.0,
+    "breakage": 0.2336448598130841,
+    "breakage_ub": 0.2866043613707165
+  },
+  {
+    "condition": "math, self-check, loose",
+    "n_tasks": 100,
+    "reject": 0.013333333333333332,
+    "reject_ub": 0.03333333333333333,
+    "breakage": 0.0,
+    "breakage_ub": 0.0
+  },
+  {
+    "condition": "math, self-check, tight",
+    "n_tasks": 100,
+    "reject": 0.0,
+    "reject_ub": 0.0,
+    "breakage": 0.0,
+    "breakage_ub": 0.0
+  },
+  {
+    "condition": "math OOD, self-check",
+    "n_tasks": 27,
+    "reject": 0.04938271604938271,
+    "reject_ub": 0.09876543209876543,
+    "breakage": 0.024691358024691357,
+    "breakage_ub": 0.07407407407407407
+  },
+  {
+    "condition": "code OOD, NO tests",
+    "n_tasks": 88,
+    "reject": 1.0,
+    "reject_ub": 1.0,
+    "breakage": 0.11363636363636363,
+    "breakage_ub": 0.1553030303030303
+  },
+  {
+    "condition": "code OOD, tests restored",
+    "n_tasks": 62,
+    "reject": 0.04838709677419355,
+    "reject_ub": 0.0967741935483871,
+    "breakage": 0.0,
+    "breakage_ub": 0.0
+  },
+  {
+    "condition": "BBH, self-check, loose",
+    "n_tasks": 104,
+    "reject": 0.019230769230769232,
+    "reject_ub": 0.03205128205128205,
+    "breakage": 0.00641025641025641,
+    "breakage_ub": 0.01282051282051282
+  }
+]

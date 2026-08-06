@@ -316,7 +316,53 @@ def fig6():
     print(f"fig6 written ({len(groups)} groups)")
 
 
+# --------------------------------------------------------------- Fig. 6 ----
+def fig_bound():
+    """The derived bound against measurement.
+
+    A log-log scatter was the obvious form and the wrong one: five conditions
+    have breakage exactly 0.000, which a log axis cannot render and which a
+    clamped floor would misreport as nonzero. A paired dot plot shows the
+    bound and the observation for each condition, keeps true zeros honest, and
+    makes the gap itself the visual quantity.
+    """
+    tbl = json.load(open(EXP / "false_rejection_table.json"))
+    tbl.sort(key=lambda r: r["reject"])
+    n = len(tbl)
+    fig, ax = plt.subplots(figsize=(5.5, 2.7))
+    for i, r in enumerate(tbl):
+        ax.plot([r["breakage"], r["reject"]], [i, i], lw=1.1, color=GRID,
+                zorder=1, solid_capstyle="round")
+        ax.scatter([r["reject"]], [i], s=30, color=BREAK, zorder=3,
+                   edgecolor="white", linewidth=0.6)
+        ax.scatter([r["breakage"]], [i], s=30, color=REPAIR, zorder=3,
+                   edgecolor="white", linewidth=0.6)
+        gap = r["reject"] - r["breakage"]
+        if gap > 0.02:
+            ax.text((r["breakage"] + r["reject"]) / 2, i + 0.30,
+                    f"{gap:.2f}", ha="center", fontsize=5.9, color=INK2)
+    ax.scatter([], [], s=30, color=BREAK, label="bound: verifier false-rejection rate")
+    ax.scatter([], [], s=30, color=REPAIR, label="observed breakage")
+    ax.set_yticks(range(n), [r["condition"] for r in tbl], fontsize=6.8)
+    ax.set_xlabel("rate over baseline-correct tasks")
+    ax.set_xlim(-0.03, 1.06)
+    ax.set_ylim(-0.8, n - 0.2)
+    ax.grid(axis="x", color=GRID, lw=0.5)
+    ax.set_axisbelow(True)
+    ax.legend(loc="lower right", frameon=False, fontsize=7, handlelength=1.0,
+              borderpad=0.3)
+    _despine(ax)
+    fig.savefig(ROOT / "paper" / "fig_bound.pdf")
+    print("fig_bound written")
+
+
 if __name__ == "__main__":
+    fig1()
+    fig3()
+    fig4()
+    fig5()
+    fig6()
+    fig_bound()
     fig1()
     fig3()
     fig4()
