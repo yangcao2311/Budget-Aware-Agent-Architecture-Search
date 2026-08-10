@@ -1,0 +1,17 @@
+{
+  "run": "kimi_envelope_test/incumbent_refine_code_loose",
+  "seed": 0,
+  "n": 150,
+  "success_rate": 0.6667,
+  "usd_per_task": 0.00348,
+  "usd_per_success": 0.00522,
+  "llm_calls_per_task": 0.87,
+  "tokens_per_task": 458.7,
+  "p50_sec": 15.06,
+  "p95_sec": 153.36,
+  "total_usd": 0.5222,
+  "wall_min": 25.0,
+  "reserve_rejected": 8,
+  "over_budget": 0,
+  "errors": 29
+}

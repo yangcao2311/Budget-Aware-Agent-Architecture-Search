@@ -23,10 +23,11 @@ Everything below recomputes the paper from logs already in `experiments/`.
 ```bash
 python -m venv .venv && .venv/bin/pip install -r requirements.txt
 
-.venv/bin/python scripts/audit_claims.py        # all 117 paper numbers vs raw logs
+.venv/bin/python scripts/audit_claims.py        # all 190 paper numbers vs raw logs
 .venv/bin/python scripts/confirm_partI.py       # C1-C5 verdicts (C4 unsupported as stated)
 .venv/bin/python scripts/confirm_partII.py      # P1-P5 verdicts (three unsupported)
 .venv/bin/python scripts/false_rejection.py     # the bound b <= P(false reject), 10 conditions
+.venv/bin/python scripts/regen_leak.py          # regeneration-vs-reuse leak, from stored seeds
 .venv/bin/python scripts/score_ood_predictions.py   # the locked OOD prediction (it failed)
 .venv/bin/python scripts/sensitivity_ledger.py  # robustness to the ledger defect
 .venv/bin/python scripts/voi_model.py           # decomposition identity + transfer tests

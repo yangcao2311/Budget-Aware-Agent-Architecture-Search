@@ -1,0 +1,17 @@
+{
+  "run": "kimi_envelope_ood/direct_code_loose",
+  "seed": 2,
+  "n": 100,
+  "success_rate": 0.84,
+  "usd_per_task": 0.0057,
+  "usd_per_success": 0.00678,
+  "llm_calls_per_task": 0.99,
+  "tokens_per_task": 757.3,
+  "p50_sec": 0.0,
+  "p95_sec": 68.21,
+  "total_usd": 0.5696,
+  "wall_min": 2.5,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 1
+}

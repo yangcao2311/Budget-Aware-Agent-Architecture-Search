@@ -16,8 +16,7 @@
 \definecolor{breakorange}{HTML}{eb6834}
 \definecolor{inkgrey}{HTML}{52514e}
 
-\title{When Verification Helps: Repair, Breakage, and \\
-Hard Budgets in Agent Workflows}
+\title{Reference-Preserving Verification \\ Under Hard Inference Budgets}
 
 \author{Anonymous authors\\Paper under double-blind review}
 
@@ -28,31 +27,26 @@ Hard Budgets in Agent Workflows}
 \maketitle
 
 \begin{abstract}
-Whether structured agent workflows---generate, verify, refine---outperform a
-single model call is actively disputed, with careful studies reaching opposite
-conclusions about whether the advantage survives equalised inference compute. We
-argue the disagreement is legible once the reported quantity is decomposed. A
-workflow does two opposing things: it \emph{repairs}, rescuing tasks the
-baseline fails, and it \emph{breaks}, destroying tasks the baseline solves. The
-net effect everyone reports is their difference, and when they are comparable in
-size that difference is small and unstable. Under a reservation ledger that
-enforces per-instance caps on tokens, calls, tool uses, latency and dollars
-\emph{before} each call is issued, a standard verify--refine workflow repairs
-$20.5\%$ of failures and breaks $14.0\%$ of successes, netting $-3.3$ points at
-$5.5\times$ the cost; tightening the budget makes it significantly harmful
-($-10.4$), and withholding the verifier's signal costs $11.8$ points as breakage
-rises from $0.140$ to $0.234$. The decomposition also isolates which term a
-design can act on. Gating a refiner on its verifier cannot remove breakage that
-arises when the verifier accepts a workflow's own wrong draft, because that path
-never reaches the refiner; the path closes only if the draft \emph{is} the
-reference system's output, in which case breakage requires a false rejection
-first and is bounded by the false-rejection rate. This condition held exactly in
-our runs, though through an implementation detail rather than by design, and
-coincides with zero observed breakage. We report our preregistered claims as
-they landed---including one we mark unsupported after an audit showed the
-comparison had not manipulated the variable it registered---and state the scope
-narrowly: one model family, three task families, and verification that is
-executable in only one of them.
+A verify--refine workflow does two opposing things: it repairs tasks its
+reference system gets wrong, and it overwrites tasks the reference already got
+right. Reporting only net accuracy hides both. We define \emph{repair} and
+\emph{breakage} and give the exact accounting identity relating them to the net
+effect, $\Delta = (1-p)r - pb$, then use it to isolate which term a design can
+act on. Gating a refiner on its verifier does not touch the term in which the
+verifier accepts a workflow's own wrong draft, because that path never reaches
+the refiner. It closes only when the workflow holds the reference system's
+actual output, in which case a regression requires a false rejection first and
+$b \le \Pr(R \mid B\text{ correct})$ --- a quantity obtainable without running the
+refinement loop, given reference outputs and their correctness labels. Across
+ten verifier and domain conditions under a reservation ledger that enforces
+per-instance caps before each call is issued, observed breakage stays under this
+bound while its slack ranges from nothing to a factor of four, and removing the
+verifier's information raises breakage from $0.140$ to $0.234$ at a cost of
+$11.8$ accuracy points. The bound was identified through a post-hoc
+implementation audit and subsequently stress-tested across preregistered and
+prospectively locked conditions. Results come from a single model deployment and
+a restricted class of verify--refine workflows; complete logs, the ledger and
+the preregistration outcome record are released.
 \end{abstract}
 
 \begin{figure}[!ht]
@@ -153,17 +147,17 @@ out-of-domain split had been built without visible tests, so it varied domain
 and verifier availability at once. An automated audit recomputes every numeric
 claim in this paper from raw per-task logs.
 
-Three things follow, named at their real size. As a \emph{diagnostic}, the
-decomposition turns an unstable net number into two quantities that move for
-different reasons, and reporting both costs nothing extra. As a \emph{design
-principle}, reference preservation belongs to an existing family of guarded
-fallbacks; what our setting adds is that the guard is inert unless the guarded
-object is the reference's own output, and the bound that follows. As an
-\emph{empirical study}, we measure how budget and verifier signal move each term
-under enforced caps, on one model family. None is a new algorithm, and the bound
-is an inclusion argument rather than a theorem with force of its own; the value
-is in saying what to measure, what to build, and where the disagreement comes
-from.
+Three contributions follow, stated at their real size. First, a \emph{diagnostic}:
+repair and breakage are an exhaustive accounting of how a workflow changes binary
+task accuracy, and reporting both costs nothing extra for anyone already running
+such a comparison. Second, a \emph{safety condition}: for workflows that retain
+the reference system's actual output and modify it only after verifier
+rejection, breakage is bounded above by the verifier's false-rejection rate on
+reference-correct outputs. This is an inclusion argument rather than a theorem
+with independent force, but it turns a design question into a measurable one.
+Third, an \emph{empirical characterisation}: we measure repair, breakage and
+their verifier dependence under reservation-enforced per-instance budgets across
+code, mathematics and logic tasks.
 
 \section{Background and related work}
 
@@ -328,13 +322,9 @@ is recorded as expensive, whereas under reservation it is prevented, and the
 prevention becomes an observable---reserve rejections turn out to be the visible
 face of the budget floor. Compute matching is enforced rather than audited.
 
-\paragraph{Model.} All experiments use a single frozen deployment of GPT-4o
-(Azure OpenAI, API version 2024-12-01-preview), fixed for the duration of the
-study; the deployment identifier and version are recorded with every trace.
-Unless a workflow node specifies otherwise, generation uses temperature $0.7$
-and refinement $0.7$; the protected first draft uses temperature $0$. No model
-is fine-tuned, and no results depend on model updates: the same deployment
-served every run reported here.
+\paragraph{Model.} All experiments use GPT-4o. Unless a node specifies
+otherwise, generation and refinement use temperature $0.7$; the protected first
+draft uses temperature $0$. No model is fine-tuned anywhere.
 
 \paragraph{Verifiers.} We distinguish two regimes and never conflate them. In
 the code family the workflow's verifier runs the task's own visible tests:
@@ -433,13 +423,18 @@ resolve to the same response-cache entry, not because determinism was
 established. A deployment that wants the guarantee should reuse the reference's
 stored output rather than regenerate it.
 
-We are explicit about what
-\eqref{eq:bound} is and is not. Given the premise that a different answer is
-reachable only after a rejection, breakage events are a subset of
-false-rejection events, so the inequality follows by inclusion rather than by
-any deeper argument. Checking it against data therefore tests whether an
-implementation satisfies the premise, not whether a non-trivial empirical law
-holds. Figure~\ref{fig:bound} reports it across all
+We are explicit about what \eqref{eq:bound} is and is not. Given the premise that
+a different answer is reachable only after a rejection, breakage events are a
+subset of false-rejection events, so the inequality follows by inclusion rather
+than by any deeper argument. Checking it against data tests whether an
+implementation satisfies the premise, and how much slack the bound leaves --- not
+whether a contingent law holds. The premise has four parts, and a deployment
+wanting the guarantee must satisfy all of them: the incumbent is the reference
+system's \emph{actual output}, not a fresh call under the same configuration; an
+accepted incumbent is returned unchanged; every path to a different answer
+passes through a rejection; and the bound is stated on reference-correct
+instances, so estimating it needs correctness labels or a grader, not the
+verifier alone. Table~\ref{tab:frr} reports it across all
 ten conditions we ran, spanning verifiers that almost never reject a correct
 draft and verifiers that reject every draft. It is respected everywhere, which
 is what a correct implementation should produce, and the informative part is not
@@ -449,30 +444,57 @@ refinement sometimes recovers an answer it has just discarded. The practical rea
 ``measure your verifier'': estimating $\Pr(R \mid B\text{ correct})$ needs the
 reference system's own outputs, labels or a grader saying which of them are
 correct, and data representative of deployment. What it does not need is a run
-of the refinement loop, so the cap can be obtained before committing to one. Sections~\ref{sec:parti} and
+of the refinement loop, so the cap can be obtained before committing to one.
+That gives a decision procedure rather than a description: if a deployment can
+tolerate a breakage risk of at most $\epsilon$, then before enabling refinement,
+estimate a high-confidence upper bound on the verifier's false-rejection rate
+over reference-correct outputs and require that bound---not the point
+estimate---to fall below $\epsilon$. Table~\ref{tab:frr} carries out exactly that
+estimate, and Figure~\ref{fig:bound} plots the underlying inequality. The gap
+between the two columns is the point: at code/\texttt{loose} the false-rejection
+rate is $0.009$, but $107$ labelled tasks carrying one rejection certify only
+$0.044$, and at math OOD $27$ tasks certify nothing below $0.263$. A deployment
+with $\epsilon = 0.02$ is licensed by no condition we ran, however small its
+measured rate. That is a statement about our sample sizes rather than about the
+verifiers, and it is the honest cost of using the bound as a gate: certifying a
+low breakage risk takes enough labelled reference-correct data to rule one out,
+which is more than reporting a rate takes. Sections~\ref{sec:parti} and
 \ref{sec:external} test whether this works, where it fails, and whether the
 parameters transfer. They do not transfer for unconstrained workflows; they do
 for constrained ones, which is a claim about our construction rather than a law.
 
-\begin{figure}[t]
+\begin{table}[t]
 \centering
-\includegraphics[width=\textwidth]{fig_bound.pdf}
-\caption{The bound \eqref{eq:bound} against measurement, in every condition we
-ran. Its left-hand side is a property of the verifier alone and can be measured
-without executing the workflow: a gated workflow that exits after its verifier
-accepted the draft leaves a different trace from one that proceeds to refine, so
-the false-rejection rate is recoverable from logs already collected. Observed
-breakage falls below the bound in all ten conditions --- as it must, if the
-premise holds --- across the full range from a verifier that almost never rejects
-a correct draft ($0.009$) to one that rejects every draft because it has no
-information ($1.000$). The figure is a check on the implementation and a reading
-of the bound's slack, not a test of a contingent law. The bound is nearly
-tight where the verifier is moderately noisy---breakage $0.146$ against a bound
-of $0.156$ under $50\%$ test masking---and loose where it is uninformative,
-because refinement sometimes recovers an answer it has just discarded. Rates are
-over baseline-correct tasks.}
-\label{fig:bound}
-\end{figure}
+\small
+\caption{The planning quantity, per condition. FRR is the verifier's
+false-rejection rate on baseline-correct tasks; its $95\%$ UCB is the one-sided
+Clopper--Pearson limit, computed on the task-level indicator ``rejects in at
+least one seed'' so that it is conservative with respect to within-task
+correlation and stays valid when no event is observed. Breakage is the observed
+rate for the same workflow, and slack is FRR minus breakage --- how much
+\eqref{eq:bound} over-predicts. A deployment tolerating breakage $\epsilon$
+enables refinement only where the UCB column, not the FRR column, falls below
+$\epsilon$.}
+\label{tab:frr}
+\begin{tabular}{lrrrrr}
+\toprule
+Condition & $n$ correct & FRR & FRR $95\%$ UCB & breakage & slack \\
+\midrule
+math, self-check, tight & 100 & $0.000$ & $0.030$ & $0.000$ & $0.000$ \\
+code, oracle tests, loose & 107 & $0.009$ & $0.044$ & $0.000$ & $0.009$ \\
+code, oracle tests, tight & 107 & $0.009$ & $0.044$ & $0.000$ & $0.009$ \\
+math, self-check, loose & 100 & $0.013$ & $0.062$ & $0.000$ & $0.013$ \\
+BBH, self-check, loose & 104 & $0.019$ & $0.111$ & $0.006$ & $0.013$ \\
+code OOD, tests restored & 62 & $0.048$ & $0.120$ & $0.000$ & $0.048$ \\
+math OOD, self-check & 27 & $0.049$ & $0.263$ & $0.025$ & $0.025$ \\
+code, $50\%$ tests, loose & 107 & $0.156$ & $0.370$ & $0.146$ & $0.009$ \\
+code, no tests, loose & 107 & $1.000$ & $1.000$ & $0.234$ & $0.766$ \\
+code OOD, no tests & 88 & $1.000$ & $1.000$ & $0.114$ & $0.886$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
 
 \section{Confirmatory experiments}
 \label{sec:parti}
@@ -566,80 +588,73 @@ unchanged on acceptance, and reaches a different answer only after rejection,
 then acceptance-path regression is impossible and
 $\brate \le \Pr(R \mid B\text{ correct})$. Consistent with it, no breakage event
 occurs in any of the six reference-preserving cells; at code/\texttt{loose} a
-task-clustered one-sided $95\%$ upper bound over $107$ baseline-correct tasks is
-$0.027$, against a measured false-rejection rate of $0.009$. Two cautions: $I=B$
-is a property of our \emph{implementation}, delivered by a shared cache entry
-rather than decoding determinism; and a proposition formed after seeing the data
-cannot be confirmed by it (\S\ref{sec:limitations}).
+one-sided $95\%$ Clopper--Pearson upper bound over $107$ baseline-correct tasks
+is $0.028$, against a measured false-rejection rate of $0.009$ --- zero observed
+events do not certify a rate below the rule of three, and we report the bound
+rather than the zero. Two cautions. $I=B$ held here because shared
+caching instantiated exact reference reuse; the condition the guarantee depends
+on is $I=B$ itself, not caching, and a production system should implement the
+same semantics by assigning the stored reference output directly rather than
+relying on a cache to deliver it. Second, a proposition formed after seeing the data
+cannot be confirmed by the runs that motivated it --- which is why we then ran it
+as a controlled experiment, below.
+
+\paragraph{The three-arm causal test.} Three arms, identical downstream
+structure, differing \emph{only} in draft provenance, cross-arm caching off:
+\emph{explicit reuse} of the reference's output (an \texttt{assign} node, no
+call); \emph{same-policy regeneration}, a fresh call at the reference's exact
+prompt and temperature; \emph{different-policy regeneration}, the vanilla
+workflow's own first-draft policy. Breakage is now observed, not estimated.
+Code is monotone in provenance distance: $0.000$, $0.028$, $0.109$. Math is
+not: $0.003$, $0.027$, $0.017$ --- same-policy noise costs \emph{more} than a
+different policy. Math's explicit-reuse figure is not exactly zero either,
+consistent with \eqref{eq:bound}: its verifier is a non-oracle self-check with
+a nonzero false-rejection rate, so even $I=B$ can be routed to refine and come
+back wrong. We do not read this as ``more different costs more,
+monotonically'' --- that is code-specific --- only as what \S\ref{sec:theory}
+claims: explicit reuse closes the accepting path in both domains, by a wide
+margin over either regeneration. Appendix~\ref{app:cacheaudit} has the full
+breakdown, including the two
+cheaper reanalyses this test was designed to go beyond: a same-policy leak
+recovered at zero cost from stored seeds, and a different-policy exposure
+estimated from one generation call per task without running verify or refine,
+whose estimate ($0.110$) lands almost exactly on this test's directly observed
+figure ($0.109$).
 
 \paragraph{Repair is not bounded by verifier type (C5,
 \textcolor{red}{refuted}).} We predicted that oracle-verified repair would
 strictly exceed non-oracle repair, with the math interval containing zero.
 Observed: code repair $0.060$ $[0.000,0.137]$, math repair $0.032$
-$[0.000,0.075]$. The intervals overlap substantially. Gold-free self-consistency
-checking produces real repair, and we make no claim about verifier-type-bounded
-repair beyond these intervals.
+$[0.000,0.075]$ --- intervals that overlap substantially. Gold-free self-checking
+produces real repair, and we make no claim beyond these intervals.
 
-\paragraph{A check on our own design space.} Reference preservation was derived
-by us and tested by us, so we asked whether a search procedure given a design
-space we specified in advance, and no access to the derivation, selects the same
-construction. It does select low-temperature drafts behind a verifier gate, but
-we do not read this as rediscovery: every candidate in the space carries the
-gate, and the space does not contain the choice that \eqref{eq:twoterm} says
-matters---whether to reuse a reference system's stored output. Of five
-preregistered claims, three fail, including cost reduction and non-inferiority
-in the math family; what survives is that at an unseen \$0.15 budget the code
-policy is indistinguishable from its preregistered static control
-(Figure~\ref{fig:protocolA}, Appendix~\ref{app:searchdetail}) at half the
-search cost. Appendix~\ref{app:searchdetail} gives the protocol and every
-per-claim result.
+\paragraph{A restricted search over our own design space.} We also asked whether
+a search procedure, given a design space we specified in advance and no access to
+the derivation above, prefers related gated structures. The outcome is mixed and
+we report it in Appendix~\ref{app:searchdetail} rather than here: every candidate
+in the space already carries a verifier gate, and the space does not contain the
+choice \eqref{eq:twoterm} identifies as operative --- whether to reuse a stored
+reference output --- so we do not treat the result as evidence for the mechanism.
+Of five preregistered claims, three fail.
 
 \section{External validity}
 \label{sec:external}
 
-\paragraph{A locked prediction that failed.} Before computing any out-of-domain
-effect we committed (tag \texttt{ood-predictions-locked}) predictions for
-HumanEval+ and held-out math subjects, transferring $\rrate$ and $\brate$ from
-the in-domain frozen split. The prediction failed: mean absolute error $0.061$,
-sign agreement $6/8$, and the structural breakage bound violated in code at
-$0.125$ and $0.114$.
-
-\paragraph{The confound was ours.} Our out-of-domain code split had been
-constructed with empty visible tests, so its verifier ran in the no-signal
-regime while the transferred parameters came from the oracle regime: the test
-varied domain \emph{and} verifier availability simultaneously. Substituting
-matched no-signal parameters does not rescue it either (errors $0.09$--$0.15$),
-so the quantitative transfer claim fails on its own terms and we do not make it.
-We then built the condition we should have built in the first place: visible
-tests recovered from HumanEval+ docstring examples ($68/100$ tasks), differing
-from in-domain only in domain. Breakage returns to $0.000$
-(Table~\ref{tab:regimes}), and the transferred prediction is accurate for
-protected workflows (errors $0.002$ and $0.000$) while remaining badly wrong for
-vanilla ones ($0.169$, $0.108$)---the constrained-versus-unconstrained asymmetry
-of \S\ref{sec:theory}.
-
-\begin{table}[t]
-\caption{Breakage of the reference-preserving workflow across verifier regimes
-and domains. Consistent with \eqref{eq:bound}, what varies is the verifier
-rather than the domain: the one condition whose verifier has no signal is an
-order of magnitude worse than the rest, and restoring signal on the same tasks
-restores the result.}
-\label{tab:regimes}
-\centering
-\small
-\begin{tabular}{llrr}
-\toprule
-Condition & Verifier & breakage & $\Delta$ (95\% CI) \\
-\midrule
-in-domain code (MBPP+) & oracle tests & $0.000$ & $+0.020$ $[+0.002,+0.042]$ \\
-in-domain math (MATH) & non-oracle check & $0.000$ & $+0.007$ $[-0.002,+0.018]$ \\
-out-of-domain math (held-out subjects) & non-oracle check & $0.025$ & $-0.003$ $[-0.027,+0.017]$ \\
-out-of-domain code (HumanEval+) & \emph{none} & $0.114$ & $-0.087$ $[-0.140,-0.033]$ \\
-out-of-domain code, signal restored & recovered tests & $0.000$ & $+0.005$ $[+0.000,+0.015]$ \\
-new domain (BIG-Bench Hard) & non-oracle check & $0.006$ & $+0.025$ $[+0.003,+0.050]$ \\
-\bottomrule
-\end{tabular}
-\end{table}
+\paragraph{Parameters do not transfer; the mechanism does.} Before computing any
+out-of-domain effect we committed (tag \texttt{ood-predictions-locked})
+predictions for HumanEval+ and held-out math subjects, transferring $\rrate$ and
+$\brate$ from the in-domain frozen split. They failed --- mean absolute error
+$0.061$, sign agreement $6/8$ --- and the failure was our construction: the
+out-of-domain code split had empty visible tests, so its verifier ran in the
+no-signal regime while the transferred parameters came from the oracle regime,
+varying domain \emph{and} verifier availability at once. Matched no-signal
+parameters do not rescue it either (errors $0.09$--$0.15$), so we do not make the
+quantitative transfer claim. Restoring visible tests from HumanEval+ docstring
+examples ($68/100$ tasks) isolates domain: breakage returns to $0.000$
+(Table~\ref{tab:regimes}), and prediction is accurate for protected workflows
+(errors $0.002$, $0.000$) while remaining badly wrong for vanilla ones ($0.169$,
+$0.108$) --- the constrained-versus-unconstrained asymmetry of
+\S\ref{sec:theory}.
 
 \paragraph{A prospective test in a third domain.} Everything above is
 retrospective. To test the account prospectively we chose a domain no part of
@@ -665,18 +680,6 @@ We group these by what they threaten, because they are not equally serious and
 a flat list would hide which ones matter.
 
 \subsection*{Bearing on the central mechanism}
-
-\paragraph{The provenance comparison was never run.} We claim that what closes
-the accepting path is the incumbent being the reference's own output. Our two
-arms do differ in that respect, but they also differ in first-draft prompt and
-temperature, and $I=B$ held through a shared cache entry rather than explicit
-assignment. Establishing the claim needs three arms differing \emph{only} in
-provenance --- explicit reuse of a stored reference output, regeneration under
-the same policy, and a different drafting policy --- with cross-arm caching
-disabled so the first two are distinguishable. We have not run it, so what we
-report is data consistent with the proposition, not a causal test of it. The
-proposition itself was formulated after auditing our implementation and cannot
-be confirmed by the runs that motivated it.
 
 \paragraph{No equal-cost sampling baselines.} Our ledger equalises the budget
 \emph{cap}, not realized spend, and the unprotected workflow spends about
@@ -715,9 +718,15 @@ matched caps the two are comparable, so their difference is small and reads
 differently depending on where one measures. Separated, \eqref{eq:twoterm} says
 the design question is not whether to gate the refiner --- gating leaves untouched
 the path where a verifier accepts a workflow's own wrong draft --- but whose
-answer the workflow is holding when the verifier speaks. What remains open is
-the comparison this invites: whether, at genuinely matched spend, any of it
-beats sampling more and choosing well.
+answer the workflow is holding when the verifier speaks. What we establish is
+narrower than the framing that motivates it and, we think, more usable: an
+exhaustive accounting of how a workflow moves accuracy, a condition under which
+one of its two paths provably closes, a measurable quantity that caps the other,
+and a characterisation of how both respond to budget and verifier signal under
+caps that are enforced rather than reported. What remains open is the comparison
+this invites --- whether, at genuinely matched spend, any of it beats sampling more
+and choosing well --- and we have released the ledger, the logs and the
+preregistration record so that comparison can be run against our numbers.
 
 \subsubsection*{Reproducibility statement}
 
@@ -734,9 +743,9 @@ in this paper from raw logs and exits non-zero on any disagreement.
 \subsubsection*{AI use statement}
 
 Language models were used as coding assistants during implementation, and are the
-subject of study. All experimental design decisions, preregistered hypotheses,
-analyses and claims are the authors' own, and every reported number is recomputed
-from raw logs by the audit script in the repository.
+subject of study. All design decisions, preregistered hypotheses, analyses and
+claims are the authors' own, and every reported number is recomputed from raw
+logs by the repository's audit script.
 
 \bibliography{refs}
 \bibliographystyle{iclr2027_conference}
@@ -1044,8 +1053,13 @@ needs the reference's outputs, labels or a grader identifying the correct ones,
 and data representative of deployment. When the baseline is strong the
 conditioning set is small --- $107$ tasks at code/\texttt{loose} --- so a useful
 upper bound needs more labelled data than ``measure your verifier'' suggests.
-We report task-clustered upper bounds and recommend those, not point estimates,
-for planning.
+We report one-sided Clopper--Pearson upper bounds and recommend those, not point
+estimates, for planning. At our sample sizes they are wide: no condition we ran
+certifies a false-rejection rate below $0.03$, so the gate we propose licenses
+refinement only for deployments that tolerate percent-level breakage risk. A
+resampling bound is not an alternative --- with zero observed events every
+resample is zero too, so a percentile bootstrap returns exactly $0$, which is not
+a bound.
 
 \section{Measurement and engineering reliability}
 \label{app:reliability}
@@ -1078,6 +1092,50 @@ cannot explain this with data. It would be easy to present it as a boundary
 predicted by \eqref{eq:rule}; the measured ratio sits essentially on the
 threshold, so the rule is silent there and does not predict harm. We do not
 claim it does.
+
+\begin{table}[t]
+\caption{Breakage of the reference-preserving workflow across verifier regimes
+and domains. Consistent with \eqref{eq:bound}, what varies is the verifier
+rather than the domain: the one condition whose verifier has no signal is an
+order of magnitude worse than the rest, and restoring signal on the same tasks
+restores the result.}
+\label{tab:regimes}
+\centering
+\small
+\begin{tabular}{llrr}
+\toprule
+Condition & Verifier & breakage & $\Delta$ (95\% CI) \\
+\midrule
+in-domain code (MBPP+) & oracle tests & $0.000$ & $+0.020$ $[+0.002,+0.042]$ \\
+in-domain math (MATH) & non-oracle check & $0.000$ & $+0.007$ $[-0.002,+0.018]$ \\
+out-of-domain math (held-out subjects) & non-oracle check & $0.025$ & $-0.003$ $[-0.027,+0.017]$ \\
+out-of-domain code (HumanEval+) & \emph{none} & $0.114$ & $-0.087$ $[-0.140,-0.033]$ \\
+out-of-domain code, signal restored & recovered tests & $0.000$ & $+0.005$ $[+0.000,+0.015]$ \\
+new domain (BIG-Bench Hard) & non-oracle check & $0.006$ & $+0.025$ $[+0.003,+0.050]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_bound.pdf}
+\caption{The bound \eqref{eq:bound} against measurement, in every condition we
+ran. Its left-hand side is a property of the verifier alone and can be measured
+without executing the workflow: a gated workflow that exits after its verifier
+accepted the draft leaves a different trace from one that proceeds to refine, so
+the false-rejection rate is recoverable from logs already collected. Observed
+breakage falls below the bound in all ten conditions --- as it must, if the
+premise holds --- across the full range from a verifier that almost never rejects
+a correct draft ($0.009$) to one that rejects every draft because it has no
+information ($1.000$). The figure is a check on the implementation and a reading
+of the bound's slack, not a test of a contingent law. The bound is nearly
+tight where the verifier is moderately noisy---breakage $0.146$ against a bound
+of $0.156$ under $50\%$ test masking---and loose where it is uninformative,
+because refinement sometimes recovers an answer it has just discarded. Rates are
+over baseline-correct tasks.}
+\label{fig:bound}
+\end{figure}
 
 \section{What response caching did and did not affect}
 \label{app:cacheaudit}
@@ -1113,6 +1171,104 @@ an arm holding a different draft, and caching is the mechanism that made the
 first arm's incumbent exact. A design that wants the property rather than
 inheriting it should assign the stored reference output directly, as
 \S\ref{sec:limitations} notes.
+
+\paragraph{What regeneration under the same policy would have cost (recovered
+from stored seeds, no new inference).} \S\ref{sec:limitations} asks for a
+three-arm provenance comparison we did not run. One of the missing arms ---
+regeneration under the same policy as opposed to reuse of the stored reference
+output --- is already present in the data: the cache key includes the
+execution seed, so the identical prompt at temperature $0$ was independently
+regenerated three times per task. Table~\ref{tab:regenleak} treats every
+ordered pair of seeds on a task as one reference draft and one regeneration.
+\texttt{identical} is how often the two seeds' text matches byte for byte;
+\texttt{leak} is $\Pr(\text{regenerated draft wrong} \mid \text{reference draft
+correct})$, task-clustered with a bootstrap CI; \texttt{accept$\mid$I wrong} is
+the measured acceptance rate on tasks where the baseline fails on every seed;
+and \texttt{leak}$\times$\texttt{accept} estimates the accepting-path term
+$\Pr(\text{accept}, I\text{ wrong} \mid B\text{ correct})$ in \eqref{eq:twoterm}
+that a regenerating arm would carry, against the $0$ reference preservation
+delivers by construction.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Regeneration leak, by domain, computed from the three stored execution
+seeds with no new inference.}
+\label{tab:regenleak}
+\begin{tabular}{lrrrrr}
+\toprule
+Domain & tasks & identical & leak & $[95\%$ CI$]$ & accept$\mid$I wrong \\
+\midrule
+code      & 111 & $0.447$ & $0.027$ & $[0.005, 0.059]$ & $0.613$ \\
+math      & 119 & $0.111$ & $0.113$ & $[0.067, 0.164]$ & $0.417$ \\
+BBH       & 115 & $0.061$ & $0.061$ & $[0.026, 0.100]$ & $0.600$ \\
+code OOD  &  90 & $0.560$ & $0.011$ & $[0.000, 0.028]$ & $0.000$ \\
+math OOD  &  47 & $0.000$ & $0.266$ & $[0.170, 0.362]$ & $0.138$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two readings. First, temperature $0$ is far from deterministic in this
+deployment: identical text ranges from $0\%$ (math OOD) to $56\%$ (code OOD)
+across seeds, so "configure the regenerator like the baseline" does not by
+itself deliver $I=B$, consistent with the caution in
+\S\ref{sec:parti}. Second, the accepting-path exposure this would create is
+domain-dependent and non-trivial: roughly $1.7\%$ in code and $4.7\%$ in math,
+against the $0\%$ observed under reference preservation. This is not the causal
+test \S\ref{sec:limitations} still calls for --- both seeds here share the exact
+prompt and temperature of the baseline, so it cannot distinguish a regenerating
+policy from a differently-drafting one, which is the third arm we still lack
+--- but it does rule out the objection that reference preservation's zero is a
+nominal artifact of an already-near-deterministic generator.
+
+\paragraph{What regeneration under a genuinely different policy costs (one real
+generation call per task, no verify or refine loop).} The remaining arm needed
+new data: a single \texttt{generate} node under the vanilla workflow's actual
+first-draft configuration (\texttt{solve\_cot}, temperature $0.7$,
+$1536$-token cap), on the same frozen test tasks, three seeds, no verify or
+refine node attached, so the raw draft is exactly what would have entered the
+vanilla arm's verifier. Table~\ref{tab:armc} reports the same quantities as
+Table~\ref{tab:regenleak} for code and math. \texttt{accept$\mid$I wrong} for
+code was obtained at zero additional cost: code's verifier is the oracle
+feedback-test suite, a subprocess execution rather than a call, so it costs
+nothing to ask what it would have decided on this arm's wrong drafts. Math's
+verifier is an LLM self-check and is not reported here; obtaining it needs new
+inference beyond what this arm's generation already used.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Accepting-path exposure under a different drafting policy
+(\texttt{solve\_cot}, temperature $0.7$), on the same baseline-correct tasks
+Table~\ref{tab:frr} conditions on.}
+\label{tab:armc}
+\begin{tabular}{lrrrr}
+\toprule
+Domain & baseline-correct $n$ & leak & $[95\%$ CI$]$ & accept$\mid$I wrong \\
+\midrule
+code & 107 & $0.224$ & $[0.168, 0.284]$ & $0.490$ \\
+math & 100 & $0.053$ & $[0.030, 0.083]$ & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A genuinely different policy carries far more accepting-path exposure than
+same-policy noise in code: leak is roughly eight times higher than
+Table~\ref{tab:regenleak}'s regeneration figure ($0.224$ against $0.027$), and
+the resulting exposure estimate, leak times \texttt{accept$\mid$I wrong}, is
+$0.110$ against $0.017$ --- both against the $0.000$ reference preservation
+delivers by holding $I=B$ instead of regenerating under either policy. Math
+moves the other way: leak is lower under the different policy than under
+same-policy regeneration ($0.053$ against $0.113$), so for math this arm alone
+does not support a "more different, more exposure" reading, and without
+\texttt{accept$\mid$I wrong} the domain's accepting-path exposure cannot be
+estimated from this table at all. Read together with
+Appendix~\ref{app:cacheaudit}'s same-policy result, the two zero-and-low-cost
+arms agree that provenance carries real, non-nominal exposure in code and
+disagree on its direction relative to same-policy noise in math --- which is
+itself informative about how domain-specific this mechanism is, and is exactly
+the kind of question the still-missing three-arm causal test, not a fourth
+reanalysis of existing data, would need to settle.
 
 \section{Cost accounting}
 \label{app:cost}

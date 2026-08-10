@@ -1,0 +1,17 @@
+{
+  "run": "kimi_envelope_test_mask0.0_k1/verify_refine_3_code_loose",
+  "seed": 1,
+  "n": 150,
+  "success_rate": 0.4333,
+  "usd_per_task": 0.01713,
+  "usd_per_success": 0.03953,
+  "llm_calls_per_task": 2.07,
+  "tokens_per_task": 2196.4,
+  "p50_sec": 35.07,
+  "p95_sec": 281.4,
+  "total_usd": 2.5692,
+  "wall_min": 45.4,
+  "reserve_rejected": 68,
+  "over_budget": 0,
+  "errors": 58
+}

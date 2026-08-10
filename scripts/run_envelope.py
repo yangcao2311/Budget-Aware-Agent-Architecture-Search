@@ -74,6 +74,11 @@ def main():
     ap.add_argument("--mask-tests", type=float, default=1.0)
     ap.add_argument("--critic-k", type=int, default=1)
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--tag-prefix", default="",
+                    help="Prepended to the run directory name (e.g. 'kimi_') "
+                         "so a different-model campaign cannot collide with "
+                         "or overwrite existing results in experiments/envelope*/. "
+                         "Empty by default: unchanged behavior.")
     args = ap.parse_args()
 
     deg = f"_mask{args.mask_tests}_k{args.critic_k}" \
@@ -97,7 +102,7 @@ def main():
                 wf = clamp_to_tier(ENVELOPE_LIB[sname](), BUDGET_TIERS[tier])
                 if fam == "math" and args.critic_k != 1:
                     wf = set_critic_k(wf, args.critic_k)
-                run = f"envelope{deg}/{sname}_{fam}_{tier}"
+                run = f"{args.tag_prefix}envelope{deg}/{sname}_{fam}_{tier}"
                 s = evaluate(wf, tasks, BUDGET_TIERS[tier], run_name=run,
                              seed=args.seed, use_cache=True, workers=args.workers)
                 s.update({"structure": sname, "family": fam, "tier": tier,
@@ -107,7 +112,7 @@ def main():
                       f"succ={s['success_rate']:.3f} $/task={s['usd_per_task']:.4f} "
                       f"rr={s.get('reserve_rejected', 0)}")
 
-    out = Path(__file__).resolve().parent.parent / "experiments" / f"envelope{deg}_summary.jsonl"
+    out = Path(__file__).resolve().parent.parent / "experiments" / f"{args.tag_prefix}envelope{deg}_summary.jsonl"
     with open(out, "a") as f:
         for r in rows:
             f.write(json.dumps(r) + "\n")

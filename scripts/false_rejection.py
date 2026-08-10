@@ -12,6 +12,7 @@ The bound is derived, not fitted, so this is a genuine test: a single condition
 with breakage above its own false-rejection rate would falsify it.
 """
 import json
+import math
 import random
 from collections import defaultdict
 from pathlib import Path
@@ -33,16 +34,69 @@ def per_task(dirname):
     return {t: sum(v) / len(v) for t, v in acc.items()}
 
 
-def cluster_boot_upper(per_task_vals, seed=0):
-    """One-sided 95% upper bound by task-clustered bootstrap. Execution seeds
-    of a task are not independent, so the task is the resampling unit."""
+def cluster_upper(per_task_vals, alpha=0.05):
+    """One-sided (1-alpha) upper bound on a task-level rate, valid under zero
+    observed events.
+
+    A percentile bootstrap must not be used here: when every task shows zero
+    events, every resample is also zero and the method returns exactly 0, which
+    is not an upper bound on the underlying probability. We instead count a
+    task as an event if it shows the event in ANY execution seed, and take the
+    exact Clopper-Pearson upper limit on that task-level proportion. Since
+    Pr(event on a random seed) <= Pr(event in some seed), this upper-bounds the
+    rate we report, and it is conservative with respect to within-task
+    correlation rather than assuming seeds are independent. At k = 0 it reduces
+    to 1 - alpha^(1/n), the rule of three.
+    """
     if not per_task_vals:
         return float("nan")
-    rng = random.Random(seed)
     n = len(per_task_vals)
-    boots = sorted(sum(per_task_vals[rng.randrange(n)] for _ in range(n)) / n
-                   for _ in range(NB))
-    return boots[int(0.95 * NB)]
+    k = sum(1 for v in per_task_vals if v > 0.0)
+    if k >= n:
+        return 1.0
+    return _beta_quantile(1.0 - alpha, k + 1, n - k)
+
+
+def _beta_quantile(q, a, b, tol=1e-13):
+    """Inverse regularised incomplete beta, by bisection (no SciPy dependency)."""
+    lo, hi = 0.0, 1.0
+    for _ in range(200):
+        mid = (lo + hi) / 2.0
+        if _betainc(mid, a, b) < q:
+            lo = mid
+        else:
+            hi = mid
+        if hi - lo < tol:
+            break
+    return (lo + hi) / 2.0
+
+
+def _betainc(x, a, b):
+    """Regularised incomplete beta I_x(a, b) via its continued fraction."""
+    if x <= 0.0:
+        return 0.0
+    if x >= 1.0:
+        return 1.0
+    if x > (a + 1.0) / (a + b + 2.0):
+        return 1.0 - _betainc(1.0 - x, b, a)
+    lbeta = math.lgamma(a) + math.lgamma(b) - math.lgamma(a + b)
+    front = math.exp(math.log(x) * a + math.log1p(-x) * b - lbeta) / a
+    f, c, d = 1.0, 1.0, 0.0
+    for i in range(400):
+        m = i // 2
+        if i == 0:
+            num = 1.0
+        elif i % 2 == 0:
+            num = (m * (b - m) * x) / ((a + 2 * m - 1) * (a + 2 * m))
+        else:
+            num = -((a + m) * (a + b + m) * x) / ((a + 2 * m) * (a + 2 * m + 1))
+        d = 1.0 + num * d
+        d = 1e-30 if abs(d) < 1e-30 else 1.0 / d
+        c = 1.0 + num / (1e-30 if abs(c) < 1e-30 else c)
+        f *= c * d
+        if abs(1.0 - c * d) < 1e-15:
+            break
+    return front * (f - 1.0)
 
 
 def measure(struct, base, tag="envelope_test"):
@@ -72,9 +126,9 @@ def measure(struct, base, tag="envelope_test"):
     return {
         "n_tasks": len(rej),
         "reject": sum(rej) / len(rej),
-        "reject_ub": cluster_boot_upper(rej),
+        "reject_ub": cluster_upper(rej),
         "breakage": sum(brk) / len(brk),
-        "breakage_ub": cluster_boot_upper(brk),
+        "breakage_ub": cluster_upper(brk),
     }
 
 
@@ -141,3 +195,20 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def latex_table():
+    """The decision-relevant table: how many baseline-correct tasks each
+    estimate rests on, the verifier's false-rejection rate, observed breakage,
+    its upper confidence bound, and the slack the bound leaves."""
+    rows = []
+    for name, st, ba, tag in CONDS:
+        m = measure(st, ba, tag)
+        if m:
+            rows.append((name, m))
+    rows.sort(key=lambda r: r[1]["reject"])
+    print("\n% --- LaTeX table ---")
+    for name, m in rows:
+        slack = m["reject"] - m["breakage"]
+        print(f"{name} & {m['n_tasks']} & ${m['reject']:.3f}$ & ${m['reject_ub']:.3f}$ "
+              f"& ${m['breakage']:.3f}$ & ${slack:.3f}$ \\\\")

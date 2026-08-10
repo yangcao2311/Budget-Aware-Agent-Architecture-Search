@@ -1,0 +1,17 @@
+{
+  "run": "kimi_envelope_test/incumbent_refine_cot_math_loose",
+  "seed": 1,
+  "n": 150,
+  "success_rate": 0.5333,
+  "usd_per_task": 0.00854,
+  "usd_per_success": 0.01601,
+  "llm_calls_per_task": 1.2,
+  "tokens_per_task": 1021.6,
+  "p50_sec": 68.4,
+  "p95_sec": 889.03,
+  "total_usd": 1.2806,
+  "wall_min": 124.0,
+  "reserve_rejected": 29,
+  "over_budget": 0,
+  "errors": 53
+}

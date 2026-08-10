@@ -1,0 +1,17 @@
+{
+  "run": "provenance_causal/arm3_diffpolicy_math_loose",
+  "seed": 2,
+  "n": 150,
+  "success_rate": 0.86,
+  "usd_per_task": 0.01661,
+  "usd_per_success": 0.01931,
+  "llm_calls_per_task": 2.33,
+  "tokens_per_task": 1948.7,
+  "p50_sec": 11.05,
+  "p95_sec": 25.61,
+  "total_usd": 2.4914,
+  "wall_min": 5.7,
+  "reserve_rejected": 23,
+  "over_budget": 0,
+  "errors": 0
+}

@@ -113,31 +113,87 @@ def math_equal(pred: str | None, gold: str) -> bool:
     return _symbolic_equal(p, g)
 
 
+def _symbolic_compute(p: str, g: str, conn) -> None:
+    try:
+        from sympy.parsing.latex import parse_latex
+        import sympy
+        conn.send(bool(sympy.simplify(parse_latex(p) - parse_latex(g)) == 0))
+    except Exception:
+        conn.send(False)
+    finally:
+        conn.close()
+
+
 def _symbolic_equal(p: str, g: str, timeout_s: int = 5) -> bool:
     """Symbolic fallback with a hard timeout.
 
     sympy.simplify can hang indefinitely on adversarial expressions, so the
-    call runs under SIGALRM and a timeout counts as "not equal" rather than
+    call runs under a timeout and a timeout counts as "not equal" rather than
     blocking the grader. (Found the hard way: an unguarded version stalled a
-    full re-grading pass.)"""
-    import signal
+    full re-grading pass.)
 
-    def _bail(signum, frame):
-        raise TimeoutError
+    History of this function's timeout mechanism, kept because each version
+    fixed a real incident:
+      1. SIGALRM-based. Only works in the main thread of the main
+         interpreter. Every historical call site was single-threaded
+         (apply_regrade.py, or generation runs whose answers never reached
+         this fallback), so it never surfaced -- until protocol.evaluate()'s
+         ThreadPoolExecutor first needed it from a worker thread:
+         signal.signal() raised immediately, discarding the just-generated,
+         just-paid-for solution via the caller's blanket except-and-replace.
+      2. Thread-based (concurrent.futures), one pool per call. Correct, but
+         a fresh ThreadPoolExecutor per call was expensive at regrade-pass
+         volume (thousands of spin-up/tear-downs).
+      3. Thread-based, one shared pool. Fixed the overhead, but exposed the
+         real problem: Python cannot force-kill a thread, so a genuinely
+         hung sympy call leaves its worker permanently occupied. Enough
+         adversarial inputs across a 24k-call regrade pass exhausted the
+         pool and the process never exited (hung at 100% CPU, memory
+         climbing) even though every result had already been computed and
+         written to disk.
+    A subprocess CAN be force-killed, so this now runs the computation in a
+    fresh process and terminates it on timeout -- the resources are always
+    reclaimed, at the cost of one process spawn per fallback call (this path
+    is the minority case; exact and float matches short-circuit before it).
+    """
+    import multiprocessing
 
-    old = signal.signal(signal.SIGALRM, _bail)
-    signal.alarm(timeout_s)
+    global _SYMPY_WARMED
+    if not _SYMPY_WARMED:
+        # fork-mode children inherit the parent's already-imported modules via
+        # copy-on-write, so warming sympy here once makes every subsequent
+        # fork's copy free instead of a few hundred ms of cold import each.
+        try:
+            import sympy  # noqa: F401
+            from sympy.parsing.latex import parse_latex  # noqa: F401
+        except Exception:
+            pass
+        _SYMPY_WARMED = True
+
+    ctx = multiprocessing.get_context("fork")
+    parent_conn, child_conn = ctx.Pipe(duplex=False)
+    proc = ctx.Process(target=_symbolic_compute, args=(p, g, child_conn))
+    proc.start()
+    child_conn.close()
     try:
-        from sympy.parsing.latex import parse_latex
-        import sympy
-        return sympy.simplify(parse_latex(p) - parse_latex(g)) == 0
+        if parent_conn.poll(timeout_s):
+            return parent_conn.recv()
+        return False
     except Exception:
         return False
     finally:
-        signal.alarm(0)
-        signal.signal(signal.SIGALRM, old)
+        if proc.is_alive():
+            proc.terminate()
+            proc.join(1.0)
+            if proc.is_alive():
+                proc.kill()
+                proc.join()
+        else:
+            proc.join()
+        parent_conn.close()
 
 
+_SYMPY_WARMED = False
 _CHOICE = re.compile(r"\(([A-Z])\)")
 
 

@@ -1,0 +1,58 @@
+{
+  "code, loose": {
+    "tasks": 150,
+    "pairs": 900,
+    "identical": 0.44666666666666666,
+    "n_ref_correct": 654,
+    "leak": 0.012232415902140673
+  },
+  "code, tight": {
+    "tasks": 150,
+    "pairs": 900,
+    "identical": 0.44666666666666666,
+    "n_ref_correct": 654,
+    "leak": 0.012232415902140673
+  },
+  "math, loose": {
+    "tasks": 150,
+    "pairs": 900,
+    "identical": 0.1111111111111111,
+    "n_ref_correct": 660,
+    "leak": 0.05757575757575758
+  },
+  "math, tight": {
+    "tasks": 150,
+    "pairs": 900,
+    "identical": 0.1111111111111111,
+    "n_ref_correct": 660,
+    "leak": 0.05757575757575758
+  },
+  "BBH, loose": {
+    "tasks": 120,
+    "pairs": 720,
+    "identical": 0.06111111111111111,
+    "n_ref_correct": 662,
+    "leak": 0.03323262839879154
+  },
+  "BBH, tight": {
+    "tasks": 120,
+    "pairs": 720,
+    "identical": 0.06111111111111111,
+    "n_ref_correct": 662,
+    "leak": 0.03323262839879154
+  },
+  "code OOD": {
+    "tasks": 100,
+    "pairs": 600,
+    "identical": 0.56,
+    "n_ref_correct": 536,
+    "leak": 0.007462686567164179
+  },
+  "math OOD": {
+    "tasks": 100,
+    "pairs": 600,
+    "identical": 0.0,
+    "n_ref_correct": 232,
+    "leak": 0.1724137931034483
+  }
+}

@@ -11,7 +11,8 @@ from __future__ import annotations
 
 from .prompts import PROMPTS
 
-NODE_TYPES = {"generate", "refine", "vote", "verify", "decompose", "aggregate", "branch"}
+NODE_TYPES = {"generate", "refine", "vote", "verify", "decompose", "aggregate",
+              "branch", "assign"}
 MAX_NODES = 8
 MAX_LOOPS = 2
 MAX_LOOP_ITER = 3
@@ -248,6 +249,32 @@ def wf_incumbent_refine() -> dict:
         ],
         "edges": [
             {"from": "g", "to": "v"},
+            {"from": "v", "to": "END", "cond": "verify_passed"},
+            {"from": "v", "to": "r", "cond": "verify_failed"},
+            {"from": "r", "to": "v", "loop": True, "max_iter": 3},
+        ],
+    }
+
+
+def wf_assign_refine() -> dict:
+    """Provenance causal-test arm 1: explicit reuse of the reference's stored
+    output. Same verify/refine downstream as wf_incumbent_refine, but the
+    incumbent is injected directly via an `assign` node (task["_assign_solution"],
+    zero cost, no LLM call) rather than reached through a generate call that
+    happens to resolve to the same cache entry. I = B by construction, not by
+    coincidence. Added post-freeze, exploratory (not a preregistered claim):
+    this and wf_assign_refine's sibling arms (regenerate same policy,
+    regenerate different policy, both run with caching disabled) are the
+    three-arm provenance isolation the Limitations section asks for."""
+    return {
+        "nodes": [
+            {"id": "a", "type": "assign"},
+            {"id": "v", "type": "verify"},
+            {"id": "r", "type": "refine", "prompt_id": "refine_from_feedback",
+             "params": {"temperature": 0.7, "max_output_tokens": 1536}},
+        ],
+        "edges": [
+            {"from": "a", "to": "v"},
             {"from": "v", "to": "END", "cond": "verify_passed"},
             {"from": "v", "to": "r", "cond": "verify_failed"},
             {"from": "r", "to": "v", "loop": True, "max_iter": 3},

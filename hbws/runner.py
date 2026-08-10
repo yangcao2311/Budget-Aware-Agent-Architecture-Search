@@ -46,7 +46,16 @@ class WorkflowRun:
     def _exec_node(self, node: dict):
         t, fam, task_text = node["type"], self.task["family"], self.task["prompt"]
         params = node.get("params", {})
-        if t in ("generate", "decompose"):
+        if t == "assign":
+            # Zero-cost node added for the provenance causal test (arm 1:
+            # explicit reuse of the reference's stored output). Not part of
+            # any preregistered structure; the literal text is supplied per
+            # task via task["_assign_solution"] by the calling driver, not by
+            # any LLM call, so I = B by direct assignment rather than by cache
+            # coincidence.
+            self.state["solution"] = self.task["_assign_solution"]
+            self.state["verify_passed"] = None
+        elif t in ("generate", "decompose"):
             self.state["solution"] = self._chat(
                 render(node["prompt_id"], fam, task_text), params)
             self.state["verify_passed"] = None

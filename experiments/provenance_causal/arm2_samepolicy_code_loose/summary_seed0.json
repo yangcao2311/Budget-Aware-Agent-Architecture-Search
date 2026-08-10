@@ -1,0 +1,17 @@
+{
+  "run": "provenance_causal/arm2_samepolicy_code_loose",
+  "seed": 0,
+  "n": 150,
+  "success_rate": 0.7533,
+  "usd_per_task": 0.00317,
+  "usd_per_success": 0.00421,
+  "llm_calls_per_task": 1.47,
+  "tokens_per_task": 512.8,
+  "p50_sec": 1.72,
+  "p95_sec": 9.98,
+  "total_usd": 0.4753,
+  "wall_min": 2.8,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

@@ -1,7 +1,16 @@
-"""Azure GPT-4o client with retries, sqlite response cache, and ledger hooks.
+"""LLM client with retries, sqlite response cache, and ledger hooks.
 
 Cache is keyed on (model, messages, params). It is ON during search and MUST
 be OFF for final test runs (protocol §5.3): pass use_cache=False.
+
+Provider selection:
+  - LLM_PROVIDER=<NAME> selects <NAME>_API_KEY / <NAME>_BASE_URL / <NAME>_MODEL
+    (e.g. LLM_PROVIDER=kimi -> KIMI_API_KEY, KIMI_BASE_URL, KIMI_MODEL). Lets
+    separate model campaigns (e.g. a GPT-4o run and a Kimi run) live in the
+    same .env without hand-editing keys between runs.
+  - Unset LLM_PROVIDER falls back to the original two-provider behavior:
+    CHATANYWHERE_API_KEY (OpenAI-compatible proxy) if present, else
+    AZURE_OPENAI_KEY (the original Azure deployment).
 """
 from __future__ import annotations
 
@@ -13,7 +22,7 @@ import threading
 import time
 from pathlib import Path
 
-from openai import AzureOpenAI, APIError, APITimeoutError, RateLimitError
+from openai import AzureOpenAI, OpenAI, APIError, APITimeoutError, RateLimitError
 
 from .ledger import ReserveRejected, TaskLedger, llm_call_vec
 
@@ -30,15 +39,44 @@ def _load_env():
                 os.environ.setdefault(k.strip(), v.strip())
 
 
-def _client() -> AzureOpenAI:
+def _provider_prefix() -> str | None:
+    name = os.environ.get("LLM_PROVIDER")
+    return name.upper() if name else None
+
+
+def _model_name() -> str:
+    _load_env()
+    prefix = _provider_prefix()
+    if prefix and os.environ.get(f"{prefix}_MODEL"):
+        return os.environ[f"{prefix}_MODEL"]
+    return (os.environ.get("CHATANYWHERE_MODEL")
+            or os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-4o"))
+
+
+def _client():
     if getattr(_local, "client", None) is None:
         _load_env()
-        _local.client = AzureOpenAI(
-            api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-            azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-            api_key=os.environ["AZURE_OPENAI_KEY"],
-            timeout=90.0,
-        )
+        prefix = _provider_prefix()
+        if prefix and os.environ.get(f"{prefix}_API_KEY"):
+            _local.client = OpenAI(
+                api_key=os.environ[f"{prefix}_API_KEY"],
+                base_url=os.environ[f"{prefix}_BASE_URL"],
+                timeout=90.0,
+            )
+        elif os.environ.get("CHATANYWHERE_API_KEY"):
+            _local.client = OpenAI(
+                api_key=os.environ["CHATANYWHERE_API_KEY"],
+                base_url=os.environ.get(
+                    "CHATANYWHERE_BASE_URL", "https://api.chatanywhere.tech/v1"),
+                timeout=90.0,
+            )
+        else:
+            _local.client = AzureOpenAI(
+                api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+                azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+                api_key=os.environ["AZURE_OPENAI_KEY"],
+                timeout=90.0,
+            )
     return _local.client
 
 
@@ -70,8 +108,7 @@ def _encoder():
     if getattr(_local, "enc", None) is None:
         import tiktoken
         try:
-            _local.enc = tiktoken.encoding_for_model(
-                os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-4o"))
+            _local.enc = tiktoken.encoding_for_model(_model_name())
         except KeyError:
             _local.enc = tiktoken.get_encoding("o200k_base")
     return _local.enc
@@ -84,10 +121,21 @@ def estimate_in_tokens(messages: list[dict]) -> int:
     A char/3 heuristic was used first and UNDER-estimated punctuation-heavy
     code by ~55% (71 chars -> 36 real tokens vs 23 estimated), producing 124
     settle-overruns that were wrongly scored as infeasible candidates.
+
+    Non-default providers add a fixed buffer on top: measured directly against
+    tokenrouter.com's Kimi K3 endpoint, a one-token message ("pong") billed
+    prompt_tokens=90 -- a near-constant server-side overhead (likely an
+    injected system prompt we cannot see or account for by encoding our own
+    message text), not proportional to content length, so scaling the
+    tiktoken estimate cannot fix it. o200k_base is also not Kimi's real
+    tokenizer, so the content-based estimate is separately approximate.
     """
     enc = _encoder()
     n = sum(len(enc.encode(m.get("content", ""))) + 4 for m in messages) + 3
-    return int(n * 1.05) + 16
+    est = int(n * 1.05) + 16
+    if _provider_prefix():
+        est += 150
+    return est
 
 
 def chat(messages: list[dict], ledger: TaskLedger, *,
@@ -100,7 +148,7 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
     a task error. Cached hits still reserve and settle: they count against
     the task budget; caching only saves real dollars during search.
     """
-    deployment = os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-4o")
+    deployment = _model_name()
     params = {"temperature": temperature, "max_tokens": max_tokens, "seed": seed}
     key = hashlib.sha256(json.dumps(
         [deployment, messages, params], sort_keys=True).encode()).hexdigest()

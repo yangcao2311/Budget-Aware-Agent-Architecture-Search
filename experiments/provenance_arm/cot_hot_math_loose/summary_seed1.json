@@ -1,0 +1,17 @@
+{
+  "run": "provenance_arm/cot_hot_math_loose",
+  "seed": 1,
+  "n": 150,
+  "success_rate": 0.78,
+  "usd_per_task": 0.0058,
+  "usd_per_success": 0.00744,
+  "llm_calls_per_task": 0.83,
+  "tokens_per_task": 634.6,
+  "p50_sec": 4.13,
+  "p95_sec": 7.52,
+  "total_usd": 0.8701,
+  "wall_min": 1.6,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 25
+}

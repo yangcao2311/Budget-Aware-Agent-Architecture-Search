@@ -176,6 +176,110 @@ def main():
         return sum(B.values()) / len(B)
     checks.append(check("Tab3 caption p=0.919", 0.919, 0.002, p_tight))
 
+    # --- Table 1 (tab:frr): every cell recomputed from false_rejection.py ---
+    import false_rejection as FR
+
+    TAB_FRR = {
+        # name: (n tasks, FRR, FRR 95% UCB, breakage, slack)
+        "math, self-check, tight":   (100, 0.000, 0.030, 0.000, 0.000),
+        "code, oracle tests, loose": (107, 0.009, 0.044, 0.000, 0.009),
+        "code, oracle tests, tight": (107, 0.009, 0.044, 0.000, 0.009),
+        "math, self-check, loose":   (100, 0.013, 0.062, 0.000, 0.013),
+        "BBH, self-check, loose":    (104, 0.019, 0.111, 0.006, 0.013),
+        "code OOD, tests restored":  (62,  0.048, 0.120, 0.000, 0.048),
+        "math OOD, self-check":      (27,  0.049, 0.263, 0.025, 0.025),
+        "code, 50% tests, loose":    (107, 0.156, 0.370, 0.146, 0.009),
+        "code, NO tests, loose":     (107, 1.000, 1.000, 0.234, 0.766),
+        "code OOD, NO tests":        (88,  1.000, 1.000, 0.114, 0.886),
+    }
+    got = {name: FR.measure(st, ba, tag) for name, st, ba, tag in FR.CONDS}
+    for name, (n_t, frr, frr_ub, brk, slack) in TAB_FRR.items():
+        m = got.get(name)
+        if m is None:
+            checks.append((f"Tab1 {name}", 0.0, "absent", "MISSING"))
+            continue
+        checks.append(check(f"Tab1 {name} n", n_t, 0.5, lambda m=m: m["n_tasks"]))
+        checks.append(check(f"Tab1 {name} FRR", frr, 0.001, lambda m=m: m["reject"]))
+        checks.append(check(f"Tab1 {name} FRR UCB", frr_ub, 0.001, lambda m=m: m["reject_ub"]))
+        checks.append(check(f"Tab1 {name} breakage", brk, 0.001, lambda m=m: m["breakage"]))
+        checks.append(check(f"Tab1 {name} slack", slack, 0.001,
+                            lambda m=m: m["reject"] - m["breakage"]))
+
+    # the breakage UCB quoted in the mechanism paragraph (zero events, n=107)
+    checks.append(check("code/loose breakage UCB", 0.028, 0.001,
+                        lambda: got["code, oracle tests, loose"]["breakage_ub"]))
+
+
+    # --- regeneration-leak quasi-experiment (Table regenleak, appendix) ---
+    import regen_leak as RL
+
+    TAB_REGEN = {
+        "code":     (111, 0.447, 0.027, 0.613),
+        "math":     (119, 0.111, 0.113, 0.417),
+        "BBH":      (115, 0.061, 0.061, 0.600),
+        "code OOD": (90,  0.560, 0.011, 0.000),
+        "math OOD": (47,  0.000, 0.266, 0.138),
+    }
+    regen_rows = {}
+    for label, tag, base, arm in RL.DOMAINS:
+        runs = RL.load_solutions(tag, base)
+        vals, n_pairs, identical = RL.per_task_leak(runs)
+        point, lo, hi = RL.cluster_ci(vals)
+        acc_rate, acc_n = RL.accept_given_incumbent_wrong(tag, arm, base)
+        regen_rows[label] = dict(n=len(vals), identical=identical / n_pairs if n_pairs else float("nan"),
+                                  leak=point, accept=acc_rate)
+    for name, (n_t, ident, leak, acc) in TAB_REGEN.items():
+        r = regen_rows.get(name)
+        if r is None:
+            checks.append((f"Regen {name}", 0.0, "absent", "MISSING"))
+            continue
+        checks.append(check(f"Regen {name} n", n_t, 0.5, lambda r=r: r["n"]))
+        checks.append(check(f"Regen {name} identical", ident, 0.001, lambda r=r: r["identical"]))
+        checks.append(check(f"Regen {name} leak", leak, 0.001, lambda r=r: r["leak"]))
+        checks.append(check(f"Regen {name} accept|Iwrong", acc, 0.001, lambda r=r: r["accept"]))
+
+    # combined accepting-path exposure quoted in main text and appendix
+    checks.append(check("Regen code leak*accept", 0.017, 0.001,
+                        lambda: regen_rows["code"]["leak"] * regen_rows["code"]["accept"]))
+    checks.append(check("Regen math leak*accept", 0.047, 0.001,
+                        lambda: regen_rows["math"]["leak"] * regen_rows["math"]["accept"]))
+
+    # --- Table (tab:armc): arm C accepting-path exposure ---
+    import subprocess, sys as _sys
+    r = subprocess.run([_sys.executable, "scripts/provenance_arm_c_leak.py"],
+                        cwd=str(ROOT), capture_output=True, text=True)
+    out = r.stdout
+    def _grab(pattern):
+        import re
+        m = re.search(pattern, out)
+        return float(m.group(1)) if m else None
+
+    code_leak = _grab(r"code\s*: baseline-correct n=\s*\d+\s*leak=([\d.]+)")
+    math_leak = _grab(r"math\s*: baseline-correct n=\s*\d+\s*leak=([\d.]+)")
+    code_accept = _grab(r"accept\|I wrong \(oracle feedback tests, zero-cost\) = ([\d.]+)")
+    checks.append(check("TabArmC code leak", 0.224, 0.001, lambda: code_leak))
+    checks.append(check("TabArmC math leak", 0.053, 0.001, lambda: math_leak))
+    checks.append(check("TabArmC code accept|I wrong", 0.490, 0.001, lambda: code_accept))
+    checks.append(check("TabArmC code leak*accept", 0.110, 0.001,
+                        lambda: (code_leak or 0) * (code_accept or 0)))
+
+    # --- Three-arm provenance causal test (§theory + Limitations) ---
+    import subprocess as _sp, sys as _sys2
+    r = _sp.run([_sys2.executable, "scripts/provenance_causal_analysis.py"],
+                cwd=str(ROOT), capture_output=True, text=True)
+    out = r.stdout
+    import re as _re
+    CAUSAL = {
+        "code_arm1_assign": 0.000, "code_arm2_samepolicy": 0.028, "code_arm3_diffpolicy": 0.109,
+        "math_arm1_assign": 0.003, "math_arm2_samepolicy": 0.027, "math_arm3_diffpolicy": 0.017,
+    }
+    # Parse the printed breakage values in order (fam blocks, 3 arms each)
+    vals = [float(x) for x in _re.findall(r"breakage=([\d.]+)", out)]
+    keys = list(CAUSAL)
+    for key, v in zip(keys, vals):
+        claimed = CAUSAL[key]
+        checks.append(check(f"Causal {key}", claimed, 0.001, lambda v=v: v))
+
     # --- report ---
     bad = [c for c in checks if c[3] != "OK"]
     print(f"{'claim':44s}{'paper':>10s}{'recomputed':>12s}  verdict")
