@@ -6,11 +6,6 @@ __pycache__/
 data/raw/
 experiments/*/traces/
 cache.sqlite
-paper/main.aux
-paper/main.log
-paper/main.out
-paper/main.blg
-paper/main.bcf
-paper/main.run.xml
+paper/
 experiments/_kimi_retry/
 experiments/_kimi_smoke_test/
