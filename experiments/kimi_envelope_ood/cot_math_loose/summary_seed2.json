@@ -1,0 +1,17 @@
+{
+  "run": "kimi_envelope_ood/cot_math_loose",
+  "seed": 2,
+  "n": 100,
+  "success_rate": 0.43,
+  "usd_per_task": 0.01255,
+  "usd_per_success": 0.02918,
+  "llm_calls_per_task": 1.0,
+  "tokens_per_task": 1400.0,
+  "p50_sec": 0.0,
+  "p95_sec": 78.79,
+  "total_usd": 1.2546,
+  "wall_min": 4.5,
+  "reserve_rejected": 0,
+  "over_budget": 0,
+  "errors": 0
+}

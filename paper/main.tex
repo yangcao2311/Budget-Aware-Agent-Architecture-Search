@@ -16,7 +16,7 @@
 \definecolor{breakorange}{HTML}{eb6834}
 \definecolor{inkgrey}{HTML}{52514e}
 
-\title{Reference-Preserving Verification \\ Under Hard Inference Budgets}
+\title{Repair, Breakage, and Reference Preservation \\ in Verify--Refine Workflows}
 
 \author{Anonymous authors\\Paper under double-blind review}
 
@@ -42,11 +42,11 @@ ten verifier and domain conditions under a reservation ledger that enforces
 per-instance caps before each call is issued, observed breakage stays under this
 bound while its slack ranges from nothing to a factor of four, and removing the
 verifier's information raises breakage from $0.140$ to $0.234$ at a cost of
-$11.8$ accuracy points. The bound was identified through a post-hoc
-implementation audit and subsequently stress-tested across preregistered and
-prospectively locked conditions. Results come from a single model deployment and
-a restricted class of verify--refine workflows; complete logs, the ledger and
-the preregistration outcome record are released.
+$11.8$ accuracy points. The bound was identified post hoc and then
+stress-tested across preregistered and prospectively locked conditions.
+Results come from a single model deployment and a restricted class of
+verify--refine workflows; complete logs, the ledger and the preregistration
+record are released.
 \end{abstract}
 
 \begin{figure}[!ht]
@@ -147,17 +147,28 @@ out-of-domain split had been built without visible tests, so it varied domain
 and verifier availability at once. An automated audit recomputes every numeric
 claim in this paper from raw per-task logs.
 
-Three contributions follow, stated at their real size. First, a \emph{diagnostic}:
-repair and breakage are an exhaustive accounting of how a workflow changes binary
-task accuracy, and reporting both costs nothing extra for anyone already running
-such a comparison. Second, a \emph{safety condition}: for workflows that retain
-the reference system's actual output and modify it only after verifier
-rejection, breakage is bounded above by the verifier's false-rejection rate on
-reference-correct outputs. This is an inclusion argument rather than a theorem
-with independent force, but it turns a design question into a measurable one.
-Third, an \emph{empirical characterisation}: we measure repair, breakage and
-their verifier dependence under reservation-enforced per-instance budgets across
-code, mathematics and logic tasks.
+Three contributions follow, stated at their real size. First, the finding a
+gate alone does not deliver: \emph{whose answer} a verifier protects, not
+merely whether one gates a refiner, determines whether a regression is
+possible at all. For workflows that retain the reference system's actual
+output and modify it only after verifier rejection, breakage is bounded above
+by the verifier's false-rejection rate on reference-correct outputs --- an
+inclusion argument rather than a theorem with independent force, but one that
+turns a design question into a measurable, pre-deployment check. Second, the
+accounting language that makes this precise: repair and breakage are an
+exhaustive decomposition of how a workflow changes binary task accuracy, and
+reporting both costs nothing extra for anyone already running such a
+comparison. Third, an \emph{empirical characterisation}: we measure repair,
+breakage and their verifier dependence under reservation-enforced
+per-instance budgets across code, mathematics and logic tasks. This paper does
+not resolve which inference strategy is best at matched cost; it resolves an
+orthogonal, necessary question --- how a candidate workflow changes
+baseline-correct and baseline-wrong instances, and whether the regression risk
+can be bounded before deployment. An equal-cost comparison decides whether to
+adopt a workflow; the diagnostic and certificate here decide how to evaluate
+and safely adopt one. \S\ref{sec:threesample} reports a post-hoc
+cost-and-accuracy comparison against a sampling baseline built at no new cost,
+though not one we call matched.
 
 \section{Background and related work}
 
@@ -175,18 +186,15 @@ measure what it costs: $-11.8$ points when the verifier is stripped of
 information, with breakage rising from $0.140$ to $0.234$.
 
 \paragraph{Automated workflow design.} A body of work searches over agent
-structures rather than fixing them by hand. GPTSwarm \citep{zhuge2024gptswarm}
-represents agents as optimisable graphs and jointly tunes node prompts and
-edges; ADAS \citep{hu2024adas} has a meta-agent write agent code; AFlow
-\citep{zhang2025aflow} searches code-level workflows with tree search;
-AgentSquare \citep{shang2024agentsquare} searches a modular design space; EvoFlow
-\citep{zhang2025evoflow} evolves a population of heterogeneous workflows under
-cost and accuracy objectives; EvoAgentX \citep{wang2025evoagentx} packages
-several such optimisers. These methods optimise \emph{within} a design space.
-Our question is prior to it: what determines whether any structure in such a
-space is worth its cost, and why careful comparisons disagree. Our searcher is
-deliberately ordinary, because its role here is falsification rather than
-performance.
+structures rather than fixing them by hand: GPTSwarm \citep{zhuge2024gptswarm}
+optimises agent graphs jointly over prompts and edges; ADAS \citep{hu2024adas}
+has a meta-agent write agent code; AFlow \citep{zhang2025aflow} searches
+code-level workflows by tree search; AgentSquare \citep{shang2024agentsquare}
+searches a modular design space; EvoFlow \citep{zhang2025evoflow} evolves
+heterogeneous workflows under cost and accuracy objectives; EvoAgentX
+\citep{wang2025evoagentx} packages several such optimisers. These optimise
+\emph{within} a design space; our question is prior to it, what determines
+whether any structure in such a space is worth its cost.
 
 \paragraph{Budget-aware inference.} \citet{li2026bavt} condition inference-tree
 node selection on the remaining-resource ratio, and \citet{agentuct2026} make
@@ -540,32 +548,28 @@ happening underneath---in code it repairs a fifth of the baseline's failures and
 destroys a seventh of its successes.
 
 \paragraph{Structure has an entry fee (C2, supported).} At \texttt{tight}, code
-vanilla is $-0.104$ $[-0.162,-0.047]$. Moving from \texttt{loose} to
-\texttt{tight}, repair falls from $0.205$ to $0.162$ while breakage rises from
-$0.140$ to $0.224$: with fewer affordable iterations the loop is likelier to
-leave a task mid-revision, having already discarded a working answer. Both terms move together (Figure~\ref{fig:floor}, Appendix~\ref{app:floor}). The
-mechanism is visible in the ledger: 35 of 150 tasks could not fund a planned
-refinement call, and at the point of refusal the ledger shows three or four
-calls used against a cap of four, with dollars at $\$0.008$ against a cap of
-$\$0.10$. The binding constraints are the call and output-token caps, not
-dollars. Because our profiles move several caps together, this establishes a
-crossover across composite profiles and not an entry fee in a named resource;
-a single-dimension scan is required and we do not have one.
+vanilla is $-0.104$ $[-0.162,-0.047]$. Moving \texttt{loose}$\to$\texttt{tight},
+repair falls $0.205\to0.162$ while breakage rises $0.140\to0.224$: fewer
+affordable iterations make the loop likelier to leave a task mid-revision,
+having already discarded a working answer (Figure~\ref{fig:floor},
+Appendix~\ref{app:floor}). The ledger shows why: 35 of 150 tasks could not fund
+a planned refinement call, refused at three or four of four calls used, dollars
+at $\$0.008$ against a $\$0.10$ cap --- the binding constraints are calls and
+output tokens, not dollars. Since our profiles move several caps together,
+this is a crossover across composite profiles, not a named resource's entry
+fee; a single-dimension scan is required and we do not have one.
 
 \paragraph{Breakage is controlled by the verifier (C3, supported).} Masking
 visible tests at $1.0 \to 0.5 \to 0.0$ moves the code/\texttt{loose} effect
-monotonically: $-0.033$, $-0.033$, $-0.118$ $[-0.178,-0.058]$, with breakage
-climbing from $0.140$ to $0.234$. Masking changes only what the verifier can
-see, so this is a controlled manipulation of the verifier and not of the model,
-the budget or the task set (Figure~\ref{fig:signal},
-Appendix~\ref{app:floor}, left panel). It does not isolate the false-rejection
-rate as \emph{the} operative quantity: removing tests also changes false
-acceptance, how often refinement triggers, and which tasks reach the refiner at
-all. What it establishes is that verifier information is causally upstream of
-both terms in this workflow, not that one summary statistic of the verifier
-mediates the whole effect.
-It also supplies a mechanism for the sceptical literature: refinement without
-external signal does not merely fail to help, it destroys correct work.
+monotonically: $-0.033$, $-0.033$, $-0.118$ $[-0.178,-0.058]$, breakage
+climbing $0.140\to0.234$. Masking changes only what the verifier sees ---a
+controlled manipulation of the verifier, not the model, budget, or task set
+(Figure~\ref{fig:signal}, Appendix~\ref{app:floor}) --- but does not isolate
+false-rejection as \emph{the} operative quantity, since removing tests also
+changes false acceptance and refinement frequency: verifier information is
+causally upstream of both terms, not mediated by one summary statistic. It
+also gives the sceptical literature a mechanism: refinement without external
+signal does not merely fail to help, it destroys correct work.
 
 \paragraph{C4, \textcolor{red}{unsupported as preregistered}.} We registered
 the claim that adding incumbent protection---understood as a structural change,
@@ -577,27 +581,23 @@ about, and we mark C4 unsupported as stated rather than restate it to fit what
 the comparison did manipulate.
 
 \paragraph{What the comparison did manipulate, and a post-hoc proposition.} The
-arms differed in where the incumbent came from (Figure~\ref{fig:mechanism}(b)).
-In the reference-preserving arm the first call is configured exactly as the
-baseline's and, because both resolve to the same cache entry, returns
-byte-identical text: among executions where the verifier accepted, $402/402$ code
-and $396/396$ math outputs match the baseline's. Under that condition
-\eqref{eq:twoterm} gives a proposition we did not preregister and state as
-\emph{post hoc}: if a workflow emits the reference's own output, emits it
-unchanged on acceptance, and reaches a different answer only after rejection,
-then acceptance-path regression is impossible and
-$\brate \le \Pr(R \mid B\text{ correct})$. Consistent with it, no breakage event
-occurs in any of the six reference-preserving cells; at code/\texttt{loose} a
-one-sided $95\%$ Clopper--Pearson upper bound over $107$ baseline-correct tasks
-is $0.028$, against a measured false-rejection rate of $0.009$ --- zero observed
-events do not certify a rate below the rule of three, and we report the bound
-rather than the zero. Two cautions. $I=B$ held here because shared
-caching instantiated exact reference reuse; the condition the guarantee depends
-on is $I=B$ itself, not caching, and a production system should implement the
-same semantics by assigning the stored reference output directly rather than
-relying on a cache to deliver it. Second, a proposition formed after seeing the data
-cannot be confirmed by the runs that motivated it --- which is why we then ran it
-as a controlled experiment, below.
+arms differed in where the incumbent came from (Figure~\ref{fig:mechanism}(b)):
+in the reference-preserving arm the first call, configured exactly as the
+baseline's, resolves to the same cache entry and returns byte-identical text
+($402/402$ code and $396/396$ math outputs match, among verifier-accepted
+executions). Under that condition \eqref{eq:twoterm} gives a proposition we
+state as \emph{post hoc}: if a workflow emits the reference's own output
+unchanged on acceptance and reaches a different answer only after rejection,
+acceptance-path regression is impossible and
+$\brate \le \Pr(R \mid B\text{ correct})$. Consistent with it, no breakage
+occurs in any reference-preserving cell; at code/\texttt{loose} a $95\%$
+Clopper--Pearson upper bound over $107$ tasks is $0.028$ against a measured
+rate of $0.009$ (zero events do not certify below the rule of three). Two
+cautions: $I=B$ held via caching, not by design, and the guarantee depends on
+$I=B$ itself, so production systems should assign the stored output directly;
+and a proposition formed after seeing the data cannot be confirmed by the runs
+that motivated it --- which is why we then ran it as a controlled experiment,
+below.
 
 \paragraph{The three-arm causal test.} Three arms, identical downstream
 structure, differing \emph{only} in draft provenance, cross-arm caching off:
@@ -622,20 +622,56 @@ whose estimate ($0.110$) lands almost exactly on this test's directly observed
 figure ($0.109$).
 
 \paragraph{Repair is not bounded by verifier type (C5,
-\textcolor{red}{refuted}).} We predicted that oracle-verified repair would
-strictly exceed non-oracle repair, with the math interval containing zero.
-Observed: code repair $0.060$ $[0.000,0.137]$, math repair $0.032$
-$[0.000,0.075]$ --- intervals that overlap substantially. Gold-free self-checking
-produces real repair, and we make no claim beyond these intervals.
+\textcolor{red}{refuted}).} We predicted oracle-verified repair would strictly
+exceed non-oracle repair, math's interval containing zero. Observed: code
+$0.060$ $[0.000,0.137]$, math $0.032$ $[0.000,0.075]$ --- overlapping
+substantially. Gold-free self-checking produces real repair; we claim no more.
 
-\paragraph{A restricted search over our own design space.} We also asked whether
-a search procedure, given a design space we specified in advance and no access to
-the derivation above, prefers related gated structures. The outcome is mixed and
-we report it in Appendix~\ref{app:searchdetail} rather than here: every candidate
-in the space already carries a verifier gate, and the space does not contain the
-choice \eqref{eq:twoterm} identifies as operative --- whether to reuse a stored
-reference output --- so we do not treat the result as evidence for the mechanism.
-Of five preregistered claims, three fail.
+\paragraph{A restricted search over our own design space.} A search space
+specified in advance never tests reuse of a stored reference output, so we do
+not read its outcome --- three of five preregistered claims fail --- as
+mechanism evidence; full results in Appendix~\ref{app:searchdetail}.
+
+\section{Post-hoc comparison with three-sample alternatives}
+\label{sec:threesample}
+
+Not preregistered: added after review, using data already on disk rather than
+new inference. Each frozen-test task was already drafted independently three
+times to compute the seed-averaged baseline --- a $k=3$ pool at no additional
+cost. We build one selection per task by a rule fixed in advance and specific
+to each domain, not one method under two names: for math,
+\emph{self-consistency majority voting} over the three normalized answers,
+ties broken by seed index; for code, \emph{visible-test-filtered selection}
+--- the lowest-indexed draft passing the visible feedback tests (fallback seed
+$0$), scored against the held-out grading tests. Neither is matched cost:
+three calls run $1.3$--$2\times$ what the protected arm's own logs show it
+spent, since its cheapest path costs nothing.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Reference preservation against the three-sample selection built from
+the same drafts, code and math loose. \$/task is each arm's own logged cost.}
+\label{tab:bestof3}
+\begin{tabular}{lrrr}
+\toprule
+& baseline $p$ & accuracy & \$/task \\
+\midrule
+code, visible-test selection & $0.727$ & $0.733$ & $0.00489$ \\
+code, reference-preserving & $0.727$ & $0.747$ & $0.00251$ \\
+math, self-consistency vote & $0.733$ & $0.753$ & $0.02057$ \\
+math, reference-preserving & $0.733$ & $0.740$ & $0.01532$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Point estimates favor reference preservation in code and three-sample selection
+in math, but a task-paired bootstrap on the difference puts zero inside both
+intervals ($+0.013$ $[-0.007,+0.036]$ code, $-0.013$ $[-0.036,+0.007]$ math)
+--- neither distinguishable from noise here. In code, reference preservation's
+point estimate is higher \emph{and} cheaper; in math, three-sample is higher at
+$34\%$ higher cost; a study powered to resolve this, at independently drawn
+pools, remains open (\S\ref{sec:limitations}).
 
 \section{External validity}
 \label{sec:external}
@@ -681,34 +717,22 @@ a flat list would hide which ones matter.
 
 \subsection*{Bearing on the central mechanism}
 
-\paragraph{No equal-cost sampling baselines.} Our ledger equalises the budget
-\emph{cap}, not realized spend, and the unprotected workflow spends about
-$5.5\times$ the baseline. The practical question is not whether a protected
-workflow beats one call, but why one would spend a budget on verify--refine
-rather than on more candidates and better selection. Best-of-$k$,
-self-consistency, verifier reranking and retry-with-fallback at matched realized
-cost are absent from our experiments, so that question stays open.
+\paragraph{One sampling baseline, not matched, not exhaustive.}
+\S\ref{sec:threesample}'s post-hoc, same-pool comparison is not matched cost
+and not distinguishable from noise at this sample size. Verifier reranking and
+retry-with-fallback are untested; our own ledger equalises the budget
+\emph{cap} rather than realized spend, and the
+unprotected workflow spends $5.5\times$ the baseline. A genuinely matched
+study, with independently drawn pools rather than one pool of three dependent
+seeds, stays open.
 
-\paragraph{One model, given how broadly we frame the problem.} A single
-deployment is an ordinary scope note for a local observation; we open by
-addressing a disagreement in the literature, and against that framing one GPT-4o
-deployment is thin. Both $p$ and $\rrate$ depend on model quality and $\brate$
-plausibly does too, and our transfer tests show the parameters are unstable even
-across domains.
-
-\paragraph{Bearing on scope.} Verification differs in kind across our families
-(unit tests in code, a gold-free self-check in math and logic) and our
-three-way verifier taxonomy stands in for a continuum; the budget floor is a
-crossover across composite profiles, not an identified threshold in a named
-resource, since the dollar cap is not the binding one; and estimating
-$\Pr(R \mid B$ correct$)$ needs the reference's outputs, correctness labels and
-representative data, which is more than ``measure your verifier'' implies.
-Appendix~\ref{app:scopelim} states each in full.
-
-\paragraph{Measurement reliability.} Two implementation defects left traces in
-the released data, response caching coupled two arms, and a 40-task selection
-split cannot resolve the gaps it was asked to; Appendix~\ref{app:reliability}
-quantifies each.
+\paragraph{One model; scope and measurement.} A single deployment is thin
+against the disagreement we open by addressing; $p$, $\rrate$, and plausibly
+$\brate$ depend on model quality, and transfer tests show them unstable across
+domains. A second family, Kimi K3 (Appendix~\ref{app:kimi}), replicates the
+qualitative verifier-sensitivity pattern across all ten conditions, not just
+its magnitudes. The verifier taxonomy, budget floor, and two defects are
+quantified in Appendices~\ref{app:scopelim}--\ref{app:reliability}.
 
 \section{Conclusion}
 
@@ -723,10 +747,12 @@ narrower than the framing that motivates it and, we think, more usable: an
 exhaustive accounting of how a workflow moves accuracy, a condition under which
 one of its two paths provably closes, a measurable quantity that caps the other,
 and a characterisation of how both respond to budget and verifier signal under
-caps that are enforced rather than reported. What remains open is the comparison
-this invites --- whether, at genuinely matched spend, any of it beats sampling more
-and choosing well --- and we have released the ledger, the logs and the
-preregistration record so that comparison can be run against our numbers.
+caps that are enforced rather than reported. A post-hoc, same-pool sampling
+comparison (\S\ref{sec:threesample}) puts zero inside both arms' paired
+accuracy-difference interval, distinguishing neither at this sample size; a
+genuinely matched, adequately powered study, at independently drawn pools,
+remains open, and we have released the ledger, the logs and the
+preregistration record so it can be run against our numbers.
 
 \subsubsection*{Reproducibility statement}
 
@@ -1266,9 +1292,62 @@ estimated from this table at all. Read together with
 Appendix~\ref{app:cacheaudit}'s same-policy result, the two zero-and-low-cost
 arms agree that provenance carries real, non-nominal exposure in code and
 disagree on its direction relative to same-policy noise in math --- which is
-itself informative about how domain-specific this mechanism is, and is exactly
-the kind of question the still-missing three-arm causal test, not a fourth
-reanalysis of existing data, would need to settle.
+itself informative about how domain-specific this mechanism is, and is
+consistent with what the three-arm causal test in \S\ref{sec:theory} finds
+directly: explicit reuse closes the accepting path in both domains, but the
+two regeneration policies order oppositely by domain.
+
+\section{A second model family}
+\label{app:kimi}
+
+Everything above is one model. As a check on whether the qualitative pattern
+--- breakage near zero under a reliable verifier, rising as verifier signal
+degrades --- is specific to GPT-4o, we replicated all ten of
+Table~\ref{tab:frr}'s conditions on Kimi K3, a different model family. An
+initial pass had uneven API call failures ($0$--$56\%$ per cell); a frozen
+backfill protocol (retry only the calls that returned a provider error, same
+model/prompt/temperature/caps/seed, concurrency $2$, fixed backoff, logged
+append-only, never touching an already-completed call) brought every
+condition to $97$--$100\%$ completion, logged in
+PREREGISTRATION.md~\S9. We report all ten, with completion rate, rather than
+filtering by a reliability threshold.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Kimi K3, all ten of Table~\ref{tab:frr}'s conditions. Completion is
+the protected arm's fraction of task$\times$seed calls that returned a model
+response (baseline completion was $\geq99.6\%$ throughout).}
+\label{tab:kimi}
+\begin{tabular}{lrrrrr}
+\toprule
+Condition & $p$(baseline) & repair & breakage & net & completion \\
+\midrule
+code, oracle, loose & $0.771$ & $0.317$ & $0.000$ & $+0.047$ & $100\%$ \\
+code, oracle, tight & $0.773$ & $0.150$ & $0.000$ & $+0.000$ & $99\%$ \\
+math, self-check, loose & $0.807$ & $0.252$ & $0.008$ & $+0.002$ & $100\%$ \\
+math, self-check, tight & $0.804$ & $0.216$ & $0.000$ & $+0.002$ & $98\%$ \\
+BBH, self-check, loose & $0.950$ & $0.095$ & $0.014$ & $-0.017$ & $100\%$ \\
+code OOD, no tests & $0.867$ & $0.383$ & $0.104$ & $-0.087$ & $100\%$ \\
+math OOD, self-check & $0.440$ & $0.186$ & $0.030$ & $-0.010$ & $100\%$ \\
+code OOD, tests restored & $0.926$ & $0.667$ & $0.010$ & $+0.025$ & $100\%$ \\
+code, 50\% tests, loose & $0.773$ & $0.358$ & $0.046$ & $+0.018$ & $100\%$ \\
+code, no tests, loose & $0.773$ & $0.225$ & $0.152$ & $-0.103$ & $97\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The qualitative pattern replicates, cell for cell: breakage is at or near zero
+under oracle tests and under tight self-check ($0.000$, $0.000$, $0.008$,
+$0.000$), rises as visible tests are masked ($0.000\to0.046\to0.152$), peaks
+under the two no-signal conditions ($0.104$, $0.152$), and falls back to
+$0.010$ when signal is restored on the same OOD tasks --- the same ordering
+GPT-4o shows in Table~\ref{tab:frr}, though at different magnitudes (e.g.\
+code/no-tests: $0.152$ here against $0.234$ there). We read this as a
+second-family replication of the qualitative verifier-sensitivity pattern,
+not of the causal test, which we did not rerun on a second model, and not of
+the magnitudes, which our transfer tests (\S\ref{sec:external}) already show
+are not portable even within GPT-4o.
 
 \section{Cost accounting}
 \label{app:cost}

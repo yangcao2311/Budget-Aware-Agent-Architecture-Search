@@ -280,6 +280,110 @@ def main():
         claimed = CAUSAL[key]
         checks.append(check(f"Causal {key}", claimed, 0.001, lambda v=v: v))
 
+    # --- Table (tab:kimi): Kimi K3 cross-model check, low-error cells only ---
+    import json as _json2
+    from pathlib import Path as _P
+    _EXP = ROOT / "experiments"
+
+    def _kimi_repair_breakage(prot_dir, base_dir):
+        def per_task(d):
+            acc = {}
+            for s in (0, 1, 2):
+                fp = _EXP / d / f"results_seed{s}.jsonl"
+                for r in map(_json2.loads, open(fp)):
+                    if r["status"] not in ("completed", "reserve_rejected"):
+                        continue
+                    acc.setdefault(r["task_id"], []).append(
+                        bool(r.get("success_symbolic", r["success"])))
+            return acc
+        P, B = per_task(prot_dir), per_task(base_dir)
+        common = set(P) & set(B)
+        p = sum(sum(v) / len(v) for v in B.values()) / len(B)
+        rep_n = rep_d = brk_n = brk_d = 0
+        for t in common:
+            bv = sum(B[t]) / len(B[t])
+            pv = sum(P[t]) / len(P[t])
+            if bv < 1.0:
+                rep_d += 1; rep_n += pv
+            if bv > 0.0:
+                brk_d += 1
+                if bv == 1.0:
+                    brk_n += (1 - pv)
+        rep = rep_n / rep_d if rep_d else float("nan")
+        brk = brk_n / brk_d if brk_d else float("nan")
+        net = sum(sum(v) / len(v) for v in P.values()) / len(P) - p
+        return p, rep, brk, net
+
+    KIMI = {
+        "code, oracle tests, loose": (
+            "kimi_envelope_test/incumbent_refine_code_loose",
+            "kimi_envelope_test/direct_code_loose", 0.771, 0.317, 0.000, 0.047),
+        "code, oracle tests, tight": (
+            "kimi_envelope_test/incumbent_refine_code_tight",
+            "kimi_envelope_test/direct_code_tight", 0.773, 0.150, 0.000, 0.000),
+        "math, self-check, loose": (
+            "kimi_envelope_test/incumbent_refine_cot_math_loose",
+            "kimi_envelope_test/cot_math_loose", 0.807, 0.252, 0.008, 0.002),
+        "math, self-check, tight": (
+            "kimi_envelope_test/incumbent_refine_cot_math_tight",
+            "kimi_envelope_test/cot_math_tight", 0.804, 0.216, 0.000, 0.002),
+        "BBH, self-check, loose": (
+            "kimi_envelope_logic_prospective/incumbent_refine_logic_loose",
+            "kimi_envelope_logic_prospective/direct_logic_loose", 0.950, 0.095, 0.014, -0.017),
+        "code OOD, no tests": (
+            "kimi_envelope_ood/incumbent_refine_code_loose",
+            "kimi_envelope_ood/direct_code_loose", 0.867, 0.383, 0.104, -0.087),
+        "math OOD, self-check": (
+            "kimi_envelope_ood/incumbent_refine_cot_math_loose",
+            "kimi_envelope_ood/cot_math_loose", 0.440, 0.186, 0.030, -0.010),
+        "code OOD, tests restored": (
+            "kimi_envelope_ood_visible/incumbent_refine_code_loose",
+            "kimi_envelope_ood_visible/direct_code_loose", 0.926, 0.667, 0.010, 0.025),
+        "code, 50% tests, loose": (
+            "kimi_envelope_test_mask0.5_k1/verify_refine_3_code_loose",
+            "kimi_envelope_test_mask0.5_k1/direct_code_loose", 0.773, 0.358, 0.046, 0.018),
+        "code, no tests, loose": (
+            "kimi_envelope_test_mask0.0_k1/verify_refine_3_code_loose",
+            "kimi_envelope_test_mask0.0_k1/direct_code_loose", 0.773, 0.225, 0.152, -0.103),
+    }
+    for name, (prot, base, cp, crep, cbrk, cnet) in KIMI.items():
+        p, rep, brk, net = _kimi_repair_breakage(prot, base)
+        checks.append(check(f"Kimi {name} p", cp, 0.001, lambda p=p: p))
+        checks.append(check(f"Kimi {name} repair", crep, 0.001, lambda rep=rep: rep))
+        checks.append(check(f"Kimi {name} breakage", cbrk, 0.001, lambda brk=brk: brk))
+        checks.append(check(f"Kimi {name} net", cnet, 0.001, lambda net=net: net))
+
+    # --- Table (tab:bestof3): zero-cost three-sample selection vs reference-preserving ---
+    import subprocess as _sp3, sys as _sys3
+    r = _sp3.run([_sys3.executable, "scripts/best_of_3_zero_cost.py"],
+                 cwd=str(ROOT), capture_output=True, text=True)
+    out = r.stdout
+
+    def _block(fam):
+        pat = (fr"{fam} \([^)]+\): n=\d+\s+baseline p=([\d.]+)\s+"
+               fr"three-sample baseline acc=([\d.]+)\s+\[95% CI [\d.]+, [\d.]+\]\s+"
+               fr"reference-preserving acc=([\d.]+)\s+\[95% CI [\d.]+, [\d.]+\]\s+"
+               fr"paired diff \(ref - three-sample\) = ([+-][\d.]+)\s+"
+               fr"\[95% CI ([+-][\d.]+), ([+-][\d.]+)\]")
+        m = re.search(pat, out)
+        return [float(x) for x in m.groups()]
+
+    math_p, math_acc, math_ref, math_diff, math_dlo, math_dhi = _block("math")
+    code_p, code_acc, code_ref, code_diff, code_dlo, code_dhi = _block("code")
+
+    checks.append(check("BestOf3 code p", 0.727, 0.001, lambda: code_p))
+    checks.append(check("BestOf3 code accuracy", 0.733, 0.001, lambda: code_acc))
+    checks.append(check("BestOf3 math p", 0.733, 0.001, lambda: math_p))
+    checks.append(check("BestOf3 math accuracy", 0.753, 0.001, lambda: math_acc))
+    checks.append(check("BestOf3 code reference-preserving accuracy", 0.747, 0.001, lambda: code_ref))
+    checks.append(check("BestOf3 math reference-preserving accuracy", 0.740, 0.001, lambda: math_ref))
+    checks.append(check("BestOf3 code paired diff", 0.013, 0.001, lambda: code_diff))
+    checks.append(check("BestOf3 code paired diff CI lo", -0.007, 0.001, lambda: code_dlo))
+    checks.append(check("BestOf3 code paired diff CI hi", 0.036, 0.001, lambda: code_dhi))
+    checks.append(check("BestOf3 math paired diff", -0.013, 0.001, lambda: math_diff))
+    checks.append(check("BestOf3 math paired diff CI lo", -0.036, 0.001, lambda: math_dlo))
+    checks.append(check("BestOf3 math paired diff CI hi", 0.007, 0.001, lambda: math_dhi))
+
     # --- report ---
     bad = [c for c in checks if c[3] != "OK"]
     print(f"{'claim':44s}{'paper':>10s}{'recomputed':>12s}  verdict")

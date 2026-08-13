@@ -138,16 +138,37 @@ def estimate_in_tokens(messages: list[dict]) -> int:
     return est
 
 
+def _env_backoff_schedule() -> list[float] | None:
+    """LLM_BACKOFF_SCHEDULE='10,30,90' overrides retry sleep times for every
+    call in the process, without touching call sites in runner.py/protocol.py.
+    Unset by default; the Kimi backfill sets it, GPT-4o runs never do."""
+    raw = os.environ.get("LLM_BACKOFF_SCHEDULE")
+    if not raw:
+        return None
+    return [float(x) for x in raw.split(",")]
+
+
 def chat(messages: list[dict], ledger: TaskLedger, *,
          temperature: float = 0.7, max_tokens: int = 1024, seed: int | None = None,
-         use_cache: bool = True, max_retries: int = 5, wall_est: float = 0.0) -> str:
+         use_cache: bool = True, max_retries: int = 5, wall_est: float = 0.0,
+         backoff_schedule: list[float] | None = None) -> str:
     """One chat completion under reserve->call->settle discipline.
 
     Raises ReserveRejected if the worst-case cost cannot be reserved — the
     caller must treat that as a control-flow signal (fallback/END), never as
     a task error. Cached hits still reserve and settle: they count against
     the task budget; caching only saves real dollars during search.
+
+    backoff_schedule overrides the default exponential backoff with a fixed
+    sequence of sleep times (seconds), one per retry, the last value repeated
+    if there are more retries than entries. Used for provider backfill passes
+    (e.g. Kimi K3: 10, 30, 90s, max 3 attempts) where a third-party proxy's
+    rate-limit window is on a different clock than the default schedule was
+    tuned for; the default (uncalled) path is unaffected.
     """
+    env_retries = os.environ.get("LLM_MAX_RETRIES")
+    if env_retries:
+        max_retries = int(env_retries)
     deployment = _model_name()
     params = {"temperature": temperature, "max_tokens": max_tokens, "seed": seed}
     key = hashlib.sha256(json.dumps(
@@ -189,7 +210,12 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
                 return content
             except RETRYABLE as e:
                 last_err = e
-                time.sleep(min(2 ** attempt * 1.5, 30))
+                sched = backoff_schedule or _env_backoff_schedule()
+                if sched:
+                    delay = sched[min(attempt, len(sched) - 1)]
+                else:
+                    delay = min(2 ** attempt * 1.5, 30)
+                time.sleep(delay)
         raise RuntimeError(f"LLM call failed after {max_retries} retries: {last_err}")
     finally:
         if lease is not None:

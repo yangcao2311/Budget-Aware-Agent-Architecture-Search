@@ -326,3 +326,50 @@ baselines, 3 search seeds, $0.15 unseen evaluation.
     protection therefore matters where breakage risk is real, which is a
     boundary we did not anticipate and did not predict.
   - **PV4** was an explicit non-prediction and is not scored.
+
+- **2026-08-13 — Kimi K3 Table-1 replication: backfill protocol frozen after
+  provider-side (429/5xx) failures hit cells unevenly (0-56% of executions),
+  and the wording used to report the surviving conditions is corrected.**
+  Post-hoc addition (§ post-freeze), not a confirmatory claim: the whole
+  Kimi K3 check is directional, exploratory, and was never preregistered.
+  - **Backfill rule, frozen before any further attempt**: retry only
+    task x seed x arm combinations whose prior attempt returned a provider
+    error (never a completed one); identical model, prompt, temperature,
+    token caps, budget tier, and seed; concurrency capped at 2; fixed
+    backoff 10s/30s/90s on 429/5xx, max 3 attempts
+    (`LLM_BACKOFF_SCHEDULE=10,30,90 LLM_MAX_RETRIES=3`, `hbws/llm.py`); every
+    attempt appended to `experiments/kimi_backfill_attempts.jsonl`, which is
+    never truncated; a 20-task smoke test at realistic prompt/output length
+    required before any real backfill (`scripts/kimi_retry_failed.py
+    --smoke-test 20`). Target: near-100% completion per cell, or at minimum
+    back under the <5% provider-failure bar already used to gate which
+    conditions get quoted. If gaps remain, the comparison (not the backfill
+    script) restricts to the matched task x seed intersection across arms
+    and reports both completion rate and $n$.
+  - **Channel status as of this entry**: no funded Kimi K3 route is
+    currently reachable. `api.tokenrouter.com` returns
+    `model_not_found`/`no available channel` for `moonshotai/kimi-k3-free`.
+    `anyrouter.dev` was tried under both `moonshotai/kimi-k3-free` and the
+    catalog-listed `moonshotai/kimi-k3`; the latter's own diagnostic shows
+    four pooled upstreams attempted (`moonshotai-pool`, `nousresearch-pool`,
+    `hue`, `dalat`), all failing (balance-suspended, insufficient credits,
+    free tier unavailable, invalid slug respectively). The backfill has
+    therefore not been run. The paper reports only the five conditions that
+    already cleared the <5% bar in the original run and does not claim the
+    other five were completed.
+  - **Best-of-3 wording correction (same date, same review)**: the earlier
+    draft called the three-sample comparison "matched-realized-cost" and
+    referred to a single "best-of-3" method across both domains. Corrected:
+    neither domain's comparison is matched cost (three-sample selection
+    costs $1.3$-$2\times$ the protected arm's own logged spend); code and
+    math use two different selection procedures (visible-test-filtered
+    selection; self-consistency majority vote) and are named separately;
+    the whole comparison moved out of "Confirmatory experiments" into its
+    own section, "Post-hoc comparison with three-sample alternatives"
+    (`sec:threesample`), since it was added after the simulated review and
+    is not one of the five preregistered Part-I claims. A task-paired
+    bootstrap CI on the accuracy difference was added
+    (`scripts/best_of_3_zero_cost.py`): code $+0.013$ $[-0.007,+0.036]$,
+    math $-0.013$ $[-0.036,+0.007]$ --- zero is inside both intervals, so
+    neither direction is reported as a difference, only as a point estimate
+    with its cost.
