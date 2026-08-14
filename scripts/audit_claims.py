@@ -353,6 +353,69 @@ def main():
         checks.append(check(f"Kimi {name} breakage", cbrk, 0.001, lambda brk=brk: brk))
         checks.append(check(f"Kimi {name} net", cnet, 0.001, lambda net=net: net))
 
+    # --- Kimi effective n / CIs and failure-as-wrong sensitivity ---
+    # These are deliberately recomputed by the standalone zero-cost analysis
+    # script used to generate Table 7 and its sensitivity table.  The primary
+    # view must remain complete-case; the second view scores residual provider
+    # errors as wrong and is reported only as a sensitivity analysis.
+    import kimi_sensitivity as KS
+
+    KIMI_N_EFF = {
+        "code, oracle, loose": 450,
+        "code, oracle, tight": 446,
+        "math, self-check, loose": 450,
+        "math, self-check, tight": 439,
+        "BBH, self-check, loose": 360,
+        "code OOD, no tests": 300,
+        "math OOD, self-check": 300,
+        "code OOD, tests restored": 204,
+        "code, 50% tests, loose": 450,
+        "code, no tests, loose": 438,
+    }
+    # (repair point/lo/hi, breakage point/lo/hi, net point/lo/hi)
+    KIMI_PRIMARY = {
+        "code, oracle, loose": ((.317,.192,.450), (0,0,0), (.047,.024,.073)),
+        "code, oracle, tight": ((.150,.075,.233), (0,0,0), (0,0,0)),
+        "math, self-check, loose": ((.252,.153,.351), (.008,0,.018), (.002,-.011,.016)),
+        "math, self-check, tight": ((.216,.135,.306), (0,0,0), (.002,0,.007)),
+        "BBH, self-check, loose": ((.095,0,.190), (.014,.003,.029), (-.017,-.031,-.006)),
+        "code OOD, no tests": ((.383,.233,.533), (.104,.068,.147), (-.087,-.133,-.040)),
+        "math OOD, self-check": ((.186,.118,.255), (.030,.006,.067), (-.010,-.040,.020)),
+        "code OOD, tests restored": ((.667,.375,.917), (.010,0,.026), (.025,-.010,.064)),
+        "code, 50% tests, loose": ((.358,.233,.483), (.046,.019,.079), (.018,-.020,.056)),
+        "code, no tests, loose": ((.225,.125,.333), (.153,.109,.200), (-.101,-.149,-.053)),
+    }
+    KIMI_FAILURE = {
+        "code, oracle, loose": (450, (.317,.192,.450), (.000,.000,.000), (.047,.024,.073)),
+        "code, oracle, tight": (450, (.150,.075,.233), (.008,.000,.019), (-.007,-.016,.000)),
+        "math, self-check, loose": (450, (.252,.153,.351), (.008,.000,.018), (.002,-.011,.016)),
+        "math, self-check, tight": (450, (.216,.135,.306), (.026,.010,.041), (-.020,-.036,-.007)),
+        "BBH, self-check, loose": (360, (.095,.000,.190), (.014,.003,.029), (-.017,-.031,-.006)),
+        "code OOD, no tests": (300, (.383,.233,.533), (.104,.068,.147), (-.087,-.133,-.040)),
+        "math OOD, self-check": (300, (.186,.118,.255), (.030,.006,.067), (-.010,-.040,.020)),
+        "code OOD, tests restored": (204, (.667,.375,.917), (.010,.000,.026), (.025,-.010,.064)),
+        "code, 50% tests, loose": (450, (.358,.233,.483), (.046,.019,.079), (.018,-.020,.056)),
+        "code, no tests, loose": (450, (.217,.125,.317), (.175,.131,.221), (-.124,-.171,-.080)),
+    }
+    for name, (prot, base) in KS.CONDITIONS.items():
+        m = KS.metrics(prot, base, False)
+        f = KS.metrics(prot, base, True)
+        checks.append(check(f"Kimi effective n {name}", KIMI_N_EFF[name], 0, lambda m=m: m["n_eff"]))
+        for label, got, exp in (("repair", m["repair"], KIMI_PRIMARY[name][0]),
+                                ("breakage", m["breakage"], KIMI_PRIMARY[name][1]),
+                                ("net", m["net"], KIMI_PRIMARY[name][2])):
+            for j, suffix in enumerate(("point", "lo", "hi")):
+                checks.append(check(f"Kimi primary {name} {label} {suffix}", exp[j], .001,
+                                    lambda got=got, j=j: got[j]))
+        exp_n, exp_r, exp_b, exp_d = KIMI_FAILURE[name]
+        checks.append(check(f"Kimi failure n {name}", exp_n, 0, lambda f=f: f["n_eff"]))
+        for label, got, exp in (("repair", f["repair"], exp_r),
+                                ("breakage", f["breakage"], exp_b),
+                                ("net", f["net"], exp_d)):
+            for j, suffix in enumerate(("point", "lo", "hi")):
+                checks.append(check(f"Kimi failure {name} {label} {suffix}", exp[j], .001,
+                                    lambda got=got, j=j: got[j]))
+
     # --- Table (tab:bestof3): zero-cost three-sample selection vs reference-preserving ---
     import subprocess as _sp3, sys as _sys3
     r = _sp3.run([_sys3.executable, "scripts/best_of_3_zero_cost.py"],
