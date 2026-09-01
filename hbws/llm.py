@@ -249,6 +249,11 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
                 else:
                     delay = min(2 ** attempt * 1.5, 30)
                 time.sleep(delay)
+            except Exception as e:
+                _append_attempt_log({"model": deployment, "attempt": attempt + 1,
+                                     "status": "nonretryable_error",
+                                     "error_type": type(e).__name__})
+                raise
         raise RuntimeError(f"LLM call failed after {max_retries} retries: {last_err}")
     finally:
         if lease is not None:
