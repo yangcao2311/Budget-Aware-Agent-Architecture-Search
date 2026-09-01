@@ -22,7 +22,8 @@ import threading
 import time
 from pathlib import Path
 
-from openai import AzureOpenAI, OpenAI, APIError, APITimeoutError, RateLimitError
+from openai import (AzureOpenAI, OpenAI, APIConnectionError, APITimeoutError,
+                    InternalServerError, RateLimitError)
 
 from .ledger import ReserveRejected, TaskLedger, llm_call_vec
 
@@ -101,7 +102,8 @@ class Cache:
 
 
 CACHE = Cache()
-RETRYABLE = (RateLimitError, APITimeoutError, APIError, ConnectionError)
+RETRYABLE = (RateLimitError, APITimeoutError, APIConnectionError,
+             InternalServerError, ConnectionError)
 _attempt_log_lock = threading.Lock()
 
 

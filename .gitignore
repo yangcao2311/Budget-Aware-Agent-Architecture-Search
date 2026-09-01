@@ -1,5 +1,6 @@
 .env
 .venv/
+.macdeps/
 API_Key.txt
 api_key.txt
 glm_api_key.txt
