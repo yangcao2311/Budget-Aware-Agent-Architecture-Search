@@ -39,11 +39,13 @@ def provider_env(disable_seed: bool) -> dict:
     env.update({
         "LLM_PROVIDER": "glm",
         "GLM_API_KEY": load_key(),
-        "GLM_BASE_URL": env.get("GLM_BASE_URL", "https://api.z.ai/api/paas/v4/"),
-        "GLM_MODEL": env.get("GLM_MODEL", "glm-5.3-flash"),
+        "GLM_BASE_URL": env.get("GLM_BASE_URL", "https://api.tokenrouter.com/v1"),
+        "GLM_MODEL": env.get("GLM_MODEL", "z-ai/glm-5.3-free"),
         "LLM_REASONING_EFFORT": "low",
-        "LLM_PRICE_IN_PER_M": env.get("LLM_PRICE_IN_PER_M", "0.075"),
-        "LLM_PRICE_OUT_PER_M": env.get("LLM_PRICE_OUT_PER_M", "0.25"),
+        # TokenRouter exposes this route as `free`; dollar-cost comparisons are
+        # out of scope, while calls and provider-reported tokens remain logged.
+        "LLM_PRICE_IN_PER_M": env.get("LLM_PRICE_IN_PER_M", "0"),
+        "LLM_PRICE_OUT_PER_M": env.get("LLM_PRICE_OUT_PER_M", "0"),
         "LLM_BACKOFF_SCHEDULE": "10,30,90",
         "LLM_MAX_RETRIES": "3",
         "LLM_ATTEMPT_LOG": str(ROOT / "experiments" / "glm53f_attempts.jsonl"),
