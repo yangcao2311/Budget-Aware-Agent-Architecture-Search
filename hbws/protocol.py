@@ -13,7 +13,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from . import verify
-from .ledger import BudgetCaps
+from .ledger import BudgetCaps, active_prices
 from .runner import run_workflow
 
 EXP_DIR = Path(__file__).resolve().parent.parent / "experiments"
@@ -61,6 +61,7 @@ def evaluate(wf: dict, tasks: list[dict], caps: BudgetCaps, *, run_name: str,
     calls = [r["budget"].get("llm_calls", 0) for r in results]
     toks = [r["budget"].get("in_tokens", 0) + r["budget"].get("out_tokens", 0) for r in results]
     secs = sorted(r["budget"].get("wall_sec", 0) for r in results)
+    price_in, price_out = active_prices()
     summary = {
         "run": run_name, "seed": seed, "n": n,
         "success_rate": round(succ / n, 4),
@@ -77,6 +78,8 @@ def evaluate(wf: dict, tasks: list[dict], caps: BudgetCaps, *, run_name: str,
         # not a policy failure — the reservation ledger prevents the latter.
         "over_budget": sum(1 for r in results if str(r["status"]).startswith("budget_exceeded")),
         "errors": sum(1 for r in results if str(r["status"]).startswith("error")),
+        "price_in_per_m": price_in,
+        "price_out_per_m": price_out,
     }
     with open(out_dir / f"summary_seed{seed}.json", "w") as f:
         json.dump(summary, f, indent=2)

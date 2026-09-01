@@ -39,15 +39,15 @@ ROOT = Path(__file__).resolve().parent.parent
 EXP = ROOT / "experiments"
 
 ARM2_WF = {"code": wf_incumbent_refine, "math": wf_incumbent_refine_cot}
-BASELINE_DIR = {"code": "envelope_test/direct_code_loose",
-                "math": "envelope_test/cot_math_loose"}
+BASELINE_SUFFIX = {"code": "envelope_test/direct_code_loose",
+                   "math": "envelope_test/cot_math_loose"}
 
 
-def load_baseline_by_seed(fam: str) -> dict:
+def load_baseline_by_seed(fam: str, tag_prefix: str = "", seeds=(0, 1, 2)) -> dict:
     """seed -> {task_id: (solution_text, correct)}"""
     out = defaultdict(dict)
-    for s in (0, 1, 2):
-        p = EXP / BASELINE_DIR[fam] / f"results_seed{s}.jsonl"
+    for s in seeds:
+        p = EXP / f"{tag_prefix}{BASELINE_SUFFIX[fam]}" / f"results_seed{s}.jsonl"
         for r in map(json.loads, open(p)):
             ok = bool(r.get("success_symbolic", r["success"]))
             out[s][r["task_id"]] = (r.get("solution") or "", ok)
@@ -60,6 +60,8 @@ def main():
     ap.add_argument("--n", type=int, default=150)
     ap.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
     ap.add_argument("--tag", default="provenance_causal")
+    ap.add_argument("--baseline-tag-prefix", default="",
+                    help="Prefix for this model's baseline directory, e.g. glm53f_.")
     ap.add_argument("--workers", type=int, default=6)
     args = ap.parse_args()
 
@@ -68,7 +70,7 @@ def main():
     for fam in args.families:
         tasks = load_split(fam, "test")[:args.n]
         by_id = {t["id"]: t for t in tasks}
-        base = load_baseline_by_seed(fam)
+        base = load_baseline_by_seed(fam, args.baseline_tag_prefix, args.seeds)
 
         for seed in args.seeds:
             ref = base[seed]

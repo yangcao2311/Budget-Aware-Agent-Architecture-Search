@@ -102,6 +102,7 @@ class Cache:
 
 CACHE = Cache()
 RETRYABLE = (RateLimitError, APITimeoutError, APIError, ConnectionError)
+_attempt_log_lock = threading.Lock()
 
 
 def _encoder():
@@ -148,6 +149,17 @@ def _env_backoff_schedule() -> list[float] | None:
     return [float(x) for x in raw.split(",")]
 
 
+def _append_attempt_log(row: dict) -> None:
+    """Append provider-attempt metadata without prompts, responses, or keys."""
+    path = os.environ.get("LLM_ATTEMPT_LOG")
+    if not path:
+        return
+    safe = {"time": time.time(), **row}
+    with _attempt_log_lock:
+        with open(path, "a") as f:
+            f.write(json.dumps(safe, sort_keys=True) + "\n")
+
+
 def chat(messages: list[dict], ledger: TaskLedger, *,
          temperature: float = 0.7, max_tokens: int = 1024, seed: int | None = None,
          use_cache: bool = True, max_retries: int = 5, wall_est: float = 0.0,
@@ -170,7 +182,11 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
     if env_retries:
         max_retries = int(env_retries)
     deployment = _model_name()
-    params = {"temperature": temperature, "max_tokens": max_tokens, "seed": seed}
+    disable_seed = os.environ.get("LLM_DISABLE_SEED", "0") == "1"
+    reasoning_effort = os.environ.get("LLM_REASONING_EFFORT")
+    params = {"temperature": temperature, "max_tokens": max_tokens,
+              "seed": None if disable_seed else seed,
+              "reasoning_effort": reasoning_effort}
     key = hashlib.sha256(json.dumps(
         [deployment, messages, params], sort_keys=True).encode()).hexdigest()
 
@@ -192,10 +208,18 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
         last_err = None
         for attempt in range(max_retries):
             try:
-                r = _client().chat.completions.create(
-                    model=deployment, messages=messages,
-                    temperature=temperature, max_tokens=max_tokens, seed=seed)
+                request = {"model": deployment, "messages": messages,
+                           "temperature": temperature, "max_tokens": max_tokens}
+                if seed is not None and not disable_seed:
+                    request["seed"] = seed
+                if reasoning_effort:
+                    # Z.AI exposes this as a top-level extension. extra_body
+                    # keeps the generic OpenAI client compatible with it.
+                    request["extra_body"] = {"reasoning_effort": reasoning_effort}
+                r = _client().chat.completions.create(**request)
                 content = r.choices[0].message.content or ""
+                if r.usage is None:
+                    raise RuntimeError("provider returned no usage object")
                 usage = {"in_tokens": r.usage.prompt_tokens,
                          "out_tokens": r.usage.completion_tokens, "content": content}
                 # No clamping: if actual exceeds the reservation, settle
@@ -207,9 +231,16 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
                 lease = None
                 if use_cache:
                     CACHE.put(key, usage)
+                _append_attempt_log({"model": deployment, "attempt": attempt + 1,
+                                     "status": "completed",
+                                     "in_tokens": usage["in_tokens"],
+                                     "out_tokens": usage["out_tokens"]})
                 return content
             except RETRYABLE as e:
                 last_err = e
+                _append_attempt_log({"model": deployment, "attempt": attempt + 1,
+                                     "status": "retryable_error",
+                                     "error_type": type(e).__name__})
                 sched = backoff_schedule or _env_backoff_schedule()
                 if sched:
                     delay = sched[min(attempt, len(sched) - 1)]

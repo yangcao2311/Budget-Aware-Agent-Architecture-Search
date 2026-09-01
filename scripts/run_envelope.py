@@ -74,6 +74,8 @@ def main():
     ap.add_argument("--mask-tests", type=float, default=1.0)
     ap.add_argument("--critic-k", type=int, default=1)
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--no-cache", action="store_true",
+                    help="Disable response-cache reads/writes (required for fresh replication baselines).")
     ap.add_argument("--tag-prefix", default="",
                     help="Prepended to the run directory name (e.g. 'kimi_') "
                          "so a different-model campaign cannot collide with "
@@ -104,7 +106,8 @@ def main():
                     wf = set_critic_k(wf, args.critic_k)
                 run = f"{args.tag_prefix}envelope{deg}/{sname}_{fam}_{tier}"
                 s = evaluate(wf, tasks, BUDGET_TIERS[tier], run_name=run,
-                             seed=args.seed, use_cache=True, workers=args.workers)
+                             seed=args.seed, use_cache=not args.no_cache,
+                             workers=args.workers)
                 s.update({"structure": sname, "family": fam, "tier": tier,
                           "mask_tests": args.mask_tests, "critic_k": args.critic_k})
                 rows.append(s)
