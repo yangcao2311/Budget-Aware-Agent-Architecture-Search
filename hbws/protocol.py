@@ -12,20 +12,26 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from . import verify
-from .ledger import BudgetCaps
+from . import llm, verify
+from .ledger import BudgetCaps, active_prices
 from .runner import run_workflow
 
 EXP_DIR = Path(__file__).resolve().parent.parent / "experiments"
 
 
-def grade(task: dict, solution: str) -> bool:
+def grade_with_feedback(task: dict, solution: str) -> tuple[bool, str]:
     if task["family"] == "code":
-        ok, _ = verify.run_code_tests(solution, task["grading_tests"])
-        return ok
+        return verify.run_code_tests(solution, task["grading_tests"])
     if task["family"] == "logic":
-        return verify.grade_choice(solution, task["gold_answer"])
-    return verify.grade_math(solution, task["gold_answer"])
+        ok = verify.grade_choice(solution, task["gold_answer"])
+        return ok, "answer matched" if ok else "answer did not match"
+    ok = verify.grade_math(solution, task["gold_answer"])
+    return ok, "answer matched" if ok else "answer did not match"
+
+
+def grade(task: dict, solution: str) -> bool:
+    """Compatibility wrapper for callers that need only the binary grade."""
+    return grade_with_feedback(task, solution)[0]
 
 
 def evaluate(wf: dict, tasks: list[dict], caps: BudgetCaps, *, run_name: str,
@@ -35,9 +41,16 @@ def evaluate(wf: dict, tasks: list[dict], caps: BudgetCaps, *, run_name: str,
     results = []
 
     def one(task):
-        r = run_workflow(wf, task, BudgetCaps(**vars(caps)), use_cache=use_cache, seed=seed)
-        r["success"] = grade(task, r["solution"])
-        return r
+        llm.set_call_context(run_name=run_name, task_id=task["id"], seed=seed)
+        try:
+            r = run_workflow(wf, task, BudgetCaps(**vars(caps)),
+                             use_cache=use_cache, seed=seed)
+            r["success"], r["grader_feedback"] = grade_with_feedback(
+                task, r["solution"]
+            )
+            return r
+        finally:
+            llm.clear_call_context()
 
     t0 = time.monotonic()
     with ThreadPoolExecutor(max_workers=workers) as ex:
@@ -61,6 +74,7 @@ def evaluate(wf: dict, tasks: list[dict], caps: BudgetCaps, *, run_name: str,
     calls = [r["budget"].get("llm_calls", 0) for r in results]
     toks = [r["budget"].get("in_tokens", 0) + r["budget"].get("out_tokens", 0) for r in results]
     secs = sorted(r["budget"].get("wall_sec", 0) for r in results)
+    price_in, price_out = active_prices()
     summary = {
         "run": run_name, "seed": seed, "n": n,
         "success_rate": round(succ / n, 4),
@@ -77,6 +91,8 @@ def evaluate(wf: dict, tasks: list[dict], caps: BudgetCaps, *, run_name: str,
         # not a policy failure — the reservation ledger prevents the latter.
         "over_budget": sum(1 for r in results if str(r["status"]).startswith("budget_exceeded")),
         "errors": sum(1 for r in results if str(r["status"]).startswith("error")),
+        "price_in_per_m": price_in,
+        "price_out_per_m": price_out,
     }
     with open(out_dir / f"summary_seed{seed}.json", "w") as f:
         json.dump(summary, f, indent=2)

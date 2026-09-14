@@ -70,6 +70,36 @@ PROMPTS = {
                   "constraint yourself. Do not assume any previous attempt is "
                   "correct.\n\nProblem:\n{task}\n\n" + LOGIC_FORMAT),
     },
+    "conservative_check_math": {
+        # Gold-free anchored verifier: preserve the incumbent when uncertain
+        # and return a different boxed answer only after finding a concrete
+        # error. The runner compares boxed answers exactly as for check_math.
+        "math": ("Problem:\n{task}\n\nCandidate solution:\n{solution}\n\n"
+                 "Audit the candidate carefully. Keep its final answer unless "
+                 "you can identify a concrete mathematical error and derive a "
+                 "corrected answer. If it is correct or you are uncertain, "
+                 "restate the candidate's final answer. Otherwise explain the "
+                 "error briefly and solve it correctly. " + MATH_FORMAT),
+        "logic": ("Problem:\n{task}\n\nCandidate answer:\n{solution}\n\n"
+                  "Keep the candidate choice unless a concrete constraint "
+                  "contradicts it. If correct or uncertain, restate it; "
+                  "otherwise derive the corrected choice. " + LOGIC_FORMAT),
+    },
+    "strict_check_math": {
+        "math": ("Problem:\n{task}\n\nCandidate solution:\n{solution}\n\n"
+                 "Default to keeping the candidate's final answer. Change it "
+                 "only if you can (1) identify a specific invalid step, (2) "
+                 "derive a different answer independently, and (3) verify the "
+                 "corrected answer with a separate substitution or sanity "
+                 "check. If any condition is unmet or you are uncertain, "
+                 "restate the candidate's final answer unchanged. Give only a "
+                 "brief justification. " + MATH_FORMAT),
+        "logic": ("Problem:\n{task}\n\nCandidate answer:\n{solution}\n\n"
+                  "Default to keeping the candidate. Change it only after "
+                  "identifying a specific violated constraint and independently "
+                  "verifying a different choice; otherwise restate it. " +
+                  LOGIC_FORMAT),
+    },
 }
 
 

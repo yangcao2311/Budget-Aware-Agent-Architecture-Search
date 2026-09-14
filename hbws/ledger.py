@@ -17,12 +17,14 @@ Budget signals exposed to policies:
 from __future__ import annotations
 
 import itertools
+import os
 import threading
 import time
 from dataclasses import dataclass, field
 
-# Azure GPT-4o global deployment pricing, USD per 1M tokens.
-# Frozen price table: verify against the Azure portal in W1 and archive.
+# Default Azure GPT-4o deployment pricing, USD per 1M tokens. A cross-provider
+# replication may override these with LLM_PRICE_IN_PER_M / LLM_PRICE_OUT_PER_M
+# before importing this module; the defaults preserve every original run.
 PRICE_IN_PER_M = 2.50
 PRICE_OUT_PER_M = 10.00
 
@@ -79,8 +81,14 @@ BUDGET_TIERS = {
 SEARCH_TIERS = ("tight", "loose")  # the only tiers any search code may see
 
 
+def active_prices() -> tuple[float, float]:
+    return (float(os.environ.get("LLM_PRICE_IN_PER_M", PRICE_IN_PER_M)),
+            float(os.environ.get("LLM_PRICE_OUT_PER_M", PRICE_OUT_PER_M)))
+
+
 def usd_of(in_tok: float, out_tok: float) -> float:
-    return in_tok * PRICE_IN_PER_M / 1e6 + out_tok * PRICE_OUT_PER_M / 1e6
+    price_in, price_out = active_prices()
+    return in_tok * price_in / 1e6 + out_tok * price_out / 1e6
 
 
 # Wall clock is NOT a reserved dimension (方案 §4.2 / external v3 §5.3):
