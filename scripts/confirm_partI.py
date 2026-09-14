@@ -72,11 +72,35 @@ def d(fam, struct, tier, tag="envelope_test"):
 
 
 def repair_breakage(struct_dir, base_dir):
-    S, B = per_task(struct_dir), per_task(base_dir)
-    ids = set(S) & set(B)
-    hard = [S[t] for t in ids if B[t] == 0.0]
-    easy = [1 - S[t] for t in ids if B[t] == 1.0]
-    return rate_boot(hard), rate_boot(easy)
+    # Import the canonical paired-transition implementation used by the audit.
+    # This keeps partially baseline-correct tasks and preserves the identity.
+    from audit_claims import paired_transitions
+    trans = paired_transitions(struct_dir, base_dir)
+    ids = sorted(trans)
+
+    def ratio_boot(num_key, den_key, seed=0):
+        if not ids:
+            return None
+        rng = random.Random(seed)
+        n = len(ids)
+
+        def ratio(sample):
+            num = sum(trans[ids[i]][num_key] for i in sample)
+            den = sum(trans[ids[i]][den_key] for i in sample)
+            return num / den if den else float("nan")
+
+        point = ratio(range(n))
+        boots = []
+        for _ in range(N_BOOT):
+            value = ratio([rng.randrange(n) for _ in range(n)])
+            if value == value:
+                boots.append(value)
+        boots.sort()
+        return {"rate": point, "lo": boots[int(.025 * len(boots))],
+                "hi": boots[int(.975 * len(boots))], "n": n}
+
+    return (ratio_boot("repair_num", "repair_den"),
+            ratio_boot("break_num", "break_den"))
 
 
 def main():

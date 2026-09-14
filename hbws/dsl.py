@@ -51,6 +51,10 @@ def validate(wf: dict) -> None:
             raise InvalidWorkflow(f"node type {n['type']} not whitelisted")
         if n["type"] == "vote" and not (2 <= n.get("k", 0) <= MAX_VOTE_K):
             raise InvalidWorkflow(f"vote k={n.get('k')} not in [2,{MAX_VOTE_K}]")
+        if (n["type"] == "verify" and
+                n.get("decision_rule", "majority") not in {"majority", "any_agree"}):
+            raise InvalidWorkflow(
+                f"unknown verifier decision_rule {n.get('decision_rule')}")
         pid = n.get("prompt_id")
         if pid is not None and pid not in PROMPTS:
             raise InvalidWorkflow(f"unknown prompt_id {pid}")
@@ -280,6 +284,59 @@ def wf_assign_refine() -> dict:
             {"from": "r", "to": "v", "loop": True, "max_iter": 3},
         ],
     }
+
+
+def wf_assign_conservative_refine() -> dict:
+    """Reference-preserving candidate for held-out risk certification.
+
+    Three independent gold-free checks are run and the stored reference is
+    rejected only when none agrees with it. A rejection triggers one repair
+    call and then stops. The relaxed rejection rule is selected on development
+    data; the independent certificate, not this construction, controls its
+    reported deployment risk.
+    """
+    return {
+        "nodes": [
+            {"id": "a", "type": "assign"},
+            {"id": "v", "type": "verify", "k": 3,
+             "decision_rule": "any_agree"},
+            {"id": "r", "type": "refine", "prompt_id": "refine_from_feedback",
+             "params": {"temperature": 0.7, "max_output_tokens": 1536}},
+        ],
+        "edges": [
+            {"from": "a", "to": "v"},
+            {"from": "v", "to": "END", "cond": "verify_passed"},
+            {"from": "v", "to": "r", "cond": "verify_failed"},
+            {"from": "r", "to": "END"},
+        ],
+    }
+
+
+def wf_assign_anchored_refine() -> dict:
+    """Reference-preserving, one-call conservative verifier candidate."""
+    return {
+        "nodes": [
+            {"id": "a", "type": "assign"},
+            {"id": "v", "type": "verify", "k": 1,
+             "prompt_id": "conservative_check_math",
+             "max_output_tokens": 384},
+            {"id": "r", "type": "refine", "prompt_id": "refine_from_feedback",
+             "params": {"temperature": 0.7, "max_output_tokens": 1536}},
+        ],
+        "edges": [
+            {"from": "a", "to": "v"},
+            {"from": "v", "to": "END", "cond": "verify_passed"},
+            {"from": "v", "to": "r", "cond": "verify_failed"},
+            {"from": "r", "to": "END"},
+        ],
+    }
+
+
+def wf_assign_strict_refine() -> dict:
+    """Reference-preserving verifier that changes only on checked evidence."""
+    workflow = wf_assign_anchored_refine()
+    workflow["nodes"][1]["prompt_id"] = "strict_check_math"
+    return workflow
 
 
 # The envelope structure library (Fig.2). Keys are frozen names used in

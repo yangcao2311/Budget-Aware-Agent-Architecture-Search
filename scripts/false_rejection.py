@@ -1,24 +1,28 @@
 #!/usr/bin/env python
-"""Measure the verifier's false-rejection rate and test the bound
+"""Measure the verifier's false-rejection rate and audit the bound
 
     b <= Pr(reject | incumbent correct)                                   (3)
 
-against observed breakage, across every condition already on disk. No new
-inference: the rate is recoverable from stored traces, because a protected
-workflow that exits after [generate, verify] had its draft accepted, while one
-that reaches a refine node had it rejected.
+against observed breakage, across reference-preserving conditions already on
+disk. No new inference is required: in these workflows the verifier sees the
+stored reference output, so a trace that reaches a refine node records a false
+rejection whenever the reference output is correct.
 
-The bound is derived, not fitted, so this is a genuine test: a single condition
-with breakage above its own false-rejection rate would falsify it.
+Do not add regenerated-incumbent conditions to CERTIFICATE_CONDS. When I != B,
+``baseline correct and draft rejected'' is not the false-rejection estimand in
+the certificate, because the independently generated draft may itself be
+wrong. Such conditions belong in a verifier-signal ablation, not this table.
 """
 import json
-import math
-import random
+import sys
 from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 EXP = ROOT / "experiments"
+sys.path.insert(0, str(ROOT))
+
+from hbws.stats import cluster_ratio_upper
 SEEDS = [0, 1, 2]
 NB = 10000
 
@@ -34,113 +38,69 @@ def per_task(dirname):
     return {t: sum(v) / len(v) for t, v in acc.items()}
 
 
-def cluster_upper(per_task_vals, alpha=0.05):
-    """One-sided (1-alpha) upper bound on a task-level rate, valid under zero
-    observed events.
-
-    A percentile bootstrap must not be used here: when every task shows zero
-    events, every resample is also zero and the method returns exactly 0, which
-    is not an upper bound on the underlying probability. We instead count a
-    task as an event if it shows the event in ANY execution seed, and take the
-    exact Clopper-Pearson upper limit on that task-level proportion. Since
-    Pr(event on a random seed) <= Pr(event in some seed), this upper-bounds the
-    rate we report, and it is conservative with respect to within-task
-    correlation rather than assuming seeds are independent. At k = 0 it reduces
-    to 1 - alpha^(1/n), the rule of three.
-    """
-    if not per_task_vals:
-        return float("nan")
-    n = len(per_task_vals)
-    k = sum(1 for v in per_task_vals if v > 0.0)
-    if k >= n:
-        return 1.0
-    return _beta_quantile(1.0 - alpha, k + 1, n - k)
-
-
-def _beta_quantile(q, a, b, tol=1e-13):
-    """Inverse regularised incomplete beta, by bisection (no SciPy dependency)."""
-    lo, hi = 0.0, 1.0
-    for _ in range(200):
-        mid = (lo + hi) / 2.0
-        if _betainc(mid, a, b) < q:
-            lo = mid
-        else:
-            hi = mid
-        if hi - lo < tol:
-            break
-    return (lo + hi) / 2.0
-
-
-def _betainc(x, a, b):
-    """Regularised incomplete beta I_x(a, b) via its continued fraction."""
-    if x <= 0.0:
-        return 0.0
-    if x >= 1.0:
-        return 1.0
-    if x > (a + 1.0) / (a + b + 2.0):
-        return 1.0 - _betainc(1.0 - x, b, a)
-    lbeta = math.lgamma(a) + math.lgamma(b) - math.lgamma(a + b)
-    front = math.exp(math.log(x) * a + math.log1p(-x) * b - lbeta) / a
-    f, c, d = 1.0, 1.0, 0.0
-    for i in range(400):
-        m = i // 2
-        if i == 0:
-            num = 1.0
-        elif i % 2 == 0:
-            num = (m * (b - m) * x) / ((a + 2 * m - 1) * (a + 2 * m))
-        else:
-            num = -((a + m) * (a + b + m) * x) / ((a + 2 * m) * (a + 2 * m + 1))
-        d = 1.0 + num * d
-        d = 1e-30 if abs(d) < 1e-30 else 1.0 / d
-        c = 1.0 + num / (1e-30 if abs(c) < 1e-30 else c)
-        f *= c * d
-        if abs(1.0 - c * d) < 1e-15:
-            break
-    return front * (f - 1.0)
-
-
 def measure(struct, base, tag="envelope_test"):
-    """Returns per-task breakage and per-task false-rejection indicators,
-    both restricted to tasks the baseline solves in every seed."""
-    B = per_task(f"{tag}/{base}")
-    brk, rej = [], []
+    """Measure transitions on baseline-correct paired executions.
+
+    Point rates and upper bounds target the same ratio of task-cluster means.
+    Seeds are averaged within task before the cluster-Hoeffding ratio bound is
+    applied, so they are not treated as independent observations.
+    """
+    baseline_rows = {}
+    for s in SEEDS:
+        p = EXP / tag / base / f"results_seed{s}.jsonl"
+        if p.exists():
+            for r in map(json.loads, open(p)):
+                baseline_rows[(r["task_id"], s)] = bool(
+                    r.get("success_symbolic", r["success"]))
     per_task_reject = defaultdict(list)
     per_task_break = defaultdict(list)
+    per_task_eligible = defaultdict(list)
     for s in SEEDS:
         p = EXP / tag / struct / f"results_seed{s}.jsonl"
         if not p.exists():
             continue
         for r in map(json.loads, open(p)):
-            if B.get(r["task_id"], 0.0) != 1.0:
+            key = (r["task_id"], s)
+            if key not in baseline_rows:
+                continue
+            eligible = baseline_rows[key]
+            per_task_eligible[r["task_id"]].append(1.0 if eligible else 0.0)
+            if not eligible:
+                per_task_reject[r["task_id"]].append(0.0)
+                per_task_break[r["task_id"]].append(0.0)
                 continue
             types = [t["type"] for t in r.get("trace", [])]
             if "verify" not in types:
+                per_task_reject[r["task_id"]].append(0.0)
+                per_task_break[r["task_id"]].append(0.0)
                 continue
             per_task_reject[r["task_id"]].append(1.0 if "refine" in types else 0.0)
             ok = bool(r.get("success_symbolic", r["success"]))
             per_task_break[r["task_id"]].append(0.0 if ok else 1.0)
-    rej = [sum(v) / len(v) for v in per_task_reject.values()]
-    brk = [sum(v) / len(v) for v in per_task_break.values()]
-    if not rej:
+    tasks = sorted(per_task_eligible)
+    if not tasks:
         return None
+    den = [sum(per_task_eligible[t]) / len(per_task_eligible[t]) for t in tasks]
+    rej = [sum(per_task_reject[t]) / len(per_task_reject[t]) for t in tasks]
+    brk = [sum(per_task_break[t]) / len(per_task_break[t]) for t in tasks]
+    reject = sum(rej) / sum(den)
+    breakage = sum(brk) / sum(den)
     return {
-        "n_tasks": len(rej),
-        "reject": sum(rej) / len(rej),
-        "reject_ub": cluster_upper(rej),
-        "breakage": sum(brk) / len(brk),
-        "breakage_ub": cluster_upper(brk),
+        "n_tasks": len(tasks),
+        "n_tasks_eligible": sum(1 for x in den if x > 0),
+        "n_eligible": sum(den),
+        "reject": reject,
+        "reject_ub": cluster_ratio_upper(rej, den),
+        "breakage": breakage,
+        "breakage_ub": cluster_ratio_upper(brk, den),
     }
 
 
-CONDS = [
+CERTIFICATE_CONDS = [
     ("code, oracle tests, loose", "incumbent_refine_code_loose",
      "direct_code_loose", "envelope_test"),
     ("code, oracle tests, tight", "incumbent_refine_code_tight",
      "direct_code_tight", "envelope_test"),
-    ("code, 50% tests, loose", "verify_refine_3_code_loose",
-     "direct_code_loose", "envelope_test_mask0.5_k1"),
-    ("code, NO tests, loose", "verify_refine_3_code_loose",
-     "direct_code_loose", "envelope_test_mask0.0_k1"),
     ("math, self-check, loose", "incumbent_refine_cot_math_loose",
      "cot_math_loose", "envelope_test"),
     ("math, self-check, tight", "incumbent_refine_cot_math_tight",
@@ -155,12 +115,15 @@ CONDS = [
      "direct_logic_loose", "envelope_logic_prospective"),
 ]
 
+# Backwards-compatible name used by the claim audit and figure generator.
+CONDS = CERTIFICATE_CONDS
+
 
 def main():
     print("=" * 88)
-    print("Testing the derived bound  breakage <= Pr(reject | incumbent correct)")
-    print("Rates are over baseline-correct TASKS; upper bounds are one-sided 95%,")
-    print("task-clustered (execution seeds within a task are not independent).")
+    print("Auditing the derived bound  breakage <= Pr(reject | reference correct)")
+    print("Rates and one-sided 95% bounds target E[N_t]/E[D_t], with")
+    print("execution seeds averaged inside each independent task cluster.")
     print("=" * 88)
     print(f"{'condition':30s}{'tasks':>7s}{'false-rej':>11s}{'[95% ub]':>10s}"
           f"{'breakage':>10s}{'[95% ub]':>10s}{'  bound':>8s}")
@@ -182,7 +145,7 @@ def main():
         print(f"BOUND VIOLATED in {len(violations)}: " + "; ".join(violations))
     else:
         span = [m["reject"] for _, m in rows]
-        print(f"Bound holds in {len(rows)}/{len(rows)} conditions, over the "
+        print(f"Bound is respected in {len(rows)}/{len(rows)} eligible conditions, over the "
               f"full false-rejection range {min(span):.3f} to {max(span):.3f}.")
         tight = [(n, m) for n, m in rows if 0.05 < m["reject"] < 0.95]
         for n, m in tight:

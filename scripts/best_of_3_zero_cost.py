@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-"""A matched-realized-cost self-consistency / test-filtered-selection
+"""An offline three-sample self-consistency / test-filtered-selection
 baseline, built entirely from data already on disk -- no new inference.
 
 Each task in the frozen test split was already drafted independently three
 times (once per execution seed) to compute the seed-averaged baseline. Those
 three drafts are exactly a k=3 sampling pool. This script selects one answer
 per task from that pool -- the way a best-of-3 baseline would -- and grades
-the selection, so its logical cost is exactly three generate calls per task,
-identical to what the baseline already spent, and its accuracy is directly
-comparable to Table 1's protected-arm figures at that same logical cost.
+the selection. The resulting k=3 policy is an offline replay with the same
+logical call count as the stored seed pool; it is *not* a matched-cost
+comparison with the protected arm.
 
 Selection rules, fixed in advance (not tuned on the outcome):
   math:  normalize each seed's boxed answer; majority vote; ties broken by

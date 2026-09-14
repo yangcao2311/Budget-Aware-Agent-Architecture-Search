@@ -33,15 +33,18 @@ class WorkflowRun:
         self.state = {"solution": "", "verify_passed": None, "feedback": ""}
         self.trace: list[dict] = []
         self.loop_counts: dict[int, int] = {}
+        self._node_diagnostics: dict = {}
 
     # -- node semantics ------------------------------------------------------
 
     def _chat(self, prompt: str, params: dict) -> str:
-        return llm.chat(
+        answer = llm.chat(
             [{"role": "user", "content": prompt}], self.ledger,
             temperature=params.get("temperature", 0.7),
             max_tokens=params.get("max_output_tokens", 1024),
             seed=self.seed, use_cache=self.use_cache)
+        self._node_diagnostics["llm_response"] = llm.last_response_meta()
+        return answer
 
     def _exec_node(self, node: dict):
         t, fam, task_text = node["type"], self.task["family"], self.task["prompt"]
@@ -98,23 +101,61 @@ class WorkflowRun:
                 k = node.get("k", 1)
                 a1 = verify.extract_boxed(self.state["solution"])
                 agree = 0
+                checks = []
                 for i in range(k):
+                    verifier_prompt = node.get("prompt_id", "check_math")
                     check = llm.chat(
-                        [{"role": "user", "content": render("check_math", fam, task_text)}],
+                        [{"role": "user", "content": render(
+                            verifier_prompt, fam, task_text,
+                            self.state["solution"], self.state["feedback"])}],
                         self.ledger, temperature=0.3 + 0.2 * i,
-                        max_tokens=1536, seed=(self.seed or 0) * 100 + 50 + i,
+                        max_tokens=node.get("max_output_tokens", 1536),
+                        seed=(self.seed or 0) * 100 + 50 + i,
                         use_cache=self.use_cache)
                     a2 = verify.extract_boxed(check)
+                    same = False
                     if a1 is None or a2 is None:
+                        checks.append({
+                            "index": i,
+                            "checker_text": check,
+                            "candidate_answer": a1,
+                            "checker_answer": a2,
+                            "agreement": False,
+                            "parse_status": ("candidate_parse_failure" if a1 is None
+                                             else "checker_parse_failure"),
+                            "response": llm.last_response_meta(),
+                        })
                         continue
                     same = (verify.same_choice(a1, a2) if fam == "logic"
                             else verify.math_equal(a1, a2))
+                    checks.append({
+                        "index": i,
+                        "checker_text": check,
+                        "candidate_answer": a1,
+                        "checker_answer": a2,
+                        "agreement": bool(same),
+                        "parse_status": "parsed",
+                        "response": llm.last_response_meta(),
+                    })
                     if same:
                         agree += 1
-                ok = agree * 2 > k
+                decision_rule = node.get("decision_rule", "majority")
+                if decision_rule == "majority":
+                    ok = agree * 2 > k
+                elif decision_rule == "any_agree":
+                    ok = agree > 0
+                else:
+                    raise ValueError(f"unknown verifier decision rule: {decision_rule}")
                 fb = ("independent check agrees" if ok else
                       "an independent solution reached a different answer; "
                       "re-examine your reasoning step by step")
+                self._node_diagnostics["verifier"] = {
+                    "candidate_answer": a1,
+                    "checks": checks,
+                    "agree_count": agree,
+                    "k": k,
+                    "decision_rule": decision_rule,
+                }
             self.state["verify_passed"], self.state["feedback"] = ok, fb
         elif t == "branch":
             pass  # routing happens on edges
@@ -167,6 +208,7 @@ class WorkflowRun:
         try:
             for _ in range(64):  # absolute step bound
                 node = self.nodes[cur]
+                llm.update_call_context(node_id=cur, node_type=node["type"])
                 t0 = time.monotonic()
                 try:
                     self._exec_node(node)
@@ -177,11 +219,15 @@ class WorkflowRun:
                     self.trace.append({"node": cur, "type": node["type"],
                                        "reserve_rejected": str(e),
                                        "budget": self.ledger.snapshot()})
+                    self._node_diagnostics = {}
                     break
-                self.trace.append({"node": cur, "type": node["type"],
-                                   "sec": round(time.monotonic() - t0, 2),
-                                   "budget": self.ledger.snapshot(),
-                                   "remaining_frac": round(self.ledger.remaining_frac, 3)})
+                trace_row = {"node": cur, "type": node["type"],
+                             "sec": round(time.monotonic() - t0, 2),
+                             "budget": self.ledger.snapshot(),
+                             "remaining_frac": round(self.ledger.remaining_frac, 3)}
+                trace_row.update(self._node_diagnostics)
+                self._node_diagnostics = {}
+                self.trace.append(trace_row)
                 nxt = self._next(cur)
                 if nxt in (None, "END"):
                     break

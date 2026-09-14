@@ -69,8 +69,8 @@ def code_accept_given_wrong():
     for s in SEEDS:
         for r in map(json.loads, open(EXP / f"provenance_arm/cot_hot_code_loose/results_seed{s}.jsonl")):
             vals = B.get(r["task_id"])
-            if not vals or all(vals):
-                continue  # only tasks where baseline fails every seed
+            if not vals or not all(vals):
+                continue  # only tasks where the baseline is correct in every seed
             ok = bool(r.get("success_symbolic", r["success"]))
             if ok:
                 continue  # only arm-C's WRONG drafts

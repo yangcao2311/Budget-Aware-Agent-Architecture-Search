@@ -1,8 +1,9 @@
 """Deterministic verifiers.
 
 - Code family: run the extracted program against unit tests in a resource-
-  limited subprocess (5s CPU, 1GB address space). Model output is executed
-  ONLY here, inside the sandbox, never in the search/runner process.
+  limited subprocess (5s CPU and wall timeout, plus a 4GB address-space cap
+  where the platform supports it reliably). Model output is executed ONLY
+  here, inside the sandbox, never in the search/runner process.
 - Math family: extract \\boxed answer and compare after normalization
   (exact string, numeric, or sympy equivalence when available).
 
@@ -14,6 +15,7 @@ Two grading modes per protocol:
 from __future__ import annotations
 
 import re
+import resource
 import subprocess
 import sys
 import tempfile
@@ -28,12 +30,31 @@ def extract_code(text: str) -> str:
     return blocks[-1].strip() if blocks else text.strip()
 
 
-_SANDBOX_PRELUDE = """\
+def _sandbox_prelude() -> str:
+    """Build a platform-safe subprocess prelude.
+
+    Darwin exposes ``RLIMIT_AS`` but rejects the 4 GiB hard limit used by the
+    original Linux-oriented harness when the process already has a larger
+    address-space soft limit.  Wall and CPU limits remain active everywhere;
+    the address-space soft limit is added only on platforms where it is a
+    supported and reliable sandbox control.  The existing hard limit is never
+    lowered, which also avoids ``current limit exceeds maximum limit`` errors.
+    """
+    memory_limit = ""
+    if sys.platform != "darwin" and hasattr(resource, "RLIMIT_AS"):
+        memory_limit = """\
+_as_soft, _as_hard = resource.getrlimit(resource.RLIMIT_AS)
+_as_target = 4 * 1024**3
+if _as_hard != resource.RLIM_INFINITY:
+    _as_target = min(_as_target, _as_hard)
+if _as_target > 0:
+    resource.setrlimit(resource.RLIMIT_AS, (_as_target, _as_hard))
+"""
+    return """\
 import os, resource, sys
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
 resource.setrlimit(resource.RLIMIT_CPU, (5, 5))
-# 4GB: the evalplus harness imports numpy, whose BLAS needs address space.
-resource.setrlimit(resource.RLIMIT_AS, (4 * 1024**3, 4 * 1024**3))
+""" + memory_limit + """\
 sys.setrecursionlimit(10000)
 """
 
@@ -48,7 +69,7 @@ def run_code_tests(solution_text: str, test_code: str) -> tuple[bool, str]:
         return False, ("no tests are available; carefully review your solution "
                        "for correctness and edge cases")
     code = extract_code(solution_text)
-    program = _SANDBOX_PRELUDE + code + "\n\n" + test_code + "\nprint('ALL_TESTS_PASSED')\n"
+    program = _sandbox_prelude() + code + "\n\n" + test_code + "\nprint('ALL_TESTS_PASSED')\n"
     with tempfile.TemporaryDirectory() as td:
         path = Path(td) / "prog.py"
         path.write_text(program)

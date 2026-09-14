@@ -107,6 +107,37 @@ RETRYABLE = (RateLimitError, APITimeoutError, APIConnectionError,
 _attempt_log_lock = threading.Lock()
 
 
+def clear_last_response_meta() -> None:
+    """Clear thread-local metadata from the preceding provider call."""
+    _local.last_response_meta = None
+
+
+def last_response_meta() -> dict | None:
+    """Return metadata for the most recent call in this worker thread.
+
+    The completion text remains the public return value of :func:`chat`; this
+    side channel lets experiment traces retain provider termination metadata
+    without changing every existing caller.
+    """
+    value = getattr(_local, "last_response_meta", None)
+    return dict(value) if value is not None else None
+
+
+def set_call_context(**fields) -> None:
+    """Attach non-sensitive experiment identifiers to attempt-log rows."""
+    _local.call_context = {k: v for k, v in fields.items() if v is not None}
+
+
+def update_call_context(**fields) -> None:
+    context = dict(getattr(_local, "call_context", {}))
+    context.update({k: v for k, v in fields.items() if v is not None})
+    _local.call_context = context
+
+
+def clear_call_context() -> None:
+    _local.call_context = {}
+
+
 def _encoder():
     if getattr(_local, "enc", None) is None:
         import tiktoken
@@ -156,7 +187,7 @@ def _append_attempt_log(row: dict) -> None:
     path = os.environ.get("LLM_ATTEMPT_LOG")
     if not path:
         return
-    safe = {"time": time.time(), **row}
+    safe = {"time": time.time(), **getattr(_local, "call_context", {}), **row}
     with _attempt_log_lock:
         with open(path, "a") as f:
             f.write(json.dumps(safe, sort_keys=True) + "\n")
@@ -180,6 +211,7 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
     rate-limit window is on a different clock than the default schedule was
     tuned for; the default (uncalled) path is unaffected.
     """
+    clear_last_response_meta()
     env_retries = os.environ.get("LLM_MAX_RETRIES")
     if env_retries:
         max_retries = int(env_retries)
@@ -205,6 +237,16 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
                                       "in_tokens": hit["in_tokens"],
                                       "out_tokens": hit["out_tokens"]})
                 lease = None
+                _local.last_response_meta = {
+                    "cached": True,
+                    "model": deployment,
+                    "finish_reason": hit.get("finish_reason"),
+                    "provider_model": hit.get("provider_model"),
+                    "system_fingerprint": hit.get("system_fingerprint"),
+                    "in_tokens": hit["in_tokens"],
+                    "out_tokens": hit["out_tokens"],
+                    "requested_max_tokens": max_tokens,
+                }
                 return hit["content"]
 
         last_err = None
@@ -223,7 +265,11 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
                 if r.usage is None:
                     raise RuntimeError("provider returned no usage object")
                 usage = {"in_tokens": r.usage.prompt_tokens,
-                         "out_tokens": r.usage.completion_tokens, "content": content}
+                         "out_tokens": r.usage.completion_tokens,
+                         "content": content,
+                         "finish_reason": getattr(r.choices[0], "finish_reason", None),
+                         "provider_model": getattr(r, "model", None),
+                         "system_fingerprint": getattr(r, "system_fingerprint", None)}
                 # No clamping: if actual exceeds the reservation, settle
                 # raises settle_overrun — a defect in the estimator we must
                 # see and fix, not silently absorb.
@@ -233,8 +279,22 @@ def chat(messages: list[dict], ledger: TaskLedger, *,
                 lease = None
                 if use_cache:
                     CACHE.put(key, usage)
+                _local.last_response_meta = {
+                    "cached": False,
+                    "model": deployment,
+                    "finish_reason": usage["finish_reason"],
+                    "provider_model": usage["provider_model"],
+                    "system_fingerprint": usage["system_fingerprint"],
+                    "in_tokens": usage["in_tokens"],
+                    "out_tokens": usage["out_tokens"],
+                    "requested_max_tokens": max_tokens,
+                }
                 _append_attempt_log({"model": deployment, "attempt": attempt + 1,
                                      "status": "completed",
+                                     "provider_model": usage["provider_model"],
+                                     "system_fingerprint": usage["system_fingerprint"],
+                                     "finish_reason": usage["finish_reason"],
+                                     "requested_max_tokens": max_tokens,
                                      "in_tokens": usage["in_tokens"],
                                      "out_tokens": usage["out_tokens"]})
                 return content

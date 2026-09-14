@@ -9,6 +9,7 @@ Fig.3  the budget floor: how repair and breakage each move with budget.
 Fig.4  dose-response: an ordered manipulation of verifier signal.
 Fig.5  the guarantee across verifier regimes and domains.
 Fig.6  search: what the optimiser converged to, and how the archive moved.
+Fig.7  certificate planning: labelled-task requirements implied by the bound.
 
 (Fig.2 is a TikZ mechanism diagram drawn in main.tex.)
 
@@ -16,6 +17,7 @@ Palette: validated diverging pair blue #2a78d6 / orange #eb6834
 (CVD dE 24.7, normal-vision dE 33.6, contrast pass on a light surface).
 """
 import json
+import math
 import random
 from collections import defaultdict
 from pathlib import Path
@@ -23,6 +25,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 EXP = ROOT / "experiments"
@@ -57,20 +60,48 @@ def per_task(d):
     return {t: sum(v) / len(v) for t, v in acc.items()}
 
 
+def paired_transitions(sd, bd):
+    def rows(d):
+        out = {}
+        for s in SEEDS:
+            p = EXP / d / f"results_seed{s}.jsonl"
+            if p.exists():
+                for r in map(json.loads, open(p)):
+                    out[(r["task_id"], s)] = bool(
+                        r.get("success_symbolic", r["success"]))
+        return out
+
+    W, B = rows(sd), rows(bd)
+    by_task = defaultdict(list)
+    for task, seed in sorted(set(W) & set(B)):
+        by_task[task].append((B[(task, seed)], W[(task, seed)]))
+    out = {}
+    for task, vals in by_task.items():
+        n = len(vals)
+        out[task] = {
+            "p": sum(b for b, _ in vals) / n,
+            "w": sum(w for _, w in vals) / n,
+            "rn": sum((not b) and w for b, w in vals) / n,
+            "rd": sum(not b for b, _ in vals) / n,
+            "bn": sum(b and (not w) for b, w in vals) / n,
+            "bd": sum(b for b, _ in vals) / n,
+        }
+    return out
+
+
 def stat(sd, bd, seed=0):
-    S, B = per_task(sd), per_task(bd)
-    ids = sorted(set(S) & set(B))
+    T = paired_transitions(sd, bd)
+    ids = sorted(T)
     if not ids:
         return None
-    d = [S[t] - B[t] for t in ids]
+    d = [T[t]["w"] - T[t]["p"] for t in ids]
     n = len(d)
     rng = random.Random(seed)
     bo = sorted(sum(d[rng.randrange(n)] for _ in range(n)) / n for _ in range(NB))
-    easy = [1 - S[t] for t in ids if B[t] == 1.0]
-    hard = [S[t] for t in ids if B[t] == 0.0]
+    rep = sum(T[t]["rn"] for t in ids) / sum(T[t]["rd"] for t in ids)
+    brk = sum(T[t]["bn"] for t in ids) / sum(T[t]["bd"] for t in ids)
     return {"delta": sum(d) / n, "lo": bo[int(.025 * NB)], "hi": bo[int(.975 * NB)],
-            "brk": sum(easy) / len(easy) if easy else 0.0,
-            "rep": sum(hard) / len(hard) if hard else 0.0}
+            "brk": brk, "rep": rep}
 
 
 T = "envelope_test"
@@ -115,8 +146,9 @@ def fig1():
         ax.set_axisbelow(True)
         _despine(ax)
         if which == "protected":
-            for x in xs:
-                ax.text(x, -0.02, "0.000", ha="center", va="top",
+            for x, negative_breakage in zip(xs, brks):
+                ax.text(x, min(-0.02, negative_breakage - 0.012),
+                        f"{-negative_breakage:.3f}", ha="center", va="top",
                         fontsize=6.2, color=BREAK)
     axes[0].set_ylabel("rate")
     h, l = axes[0].get_legend_handles_labels()
@@ -223,7 +255,7 @@ def fig5():
     ax.axhline(0.02, color=INK2, lw=0.8, ls=":")
     # Park the annotation in the empty upper-left quadrant (those bars are
     # 0.000) and lead to the rule, so it cannot collide with a value label.
-    ax.annotate("predicted bound (0.02)", xy=(1.45, 0.021), xytext=(-0.35, 0.072),
+    ax.annotate("locked prediction threshold (0.02)", xy=(1.45, 0.021), xytext=(-0.35, 0.072),
                 ha="left", fontsize=6.3, color=INK2,
                 arrowprops=dict(arrowstyle="->", lw=0.6, color=INK2,
                                 shrinkA=1, shrinkB=1))
@@ -341,10 +373,11 @@ def fig_bound():
         if gap > 0.02:
             ax.text((r["breakage"] + r["reject"]) / 2, i + 0.30,
                     f"{gap:.2f}", ha="center", fontsize=5.9, color=INK2)
-    ax.scatter([], [], s=30, color=BREAK, label="bound: verifier false-rejection rate")
+    ax.scatter([], [], s=30, color=BREAK,
+               label="certificate premise: false-rejection rate")
     ax.scatter([], [], s=30, color=REPAIR, label="observed breakage")
     ax.set_yticks(range(n), [r["condition"] for r in tbl], fontsize=6.8)
-    ax.set_xlabel("rate over baseline-correct tasks")
+    ax.set_xlabel("rate over paired baseline-correct executions")
     ax.set_xlim(-0.03, 1.06)
     ax.set_ylim(-0.8, n - 0.2)
     ax.grid(axis="x", color=GRID, lw=0.5)
@@ -356,6 +389,41 @@ def fig_bound():
     print("fig_bound written")
 
 
+def fig_certificate_planning():
+    """Planning curve for the estimand-aligned cluster-Hoeffding ratio bound."""
+    n = np.logspace(2, 5, 600)
+    alpha, dbar = 0.05, 0.73
+    qs = [(0.00, REPAIR, "planning FRR 0%"),
+          (0.01, INK2, "planning FRR 1%"),
+          (0.02, BREAK, "planning FRR 2%")]
+    fig, ax = plt.subplots(figsize=(5.5, 2.45))
+    for q, color, label in qs:
+        u = q + np.sqrt(math.log(1 / alpha) / (2 * n)) / dbar
+        ax.plot(n, u, lw=1.6, color=color, label=label)
+    for eps in (0.01, 0.02, 0.05, 0.10):
+        ax.axhline(eps, color=GRID, lw=0.7, ls="--", zorder=0)
+        ax.text(1.04e5, eps, f"epsilon={eps:.2f}", va="center", ha="right",
+                fontsize=6.4, color=INK2,
+                bbox=dict(facecolor="white", edgecolor="none", pad=0.4))
+    for q, color, _ in qs:
+        n_req = math.floor(math.log(1 / alpha) /
+                           (2 * dbar ** 2 * (0.05 - q) ** 2)) + 1
+        ax.scatter([n_req], [0.05], s=22, color=color, edgecolor="white",
+                   linewidth=0.5, zorder=4)
+        ax.text(n_req, 0.055, f"{n_req:,}", ha="center", va="bottom",
+                fontsize=6.2, color=color)
+    ax.set_xscale("log")
+    ax.set_xlim(100, 120000)
+    ax.set_ylim(0, 0.20)
+    ax.set_xlabel("independent labelled tasks (n)")
+    ax.set_ylabel("planned upper bound")
+    ax.grid(axis="x", color=GRID, lw=0.5)
+    ax.legend(loc="upper right", frameon=False, ncol=1, fontsize=7)
+    _despine(ax)
+    fig.savefig(ROOT / "paper" / "fig_certificate_planning.pdf")
+    print("fig_certificate_planning written")
+
+
 if __name__ == "__main__":
     fig1()
     fig3()
@@ -363,8 +431,4 @@ if __name__ == "__main__":
     fig5()
     fig6()
     fig_bound()
-    fig1()
-    fig3()
-    fig4()
-    fig5()
-    fig6()
+    fig_certificate_planning()

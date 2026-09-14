@@ -28,21 +28,22 @@ def per_task(dirname):
 
 
 def measure(struct_dir, base_dir, seed=0):
-    S, B = per_task(struct_dir), per_task(base_dir)
-    ids = sorted(set(S) & set(B))
+    from audit_claims import paired_transitions
+    trans = paired_transitions(struct_dir, base_dir)
+    ids = sorted(trans)
     if not ids:
         return None
-    d = [S[t] - B[t] for t in ids]
+    d = [trans[t]["w"] - trans[t]["p"] for t in ids]
     rng = random.Random(seed)
     n = len(d)
     boots = sorted(sum(d[rng.randrange(n)] for _ in range(n)) / n for _ in range(N_BOOT))
-    easy = [1 - S[t] for t in ids if B[t] == 1.0]
-    hard = [S[t] for t in ids if B[t] == 0.0]
+    rep_den = sum(trans[t]["repair_den"] for t in ids)
+    brk_den = sum(trans[t]["break_den"] for t in ids)
     return {"delta": sum(d) / n, "lo": boots[int(0.025 * N_BOOT)],
             "hi": boots[int(0.975 * N_BOOT)],
-            "breakage": sum(easy) / len(easy) if easy else float("nan"),
-            "repair": sum(hard) / len(hard) if hard else float("nan"),
-            "n": n, "n_easy": len(easy), "n_hard": len(hard)}
+            "breakage": sum(trans[t]["break_num"] for t in ids) / brk_den,
+            "repair": sum(trans[t]["repair_num"] for t in ids) / rep_den,
+            "n": n, "n_easy": brk_den, "n_hard": rep_den}
 
 
 def main():

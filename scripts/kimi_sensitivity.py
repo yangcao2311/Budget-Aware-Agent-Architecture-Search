@@ -10,12 +10,10 @@ primary analysis.  The sensitivity analysis retains every row and scores a
 provider error as wrong (0), so it is a worst-case check on the small residual
 provider-failure fraction.
 
-Rates use the same task-level estimands as the original Kimi analysis:
-repair is the protected-arm success fraction on tasks with baseline mean < 1;
-breakage is 1 minus the protected-arm success fraction on baseline-perfect
-tasks, with partially baseline-correct tasks retained in the denominator as
-zero contribution; net is the mean protected-minus-baseline task difference.
-Confidence intervals are percentile bootstrap intervals over task clusters.
+Within each task, paired seeds are classified as repair, breakage, or unchanged.
+Tasks are then weighted equally.  This retains partially baseline-correct tasks
+and makes the reported identity exact. Confidence intervals resample task
+clusters and recompute the conditional-rate ratios in each bootstrap draw.
 """
 from __future__ import annotations
 
@@ -109,6 +107,28 @@ def _percentile_ci(values, seed=0):
     return point, draws[int(0.025 * NB)], draws[int(0.975 * NB)]
 
 
+def _ratio_ci(values, seed=0):
+    """Bootstrap a ratio of task-level numerator/denominator contributions."""
+    if not values:
+        return float("nan"), float("nan"), float("nan")
+    n = len(values)
+
+    def ratio(sample):
+        num = sum(values[i][0] for i in sample)
+        den = sum(values[i][1] for i in sample)
+        return num / den if den else float("nan")
+
+    point = ratio(range(n))
+    rng = random.Random(seed)
+    draws = []
+    for _ in range(NB):
+        value = ratio([rng.randrange(n) for _ in range(n)])
+        if value == value:
+            draws.append(value)
+    draws.sort()
+    return point, draws[int(0.025 * len(draws))], draws[int(0.975 * len(draws))]
+
+
 def metrics(protected_dir: str, baseline_dir: str, failure_as_wrong=False):
     """Compute rates and task-clustered CIs for one condition."""
     protected = load_rows(protected_dir, failure_as_wrong)
@@ -121,30 +141,41 @@ def metrics(protected_dir: str, baseline_dir: str, failure_as_wrong=False):
     task_values = {}
     for task, seeds in by_task.items():
         keys = [(task, seed) for seed in seeds]
-        p = sum(protected[k][0] for k in keys) / len(keys)
-        b = sum(baseline[k][0] for k in keys) / len(keys)
-        task_values[task] = (p, b)
+        vals = [(baseline[k][0], protected[k][0]) for k in keys]
+        n = len(vals)
+        b = sum(x for x, _ in vals) / n
+        p = sum(x for _, x in vals) / n
+        task_values[task] = {
+            "baseline": b,
+            "workflow": p,
+            "repair": (sum((not b0) and w0 for b0, w0 in vals) / n,
+                       sum(not b0 for b0, _ in vals) / n),
+            "breakage": (sum(b0 and (not w0) for b0, w0 in vals) / n,
+                         sum(b0 for b0, _ in vals) / n),
+            "net": p - b,
+        }
 
-    # Preserve the estimand used by the original Table 7 computation.
-    repair_values = [p for p, b in task_values.values() if b < 1.0]
-    breakage_values = [
-        (1.0 - p if b == 1.0 else 0.0)
-        for p, b in task_values.values()
-        if b > 0.0
-    ]
-    net_values = [p - b for p, b in task_values.values()]
-    baseline_p = sum(b for p, b in task_values.values()) / len(task_values)
+    repair_values = [v["repair"] for v in task_values.values()]
+    breakage_values = [v["breakage"] for v in task_values.values()]
+    net_values = [v["net"] for v in task_values.values()]
+    baseline_p = sum(v["baseline"] for v in task_values.values()) / len(task_values)
+    repair = _ratio_ci(repair_values)
+    breakage = _ratio_ci(breakage_values)
+    net = _percentile_ci(net_values)
+    identity_delta = (1 - baseline_p) * repair[0] - baseline_p * breakage[0]
+    if abs(identity_delta - net[0]) > 1e-12:
+        raise AssertionError("repair--breakage identity drift")
 
     statuses = Counter(status for _, status in protected.values())
     return {
         "n_eff": len(paired),
         "n_tasks": len(task_values),
-        "n_repair": len(repair_values),
-        "n_breakage": len(breakage_values),
+        "n_repair": sum(v["repair"][1] for v in task_values.values()),
+        "n_breakage": sum(v["breakage"][1] for v in task_values.values()),
         "baseline": baseline_p,
-        "repair": _percentile_ci(repair_values),
-        "breakage": _percentile_ci(breakage_values),
-        "net": _percentile_ci(net_values),
+        "repair": repair,
+        "breakage": breakage,
+        "net": net,
         "protected_status": dict(statuses),
         "failure_as_wrong": failure_as_wrong,
     }

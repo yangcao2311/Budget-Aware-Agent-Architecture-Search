@@ -39,15 +39,16 @@ ROOT = Path(__file__).resolve().parent.parent
 EXP = ROOT / "experiments"
 
 ARM2_WF = {"code": wf_incumbent_refine, "math": wf_incumbent_refine_cot}
-BASELINE_SUFFIX = {"code": "envelope_test/direct_code_loose",
-                   "math": "envelope_test/cot_math_loose"}
+BASELINE_STRUCTURE = {"code": "direct", "math": "cot"}
 
 
-def load_baseline_by_seed(fam: str, tag_prefix: str = "", seeds=(0, 1, 2)) -> dict:
+def load_baseline_by_seed(fam: str, tier: str = "loose",
+                          tag_prefix: str = "", seeds=(0, 1, 2)) -> dict:
     """seed -> {task_id: (solution_text, correct)}"""
     out = defaultdict(dict)
     for s in seeds:
-        p = EXP / f"{tag_prefix}{BASELINE_SUFFIX[fam]}" / f"results_seed{s}.jsonl"
+        suffix = f"envelope_test/{BASELINE_STRUCTURE[fam]}_{fam}_{tier}"
+        p = EXP / f"{tag_prefix}{suffix}" / f"results_seed{s}.jsonl"
         for r in map(json.loads, open(p)):
             ok = bool(r.get("success_symbolic", r["success"]))
             out[s][r["task_id"]] = (r.get("solution") or "", ok)
@@ -59,49 +60,71 @@ def main():
     ap.add_argument("--families", nargs="+", default=["code", "math"])
     ap.add_argument("--n", type=int, default=150)
     ap.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
+    ap.add_argument("--tiers", nargs="+", choices=["tight", "loose"],
+                    default=["loose"])
     ap.add_argument("--tag", default="provenance_causal")
     ap.add_argument("--baseline-tag-prefix", default="",
                     help="Prefix for this model's baseline directory, e.g. glm53f_.")
     ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--stable-correct-only", action="store_true",
+                    help="Run only tasks whose model-specific baseline is correct in every requested seed. This is the primary breakage population.")
     args = ap.parse_args()
 
-    caps = BUDGET_TIERS["loose"]
     rows = []
     for fam in args.families:
-        tasks = load_split(fam, "test")[:args.n]
-        by_id = {t["id"]: t for t in tasks}
-        base = load_baseline_by_seed(fam, args.baseline_tag_prefix, args.seeds)
+        source_tasks = load_split(fam, "test")[:args.n]
+        for tier in args.tiers:
+            caps = BUDGET_TIERS[tier]
+            tasks = list(source_tasks)
+            by_id = {t["id"]: t for t in tasks}
+            base = load_baseline_by_seed(
+                fam, tier, args.baseline_tag_prefix, args.seeds)
+            if args.stable_correct_only:
+                population_base = load_baseline_by_seed(
+                    fam, tier, args.baseline_tag_prefix, (0, 1, 2)
+                )
+                stable_ids = {
+                    task_id for task_id in by_id
+                    if all(task_id in population_base[s] and population_base[s][task_id][1]
+                           for s in (0, 1, 2))
+                }
+                tasks = [t for t in tasks if t["id"] in stable_ids]
+                print(f"[primary population] {fam}/{tier}: {len(tasks)} tasks "
+                      "baseline-correct in every requested seed")
 
-        for seed in args.seeds:
-            ref = base[seed]
+            for seed in args.seeds:
+                ref = base[seed]
             # arm 1: explicit reuse -- inject each task's reference solution
-            tasks_assign = [
-                {**t, "_assign_solution": ref[t["id"]][0]} for t in tasks
-                if t["id"] in ref
-            ]
-            s1 = evaluate(wf_assign_refine(), tasks_assign, caps,
-                          run_name=f"{args.tag}/arm1_assign_{fam}_loose",
+                tasks_assign = [
+                    {**t, "_assign_solution": ref[t["id"]][0]} for t in tasks
+                    if t["id"] in ref
+                ]
+                s1 = evaluate(wf_assign_refine(), tasks_assign, caps,
+                          run_name=f"{args.tag}/arm1_assign_{fam}_{tier}",
                           seed=seed, use_cache=False, workers=args.workers)
-            rows.append({**s1, "family": fam, "arm": "arm1_assign"})
-            print(f"[arm1 assign  ] {fam:5s} seed={seed} n={s1['n']:3d} "
+                rows.append({**s1, "family": fam, "tier": tier,
+                             "arm": "arm1_assign"})
+                print(f"[arm1 assign  ] {fam:5s}/{tier:5s} seed={seed} n={s1['n']:3d} "
                   f"succ={s1['success_rate']:.3f} $/task={s1['usd_per_task']:.5f} "
                   f"errors={s1.get('errors', 0)}")
 
             # arm 2: same-policy regeneration, cache off, same seed
-            s2 = evaluate(ARM2_WF[fam](), tasks, caps,
-                          run_name=f"{args.tag}/arm2_samepolicy_{fam}_loose",
+                s2 = evaluate(ARM2_WF[fam](), tasks, caps,
+                          run_name=f"{args.tag}/arm2_samepolicy_{fam}_{tier}",
                           seed=seed, use_cache=False, workers=args.workers)
-            rows.append({**s2, "family": fam, "arm": "arm2_samepolicy"})
-            print(f"[arm2 same-pol] {fam:5s} seed={seed} n={s2['n']:3d} "
+                rows.append({**s2, "family": fam, "tier": tier,
+                             "arm": "arm2_samepolicy"})
+                print(f"[arm2 same-pol] {fam:5s}/{tier:5s} seed={seed} n={s2['n']:3d} "
                   f"succ={s2['success_rate']:.3f} $/task={s2['usd_per_task']:.5f} "
                   f"errors={s2.get('errors', 0)}")
 
             # arm 3: different-policy regeneration (vanilla), cache off
-            s3 = evaluate(_wf_verify_refine(3), tasks, caps,
-                          run_name=f"{args.tag}/arm3_diffpolicy_{fam}_loose",
+                s3 = evaluate(_wf_verify_refine(3), tasks, caps,
+                          run_name=f"{args.tag}/arm3_diffpolicy_{fam}_{tier}",
                           seed=seed, use_cache=False, workers=args.workers)
-            rows.append({**s3, "family": fam, "arm": "arm3_diffpolicy"})
-            print(f"[arm3 diff-pol] {fam:5s} seed={seed} n={s3['n']:3d} "
+                rows.append({**s3, "family": fam, "tier": tier,
+                             "arm": "arm3_diffpolicy"})
+                print(f"[arm3 diff-pol] {fam:5s}/{tier:5s} seed={seed} n={s3['n']:3d} "
                   f"succ={s3['success_rate']:.3f} $/task={s3['usd_per_task']:.5f} "
                   f"errors={s3.get('errors', 0)}")
 

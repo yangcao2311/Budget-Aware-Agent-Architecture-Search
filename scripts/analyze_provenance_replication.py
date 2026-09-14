@@ -68,11 +68,15 @@ def main():
     ap.add_argument("--baseline-tag-prefix", required=True)
     ap.add_argument("--causal-tag", required=True)
     ap.add_argument("--output", required=True)
+    ap.add_argument("--families", nargs="+", choices=("code", "math"),
+                    default=["code", "math"])
+    ap.add_argument("--primary-only", action="store_true",
+                    help="Report only the stable-baseline-correct breakage/path estimand.")
     args = ap.parse_args()
 
     result = {"baseline_tag_prefix": args.baseline_tag_prefix,
               "causal_tag": args.causal_tag, "families": {}}
-    for fam in ("code", "math"):
+    for fam in args.families:
         base = load(f"{args.baseline_tag_prefix}{BASE_SUFFIX[fam]}")
         arms = {arm: load(f"{args.causal_tag}/{arm}_{fam}_loose")
                 for arm in ARM_NAMES}
@@ -84,8 +88,10 @@ def main():
 
         fam_out = {"stable_baseline_correct_tasks": len(stable_correct),
                    "arms": {}}
+        breakage_by_arm = {}
         for arm_idx, arm in enumerate(ARM_NAMES):
             task_breakage = []
+            task_breakage_by_id = {}
             task_acceptance = []
             task_reject_refine = []
             matched_pairs = provider_errors = 0
@@ -105,7 +111,9 @@ def main():
                     acc.append(float(p == "acceptance"))
                     rej.append(float(p == "rejection_refinement"))
                 if vals:
-                    task_breakage.append(sum(vals) / len(vals))
+                    task_rate = sum(vals) / len(vals)
+                    task_breakage.append(task_rate)
+                    task_breakage_by_id[task_id] = task_rate
                     task_acceptance.append(sum(acc) / len(acc))
                     task_reject_refine.append(sum(rej) / len(rej))
 
@@ -117,6 +125,59 @@ def main():
                 "acceptance_path": mean_ci(task_acceptance, 200 + arm_idx),
                 "rejection_refinement_path": mean_ci(task_reject_refine, 300 + arm_idx),
             }
+            per_seed = {}
+            for s in SEEDS:
+                matched = [
+                    task_id for task_id in base
+                    if valid(base[task_id].get(s)) and
+                    valid(arms[arm].get(task_id, {}).get(s))
+                ]
+                reference_correct = [
+                    task_id for task_id in matched
+                    if base[task_id][s].get("success")
+                ]
+                path_counts = defaultdict(int)
+                for task_id in reference_correct:
+                    path_counts[path_of(arms[arm][task_id][s])] += 1
+                denominator = len(reference_correct)
+                per_seed[str(s)] = {
+                    "matched_tasks": len(matched),
+                    "baseline_correct_tasks": denominator,
+                    "breakage": (
+                        sum(path_counts[path] for path in
+                            ("acceptance", "rejection_refinement", "unclassified")) /
+                        denominator if denominator else None
+                    ),
+                    "acceptance_path": (
+                        path_counts["acceptance"] / denominator
+                        if denominator else None
+                    ),
+                    "rejection_refinement_path": (
+                        path_counts["rejection_refinement"] / denominator
+                        if denominator else None
+                    ),
+                }
+            fam_out["arms"][arm]["per_seed_all_baseline_correct"] = per_seed
+            breakage_by_arm[arm] = task_breakage_by_id
+
+        contrasts = {}
+        for contrast_idx, (left, right) in enumerate((
+            ("arm1_assign", "arm2_samepolicy"),
+            ("arm1_assign", "arm3_diffpolicy"),
+            ("arm2_samepolicy", "arm3_diffpolicy"),
+        )):
+            common = sorted(set(breakage_by_arm[left]) & set(breakage_by_arm[right]))
+            values = [breakage_by_arm[right][task_id] - breakage_by_arm[left][task_id]
+                      for task_id in common]
+            contrasts[f"{right}_minus_{left}"] = {
+                "effective_tasks": len(common),
+                "difference": mean_ci(values, 500 + contrast_idx),
+            }
+        fam_out["paired_breakage_contrasts"] = contrasts
+
+        if args.primary_only:
+            result["families"][fam] = fam_out
+            continue
 
         # Pair-level audit over all tasks: p, repair, breakage, net. This is
         # secondary because it allows baseline correctness to vary by replicate.
@@ -162,4 +223,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -44,8 +44,10 @@ ATTEMPT_LOG = ROOT / "experiments" / "kimi_backfill_attempts.jsonl"
 # (run_dir, structure_key, family, tier, split, n, mask)
 CELLS = [
     ("kimi_envelope_test/incumbent_refine_code_loose", "incumbent_refine", "code", "loose", "test", 150, 1.0),
+    ("kimi_envelope_test/incumbent_refine_code_tight", "incumbent_refine", "code", "tight", "test", 150, 1.0),
     ("kimi_envelope_test/direct_code_loose", "direct", "code", "loose", "test", 150, 1.0),
     ("kimi_envelope_test/incumbent_refine_cot_math_loose", "incumbent_refine_cot", "math", "loose", "test", 150, 1.0),
+    ("kimi_envelope_test/incumbent_refine_cot_math_tight", "incumbent_refine_cot", "math", "tight", "test", 150, 1.0),
     ("kimi_envelope_test/cot_math_loose", "cot", "math", "loose", "test", 150, 1.0),
     ("kimi_envelope_logic_prospective/incumbent_refine_logic_loose", "incumbent_refine", "logic", "loose", "logic_prospective", 120, 1.0),
     ("kimi_envelope_logic_prospective/direct_logic_loose", "direct", "logic", "loose", "logic_prospective", 120, 1.0),
@@ -98,6 +100,52 @@ def log_attempt(record: dict) -> None:
         f.write(json.dumps(record) + "\n")
 
 
+def refresh_summaries(run_dir: str, seed: int, rows: list[dict]) -> None:
+    """Keep derived summaries synchronized with the merged raw rows.
+
+    The raw JSONL remains authoritative.  Historical wall-clock duration is
+    preserved because it cannot be reconstructed after a retry-only merge;
+    all outcome, usage, and failure fields are recomputed.
+    """
+    out_dir = EXP / run_dir
+    summary_path = out_dir / f"summary_seed{seed}.json"
+    old = json.loads(summary_path.read_text()) if summary_path.exists() else {}
+    n = len(rows)
+    succ = sum(bool(r.get("success")) for r in rows)
+    usd = [r.get("budget", {}).get("usd", 0) for r in rows]
+    calls = [r.get("budget", {}).get("llm_calls", 0) for r in rows]
+    toks = [r.get("budget", {}).get("in_tokens", 0) +
+            r.get("budget", {}).get("out_tokens", 0) for r in rows]
+    secs = sorted(r.get("budget", {}).get("wall_sec", 0) for r in rows)
+    summary = {
+        **old,
+        "run": run_dir,
+        "seed": seed,
+        "n": n,
+        "success_rate": round(succ / n, 4) if n else 0,
+        "usd_per_task": round(sum(usd) / n, 5) if n else 0,
+        "usd_per_success": round(sum(usd) / succ, 5) if succ else None,
+        "llm_calls_per_task": round(sum(calls) / n, 2) if n else 0,
+        "tokens_per_task": round(sum(toks) / n, 1) if n else 0,
+        "p50_sec": round(secs[n // 2], 2) if n else 0,
+        "p95_sec": round(secs[int(n * 0.95)] if n > 1 else secs[0], 2) if n else 0,
+        "total_usd": round(sum(usd), 4),
+        "reserve_rejected": sum(r.get("status") == "reserve_rejected" for r in rows),
+        "over_budget": sum(str(r.get("status", "")).startswith("budget_exceeded") for r in rows),
+        "errors": sum(str(r.get("status", "")).startswith("error") for r in rows),
+    }
+    summary_path.write_text(json.dumps(summary, indent=2) + "\n")
+
+    aggregate_path = EXP / f"{run_dir.split('/', 1)[0]}_summary.jsonl"
+    if aggregate_path.exists():
+        aggregate = [json.loads(line) for line in aggregate_path.read_text().splitlines()
+                     if line.strip()]
+        for i, row in enumerate(aggregate):
+            if row.get("run") == run_dir and row.get("seed") == seed:
+                aggregate[i] = {**row, **summary}
+        aggregate_path.write_text("".join(json.dumps(row) + "\n" for row in aggregate))
+
+
 def smoke_test(n: int, workers: int) -> None:
     """Cheap, realistic-length probe before any real backfill: a code and a
     math task at the actual node config (solve_direct/solve_cot, real token
@@ -143,6 +191,7 @@ def main():
             rows = [json.loads(l) for l in open(f)]
             bad_ids = [r["task_id"] for r in rows if r["status"] not in ("completed", "reserve_rejected")]
             if not bad_ids:
+                refresh_summaries(run_dir, seed, rows)
                 continue
             retry_tasks = [by_id[i] for i in bad_ids if i in by_id]
             print(f"{run_dir} seed{seed}: retrying {len(retry_tasks)} tasks")
@@ -159,6 +208,7 @@ def main():
             with open(f, "w") as fh:
                 for r in merged:
                     fh.write(json.dumps(r) + "\n")
+            refresh_summaries(run_dir, seed, merged)
             log_attempt({"phase": "cell_done", "run_dir": run_dir, "seed": seed,
                          "success_rate": s["success_rate"], "n_retried": len(retry_tasks),
                          "still_bad": len(still_bad_ids), "still_bad_ids": still_bad_ids,
