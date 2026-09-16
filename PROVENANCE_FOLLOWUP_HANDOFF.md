@@ -60,7 +60,13 @@ B/P numbers. B was confirmed to have genuinely overlapping requests during
 execution (`vllm:num_requests_running` observed at 7-8 concurrently via
 `/metrics`, saved in
 `experiments/qwen_serving_regime_20260915_B_metrics_snapshot.txt`) -- this
-is not merely "max-num-seqs was set."
+is not merely "max-num-seqs was set." P was confirmed to have genuine
+prefix-cache activity during execution: vLLM's own periodic engine log
+(`experiments/qwen_serving_regime_20260915_vllm_P.log`, 2187 stat lines
+logged every ~10s) reports `Prefix cache hit rate` climbing from 0% at
+startup to 39.5% by the end of the 450-row run, as the shared chat-
+template prefix across requests is increasingly reused -- this is not
+merely "prefix caching was enabled."
 
 **This is a real, non-null result, not a null result to report and move
 on from**: on identical hardware, weights, and request, both batched
