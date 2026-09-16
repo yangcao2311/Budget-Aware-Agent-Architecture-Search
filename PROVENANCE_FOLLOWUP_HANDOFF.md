@@ -230,3 +230,128 @@ JSON regardless). No task was filtered by correctness or by arm outcome.
 - The GLM clean-matrix first-draft backfill (original Part B) remains
   un-run; it was explicitly superseded by the budget-parity design above
   before any Zhipu call was made, per the operator's instruction.
+
+## Part C: GLM-4-Flash code-domain budget-parity replication (2026-09-17)
+
+**This is a code-domain REPLICATION of the completed math budget-parity
+follow-up (Part B), using the identical design -- not a cross-domain
+replication claim.** Two cohorts (`prior-tight`, `prior-loose`, named
+after their inherited frozen reference directories -- not a budget-tier
+manipulation), two arms (assign, same_policy), 150 tasks x seeds 0/1/2
+each, 1800 rows total.
+
+**Inputs**: `experiments/glm4flash_repaired_matrix_clean_20260910_
+envelope_test/direct_code_{tight,loose}/results_seed{0,1,2}.jsonl` and
+`data/code_test.jsonl`, transferred by the operator as
+`glm_budget_parity_code_references_20260916.tar.gz` (package SHA256
+`bb0f06c655d2e688ad7b3acfd3015b871af0631ccfbcd7e841250bed61df4d62`,
+confirmed before extraction), all 7 files verified against the package's
+own `SHA256SUMS` -- all `OK`, none regenerated.
+
+**Design differences from math, both frozen before any call and both
+required by the domain itself, not chosen post-hoc**:
+- `hbws.dsl.wf_incumbent_refine` (prompt_id `solve_direct`, the code
+  family's own "direct" first-draft policy) replaces math's
+  `wf_incumbent_refine_cot` for the same_policy arm.
+- `DRAFT_EXTRA_OUT_TOKENS = 1024` (code's own "g" node cap), not math's
+  1536 -- verified in
+  `tests/test_glm_budget_parity_code_noninvasive.py::test_budget_parity_arithmetic_matches_code_draft_cost`.
+- Code's verify node reserves a TOOL call (running the task's own visible
+  `feedback_tests` in the sandbox), never an LLM call -- so `SUFFIX_CAPS`
+  (reused verbatim from the math version) is used only by up to 4 refine
+  calls in this domain (discovered while writing the mock test: the
+  `v -> r` edge has no loop cap, only `r -> v` does, at `max_iter=3`, so
+  a verifier that never passes drives 4 refines, not 3 -- confirmed by
+  direct trace inspection and covered by
+  `test_same_policy_worst_case_refine_loop_never_gated_under_suffix_caps`
+  / `test_assign_worst_case_refine_loop_never_gated_under_suffix_caps`,
+  both of which also assert this worst case is never suffix-gated).
+
+**Directional prediction, frozen in the manifest before any real GLM
+call** (verbatim, per operator instruction): the code-domain assignment
+advantage was expected to be smaller than math's, possibly
+indistinguishable, because (a) code's verifier runs the task's own tests
+rather than a gold-free self-consistency check, so incorrect regenerated
+drafts are rejected far more reliably before acceptance, and (b) the
+triggering event (a non-byte-identical first-accepted draft) is itself
+~4x rarer in code (94.9%/93.0% byte-identical) than math (32.6%/23.8%).
+
+**Run**: workers=2 throughout (no rate-limit retries observed -- code
+verification runs locally in the sandbox, so far fewer GLM calls per row
+than math). All 1800 rows `completed`, 0 execution errors, 0
+`over_budget`. Wall time: ~32 minutes total for all 4 cells (vs. ~9-10
+hours for the math version's 1800 rows) -- code's verify cost is a local
+sandbox run, not an additional GLM call.
+
+**Result (`experiments/glm_budget_parity_code_20260917_analysis.json`)**:
+
+| cohort | arm | accuracy | repair (of ref-wrong) | breakage (of ref-correct) | counterfactual blocked under original tier caps |
+|---|---|---|---|---|---|
+| tight | assign | 0.7244 | 10.1% (14/138) | **0.0%** (0/312) | 11/450 |
+| tight | same_policy | 0.7111 | 8.0% (11/138) | **1.0%** (3/312) | 71/450 |
+| loose | assign | 0.7244 | 8.8% (12/136) | **0.0%** (0/314) | 0/450 |
+| loose | same_policy | 0.7333 | 13.2% (18/136) | **0.6%** (2/314) | 0/450 |
+
+Accuracy delta (assign - same_policy): tight +0.0133, loose -0.0089 --
+opposite signs, both tiny.
+
+**The prediction held**: the code-domain assign-vs-same_policy asymmetry
+is far smaller than math's (breakage differs by 0-3 events out of
+312-314 reference-correct positions per cohort, vs. math's 20-22-event
+gaps out of ~347) and is not even consistent in direction between
+cohorts (tight slightly favors assign, loose slightly favors
+same_policy) -- reported as indistinguishable, exactly as the frozen
+prediction anticipated, in both cohorts, without adding conditions,
+swapping metrics, or omitting either cohort. `ci_is_degenerate` is not
+triggered for any of these cells' breakage/repair rates (each has >2
+events), but the intervals are wide relative to the tiny point estimates
+and are reported as post-hoc descriptive, not as evidence the difference
+is exactly zero.
+
+**Counterfactual original-tier-caps audit** (never affects the actual
+run; simulated post-hoc from each row's own `trace` plus its raw call
+log, replayed against a fresh shadow ledger using the pre-budget-parity
+`BUDGET_TIERS[cohort]` caps): under the ORIGINAL tight-tier caps
+(`max_llm_calls=4`), same_policy's extra draft call combined with its
+refine calls would have been gated at 71/450 positions (15.8%) versus
+assign's 11/450 (2.4%) -- a real, substantial admission-gating asymmetry
+that the original design's confound would have produced in this domain
+too. Under the original loose-tier caps, neither arm would have been
+gated at all (0/450 each) -- loose's caps were already generous enough
+for code's shorter LLM-call footprint. This confirms the original
+confound was real specifically for code/tight, even though the
+budget-parity-corrected behavioral difference (breakage/repair) turns out
+to be small once that confound is removed.
+
+**Secondary: stratified by same_policy's first-draft outcome** (did the
+independently regenerated first draft pass the first verify?):
+
+| cohort | first draft passed: n, final accuracy | first draft rejected: n, final accuracy |
+|---|---|---|
+| tight | 352, 87.2% | 98, 13.3% |
+| loose | 357, 87.4% | 93, 19.4% |
+
+As expected, final accuracy is overwhelmingly determined by whether the
+independently regenerated first draft itself passed verification --
+consistent with code's task-test verifier being decisive rather than
+gold-free-heuristic-permissive.
+
+**New files** (code-domain only; none of Parts A/B's files or the frozen
+math source touched): `scripts/run_glm_budget_parity_code.py`,
+`run_glm_budget_parity_code_all_cells.sh`,
+`build_glm_budget_parity_code_roster.py`, `analyze_glm_budget_parity_code.py`,
+`tests/test_glm_budget_parity_code_noninvasive.py`. Reuses
+`glm_exact_reservation.py` / `glm_call_logger.py` / `glm_key_rotation.py`
+unchanged from Part B.
+
+**Validation**: `python -m pytest tests/` 18/18 passed (3 new for this
+part). 1800/1800 rows, 0 `error:`-prefixed statuses, 8 result files x 150
+unique task ids. Full SHA-256 inventory:
+`experiments/glm_budget_parity_code_20260917_sha256_inventory.txt`.
+
+**Known limitations**: `ORIGINAL_TIER_CAPS` in the counterfactual audit
+reserves each replayed call using `glm_exact_reservation`'s same-family
+proxy estimator (recomputed from the actual logged request messages), not
+the exact reservation the real run made at execution time -- a
+faithful-but-approximate replay, not a byte-exact reproduction of what an
+original-caps run would have measured live.
