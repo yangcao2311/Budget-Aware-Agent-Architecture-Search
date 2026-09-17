@@ -355,3 +355,139 @@ proxy estimator (recomputed from the actual logged request messages), not
 the exact reservation the real run made at execution time -- a
 faithful-but-approximate replay, not a byte-exact reproduction of what an
 original-caps run would have measured live.
+
+## Part D: Factorial budget ablation -- call cap x output-token cap (2026-09-17)
+
+**Question**: the paper's tight/loose budget profiles move the LLM-call
+cap and the per-task output-token cap together. Which one (if either)
+actually drives the breakage effect, and is there an interaction?
+
+**Design**: 2x2 grid decomposing `hbws.ledger.BUDGET_TIERS`'s tight/loose
+profiles into their two named axes, with the three auxiliary dimensions
+(`max_in_tokens`, `max_tool_calls`, `max_wall_sec`, `max_usd`) bundled
+with whichever axis they naturally track (count-of-actions with the call
+cap; token volume with the token cap) -- see
+`scripts/run_factorial_budget_ablation.py`'s module docstring for the
+exact bundling and rationale.
+
+| cell | call cap | token cap | == existing tier? |
+|---|---|---|---|
+| A | tight (4) | tight (2000) | `BUDGET_TIERS["tight"]` exactly |
+| B | tight (4) | loose (4000) | -- |
+| C | loose (8) | tight (2000) | -- |
+| D | loose (8) | loose (4000) | `BUDGET_TIERS["loose"]` exactly |
+
+**Corner-reproduction check**: `CELLS["A"] == BUDGET_TIERS["tight"]` and
+`CELLS["D"] == BUDGET_TIERS["loose"]` are asserted at import time in
+`run_factorial_budget_ablation.py` (the process will not run at all if
+this fails) and re-confirmed independently in the analysis JSON and by
+`tests/test_factorial_budget_ablation_noninvasive.py::test_corner_cells_equal_budget_tiers_exactly`.
+**Both hold exactly.**
+
+**Sizing**: per the operator's frozen power simulation, the clean/normal
+verifier's baseline breakage (~0.02) gives 9-27% power to detect even a
+50% relative reduction -- reproducing the uninformative null already seen
+in the code budget-parity replication (Part C). The fully-masked verifier
+(mask fraction 0.0, the existing, unmodified `scripts/run_envelope.py::
+mask_tests` mechanism) was specified to have baseline breakage ~0.235,
+giving 84-100% power. **Domain: code. Verifier: fully masked. Workflow:
+`hbws.dsl.wf_incumbent_refine`, self-drafting arm only** (not the
+assign-vs-same_policy budget-parity design -- no separate drafting/suffix
+accounting here, by design).
+
+A mechanical fact discovered while sizing the mock tests, worth recording
+explicitly: `hbws.verify.run_code_tests` returns `(False, "no tests are
+available...")` -- never a vacuous pass -- when `feedback_tests` is empty
+(mask 0.0). So under this condition, verify **never** passes, for any
+candidate, regardless of correctness. Combined with the suffix graph's
+`v -> r` edge having no loop cap (only `r -> v` does, at `max_iter=3`),
+every task deterministically drives exactly 4 refines (5 LLM calls: g +
+r1..r4) before the graph's own termination condition is reached, with no
+final re-verify after the 4th refine. Tight's `max_llm_calls=4` cannot
+reach this natural termination (it allows only g + 3 refines before the
+4th call is refused), so **every task under a tight call cap is expected
+to hit `reserve_rejected` deterministically** -- confirmed empirically
+(cells A and B: 150/150 `reserve_rejected` in every seed).
+
+**Per-iteration logging** (`scripts/glm_iteration_logger.py`): for every
+LLM call, records the reservation vector computed before the call (using
+the SAME installed estimator hbws.llm.chat would use internally, so it is
+not a re-derivation error), whether it was refused, the full request, the
+exact response text, and usage. `scripts/reconstruct_iterations.py`
+combines this with each row's own `trace` to produce, per task/seed/cell,
+a full per-iteration record (candidate text, masked-verifier verdict,
+correctness under the REAL held-out `grading_tests` -- graded offline,
+never seen by the runner or the masked verifier) -- 1800 rows worth of
+per-iteration data now sit in
+`experiments/factorial_budget_ablation_20260917_{A,B,C,D}_iterations.jsonl`,
+making any tighter/looser cap question replayable without another GLM
+call.
+
+**Run**: workers=2, all 4 cells, 0 execution errors, 0 `over_budget`
+(genuine settle-overrun defects) across all 1800 rows.
+`reserve_rejected` counts: A=450/450, B=450/450, C=36/450, D=0/450 (all
+in the expected direction -- call cap dominates; token cap alone produces
+a small nonzero residual at cell C that the 10-task preflight, by chance,
+did not surface, underscoring why the full 150-task roster matters).
+
+**Result (`experiments/factorial_budget_ablation_20260917_analysis.json`)**:
+
+| cell | breakage rate | breakage events/denominator | repair rate |
+|---|---|---|---|
+| A (tight, tight) | 6.75% | 21/311 | 8.63% (12/139) |
+| B (tight, loose) | 6.71% | 21/313 | 7.30% (10/137) |
+| C (loose, tight) | 6.73% | 21/312 | 10.14% (14/138) |
+| D (loose, loose) | 6.71% | 21/313 | 5.84% (8/137) |
+
+Main effects on breakage (task-clustered paired bootstrap, 10000 draws,
+post-hoc descriptive): call-cap main effect ~0 (95% CI [-0.012, 0.013]),
+token-cap main effect ~0 (95% CI [-0.011, 0.012]), interaction ~0 (95% CI
+[-0.027, 0.027]). Verified this is not a bug (not the same 21 task/seed
+pairs breaking in every cell -- e.g. A and D's breakage sets overlap only
+10/21): each cell's 150-task x 3-seed first draft is byte-identical
+across all four cells (same seed, same temperature-0 prompt, cap-
+independent), so which tasks start "reference-correct" is necessarily
+identical across cells, but WHICH of those end up broken differs
+cell-to-cell -- the totals landing on the same count (21) across all four
+cells is a genuine numeric coincidence in this particular roster, not an
+artifact of the analysis.
+
+**Power reality check, reported honestly rather than silently absorbed**:
+the frozen simulation assumed baseline breakage 0.235 for this condition;
+the observed pooled breakage rate here is ~0.067, roughly a third of
+that. The achieved power to detect a 30-50% relative main effect is
+correspondingly lower than the planned 84-100%. **The near-zero main
+effects above must be read against this weaker-than-planned power** --
+this run does not have the statistical power originally budgeted for,
+and the null should not be reported as strong evidence that call cap and
+token cap have no true effect on breakage; it is a genuine null at the
+power this run actually achieved.
+
+**Terminal-path categories**: `pass` = 0 in every cell (mechanically
+expected under full masking, as derived above); 100% of completed and
+gated rows fall in the `reject` category (verify always rejects); no
+`no_verify` or `verify_gated` rows occurred (tool-call caps, generous
+relative to the 4 verifies ever attempted, were never the binding
+constraint in this design).
+
+**New files**: `scripts/run_factorial_budget_ablation.py`,
+`run_factorial_budget_ablation_all_cells.sh`,
+`build_factorial_masked_code_roster.py`, `glm_iteration_logger.py`,
+`reconstruct_iterations.py`, `analyze_factorial_budget_ablation.py`,
+`tests/test_factorial_budget_ablation_noninvasive.py`. Reuses
+`glm_exact_reservation.py` unchanged from Parts B/C.
+
+**Validation**: `python -m pytest tests/` 21/21 passed (3 new for this
+part, including a corner-reproduction assertion and a reservation-
+refusal-is-logged regression test). 1800/1800 rows across all 4 cells, 0
+`error:`-prefixed statuses (only `completed`/`reserve_rejected`, both
+legitimate outcomes of this design). Full SHA-256 inventory:
+`experiments/factorial_budget_ablation_20260917_sha256_inventory.txt`.
+
+**Known limitations**: `glm_exact_reservation`'s same-family proxy
+tokenizer (not GLM-4-Flash's exact tokenizer) is used for the logged
+`reservation_request` vectors, same caveat as Parts B/C. The
+reconstruction's per-iteration `verdict` field is inferred from trace
+node order (generic logic, works for any mask fraction), not hardcoded
+to "always rejects" -- confirmed to independently reproduce the "always
+rejects under full mask" mechanical fact rather than assuming it.
