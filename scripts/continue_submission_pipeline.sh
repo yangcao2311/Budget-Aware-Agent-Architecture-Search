@@ -1,7 +1,7 @@
 #!/bin/zsh
 set -euo pipefail
 
-repo_dir="/Users/caoyang/Desktop/Research/Agent/Agent_repo"
+repo_dir="${0:A:h:h}"
 cd "$repo_dir"
 
 # Wait for the final seed-2 arm file before issuing another provider call.
