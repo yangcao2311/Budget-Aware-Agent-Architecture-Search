@@ -1,7 +1,7 @@
-# Repair, Breakage, or Blocked
+# Repair, Breakage, and Blocked Execution
 
-Code accompanying the paper *Repair, Breakage, or Blocked: A Path-Level
-Regression Audit of Verify--Refine Workflows*. The repository intentionally
+Code accompanying the paper *Repair, Breakage, and Blocked Execution: A Path-Level
+Regression Audit of Verify–Refine Workflows*. The repository intentionally
 contains the reusable workflow implementation and analysis code only; paper
 sources, figures, raw logs, frozen data files, and credentials are kept out of
 the public code package.
