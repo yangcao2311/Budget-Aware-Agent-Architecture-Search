@@ -18,7 +18,7 @@ BREAK = "#eb6834"
 INK = "#0b0b0b"
 GRID = "#d8d7d2"
 ARMS = ("arm1_assign", "arm2_samepolicy", "arm3_diffpolicy")
-LABELS = ("assign", "same-policy", "different-policy")
+LABELS = ("assign", "same-policy", "different-policy\nstress test")
 
 
 def main() -> None:
@@ -52,7 +52,11 @@ def main() -> None:
         ax.axhline(0, color="#555555", lw=.65)
         ax.grid(axis="y", color=GRID, lw=.5)
         ax.set_axisbelow(True)
-        ax.set_title(key.replace("/", " / "))
+        if key == "math/tight":
+            ax.set_facecolor("#f1f1f1")
+            ax.set_title("math / tight (censored)")
+        else:
+            ax.set_title(key.replace("/", " / "))
         ax.set_xticks(x, LABELS, rotation=12, ha="right")
         ax.set_ylim(-.58, .58)
         ax.spines[["top", "right"]].set_visible(False)

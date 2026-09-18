@@ -164,7 +164,7 @@ def fig1():
 def fig3():
     """The budget floor: both terms move, and they move in opposite directions."""
     tiers = ["tight", "unseen", "loose"]
-    xlab = ["\\$0.10", "\\$0.15", "\\$0.25"]
+    xlab = ["tight", "unseen", "loose"]
     fig, axes = plt.subplots(1, 2, figsize=(5.5, 1.85),
                              gridspec_kw={"wspace": 0.3})
     for ax, fam in zip(axes, ["code", "math"]):
@@ -183,20 +183,54 @@ def fig3():
                     ecolor=INK2, elinewidth=0.9, capsize=2.5, label="net effect")
         ax.axhline(0, color=INK2, lw=0.7)
         ax.set_xticks(x, xlab)
-        ax.set_xlabel("per-task budget")
+        ax.set_xlabel("composite budget profile")
         ax.set_title(f"{fam}: vanilla verify–refine", color=INK, pad=3)
         ax.grid(color=GRID, lw=0.5)
         ax.set_axisbelow(True)
         _despine(ax)
     axes[0].set_ylabel("rate")
-    axes[0].legend(loc="center left", frameon=False, handlelength=1.5,
-                   borderpad=0.2, labelspacing=0.25)
-    axes[0].annotate("breakage overtakes repair\nbelow the entry fee",
-                     xy=(0.06, 0.20), xytext=(0.55, 0.10), fontsize=6.4,
-                     color=INK2, ha="left",
+    for ax in axes:
+        lo_y, hi_y = ax.get_ylim()
+        ax.set_ylim(lo_y, hi_y + 0.34 * (hi_y - lo_y))
+    axes[0].legend(loc="upper right", frameon=False, handlelength=1.5,
+                   borderpad=0.2, labelspacing=0.22, ncol=3, columnspacing=0.9,
+                   handletextpad=0.4, fontsize=6.4)
+    axes[0].annotate("breakage overtakes\nrepair at tight", xy=(0.06, 0.21),
+                     xytext=(0.9, 0.06), fontsize=6.4, color=INK2, ha="left",
                      arrowprops=dict(arrowstyle="->", lw=0.7, color=INK2))
     fig.savefig(ROOT / "paper" / "fig3_budget_floor.pdf")
     print("fig3 written")
+
+
+def fig3_code_only():
+    """Main-text variant: the code panel alone, where the crossover happens."""
+    fig, ax = plt.subplots(figsize=(3.05, 1.95))
+    tiers = ["tight", "unseen", "loose"]
+    xlab = ["tight", "unseen", "loose"]
+    reps, brks, nets, lo, hi = [], [], [], [], []
+    for tier in tiers:
+        st = stat(f"{T}/verify_refine_3_code_{tier}", f"{T}/direct_code_{tier}")
+        reps.append(st["rep"]); brks.append(st["brk"]); nets.append(st["delta"])
+        lo.append(st["delta"] - st["lo"]); hi.append(st["hi"] - st["delta"])
+    x = list(range(len(tiers)))
+    ax.plot(x, reps, "o-", ms=5, lw=1.7, color=REPAIR, label="repair")
+    ax.plot(x, brks, "s-", ms=5, lw=1.7, color=BREAK, label="breakage")
+    ax.errorbar(x, nets, yerr=[lo, hi], fmt="D-", ms=4, lw=1.4, color=INK,
+                ecolor=INK2, elinewidth=0.9, capsize=2.5, label="net effect")
+    ax.axhline(0, color=INK2, lw=0.7)
+    ax.set_xticks(x, xlab)
+    ax.set_xlabel("composite budget profile")
+    ax.set_ylabel("rate")
+    ax.grid(color=GRID, lw=0.5)
+    ax.set_axisbelow(True)
+    lo_y, hi_y = ax.get_ylim()
+    ax.set_ylim(lo_y, hi_y + 0.40 * (hi_y - lo_y))
+    ax.legend(loc="upper right", frameon=False, handlelength=1.5,
+              borderpad=0.2, labelspacing=0.22, ncol=3, columnspacing=1.0,
+              handletextpad=0.4, fontsize=6.4)
+    _despine(ax)
+    fig.savefig(ROOT / "paper" / "fig3_budget_floor_code.pdf")
+    print("fig3_code_only written")
 
 
 # --------------------------------------------------------------- Fig. 4 ----
@@ -223,8 +257,11 @@ def fig4():
     ax.invert_xaxis()
     ax.grid(color=GRID, lw=0.5)
     ax.set_axisbelow(True)
-    ax.legend(loc="center left", frameon=False, handlelength=1.5,
-              borderpad=0.2, labelspacing=0.25)
+    lo_y, hi_y = ax.get_ylim()
+    ax.set_ylim(lo_y, hi_y + 0.42 * (hi_y - lo_y))
+    ax.legend(loc="upper right", frameon=False, handlelength=1.5,
+              borderpad=0.2, labelspacing=0.22, ncol=3, columnspacing=1.0,
+              handletextpad=0.4, fontsize=6.4)
     _despine(ax)
     fig.savefig(ROOT / "paper" / "fig4_dose_response.pdf")
     print("fig4 written")

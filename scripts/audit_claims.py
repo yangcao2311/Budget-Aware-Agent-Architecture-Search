@@ -963,7 +963,8 @@ def main():
         for b in bad:
             print(f"  {b[0]}: paper={b[1]} recomputed={b[2]} ({b[3]})")
         sys.exit(1)
-    print("\nAll numeric claims in main.tex reproduce from raw per-task logs.")
+    print("\nRegistered legacy checks passed; this registry is not a complete audit of the active manuscript.")
+    print("For current evidence, also run audit_final_auxiliary_evidence.py and audit_submission_ready.py.")
 
 
 if __name__ == "__main__":
