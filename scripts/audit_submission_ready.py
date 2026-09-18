@@ -156,6 +156,8 @@ def main() -> None:
             "the three-way breakage decomposition is missing from the theory")
     require(r"\label{tab:serving}" in followup_appendix,
             "serving-regime table is missing from the appendix")
+    require(r"\input{generated_verifier_fidelity_rows.tex}" in lean_appendix,
+            "verifier fidelity table is missing from the appendix")
     require(r"\ParityRepairTight" in followup_appendix
             and r"\ParityRepairLoose" in followup_appendix,
             "budget-parity repair intervals are not reported in the appendix")

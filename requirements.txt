@@ -6,3 +6,4 @@ openai==2.53.0
 pandas==3.0.5
 sympy==1.14.0
 tiktoken==0.13.0
+pytest>=8.0

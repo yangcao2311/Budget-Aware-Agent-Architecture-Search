@@ -16,6 +16,8 @@ the public code package.
 - `PREREGISTRATION.md` — the Part-I/Part-II preregistration, frozen at the
   `prereg-freeze-partI` and `prereg-freeze-partII` tags.
 - `data/SHA256SUMS` — checksum manifest binding the frozen splits.
+- `LOCAL_QWEN_CONTROL.md` — hardware, serving configuration and commands for
+  the local Qwen2.5-Coder-7B-Instruct deterministic-serving control.
 - `requirements.txt` — pinned Python dependencies.
 - `.env.example` — empty configuration template; no credentials are stored.
 
@@ -38,8 +40,15 @@ error.
 
 ## Reproducing the paper's numbers
 
-These read existing per-task result rows and never issue provider requests.
-Provide the experiment logs locally, then run from the repository root:
+**The per-task execution records are not in this repository.** The analysis
+entry points below read them from `experiments/`, so a fresh clone will not
+reproduce the tables on its own. The anonymized supplementary package that
+accompanies the paper ships derived records — every field the analyses use,
+with the model outputs replaced by their SHA-256 digests — and those scripts do
+run against it.
+
+These scripts read existing per-task result rows and never issue provider
+requests. With the records in place, run from the repository root:
 
 ```bash
 python scripts/analyze_signal_paths.py

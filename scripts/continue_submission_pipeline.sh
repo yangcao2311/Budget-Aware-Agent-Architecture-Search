@@ -66,7 +66,7 @@ done
 .venv_shared/bin/python scripts/render_main_evidence.py
 .venv_shared/bin/python scripts/make_clean_matrix_figure.py
 (cd paper && LC_ALL=C LANG=C latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex)
-/opt/anaconda3/bin/python3 -m pytest -q
+python3 -m pytest -q
 .venv_shared/bin/python scripts/audit_claims.py
 .venv_shared/bin/python scripts/audit_submission_ready.py
 echo "ALL_API_GENERATION_AND_MACHINE_AUDIT_STAGES_COMPLETE"
