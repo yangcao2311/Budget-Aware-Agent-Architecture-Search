@@ -17,6 +17,11 @@ def require(condition: bool, message: str) -> None:
         raise AssertionError(message)
 
 
+def normalize_whitespace(text: str) -> str:
+    """Collapse layout-only whitespace before checking prose assertions."""
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def main() -> None:
     clean_path = EXP / "glm4flash_repaired_matrix_final_20260910_analysis.json"
     search_path = EXP / "assign_search_intervention_20260909/analysis.json"
@@ -102,6 +107,8 @@ def main() -> None:
                        five_refiner_appendix + "\n" + qwen_appendix + "\n" +
                        lean_appendix + "\n" + restored_appendix + "\n" +
                        evidence_map + "\n" + followup_appendix)
+    revised_body_flat = normalize_whitespace(revised_body)
+    submission_body_flat = normalize_whitespace(submission_body)
     require(r"\input{generated_clean_matrix_main_rows.tex}" in revised_body,
             "clean matrix is not in the main paper")
     require(r"\input{generated_clean_matrix_censored_rows.tex}" in lean_appendix,
@@ -141,14 +148,17 @@ def main() -> None:
     require(r"\label{app:revert}" in followup_appendix,
             "revert-control appendix label is missing")
     # the limitations must report the control, not concede it as untested.
-    require("Best-so-far retention adds nothing" in revised_body,
+    require("Best-so-far retention adds nothing" in revised_body_flat,
             "limitations still concede best-so-far retention as untested")
-    require("do not compare assignment with best-so-far" not in revised_body,
+    require("do not compare assignment with best-so-far" not in revised_body_flat,
             "retired best-so-far concession is still present")
     require(r"K_{\rm pre}" in before_bib,
             "the three-way breakage decomposition is missing from the theory")
     require(r"\label{tab:serving}" in followup_appendix,
             "serving-regime table is missing from the appendix")
+    require(r"\ParityRepairTight" in followup_appendix
+            and r"\ParityRepairLoose" in followup_appendix,
+            "budget-parity repair intervals are not reported in the appendix")
     require(r"\label{tab:stratification}" in followup_appendix,
             "first-incumbent stratification is missing from the appendix")
     require(r"\input{followup_appendix.tex}" in lean_appendix,
@@ -160,7 +170,7 @@ def main() -> None:
     for stale in ("Every same-policy contrast above includes zero",
                   "A byte-stable serving regime removes the distinction",
                   "isolates no serving cause"):
-        require(stale not in submission_body,
+        require(stale not in submission_body_flat,
                 f"superseded claim still present: {stale!r}")
     require(r"\label{tab:design-surface}" in restored_appendix,
             "detectability surface is missing from the appendix")

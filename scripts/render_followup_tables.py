@@ -46,9 +46,9 @@ for tier in ("tight", "loose"):
     p = t["paired_differences_assign_minus_same_policy"]
     rows.append(
         f"prior-\\texttt{{{tier}}} & {t['assign']['n']} & "
-        f"{t['assign']['accepted_wrong'] + t['assign']['rejected_wrong']} & "
+        f"{t['assign']['accepted_wrong'] + t['assign']['rejected_wrong']}/"
         f"{t['same_policy']['accepted_wrong'] + t['same_policy']['rejected_wrong']} & "
-        f"{t['assign']['accepted_wrong']} & {t['same_policy']['accepted_wrong']} & "
+        f"{t['assign']['accepted_wrong']}/{t['same_policy']['accepted_wrong']} & "
         f"{ci(p['breakage_rate'])} & "
         f"{ci(p['accuracy'])} \\\\")
 (PAPER / "generated_budget_parity_rows.tex").write_text(
@@ -94,6 +94,8 @@ m = [
     rf"\newcommand{{\WrongIncAssignTight}}{{{wt['assignment_final_correct_same_positions']}}}",
     rf"\newcommand{{\WrongIncAssignLoose}}{{{wl['assignment_final_correct_same_positions']}}}",
     rf"\newcommand{{\WrongIncSameTight}}{{{wt['same_policy_final_correct']}}}",
+    rf"\newcommand{{\ParityRepairTight}}{{{ci(b['tight']['paired_differences_assign_minus_same_policy']['repair_rate'])}}}",
+    rf"\newcommand{{\ParityRepairLoose}}{{{ci(b['loose']['paired_differences_assign_minus_same_policy']['repair_rate'])}}}",
     rf"\newcommand{{\WrongIncSameLoose}}{{{wl['same_policy_final_correct']}}}",
 ]
 (PAPER / "generated_followup_macros.tex").write_text("\n".join(m) + "\n")
